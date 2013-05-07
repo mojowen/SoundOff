@@ -1,0 +1,75 @@
+body
+	width: 500px
+	font-family: $bodyFont, sans-serif
+	padding: 50px 200px
+	letter-spacing: 2.5px
+
+h1, h2, h3, h4
+	font-family: $headerFont, sans-serif
+
+#popup
+	$width: 644px
+	background: $blue
+	width: $width - 28px*2
+	position: relative
+	h2
+		@include ribbon($yellow, $darkyellow, $width)
+		color: white
+		padding: 12px 10px
+	#form
+		padding: 0 50px 50px
+		color: white
+		
+		input, button
+			font-size: 40px
+
+		input, button, p, img, textarea
+			width: 90%
+			margin: 30px auto
+			display: block
+			img
+				margin: 0
+
+		input,textarea
+			padding: 10px 30px
+			border-radius: 5px
+			border: none
+			&:placeholder
+				color: $grey
+
+		textarea
+			height: 200px
+			font-size: 30px
+
+		#stage_1, #stage_2, #stage_3, .stage_1, .stage_2, .stage_3
+			display: none
+
+		&.stage_1
+			#stage_1, .stage_1
+				display: block
+		
+		&.stage_2
+			#stage_2, .stage_2
+				display: block
+
+		&.stage_3
+			#stage_3, .stage_3
+				display: block
+
+		.target
+			h1
+				color: $darkblue
+			.profile_img
+				float: right
+				width: 70px
+				margin-top: -20px
+		
+		.counter
+			float: right
+
+.pink_ribbon
+	@include ribbon($red,$darkred,411px)
+
+button
+	@include button($red,$darkred)
+	font-family: $headerFont
