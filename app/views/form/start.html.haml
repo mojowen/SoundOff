@@ -1,0 +1,38 @@
+#main{ "ng-app" => true }
+	#popup{ "ng-controller" => "formScope" }
+		%h2.hash_tag {{campaign}}
+
+		%form#form{ :class => 'stage_{{stage}}', 'ng-submit' => 'nextStage()' }
+			= image_tag('logo.png', :class => 'stage_1 stage_2')
+
+			#stage_1
+				%input{ :placeholder => "Zip Code", "ng-model" => "zip" }
+
+				%input{ :placeholder => "Email", "ng-model" => "email" }
+
+				%p
+					%strong Email Optional
+					Here's some text about how the email's optional and you really don't need it
+
+			#stage_2
+				%input{ :placeholder => 'Street Address', "ng-model" => 'street' }
+
+				%input{ :placeholder => 'City', "ng-model" => 'city' }
+
+				%p We need more information to find your Congressional Representative - help us out by providing your street address and city.
+
+			#stage_3
+				
+				.target{ "ng-repeat" => "target in targets" }
+					%img.profile_img{ 'ng-src' => "https://api.twitter.com/1/users/profile_image?screen_name={{target.twitter_id}}&size=bigger" }
+					%h1 @{{ target.twitter_id }}
+
+				.tag {{campaign}}
+				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message" }
+
+				%p {{counter}}
+
+			%button.stage_1.stage_2 Continue
+
+			%button.stage_3
+				= image_tag('logo.png',:width => '300px' )
