@@ -38,7 +38,6 @@ SoundOff::Application.configure do
   config.autoload_paths += %W(#{config.root}/lib)
   # Add the fonts path
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
-  config.assets.js_compressor = NoCompression.new
 
   # Precompile additional assets
   config.assets.precompile += %w( .svg .eot .woff .ttf )
