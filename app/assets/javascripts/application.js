@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require form
 
 if (!Array.prototype.filter) {
   Array.prototype.filter = function(fun /*, thisp*/)
