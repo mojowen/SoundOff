@@ -53,7 +53,13 @@ function formScope($http, $scope) {
 				next = 3;
 				break;
 			case 3:
-				// Need to launch twitter
+				if( $scope.message.length < 1 ){
+					errors.push( 'you should really write something')
+					message.className += ' oops'
+				} else {
+					message = [ $scope.targets.map( function(el) { return ' @'+el.twitter_id}), $scope.message,$scope.campaign.replace(/\s/g,''),'#soundoff' ].join(' ')
+					window.open('/redirect.html#'+escape(message) );
+				}
 				break;
 		}
 
