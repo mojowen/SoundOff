@@ -1,10 +1,13 @@
 function formScope($http, $scope) {
+
 	var config = {
-		targets: 'house', // Can also be senate
-		campaign: 'Yes on 51'
-	}
+			target: $oundoff_config.target || 'house', // Can also be senate
+			campaign: $oundoff_config.campaign || 'Yes on 51',
+			email_required: $oundoff_config.email_required || false,
+		}
+
 	$scope.campaign = '#'+config.campaign
-	$scope.stage = config.stage || 1
+	$scope.stage = 1
 
 	$scope.nextStage = function() {
 		var $notice = $('#notice').html('').attr('class',''),
@@ -62,15 +65,15 @@ function formScope($http, $scope) {
 
 
 	// Stage 1
-	$scope.zip = ''
-	$scope.email = ''
-	
+	$scope.zip = $oundoff_config.zip || ''
+	$scope.email = $oundoff_config.email || ''
 	$scope.ready_for_2 = false
 
 	$scope.sunligh_fetching = false
 
 	$scope.electeds = []
-	$scope.targets = []
+	$scope.targets = $oundoff_config.targets || []
+	if( $scope.targets.length > 0 ) $scope.stage = 3
 	
 	$scope.$watch( 'zip', function(newValue){
 		if( typeof newValue != 'undefined' && newValue.length == 5 ) {
@@ -79,10 +82,10 @@ function formScope($http, $scope) {
 				$http.jsonp(query,{})
 					.success(function(data,status) { 
 						$scope.electeds = data.results;
-						var limit = config.targets == 'house' ? 1 : 2,
-							targets = $scope.electeds.filter( function(el) { return el.chamber == config.targets } )
+						var limit = config.target == 'house' ? 1 : 2,
+							targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
 
-						if( targets.length != limit ) addGoogleMaps(); 
+						if( targets.length != limit && typeof google_maps == 'undefined' ) addGoogleMaps(); 
 						else $scope.targets = targets;
 
 						if( $scope.ready_for_2 ) $scope.nextStage()
@@ -147,8 +150,8 @@ function formScope($http, $scope) {
 	}
 	
 	// Stage 3
-	$scope.message = ''
-	$scope.drop_campaign = false
+	$scope.message = $oundoff_config.message || ''
+	$scope.drop_campaign = $oundoff_config.drop_campaign || false
 
 	$scope.targets_list = function() { return $scope.targets.map( function(el) { return '@'+el.twitter_id }).join(' ') }
 	
