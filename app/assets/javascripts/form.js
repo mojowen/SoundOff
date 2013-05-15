@@ -165,6 +165,12 @@ function formScope($http, $scope) {
 	$scope.counter = 140
 	$scope.$watch('message',setCounter);
 	$scope.$watch('drop_campaign',setCounter);
+	
+	$scope.setMessage = function(message) {
+		$scope.message = message;
+		suggest.style.display = "none";
+		return false;
+	}
 
 	function setCounter() {
 		var targets = '.'+$scope.targets_list(),

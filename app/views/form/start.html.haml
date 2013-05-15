@@ -26,9 +26,24 @@
 				.tag {{campaign}}
 				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
-				%p {{counter}}
+				%p 
+					%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;'  } Need Help?
+					%span{ :style => 'float:right'}
+						{{counter}}
 
+			#notice
 			%button.stage_1.stage_2 Continue
 
 			%button.stage_3
 				= image_tag('logo.png',:width => '300px' )
+		#suggest
+			%h3 
+				Need Help?
+				%br
+				Try one of these:
+
+			- @suggestions.each do |suggestion|
+				%p.link{ 'ng-click' => "setMessage( #{ suggestion.to_json } )" }
+					=suggestion
+
+			%a.no_thanks{ :href => '#', :onclick => 'suggest.style.display = "none"; return false;' } No Thanks
