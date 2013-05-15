@@ -39,7 +39,8 @@
 	border-radius: 3px
 	
 	border: none
-	cursor: pointer
+	&, img
+		cursor: pointer
 		
 	display:inline-block
 	color: white
@@ -56,3 +57,12 @@
 	&:active
 		position: relative
 		top: 1px
+
+@mixin tag
+	border-radius: 3px
+	line-height: 1.4em
+	text-indent: .5em
+	vertical-align: baseline
+	white-space: nowrap
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
+	font-weight: bold
