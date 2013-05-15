@@ -13,8 +13,8 @@ function formScope($http, $scope) {
 		var $notice = $('#notice').html('').attr('class',''),
 			errors = [],
 			next = 1
-
-		$('.oops').removeClass('oops')
+			
+		$('input,textarea').blur().removeClass('oops')
 
 		switch( $scope.stage ) {
 			case 1:
@@ -45,7 +45,7 @@ function formScope($http, $scope) {
 					errors.push( 'missing street')
 					street.className += ' oops'
 				}
-				if( $scope.street.length < 1 ) {
+				if( $scope.city.length < 1 ) {
 					errors.push( 'missing city')
 					city.className += ' oops'
 				}
@@ -94,8 +94,8 @@ function formScope($http, $scope) {
 						if( targets.length != limit && typeof google_maps == 'undefined' ) addGoogleMaps(); 
 						else $scope.targets = targets;
 
-						if( $scope.ready_for_2 ) $scope.nextStage()
 						$scope.sunligh_fetching = false;
+						if( $scope.ready_for_2 ) $scope.nextStage()
 					})
 		}		
 	})
@@ -146,11 +146,10 @@ function formScope($http, $scope) {
 				$http.jsonp(query,{})
 					.success( function(data,status){ 
 						$scope.electeds = data.results;
-						$scope.targets = $scope.electeds.filter( function(el) { return el.chamber == config.targets } )
+						$scope.targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
 
-						if( $scope.ready_for_3 ) $scope.nextStage()
 						$scope.geocoder_fetching = false;
-
+						if( $scope.ready_for_3 ) $scope.nextStage();
 				})
 		}
 	}
