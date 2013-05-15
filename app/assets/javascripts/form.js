@@ -7,20 +7,57 @@ function formScope($http, $scope) {
 	$scope.stage = config.stage || 1
 
 	$scope.nextStage = function() {
+		var $notice = $('#notice').html('').attr('class',''),
+			errors = [],
+			next = 1
+
+		$('.oops').removeClass('oops')
+
 		switch( $scope.stage ) {
 			case 1:
-				// Need to do something if it's not updating
-				if( $scope.targets.length > 0 ) $scope.stage = 3;
-				else $scope.stage = 2;
-				return false;
+				if( $scope.sunligh_fetching ) {
+					$notice.text('one sec - grabbing some data')
+					$scope.ready_for_2 = true
+					return false
+				}
+				if( $scope.zip.length < 4 ) {
+					errors.push( 'missing a zip code')
+					zip.className += ' oops'
+				}
+				if( $scope.email.length < 1 && config.email_required ) {
+					errors.push( 'email is required')
+					email.className += ' oops'
+				}
+
+				if( $scope.targets.length > 0 ) next = 3;
+				else next = 2;
+				break;
 			case 2:
-				// for some reason this isn't working
-				$scope_stage = 3;
-				return false;
+				if( $scope.geocoder_fetching ) {
+					$notice.text('one sec - grabbing some data')
+					$scope.ready_for_3 = true
+					return false
+				}
+				if( $scope.street.length < 1 ) {
+					errors.push( 'missing street')
+					street.className += ' oops'
+				}
+				if( $scope.street.length < 1 ) {
+					errors.push( 'missing city')
+					city.className += ' oops'
+				}
+
+				next = 3;
+				break;
 			case 3:
 				// Need to launch twitter
 				break;
 		}
+
+		if( errors.length > 0 ) $notice.addClass('oops').html( errors.join(' and ') )
+		else $scope.stage = next;
+
+		return false
 	}
 
 
@@ -28,12 +65,17 @@ function formScope($http, $scope) {
 	$scope.zip = ''
 	$scope.email = ''
 	
+	$scope.ready_for_2 = false
+
+	$scope.sunligh_fetching = false
+
 	$scope.electeds = []
 	$scope.targets = []
 	
 	$scope.$watch( 'zip', function(newValue){
 		if( typeof newValue != 'undefined' && newValue.length == 5 ) {
 				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
+				$scope.sunligh_fetching = true
 				$http.jsonp(query,{})
 					.success(function(data,status) { 
 						$scope.electeds = data.results;
@@ -42,6 +84,9 @@ function formScope($http, $scope) {
 
 						if( targets.length != limit ) addGoogleMaps(); 
 						else $scope.targets = targets;
+
+						if( $scope.ready_for_2 ) $scope.nextStage()
+						$scope.sunligh_fetching = false;
 					})
 		}		
 	})
@@ -52,6 +97,8 @@ function formScope($http, $scope) {
 	$scope.latlng = false
 
 	$scope.geocoder = false
+	$scope.geocoder_fetching = false
+	$scope.ready_for_3 = false
 
 	$scope.$watch( 'city', lookupLatLng )
 	$scope.$watch( 'street', lookupLatLng )
@@ -62,6 +109,7 @@ function formScope($http, $scope) {
 		var script = document.createElement( 'script' ), 
 			fjs = document.head.getElementsByTagName('script')[0]
     	script.type = 'text/javascript';
+    	script.id = 'google_maps';
     	script.src = 'http://maps.google.com/maps/api/js?sensor=true&callback=addGeocoder';
 		fjs.parentNode.insertBefore( script, fjs);
 	}
@@ -69,6 +117,7 @@ function formScope($http, $scope) {
 	function lookupLatLng() {
 		if( $scope.street != '' && $scope.city != '' && $scope.geocoder ) {
 			var address = [$scope.street, $scope.city, $scope.zip].join(' ')
+			$scope.geocoder_fetching = true;
 			$scope.geocoder.geocode( { 'address': address}, function(results, status) {
 				var location = results[0].geometry.location,
 					latlng = []
@@ -89,6 +138,10 @@ function formScope($http, $scope) {
 					.success( function(data,status){ 
 						$scope.electeds = data.results;
 						$scope.targets = $scope.electeds.filter( function(el) { return el.chamber == config.targets } )
+
+						if( $scope.ready_for_3 ) $scope.nextStage()
+						$scope.geocoder_fetching = false;
+
 				})
 		}
 	}

@@ -7,6 +7,19 @@ body
 h1, h2, h3, h4
 	font-family: $headerFont, sans-serif
 
+#notice
+	background: $grey
+	@include tag
+	color: $blue
+	text-align: center
+	&.oops
+		color: $red
+
+input.oops, textarea.oops
+	border: 2px solid $red !important
+	&:placeholder
+		color: $red !important
+
 #popup
 	$width: 644px
 	background: $blue
@@ -23,7 +36,7 @@ h1, h2, h3, h4
 		input, button
 			font-size: 40px
 
-		input, button, p, img, textarea
+		input, button, p, img, textarea, #notice
 			width: 90%
 			margin: 30px auto
 			display: block

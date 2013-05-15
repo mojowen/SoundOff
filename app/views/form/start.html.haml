@@ -6,18 +6,14 @@
 			= image_tag('logo.png', :class => 'stage_1 stage_2')
 
 			#stage_1
-				%input{ :placeholder => "Zip Code", "ng-model" => "zip" }
+				%input{ :placeholder => "Zip Code", "ng-model" => "zip", :id => 'zip' }
 
-				%input{ :placeholder => "Email", "ng-model" => "email" }
-
-				%p
-					%strong Email Optional
-					Here's some text about how the email's optional and you really don't need it
+				%input{ :placeholder => "Email", "ng-model" => "email", :id => 'email'  }
 
 			#stage_2
-				%input{ :placeholder => 'Street Address', "ng-model" => 'street' }
+				%input{ :placeholder => 'Street Address', "ng-model" => 'street', :id => 'street' }
 
-				%input{ :placeholder => 'City', "ng-model" => 'city' }
+				%input{ :placeholder => 'City', "ng-model" => 'city', :id => 'city' }
 
 				%p We need more information to find your Congressional Representative - help us out by providing your street address and city.
 
@@ -28,7 +24,7 @@
 					%h1 @{{ target.twitter_id }}
 
 				.tag {{campaign}}
-				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message" }
+				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
 				%p {{counter}}
 
