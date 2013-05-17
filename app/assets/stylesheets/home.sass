@@ -1,0 +1,86 @@
+$mid: 22%
+
+body.fixed
+	#top
+		position: fixed
+		height: 100px
+		border-bottom-width: 4px
+
+		img
+			width: 180px
+			top: 20px
+
+		#description
+			display: none
+	#footer
+		display: none
+
+#top
+	background: $blue
+	position: fixed
+
+	top: 0
+	left: 0
+	right: 0
+	bottom: $mid
+
+	border-bottom: 10px solid $darkblue
+
+	$offset: 30%
+	img
+		position: absolute
+		top: $offset - 12%
+		left: 6%
+		width: 38%
+
+
+	#description
+		position: absolute
+		top: $offset
+		right: 12%
+		width: 40%
+
+		h1
+			color: $grey
+			font-size: 2.3em
+			margin-top: 0
+		p
+			color: white
+
+		button
+			margin-top: 8%
+
+
+#footer
+	position: fixed
+	top: 100% - $mid
+	bottom: 0
+	left: 0
+	right: 0
+	padding: 0 5%
+
+	p
+		color: $blue
+		font-size: 80%
+		a
+			color: $blue
+			font-size: 120%
+	div
+		display: inline-block
+		height: 100% - $mid
+
+	.disclaimer
+		width: 50%
+
+	.column
+		width: 10%
+		p
+			
+			text-align: center
+		margin: 0 1%
+		vertical-align: top
+		img
+			width: 100%
+
+#main
+	height: 10000px

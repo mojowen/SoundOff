@@ -1,0 +1,104 @@
+
+#popup
+	$width: 644px
+	background: $blue
+	width: $width - 28px*2
+	position: relative
+	h2
+		@include ribbon($yellow, $darkyellow, $width)
+		color: white
+		padding: 12px 10px
+	#form
+
+		padding: 0 50px 50px
+		color: white
+		
+		input, button
+			font-size: 40px
+
+		input, button, p, img, textarea, #notice
+			width: 90%
+			margin: 30px auto
+			display: block
+			img
+				margin: 0
+
+		input,textarea
+			padding: 10px 30px
+			border-radius: 5px
+			border: none
+			&:placeholder
+				color: $grey
+				line-height: 1.4em
+
+		textarea
+			height: 200px
+			font-size: 30px
+			resize: none
+
+		#stage_1, #stage_2, #stage_3, .stage_1, .stage_2, .stage_3
+			display: none
+
+		&.stage_1
+			#stage_1, .stage_1
+				display: block
+		
+		&.stage_2
+			#stage_2, .stage_2
+				display: block
+
+		&.stage_3
+			#stage_3, .stage_3
+				display: block
+
+		.target
+			h1
+				color: $darkblue
+			.profile_img
+				float: right
+				width: 70px
+				margin-top: -20px
+		
+		.counter
+			float: right
+
+		// use http://twitter.github.io/bootstrap/components.html#labels-badges
+		.tag
+			@include tag
+			display: inline-block
+			position: absolute
+			text-decoration: none
+			background: #CDE69C
+			color: #638421
+			font-family: helvetica
+			font-size: 30px
+			line-height: 34px
+			margin: 160px 0 0 260px
+	#suggest
+		display: none
+		position: absolute
+		top: 10px
+		left: -340px
+		width: 280px
+		background: lighten($blue, 50%)
+		padding: 10px 10px
+		a.no_thanks
+			color: $red
+			text-align: right
+			width: 100%
+			display: block
+			&:link, &:visited, &:active
+				text-decoration: none
+
+		h3
+			color: $darkblue
+		p
+			font-size: 110%
+			border-top: 1px solid $grey
+			margin: 10px 0
+			padding: 10px 20px
+			color: $darkgrey
+			&:hover
+				color: $red
+			&:first-of-type
+				border-top: none

@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require form
+//= require home
 
 if (!Array.prototype.filter) {
   Array.prototype.filter = function(fun /*, thisp*/)
