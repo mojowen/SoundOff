@@ -1,5 +1,5 @@
 #top
-	= image_tag asset_path('logo.png')
+	= image_tag asset_path('logo.png'), :class => 'home'
 
 	#description
 		%h1 Tweet @ the Right People.
@@ -10,7 +10,8 @@
 			%br
 			makers on issues that matter to you
 
-		%button{ :class => 'get_started' } Get Started
+		%button.create_campaign{ :href => '#', :onclick => 'alert("Create Your Own Campaign!")' } Get Started
+		%a.get_started Join the Conversation
 
 #footer
 	.disclaimer
@@ -42,10 +43,26 @@
 
 	.column
 		= image_tag asset_path('headcount.png')
-#main
+#main{ "ng-app" => true, "ng-controller" => 'homePageScope'  }
+
 	#menu
 		%h2
-			ScoreBoard
+			%span.selected ScoreBoard
 			|
-			Elected Official
+			%span Elected Official
+		.inner
+			.items
+				.campaign{ "ng-repeat" => "campaign in campaigns" }
+					%h3.score {{campaign.score}}
+					%h3 {{campaign.name}}
+
+					.description {{campaign.description}}
 	#content
+		.item{ "ng-repeat" => "campaign in campaigns" }
+			.description
+				.title
+					%h1 {{campaign.name}}
+					%button Sound Off
+					%h3 
+						Score
+						.score {{campaign.score}}

@@ -1,6 +1,86 @@
 $mid: 22%
 $fixed_header: 100px
 
+
+#main
+	background-color: $grey
+	position: relative
+	$menu_width: 500px
+
+	#content
+		margin: 120px 0 0 $menu_width + 100
+		.item
+			min-height: 400px
+			width: 700px
+			margin: 50px 20px
+			background: white
+			.description
+				width: 100%
+				background-color: $darkgrey
+				padding: 20px
+				.title
+					height: 250px
+					opacity: .95
+					background-color: white
+					padding: 20px
+					h1
+						font-size: 300%
+					h3
+						margin-top: -20px
+						color: white
+						text-shadow: 1px -1px 4px #333
+						font-size: 200%
+						.score
+							background: image_url('stat_big.png') top left no-repeat
+							padding: 26px 0 12px 90px
+							display: inline-block
+					button
+						@include button($yellow,$darkyellow)
+						float: right
+
+	#menu
+		position: fixed
+		top: 100%
+		height: 80%
+		background: #f3f5f4
+		width: $menu_width - 28px*2
+		left: 100px
+		.inner
+			overflow: hidden
+			height: 95%
+		.items
+			height: 90%
+			overflow-y: auto
+
+			.campaign
+				border-bottom: 2px solid $grey
+				padding: 20px
+				.score
+					float: right
+					margin: 8px 20px 0
+					background: image_url('stat.png') top left no-repeat
+					padding: 10px 0 12px 60px
+				h3
+					color: #333
+					
+				p, div
+					font-size: 90%
+					color: $darkgrey
+
+		h2
+			@include ribbon($darkred, $red, $menu_width)
+			text-align: center
+			padding: 8px 0 0
+
+			span
+				margin: 5px 0 0
+				padding: 4px 10px
+				cursor: pointer
+				&.selected, &:hover
+					color: $red
+					background: black
+
+
 body.fixed
 	#top
 		position: fixed
@@ -10,6 +90,7 @@ body.fixed
 		img
 			width: 180px
 			top: 20px
+			cursor: pointer
 
 		#description
 			display: none
@@ -55,6 +136,17 @@ body.fixed
 
 		button
 			margin-top: 8%
+			display: block
+
+		a
+			color: white
+			font-size: 125%
+			text-decoration: underline
+
+		.get_started
+			padding-top: 10%
+			display: block
+
 
 
 #footer
@@ -91,19 +183,3 @@ body.fixed
 		img
 			width: 100%
 
-#main
-	height: 10000px
-	background-color: $grey
-	position: relative
-	$menu_width: 500px
-
-	#menu
-		position: fixed
-		top: 100%
-		height: 80%
-		background: #f3f5f4
-		width: $menu_width - 28px*2
-		left: 100px
-		h2
-			@include ribbon($darkred, $red, $menu_width)
-			text-align: center

@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require form
 //= require home
+//= require home_scope
 
 if (!Array.prototype.filter) {
   Array.prototype.filter = function(fun /*, thisp*/)
