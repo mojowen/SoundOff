@@ -11,7 +11,7 @@ $fixed_header: 100px
 		margin: 120px 0 0 $menu_width + 100
 		.item
 			min-height: 400px
-			width: 700px
+			width: 750px
 			margin: 50px 20px
 			background: white
 			.description
@@ -25,10 +25,11 @@ $fixed_header: 100px
 					padding: 20px
 					h1
 						font-size: 300%
+						color: #333
 					h3
 						margin-top: -20px
 						color: white
-						text-shadow: 1px -1px 4px #333
+						text-shadow: 1px -1px 5px #000, 0px 1px 2px #000
 						font-size: 200%
 						.score
 							background: image_url('stat_big.png') top left no-repeat
@@ -37,6 +38,94 @@ $fixed_header: 100px
 					button
 						@include button($yellow,$darkyellow)
 						float: right
+			.tweets
+				text-align: center
+				.tweet
+					border: 2px solid $grey
+					text-align: left
+					margin: 8px
+					width: 30%
+					display: inline-block
+					vertical-align: top
+					padding: 8px
+					font-size: 90%
+					h2
+						font-size: 80%
+						padding-top: 8px
+						margin: 0
+					h3
+						font-size: 60%
+					img
+						height: 45px
+						width: 45px
+						clear: both
+						border-radius: 50px
+						float: left
+						margin: 12px
+					.body
+						clear: both
+						font-size: 85%
+						padding: 4px 4px 10px
+						margin: 10px
+						text-spacing: 2px
+						border-bottom: 2px solid $blue
+					.actions
+						margin: 0 0 10px
+						img
+							width: 30px
+							height: 30px
+							margin: -6px 0 0 -6px
+						.buttons
+							float: right
+							a
+								width: 15px
+								height: 15px
+								margin: 0 2px
+								display: inline-block
+								background-image: url('https://si0.twimg.com/images/dev/cms/intents/icons/sprites/everything-spritev2.png')
+								background-repeat: no-repeat
+								&.reply
+									background-position-x: -2px
+									&:hover
+										background-position-x: -18px
+								&.retweet
+									background-position: -81px
+									&:hover
+										background-position-x: -97px
+								&.favorite
+									background-position: -34px
+									&:hover
+										background-position-x: -50px
+
+
+				h4
+					text-align: center
+					position: relative
+					color: #333
+					span
+						font-size: 80%
+						font-style: italic
+						font-family: $bodyFont
+						font-weight: normal
+						width: 70%
+					&:before
+						content: ' '
+						width: 15%
+						height: 16px
+						border-top: 5px solid $blue
+						border-left: 5px solid $blue
+						position: absolute
+						left: 12px
+						top: 10px
+					&:after
+						content: ' '
+						width: 15%
+						height: 16px
+						border-top: 5px solid $red
+						border-right: 5px solid $red
+						position: absolute
+						right: 12px
+						top: 10px
 
 	#menu
 		position: fixed
@@ -174,7 +263,7 @@ body.fixed
 		width: 50%
 
 	.column
-		width: 10%
+		width: 9.9%
 		p
 			
 			text-align: center

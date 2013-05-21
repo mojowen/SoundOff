@@ -1,18 +1,22 @@
 if( $oundoff_config.home ) {
 
-	var w_top, w_height, w_width	
-
+	var w_top, w_height, w_width, freeze
+	
 	$(document)
 	.ready( function() {
 		w_top = this.body.scrollTop,
 		w_height = window.innerHeight,
 		w_width = window.innerWidth
 		reset_styles = true
+		freeze = false
 
 		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 ) document.body.classList.add('fixed');
 		
 	})
 	.scroll( function(e) {
+
+		// $('body').scrollTop(w_height);
+
 		if( document.body.classList.contains('fixed') ) return false
 
 		var w_top = this.body.scrollTop,
@@ -73,7 +77,7 @@ if( $oundoff_config.home ) {
 		}
 	})
 	.on('click','.get_started',function() {
-		scroll_to(1000)
+		scroll_to( w_height )
 	})
 	.on('click','.home',function() {
 		window.name = window.name.replace(/soundoff_open/g,'')

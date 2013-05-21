@@ -1,3 +1,5 @@
+%script{ :type => 'text/javascript', :src => '//platform.twitter.com/widgets.js'}
+
 #top
 	= image_tag asset_path('logo.png'), :class => 'home'
 
@@ -66,3 +68,23 @@
 					%h3 
 						Score
 						.score {{campaign.score}}
+
+			.tweets
+				%h4
+					Join the Ranks
+					%span SoundOff with others about {{campaign.name}}
+
+				.tweet{ 'ng-repeat' => 'tweet in campaign.tweets' }
+					.actions
+						%img{ :src => 'https://twitter.com/images/resources/twitter-bird-light-bgs.png' }
+						{{  tweet.created_at | date: 'd MMM' }}
+						.buttons
+							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.id}}', :target => '_blank' }
+							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.id}}', :target => '_blank' }
+							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.id}}', :target => '_blank' }
+
+					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}' }
+					%h2 {{tweet.from_user_name}}
+					%h3 @{{tweet.from_user }}
+
+					.body {{ tweet.text }}
