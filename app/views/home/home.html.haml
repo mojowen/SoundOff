@@ -73,7 +73,7 @@
 				%h4
 					Join the Ranks
 					%span SoundOff with others about {{campaign.name}}
-
+					{{campaign.description}}
 				.tweet{ 'ng-repeat' => 'tweet in campaign.tweets' }
 					.actions
 						%img{ :src => 'https://twitter.com/images/resources/twitter-bird-light-bgs.png' }
