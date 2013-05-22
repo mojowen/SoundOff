@@ -72,7 +72,7 @@ function openSoundOff( args ) {
       form.style.border = 'none'
       form.style.height = '0px'
       form.style.position = 'fixed'
-      form.style.top = window.innerHeight / 6 + 'px'
+      form.style.top = '60px'
 
 
 
