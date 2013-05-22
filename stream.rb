@@ -1,3 +1,5 @@
+# https://github.com/intridea/tweetstream
+
 require "twitterstream"
 
 ts = TwitterStream.new('sduncombe','stinging1')
