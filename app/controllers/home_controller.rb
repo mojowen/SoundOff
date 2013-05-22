@@ -3,5 +3,6 @@ class HomeController < ActionController::Base
   
   def home
     @config = { :home => true }
+    @body_class = 'home'
   end
 end

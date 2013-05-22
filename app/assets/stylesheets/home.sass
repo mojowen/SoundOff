@@ -1,6 +1,8 @@
 $mid: 22%
 $fixed_header: 100px
 
+body.home #main 
+	padding: 0px
 
 #main
 	background-color: $grey
@@ -8,7 +10,7 @@ $fixed_header: 100px
 	$menu_width: 500px
 
 	#content
-		margin: 120px 0 0 $menu_width + 100
+		margin: 120px 0 0 $menu_width + 100px
 		.item
 			min-height: 400px
 			width: 750px
@@ -19,7 +21,7 @@ $fixed_header: 100px
 				background-color: $darkgrey
 				padding: 20px
 				.title
-					height: 250px
+					min-height: 250px
 					opacity: .95
 					background-color: white
 					padding: 20px

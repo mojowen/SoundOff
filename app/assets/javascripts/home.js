@@ -79,10 +79,18 @@ if( $oundoff_config.home ) {
 	.on('click','.get_started',function() {
 		scroll_to( w_height )
 	})
-	.on('click','.home',function() {
+	.on('click','img.home',function() {
 		window.name = window.name.replace(/soundoff_open/g,'')
 		document.body.classList.remove('fixed')
 		$('body').scrollTop(0)
+	})
+	.on('click','.open_soundoff', function() {
+		var $this = $(this),
+			config = {}
+		if( $this.attr('campaign') ) config.campaign = $this.attr('campaign');
+
+		openSoundOff(config)
+		return false;
 	})
 
 	function scroll_to(target_height) {

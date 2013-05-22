@@ -1,10 +1,13 @@
-#main
-	padding: 50px 200px
+body.form
+	padding: 10px 20px
+	#main, &
+		background: transparent
 
 #popup
 	$width: 644px
 	background: $blue
 	width: $width - 28px*2
+	margin: 0 auto
 	position: relative
 	h2
 		@include ribbon($yellow, $darkyellow, $width)
@@ -75,7 +78,16 @@
 			font-family: helvetica
 			font-size: 30px
 			line-height: 34px
-			margin: 160px 0 0 260px
+			margin: 160px 0 0 0
+			right: 90px
+			text-align: right
+			span
+				cursor: pointer
+				color: $darkgrey
+				font-size: 20px
+				margin: -5px 5px 0 0
+				&:hover
+					color: black
 	#suggest
 		display: none
 		position: absolute

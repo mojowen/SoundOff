@@ -23,7 +23,10 @@
 					%img.profile_img{ 'ng-src' => "https://api.twitter.com/1/users/profile_image?screen_name={{target.twitter_id}}&size=bigger" }
 					%h1 @{{ target.twitter_id }}
 
-				.tag {{campaign}}
+				.tag{ 'ng-hide' => 'drop_campaign'}
+					{{campaign}}
+					%span{ 'ng-click' => "removeCampaign()" } x
+
 				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
 				%p 

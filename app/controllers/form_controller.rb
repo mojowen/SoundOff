@@ -6,8 +6,10 @@ class FormController < ActionController::Base
   		# 	{ :twitter_id => 'blumenauermedia'}
   		# ],
   		# :message => 'fuck you'
-
+      :campaign => params[:campaign],
+      :elected => params[:elected]
   	}
+    @body_class = 'form'
   	@suggestions = [
   		'Maybe you should stop that thing that makes me upset, congress',
   		'This is where suggested tweet would go',

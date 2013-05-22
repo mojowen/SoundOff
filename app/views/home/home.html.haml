@@ -64,16 +64,18 @@
 			.description
 				.title
 					%h1 {{campaign.name}}
-					%button Sound Off
-					%h3 
-						Score
-						.score {{campaign.score}}
+					%button.open_soundoff{{  :campaign => '{{campaign.name}}'}} Sound Off
+					-# %h3 
+					-# 	Score
+					-# 	.score {{campaign.score}}
+					
+					{{campaign.description}}
 
 			.tweets
 				%h4
 					Join the Ranks
 					%span SoundOff with others about {{campaign.name}}
-					{{campaign.description}}
+
 				.tweet{ 'ng-repeat' => 'tweet in campaign.tweets' }
 					.actions
 						%img{ :src => 'https://twitter.com/images/resources/twitter-bird-light-bgs.png' }

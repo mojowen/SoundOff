@@ -158,6 +158,11 @@ function formScope($http, $scope) {
 	$scope.message = $oundoff_config.message || ''
 	$scope.drop_campaign = $oundoff_config.drop_campaign || false
 
+	$scope.removeCampaign = function() {
+		console.log('going')
+		$scope.drop_campaign = true
+	}
+
 	$scope.targets_list = function() { return $scope.targets.map( function(el) { return '@'+el.twitter_id }).join(' ') }
 	
 
@@ -182,7 +187,17 @@ function formScope($http, $scope) {
 	}
 }
 
-
+// A way to cancel the soundoff - half baked
+$(document).on('click','#main', function(e) { 
+	if( window.parent != window && e.target != popup && $(e.target).parents('#popup').length < 1 ) {
+		if ( confirm('Are you sure you want to cancel your SoundOff?') ) {
+			var dark = window.parent.document.getElementById('dark_div_soundoff'),
+				frame = window.parent.document.getElementById('form_iframe_soundoff')
+			dark.parentNode.removeChild( dark )
+			frame.parentNode.removeChild( frame )
+		}
+	}
+})
 
 function addGeocoder() {
 	angular.element( document.getElementById('popup') ).scope().$apply( function($scope) {
