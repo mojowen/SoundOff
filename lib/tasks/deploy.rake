@@ -22,7 +22,7 @@ task :deploy, :remote, :branch do |t,args|
       system "git merge -s recursive -Xtheirs #{branch_to_push}"
       
       blue 'Rewriting Base Domain'
-      File.open('app/assets/javascripts/base_domain.js','w+'){ |f| f.write( '$oundoff_base_domain = '+base_domain.to_json ) }
+      File.open('app/assets/javascripts/base_domain.js','w+'){ |f| f.write( "$oundoff_base_domain = '#{base_domain}'; " ) }
 
       blue 'Precompiling Assets'
       system 'bundle exec rake assets:clean'
