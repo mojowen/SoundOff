@@ -115,18 +115,25 @@ if( $oundoff_config.home ) {
 
 	function scroll_to(target_height,direction) {
 		var increment = 
-				Math.abs( target_height - w_top ) < 35 ? 5  : 
-				Math.abs( target_height - w_top ) < 70 ? 35  : 70
+				Math.abs( target_height - w_top ) < 10 ? 1  : 
+				Math.abs( target_height - w_top ) < 50 ? 5  : 
+				Math.abs( target_height - w_top ) < 300 ? 15  : 
+				Math.abs( target_height - w_top ) < 1000 ? 100  : 250,
 			direction = direction || ( target_height > w_top ? 1 : -1 )
 
 		window.scrollBy(0,increment * direction);
 		w_top = document.body.scrollTop;
 
+		var next_increment = 
+				Math.abs( target_height - w_top ) < 10 ? 1  : 
+				Math.abs( target_height - w_top ) < 50 ? 5  : 
+				Math.abs( target_height - w_top ) < 300 ? 15  : 
+				Math.abs( target_height - w_top ) < 1000 ? 100  : 250
 
 		if( 
-			Math.floor(w_top / increment) < Math.floor(target_height / increment) && direction > 0
+			Math.floor(w_top / next_increment) < Math.floor(target_height / next_increment) && direction > 0
 			||
-			Math.floor(w_top / increment) > Math.floor(target_height / increment) && direction < 0
+			Math.floor(w_top / next_increment) > Math.floor(target_height / next_increment) && direction < 0
 		) { 
 			setTimeout( function() { scroll_to(target_height,direction) }, 1);
 		} else window.scrollTo(0 , target_height );
