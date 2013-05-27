@@ -116,8 +116,7 @@ if( $oundoff_config.home ) {
 	function scroll_to(target_height,direction) {
 		var increment = 
 				Math.abs( target_height - w_top ) < 35 ? 5  : 
-				Math.abs( target_height - w_top ) < 60 ? 35  : 
-				Math.abs( target_height - w_top ) < 150 ? 60 : 150,
+				Math.abs( target_height - w_top ) < 70 ? 35  : 70
 			direction = direction || ( target_height > w_top ? 1 : -1 )
 
 		window.scrollBy(0,increment * direction);
