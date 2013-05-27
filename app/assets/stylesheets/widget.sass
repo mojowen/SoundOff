@@ -1,0 +1,77 @@
+@import "compass/css3"
+@import "vars.sass"
+@import "mixins.sass"
+@import "fonts.sass"
+@import "main.sass"
+
+$height: 500px
+$header: 56px
+
+body.dark
+	#main
+		background: #333
+		color: $grey
+		#header
+			color: $grey
+		#content .tweet a
+			color: $grey
+
+	#main, #main #header	
+		border-color: $darkgrey
+	.tweet .body
+		text-shadow: 0px 0px 2px #000
+	
+
+#main
+	width: 300px
+	overflow: hidden
+	height: $height
+	position: relative
+	border: 1px solid $grey
+	background: white
+	border-radius: 3px
+
+
+	&.light
+
+	img, button, .tweet, div
+		display: block
+
+	#content
+		height: $height - $header
+		overflow-y: auto
+		.tweet
+			@include tweet
+			h2
+				padding-top: 16px
+			.actions
+				margin: 0 12px 10px
+
+
+	#header
+		height: $header
+		border-bottom: 1px solid $grey
+		color: #333
+		font-size: 12px
+		padding: 2px
+
+		a.logo img
+			height: 40px
+			padding-bottom: 4px
+		
+		.attribute
+			float: right
+			width: 130px
+			position: absolute
+			right: 2px
+			font-size: 8px
+			top: 2px
+			text-align: right
+			a
+				color: lighten( $red, 25%)
+
+
+	button
+		position: absolute
+		bottom: -2px
+		width: 100%

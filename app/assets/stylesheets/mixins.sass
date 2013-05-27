@@ -55,9 +55,6 @@
 	&:hover
 		background-color: lighten($color,3%)
 
-	&:active
-		position: relative
-		top: 1px
 
 @mixin tag
 	border-radius: 3px
@@ -67,3 +64,61 @@
 	white-space: nowrap
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
 	font-weight: bold
+
+@mixin tweet
+	vertical-align: top
+	padding: 8px
+	font-size: 90%
+	a
+		text-decoration: none
+		color: #333
+		&:hover
+			text-decoration: underline
+	h2
+		font-size: 80%
+		padding-top: 8px
+		margin: 0
+	h3
+		font-size: 60%
+	img
+		height: 45px
+		width: 45px
+		clear: both
+		border-radius: 50px
+		float: left
+		margin: 12px
+	.body
+		clear: both
+		font-size: 85%
+		padding: 4px 4px 10px
+		margin: 10px
+		letter-spacing: 2px
+		border-bottom: 2px solid $blue
+
+	.actions
+		margin: 0 0 10px
+		img
+			width: 30px
+			height: 30px
+			margin: -6px 0 0 -6px
+		.buttons
+			float: right
+			a
+				width: 15px
+				height: 15px
+				margin: 0 2px
+				display: inline-block
+				background-image: url('https://si0.twimg.com/images/dev/cms/intents/icons/sprites/everything-spritev2.png')
+				background-repeat: no-repeat
+				&.reply
+					background-position-x: -2px
+					&:hover
+						background-position-x: -18px
+				&.retweet
+					background-position: -81px
+					&:hover
+						background-position-x: -97px
+				&.favorite
+					background-position: -34px
+					&:hover
+						background-position-x: -50px
