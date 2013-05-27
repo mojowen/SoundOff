@@ -3,6 +3,7 @@ task :deploy, :remote, :branch do |t,args|
   branch_to_push = args[:branch] || 'master'
 
   remote = args[:remote] || 'heroku'
+  base_domain = 'http://soundoffatcongress.org'
 
   # blue ">>>> Did you pull from #{branch_to_push}?"
   # pull = STDIN.gets.chomp.downcase
@@ -20,6 +21,9 @@ task :deploy, :remote, :branch do |t,args|
       system "git checkout -B compiled"
       system "git merge -s recursive -Xtheirs #{branch_to_push}"
       
+      blue 'Rewriting Base Domain'
+      File.open('app/assets/javascripts/base_domain.js','w+'){ |f| f.write( '$oundoff_base_domain = '+base_domain.to_json ) }
+
       blue 'Precompiling Assets'
       system 'bundle exec rake assets:clean'
       system 'bundle exec rake assets:precompile'
