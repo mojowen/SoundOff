@@ -4,16 +4,18 @@ task :fetch_ids do
 	
 	twitters = Dir.glob('lib/reps/has_twitter/*')
 
-	(twitters.length / 100.to_f).ceil.times do |i|
+	# (twitters.length / 100.to_f).ceil.times do |i|
 
-		chunk = twitters.slice(i*100, 100)
+		chunk = twitters.map do |f| 
+			{ :data => JSON::parse( File.read(f) ), :file => f.to_s}
+		end
+
+		chunk = chunk.select{ |f| f[:data]['twitter_id_number'].nil? }
 
 		reps = {}
 
 		chunk.each do |rep_file|
-			tmp_rep = JSON::parse( File.read( rep_file  ) )
-
-			reps[ tmp_rep['twitter_id'] ] = { :data => tmp_rep, :file => rep_file.to_s }
+			reps[ rep_file[:data]['twitter_id'] ] = rep_file
 		end
 
 		smooshed = reps.map{|k,v| k }.join(',')
@@ -22,7 +24,7 @@ task :fetch_ids do
 
 		reps.each do |twitter_id, rep_package|
 			
-			t_scrape = ids.find{ |t| t['screen_name'] == twitter_id }
+			t_scrape = ids.find{ |t| t['screen_name'].downcase == twitter_id.downcase }
 			
 			unless t_scrape.nil?
 				
@@ -35,6 +37,6 @@ task :fetch_ids do
 			end
 		end
 
-	end
+	# end
 	
 end
