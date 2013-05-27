@@ -12,7 +12,7 @@ SoundOff::Application.configure do
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.compress = false
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -20,7 +20,7 @@ SoundOff::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
   
-  config.assets.precompile += %w(widget_snippet.js widget.js widget.css)
+  config.assets.precompile += %w(angular.min.js widget_snippet.js widget.js widget.css)
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
