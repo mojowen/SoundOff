@@ -3,7 +3,7 @@
 	%head
 		%title Sound Off
 		= stylesheet_link_tag    "application", :media => "all"
-		= javascript_include_tag "angular.min"
+		= javascript_include_tag "/angular.min.js"
 		:javascript
 			var $oundoff_config = #{ ( @config || {} ).to_json }
 		= javascript_include_tag "application"

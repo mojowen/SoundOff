@@ -5,7 +5,7 @@
 		= stylesheet_link_tag "widget", :media => "all"
 		:javascript
 			var $oundoff_config = #{ ( @config || {} ).to_json }
-		= javascript_include_tag "angular.min"
+		= javascript_include_tag "/angular.min.js"
 		= javascript_include_tag "widget"
 		= javascript_include_tag '//platform.twitter.com/widgets.js'
 		= csrf_meta_tags
