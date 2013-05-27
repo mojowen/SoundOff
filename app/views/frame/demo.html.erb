@@ -1,0 +1,26 @@
+
+<script src="/assets/widget_snippet.js"></script>
+<style type="text/css">
+textarea {
+	width: 300px;
+height: 80px;
+resize: none;
+overflow: hidden;
+}
+</style>
+<div style="float: left; width: 400px; margin: 50px">
+	<a class="soundoff_widget_light" href="#" campaign="#Yes on B">#Yes on B</a>
+
+	<h2>Light</h2>
+	<textarea><script src="<%= ENV['BASE_DOMAIN'] || '' %>/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#" campaign="#No on B">#Yes on B</a>
+	</textarea>
+
+</div>
+
+<div style="float: left; width: 400px; margin: 50px">
+	<a class="soundoff_widget_dark" href="#" campaign="#No on B">#Yes on B</a>
+
+	<h2>Dark</h2>
+	<textarea><script src="<%= ENV['BASE_DOMAIN'] || '' %>/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#" campaign="#No on B">#Yes on B</a>
+	</textarea>
+</div>

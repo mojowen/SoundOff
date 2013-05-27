@@ -1,0 +1,42 @@
+!!!
+%html
+	%head
+		%title Sound Off
+		= stylesheet_link_tag "widget", :media => "all"
+		:javascript
+			var $oundoff_config = #{ ( @config || {} ).to_json }
+		= javascript_include_tag "angular.min"
+		= javascript_include_tag "widget"
+		= javascript_include_tag '//platform.twitter.com/widgets.js'
+		= csrf_meta_tags
+
+	%body{ :class => @body_class }
+		#main{ "ng-app" => true, "ng-controller" => 'widgetScope'  }
+			#header
+				= link_to (image_tag ( @body_class.index( 'dark' ).nil? ? 'logo_dark.png' : 'logo.png' ) ), home_path, { :class => 'logo'}
+				{{ campaign }}
+
+				.attribute 
+					powered by 
+					%a{ :href=> 'http://headcount.org' } HeadCount.org
+
+
+			#content
+				.tweet{ 'ng-repeat' => 'tweet in tweets' }
+					.actions
+						%a{ :href =>  "https://twitter.com/{{tweet.from_user}}/status/{{tweet.id_str}}", :target => '_blank' }
+							= image_tag @body_class.index( 'dark' ).nil? ? 'twitter_logo.png' : 'twitter_dark.png'
+							{{  tweet.created_at | date: 'd MMM' }}
+
+						.buttons
+							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.id}}', :target => '_blank' }
+							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.id}}', :target => '_blank' }
+							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.id}}', :target => '_blank' }
+
+					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}' }
+					%h2 {{tweet.from_user_name}}
+					%h3 @{{tweet.from_user }}
+
+					.body {{ tweet.text }}
+
+			%button Sound Off

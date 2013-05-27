@@ -1,7 +1,9 @@
 SoundOff::Application.routes.draw do
 
-  match '/form' => 'form#start'
-  match '/home' => 'home#home'
+  match '/form' => 'frame#start'
+  match '/home' => 'home#home', :as => 'home'
+  match '/widget' => 'frame#widget'
+  match '/demo' => 'frame#demo'
     
   # The priority is based upon order of creation:
   # first created -> highest priority.
