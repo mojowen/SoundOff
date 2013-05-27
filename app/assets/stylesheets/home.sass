@@ -145,6 +145,7 @@ body.home #main
 			overflow-y: auto
 
 			.campaign
+				cursor: pointer
 				border-bottom: 2px solid $grey
 				padding: 20px
 				.score
@@ -158,6 +159,9 @@ body.home #main
 				p, div
 					font-size: 90%
 					color: $darkgrey
+
+				&.active, &:hover
+					background: white
 
 		h2
 			@include ribbon($darkred, $red, $menu_width)

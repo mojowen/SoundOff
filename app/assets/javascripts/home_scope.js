@@ -57,5 +57,9 @@ function homePageScope($http, $scope) {
 		
 	].sort( function(a,b) { 
 		return a.score > b.score ? -1 : 1
-	})
+	});
+
+	$scope.isActive = function($index,campaign) { return campaign == $scope.active ? 'active' : 'non-active' }
+
+	$scope.active = $scope.campaigns[0]
 }

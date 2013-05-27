@@ -54,13 +54,13 @@
 			%span Elected Official
 		.inner
 			.items
-				.campaign{ "ng-repeat" => "campaign in campaigns" }
+				.campaign{ "ng-repeat" => "campaign in campaigns", "ng-class" => "isActive($index,campaign)" }
 					%h3.score {{campaign.score}}
 					%h3 {{campaign.name}}
 
 					.description {{campaign.description}}
 	#content
-		.item{ "ng-repeat" => "campaign in campaigns" }
+		.item{ "ng-repeat" => "campaign in campaigns", "ng-class" => "isActive($index,campaign)" }
 			.description
 				.title
 					%h1 {{campaign.name}}
@@ -78,7 +78,7 @@
 
 				.tweet{ 'ng-repeat' => 'tweet in campaign.tweets' }
 					.actions
-						%img{ :src => 'https://twitter.com/images/resources/twitter-bird-light-bgs.png' }
+						= image_tag 'twitter_logo.png'
 						{{  tweet.created_at | date: 'd MMM' }}
 						.buttons
 							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.id}}', :target => '_blank' }

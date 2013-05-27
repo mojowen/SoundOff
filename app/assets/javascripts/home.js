@@ -17,10 +17,25 @@ if( $oundoff_config.home ) {
 
 		// $('body').scrollTop(w_height);
 
-		if( document.body.classList.contains('fixed') ) return false
-
 		var w_top = this.body.scrollTop,
 			p = w_top / w_height;
+
+		if( document.body.classList.contains('fixed') ) {
+			var divs = content.childNodes,
+				unset = true;
+
+			for (var i = divs.length - 1; i >= 0; i--) {
+				var campaign_div = divs[i],
+					offset_top = campaign_div.offsetTop,
+					campaign = angular.element( campaign_div ).scope().campaign
+
+				if( typeof campaign != 'undefined' && offset_top < w_top + 100 ) {
+					angular.element( main ).scope().$apply( function($scope) { $scope.active = campaign; });
+					return false
+				}
+			};
+			return false;
+		}
 
 		if( p < 1 ) {
 			
@@ -92,13 +107,31 @@ if( $oundoff_config.home ) {
 		openSoundOff(config)
 		return false;
 	})
+	.on('click','.campaign',function() {
+		var campaign = angular.element( this ).scope().campaign
+		angular.element( main ).scope().$apply( function($scope) { $scope.active = campaign; });
+		scroll_to( $('#content .active').offset().top - 120 )
+	})
 
-	function scroll_to(target_height) {
-		var increment = 25
+	function scroll_to(target_height,direction) {
+		var increment = 
+				Math.abs( target_height - w_top ) < 35 ? 5  : 
+				Math.abs( target_height - w_top ) < 60 ? 35  : 
+				Math.abs( target_height - w_top ) < 150 ? 60 : 150,
+			direction = direction || ( target_height > w_top ? 1 : -1 )
 
-		window.scrollBy(0,increment);
+		window.scrollBy(0,increment * direction);
 		w_top = document.body.scrollTop;
-		if( Math.floor(w_top / increment) < Math.floor(target_height / increment)  ) setTimeout( function() { scroll_to(target_height) }, 1);
+
+
+		if( 
+			Math.floor(w_top / increment) < Math.floor(target_height / increment) && direction > 0
+			||
+			Math.floor(w_top / increment) > Math.floor(target_height / increment) && direction < 0
+		) { 
+			setTimeout( function() { scroll_to(target_height,direction) }, 1);
+		} else window.scrollTo(0 , target_height );
+		
 
 	}
 }
