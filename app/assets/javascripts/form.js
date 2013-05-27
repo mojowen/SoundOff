@@ -186,19 +186,6 @@ function formScope($http, $scope) {
 		$scope.counter = 140 - [targets,$scope.message,tags].join(' ').length
 	}
 }
-
-// A way to cancel the soundoff - half baked
-$(document).on('click','#main', function(e) { 
-	if( window.parent != window && e.target != popup && $(e.target).parents('#popup').length < 1 ) {
-		if ( confirm('Are you sure you want to cancel your SoundOff?') ) {
-			var dark = window.parent.document.getElementById('dark_div_soundoff'),
-				frame = window.parent.document.getElementById('form_iframe_soundoff')
-			dark.parentNode.removeChild( dark )
-			frame.parentNode.removeChild( frame )
-		}
-	}
-})
-
 function addGeocoder() {
 	angular.element( document.getElementById('popup') ).scope().$apply( function($scope) {
 		$scope.geocoder = new google.maps.Geocoder();
