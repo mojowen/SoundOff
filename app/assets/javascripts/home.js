@@ -1,6 +1,6 @@
 if( $oundoff_config.home ) {
 
-	var w_top, w_height, w_width, freeze
+	var w_top, w_height, w_width, freeze, reset_styles
 	
 	$(document)
 	.ready( function() {
