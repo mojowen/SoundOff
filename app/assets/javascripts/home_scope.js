@@ -98,7 +98,7 @@ function homePageScope($http, $scope) {
 			$scope.single_facebook =  'http://facebook.com/sharer/sharer.php?u='+url
 
 			default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
-			default_message += 'Tell Congress '+$scope.single_item.name.replace(/\#/g,'%23')+' - Click to %23SoundOff and be heard: '
+			default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.single_item.name.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more!'
 			$scope.single_twitter =  default_message+url
 			$scope.build_widget =  $oundoff_base_domain + '/widget_create?campaign=' + $scope.single_item.name.replace(/\#/g,'')
 		}

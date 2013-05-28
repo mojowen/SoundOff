@@ -7,14 +7,33 @@ body.home #main
 #main
 	background-color: $grey
 	position: relative
+
 	$menu_width: 500px
+	$menu_left: 100px
+	
+	$medium_menu_width: 340px
+	$medium_menu_left: 20px
+	
+	$small_menu_width: 200px
+	$small_menu_left: 0px
 
 	#content
-		margin: 120px 0 0 $menu_width + 100px
+		margin: 120px 0 0 ($menu_width + $menu_left)
+		
+		@media screen and (max-width: $break-small)
+			margin: 120px 0 0 $small_menu_width
+		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+			margin: 120px 0 0 ($medium_menu_width + $medium_menu_left)
+		
 		.item
 			min-height: 400px
-			width: 750px
+			width: 95%
 			margin: 50px 20px
+			@media screen and (max-width: $break-small)
+				margin: 50px 4px
+			@media screen and (max-width: $break-medium) and (min-width: $break-small)
+				margin: 50px 8px
+
 			background: white
 			.description
 				width: 100%
@@ -55,7 +74,7 @@ body.home #main
 					text-align: center
 					position: relative
 					color: #333
-					padding: 0 18%
+					padding: 0 22%
 					span
 						font-size: 80%
 						font-style: italic
@@ -98,8 +117,17 @@ body.home #main
 		top: 100%
 		height: 80%
 		background: #f3f5f4
+
+
 		width: $menu_width - 28px*2
-		left: 100px
+		left: $menu_left
+		@media screen and (max-width: $break-small)
+			width: $small_menu_width - 28px*2
+			left: 28px
+		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+			width: $medium_menu_width - 28px*2
+			left: $medium_menu_left
+
 		.inner
 			transition-property: height
 			transition-duration: 0.25s
@@ -135,19 +163,26 @@ body.home #main
 			text-align: center
 			transition-property: margin-top
 			transition-duration: 0.25s
-
+			
 			span
 				font-family: $headerFont
 				color: $darkgrey
 				cursor: pointer
 				padding: 2px 10px
 				font-size: 85%
+				white-space: nowrap
 				&.on, &:hover
 					color: $darkred
 
 
 		h2
 			@include ribbon($darkred, $red, $menu_width,36px)
+
+			@media screen and (max-width: $break-small)
+				@include ribbon($darkred, $red, $small_menu_width,54px)
+			@media screen and (max-width: $break-medium) and (min-width: $break-small)
+				@include ribbon($darkred, $red, $medium_menu_width,54px)
+			
 			text-align: center
 			padding: 4px 0 0
 			margin-bottom: -6px
@@ -165,7 +200,6 @@ body.home #main
 				&.open_soundoff
 					float: right
 
-				
 		img.search
 			float: right
 			width: 30px
@@ -190,13 +224,23 @@ body.home #main
 				text-align: right
 
 	#more-info
+		display: none
 		top: 369px
 		padding: 20px 10px
 		z-index: 0
 		position: fixed
-		left: 100px
-		background: #f3f5f4
+		left: $menu_left
 		width: $menu_width - 28px*2
+		@media screen and (max-width: $break-small)
+			width: $small_menu_width - 28px*2
+			left: 28px
+		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+			width: $medium_menu_width - 28px*2
+			left: $medium_menu_left
+
+		
+		background: #f3f5f4
+		
 		overflow: hidden
 		font-size: 90%
 		p, h2
@@ -230,6 +274,8 @@ body.fixed
 	#main
 		#menu
 			top: 120px
+		#more-info
+			display: block
 
 
 #top
@@ -242,11 +288,19 @@ body.fixed
 	bottom: $mid
 
 	border-bottom: 10px solid $darkblue
-
 	$offset: 30%
+	$offset_small: 10%
+	$offset_medium: 20%
+
 	img
 		position: absolute
-		top: $offset - 12%
+		top: $offset * 0.4
+		@media screen and (max-width: $break-small)
+			position: relative
+			margin: 0 auto
+			clear: both
+		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+			top: $offset_medium * 0.4
 		left: 6%
 		width: 38%
 
@@ -254,6 +308,15 @@ body.fixed
 	#description
 		position: absolute
 		top: $offset
+		@media screen and (max-width: $break-small)
+			position: relative
+			right: 10%
+			width: 80%
+			float: right
+			margin-top: 10%
+		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+			top: $offset_medium
+
 		right: 12%
 		width: 40%
 
@@ -305,7 +368,7 @@ body.fixed
 		width: 50%
 
 	.column
-		width: 9.9%
+		width: 9%
 		p
 			
 			text-align: center

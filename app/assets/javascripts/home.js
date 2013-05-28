@@ -1,12 +1,14 @@
 if( $oundoff_config.home ) {
 
-	var w_top, w_height, w_width, freeze, reset_styles
+	var w_top, w_height, w_width, freeze, reset_styles, offset_factor
 	
 	$(document)
 	.ready( function() {
 		w_top = this.body.scrollTop,
 		w_height = window.innerHeight,
 		w_width = window.innerWidth
+		offset_factor = w_width > 980 ? 0.3 :
+			w_width > 600 ? 0.2 : 0.1;
 		reset_styles = true
 		freeze = false
 
@@ -59,9 +61,9 @@ if( $oundoff_config.home ) {
 			} else if( w_top > 10 && w_top < w_height ) {
 				var logo_width = window.innerWidth * .38,
 					logo_width_rate = 180 - logo_width,
-					logo_top = w_height * ( .3 - .18),
+					logo_top = w_height * ( offset_factor * .4 ),
 					logo_top_rate = 20 - logo_top,
-					description_top = w_height*.3,
+					description_top = w_height*offset_factor,
 					description_top_rate = w_height*1.25 - description_top,
 					top_border_width = 15,
 					top_border_width_rate =  (4 - 15),
@@ -95,6 +97,7 @@ if( $oundoff_config.home ) {
 		scroll_to( w_height )
 	})
 	.on('click','img.home',function() {
+		angular.element(main).scope().resetHard()
 		window.name = window.name.replace(/soundoff_open/g,'')
 		document.body.classList.remove('fixed')
 		$('body').scrollTop(0)
