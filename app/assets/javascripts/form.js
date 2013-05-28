@@ -2,11 +2,11 @@ function formScope($http, $scope) {
 
 	var config = {
 			target: $oundoff_config.target || 'house', // Can also be senate
-			campaign: $oundoff_config.campaign || 'Yes on 51',
+			campaign: $oundoff_config.campaign || null,
 			email_required: $oundoff_config.email_required || false,
 		}
 
-	$scope.campaign = '#'+config.campaign
+	$scope.campaign = config.campaign != null ? '#'+config.campaign : 'Tweet @ Your Rep'
 	$scope.stage = 1
 
 	$scope.nextStage = function() {
@@ -156,7 +156,7 @@ function formScope($http, $scope) {
 	
 	// Stage 3
 	$scope.message = $oundoff_config.message || ''
-	$scope.drop_campaign = $oundoff_config.drop_campaign || false
+	$scope.drop_campaign = $oundoff_config.campaign == null ? true : false
 
 	$scope.removeCampaign = function() {
 		console.log('going')
