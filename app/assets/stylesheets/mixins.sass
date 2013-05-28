@@ -1,8 +1,8 @@
-@mixin ribbon($lightcolor,$darkcolor,$width)
+@mixin ribbon($lightcolor,$darkcolor,$width,$height: 50px)
 	display: block
 	position: relative
 	top: -20px
-	height: 50px
+	height: $height
 	left: -28px
 	width: $width
 	background: $darkcolor
@@ -16,14 +16,14 @@
 	&:before
 		display: block
 		left: 0
-		top: 50px
+		top: $height
 		border-width: 14px
 		border-color: $lightcolor $lightcolor transparent transparent
 	
 	&:after
 		display: block
 		right: 0
-		top: 50px
+		top: $height
 		border-width: 14px
 		border-color: $lightcolor transparent transparent $lightcolor
 

@@ -47,20 +47,39 @@
 		= image_tag asset_path('headcount.png')
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope'  }
 
-	#menu
-		%h2
-			%span.selected ScoreBoard
-			|
-			%span Elected Official
+	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => '{true: "single", false: "" }[single_item != null]' }
+		= image_tag 'search.png', :class => 'search'
+		%input{ :placeholder => 'search', "ng-model" => "search", :type => 'text'}
+		.messages
+			%a.rest{ 'ng-hide' => 'search.length < 1', 'ng-click' => 'resetHard(); '} start over
+			%a.open_soundoff{ 'ng-hide' => 'mode.toLowerCase() != "reps" || search.length > 0'} Don't know your representative?
+		%h2 Campaigns & Elected Reps
+
+		#tabs
+			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Scoreboard
+			%span{ 'ng-click' => 'setMostRecent()', 'ng-class' => 'isMode("Most Recent")' } Most Recent
+			%span{ 'ng-click' => 'setReps()', 'ng-class' => 'isMode("Reps")' } Reps
 		.inner
 			.items
-				.campaign{ "ng-repeat" => "campaign in campaigns", "ng-class" => "isActive($index,campaign)" }
+				.campaign{ "ng-repeat" => "campaign in items()", "ng-class" => "isActive($index,campaign)" }
 					%h3.score {{campaign.score}}
 					%h3 {{campaign.name}}
 
 					.description {{campaign.description}}
+	#more-info
+		%h2 More Info
+		%p
+			Direct Link: 
+			%input{ 'onclick' => '$(this).select()' , :value =>  '{{single_url }}' }
+		%p 
+			%a{ :href => '{{single_twitter }}', :target => '_blank' } Share on Twitter
+			|
+			%a{ :href => '{{single_facebook }}', :target => '_blank' } Share on Facebook
+		%p
+			%a.build_widget{ :href => '{{build_widget}}', :target => '_blank' } Build a Widget
+
 	#content
-		.item{ "ng-repeat" => "campaign in campaigns", "ng-class" => "isActive($index,campaign)" }
+		.item{ "ng-repeat" => "campaign in items()", "ng-class" => "isActive($index,campaign)" }
 			.description
 				.title
 					%h1 {{campaign.name}}
@@ -70,6 +89,8 @@
 					-# 	.score {{campaign.score}}
 					
 					{{campaign.description}}
+
+					%h4 Launched {{ campaign.created_at | date:'d MMMM' }}
 
 			.tweets
 				%h4
