@@ -52,13 +52,15 @@
 		%input{ :placeholder => 'search', "ng-model" => "search", :type => 'text'}
 		.messages
 			%a.rest{ 'ng-hide' => 'search.length < 1', 'ng-click' => 'resetHard(); '} start over
-			%a.open_soundoff{ 'ng-hide' => 'mode.toLowerCase() != "reps" || search.length > 0'} Don't know your representative?
 		%h2 Campaigns & Elected Reps
 
 		#tabs
 			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Scoreboard
 			%span{ 'ng-click' => 'setMostRecent()', 'ng-class' => 'isMode("Most Recent")' } Most Recent
 			%span{ 'ng-click' => 'setReps()', 'ng-class' => 'isMode("Reps")' } Reps
+			%p
+				%a.open_soundoff{ 'ng-hide' => 'mode.toLowerCase() != "reps" || search.length > 0'} Don't know your representative?
+
 		.inner
 			.items
 				.campaign{ "ng-repeat" => "campaign in items()", "ng-class" => "isActive($index,campaign)" }

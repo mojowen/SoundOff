@@ -112,6 +112,7 @@ body.home #main
 				height: 170px
 			#tabs
 				margin-top: -36px
+				height: 22px
 
 		position: fixed
 		top: 100%
@@ -163,7 +164,12 @@ body.home #main
 			text-align: center
 			transition-property: margin-top
 			transition-duration: 0.25s
-			
+			p
+				height: 20px
+				a.open_soundoff
+					color: $red
+					font-size: 70%
+					text-align: center
 			span
 				font-family: $headerFont
 				color: $darkgrey
@@ -197,8 +203,6 @@ body.home #main
 				color: $red
 				&.clear
 					float: left
-				&.open_soundoff
-					float: right
 
 		img.search
 			float: right
