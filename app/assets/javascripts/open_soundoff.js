@@ -55,7 +55,7 @@ function openSoundOff( args ) {
         form.style.left = '0px'
         form.style.right = '0px'
         form.style.zIndex = '100'
-        form.style.width = '46%'
+        form.style.width = '96%'
         form.style.margin = '0 auto'
         form.style.overflow = 'hidden'
 
