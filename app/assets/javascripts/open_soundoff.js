@@ -7,7 +7,7 @@ function openSoundOff( args ) {
   if( typeof args == 'string' ) args = { campaign: args }
   for( var i in args ) {
     if( i == 'campaign' ) args[i] = args[i].replace(/\#/g,'')
-    config += i + '=' + args[i];
+    config += i + '=' + args[i] +'&';
   }
 
   if ( mobile ) { // if mobile - open form in new tab
