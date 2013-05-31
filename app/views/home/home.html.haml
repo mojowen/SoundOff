@@ -4,16 +4,23 @@
 	= image_tag asset_path('logo.png'), :class => 'home'
 
 	#description
-		%h1 Tweet @ the Right People.
+		%h1 Tweet @ power.
 		%p 
-			Speak Up! We'll make sure your voice reaches the right
+			Run your own campaign or just send one tweet. 
 			%br
-			people by directing your tweets directly to the decision
+			We'll make sure your message goes directly to the
 			%br
-			makers on issues that matter to you
+			decision makers on issues that matter to you
 
 		%button.create_campaign{ :href => '#', :onclick => 'alert("Create Your Own Campaign!")' } Get Started
 		%a.get_started Join the Conversation
+
+	#fixed
+		%a.facebook{ :href => 'https://www.facebook.com/HeadCountOrg', :target => '_blank' }
+			= image_tag 'facebook.png'
+		%a.twitter{ :href => 'https://twitter.com/headcountorg', :target => '_blank' }
+			= image_tag 'twitter_dark.png'
+		%a.menu{ :href => '#'} &#9776;
 
 #footer
 	.disclaimer
@@ -43,16 +50,16 @@
 		%p
 			%a Link
 
-	.column
-		= image_tag asset_path('headcount.png')
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope'  }
 
 	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => '{true: "single", false: "" }[single_item != null]' }
+		%h2 Campaigns & Elected Reps
+
 		= image_tag 'search.png', :class => 'search'
 		%input{ :placeholder => 'search', "ng-model" => "search", :type => 'text'}
 		.messages
-			%a.rest{ 'ng-hide' => 'search.length < 1', 'ng-click' => 'resetHard(); '} start over
-		%h2 Campaigns & Elected Reps
+			%a.rest.single{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all campaigns
+			%a.rest.many{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} clear search
 
 		#tabs
 			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Scoreboard
@@ -85,7 +92,7 @@
 			.description
 				.title
 					%h1 {{campaign.name}}
-					%button.open_soundoff{{  :campaign => '{{campaign.name}}'}} Sound Off
+					%button.open_soundoff{{  :campaign => '{{campaign.name}}'}} #SoundOff
 					-# %h3 
 					-# 	Score
 					-# 	.score {{campaign.score}}

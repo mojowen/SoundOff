@@ -11,7 +11,7 @@ function homePageScope($http, $scope) {
 			for (var i = $scope.raw_campaigns.length - 1; i >= 0; i--) {
 				var campaign = $scope.raw_campaigns[i];
 
-				for (var j = 15 - 1; j >= 0; j--) {
+				for (var j = 14 - 1; j >= 0; j--) {
 					var tweet = {}
 
 					for( var k in data.results[j] ) {
@@ -125,6 +125,7 @@ function homePageScope($http, $scope) {
 
 			$scope.search = found[0].name;
 			setTimeout( function() { $scope.single_item = found[0]; },1)
+			window.name += 'soundoff_open'
 		}
 
 	}
@@ -139,7 +140,8 @@ function homePageScope($http, $scope) {
 			return a.score > b.score ? -1 : 1
 		});
 		$scope.mode = 'Scoreboard'
-		$scope.reset()
+		if( $scope.single_item != null ) $scope.resetHard();
+		else $scope.reset()
 	}
 
 	$scope.setMostRecent = function() {
@@ -147,12 +149,13 @@ function homePageScope($http, $scope) {
 			return a.created_at > b.created_at ? -1 : 1; 
 		})
 		$scope.mode = 'Most Recent'
-		$scope.reset()
+		if( $scope.single_item != null ) $scope.resetHard();
+		else $scope.reset()
 	}
 
 	$scope.setReps = function() {
 		$scope.mode = 'Reps'
-		$scope.reset()
+		$scope.resetHard();
 	}
 
 	$scope.isActive = function($index,campaign) { return campaign == $scope.active ? 'active' : 'non-active' }

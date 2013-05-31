@@ -59,10 +59,12 @@ if( $oundoff_config.home ) {
 
 
 			} else if( w_top > 10 && w_top < w_height ) {
-				var logo_width = window.innerWidth * .38,
-					logo_width_rate = 180 - logo_width,
+				var logo_width = window.innerWidth * .5,
+					logo_width_rate = 260 - logo_width,
 					logo_top = w_height * ( offset_factor * .4 ),
-					logo_top_rate = 20 - logo_top,
+					logo_top_rate = 10 - logo_top,
+					logo_left = 0.025 * w_width,
+					logo_left_rate =  180 - logo_left,
 					description_top = w_height*offset_factor,
 					description_top_rate = w_height*1.25 - description_top,
 					top_border_width = 15,
@@ -77,11 +79,16 @@ if( $oundoff_config.home ) {
 				$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
 				$content.css({ marginTop: n_css( content_margin_top - top_bottom_rate * p *1.4 ) })
 				$top.css({ 
+					minHeight: 0,
 					borderBottomWidth: n_css( top_border_width + top_border_width_rate*p ),
 					bottom: n_css( top_bottom + top_bottom_rate * p ) 
 				})
 
-				$logo.css( { width: n_css( logo_width + logo_width_rate * p ), top: n_css( logo_top + logo_top_rate  * p ) })
+				$logo.css( { 
+					width: n_css( logo_width + logo_width_rate * p ), 
+					top: n_css( logo_top + logo_top_rate  * p ),
+					left: n_css(  logo_left_rate  * p + logo_left ) 
+				})
 				$description.css( { top: n_css( description_top - description_top_rate* p) })
 			}
 		} else {

@@ -1,5 +1,14 @@
 $mid: 22%
 $fixed_header: 100px
+$menu_width: 500px
+$menu_left: 100px
+
+$medium_menu_width: 340px
+$medium_menu_left: 20px
+
+$small_menu_width: 200px
+$small_menu_left: 0px
+
 
 body.home #main 
 	padding: 0px
@@ -8,14 +17,6 @@ body.home #main
 	background-color: $grey
 	position: relative
 
-	$menu_width: 500px
-	$menu_left: 100px
-	
-	$medium_menu_width: 340px
-	$medium_menu_left: 20px
-	
-	$small_menu_width: 200px
-	$small_menu_left: 0px
 
 	#content
 		margin: 120px 0 0 ($menu_width + $menu_left)
@@ -64,8 +65,8 @@ body.home #main
 				.tweet
 					border: 2px solid $grey
 					text-align: left
-					margin: 8px
-					width: 30%
+					margin: 8px 16px
+					width: 40%
 					display: inline-block
 					@include tweet
 
@@ -110,9 +111,11 @@ body.home #main
 			height: 250px
 			.inner
 				height: 170px
-			#tabs
-				margin-top: -36px
-				height: 22px
+			.messages
+				.single
+					display: block
+				.many
+					display: none
 
 		position: fixed
 		top: 100%
@@ -166,6 +169,8 @@ body.home #main
 			transition-duration: 0.25s
 			p
 				height: 20px
+				line-height: 1em
+				margin: 0
 				a.open_soundoff
 					color: $red
 					font-size: 70%
@@ -193,8 +198,13 @@ body.home #main
 			padding: 4px 0 0
 			margin-bottom: -6px
 			color: $darkred
-			top: -10px
+
 		.messages
+			.single
+				display: none
+			.many
+				display: block
+
 			padding: 2px 70px 4px 20px
 			display: block
 			font-size: 70%
@@ -229,7 +239,7 @@ body.home #main
 
 	#more-info
 		display: none
-		top: 369px
+		top: 420px
 		padding: 20px 10px
 		z-index: 0
 		position: fixed
@@ -264,14 +274,18 @@ body.fixed
 		position: fixed
 		height: $fixed_header
 		border-bottom-width: 4px
+		min-height: 0
 
 		img
-			width: 180px
-			top: 20px
+			width: 260px
+			top: 10px
 			cursor: pointer
+			left: 180px
 
 		#description
 			display: none
+		#fixed
+			bottom: 25px
 	#footer
 		display: none
 
@@ -290,6 +304,7 @@ body.fixed
 	left: 0
 	right: 0
 	bottom: $mid
+	min-height: 500px
 
 	border-bottom: 10px solid $darkblue
 	$offset: 30%
@@ -299,14 +314,16 @@ body.fixed
 	img
 		position: absolute
 		top: $offset * 0.4
+		transition-property: width, top, left
+
 		@media screen and (max-width: $break-small)
 			position: relative
 			margin: 0 auto
 			clear: both
 		@media screen and (max-width: $break-medium) and (min-width: $break-small)
 			top: $offset_medium * 0.4
-		left: 6%
-		width: 38%
+		left: 2.5%
+		width: 50%
 
 
 	#description
@@ -321,12 +338,12 @@ body.fixed
 		@media screen and (max-width: $break-medium) and (min-width: $break-small)
 			top: $offset_medium
 
-		right: 12%
-		width: 40%
+		right: 6%
+		width: 38%
 
 		h1
 			color: $grey
-			font-size: 2.3em
+			font-size: 3em
 			margin-top: 0
 		p
 			color: white
@@ -344,8 +361,27 @@ body.fixed
 		.get_started
 			padding-top: 10%
 			display: block
-
-
+	
+	#fixed
+		bottom: -500px
+		position: absolute
+		right: 100px
+		transition-property: bottom
+		transition-duration: 0.1s
+		width: 20%
+		a
+			font-size: 200%
+			color: white
+			text-decoration: none
+			margin: 0 50% 0 0
+			img
+				height: 50px
+				top: inherit
+				left: inherit
+				width: auto
+			&.facebook img
+				height: 30px
+				margin-top: 10px
 
 #footer
 	position: fixed
@@ -369,10 +405,10 @@ body.fixed
 		height: 100% - $mid
 
 	.disclaimer
-		width: 50%
+		width: 54%
 
 	.column
-		width: 9%
+		width: 12%
 		p
 			
 			text-align: center
