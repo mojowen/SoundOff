@@ -1,9 +1,9 @@
 #main{ "ng-app" => true }
 	#popup{ "ng-controller" => "formScope" }
 		%h2.hash_tag {{campaign}}
-
+		#close X Close
 		%form#form{ :class => 'stage_{{stage}}', 'ng-submit' => 'nextStage()' }
-			= image_tag('logo.png', :class => 'stage_1 stage_2')
+			= image_tag( @body_class.index('light') ? 'logo_dark.png' : 'logo_small.png' , :class => 'stage_1 stage_2')
 
 			#stage_1
 				%input{ :placeholder => "Zip Code", "ng-model" => "zip", :id => 'zip' }
@@ -30,15 +30,14 @@
 				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
 				%p 
-					%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;'  } Need Help?
+					%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;'  } Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
 
 			#notice
 			%button.stage_1.stage_2 Continue
 
-			%button.stage_3
-				= image_tag('logo.png',:width => '300px' )
+			%button.stage_3 #SoundOff
 		#suggest
 			%h3 
 				Need Help?

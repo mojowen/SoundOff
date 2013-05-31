@@ -15,9 +15,11 @@ function openSoundOff( args ) {
   } else { // if not mobile - open form and append
     if( typeof form_iframe_soundoff != 'undefined' ) return false
     var dark = el('div'),
+      close = el('div'),
       form = el('iframe');
 
       dark.id = 'dark_div_soundoff'
+      close.id = 'close_div_soundoff'
       form.id = 'form_iframe_soundoff'
 
       form.src = $oundoff_base_domain+'/form?'+config
@@ -41,16 +43,33 @@ function openSoundOff( args ) {
         dark.style.left = '0px'
         dark.style.right = '0px'
         dark.style.zIndex = '99'
-        dark.onclick = function() {
+        dark.onclick = closeWindow
+
+        close.style.position = 'fixed'
+        close.style.top = '64px'
+        close.style.left = ( window.innerWidth * .96 )/2 + 560/2 - 50 +'px'
+        close.style.zIndex = '110'
+        close.style.width = '90px'
+        close.style.height= '40px'
+        close.style.cursor = 'pointer'
+        close.onclick = closeWindow
+
+        function closeWindow() {
           if ( confirm('Are you sure you want to cancel your SoundOff?') ) {
-            var dark = this
+            var dark = document.getElementById('dark_div_soundoff'),
+                close = document.getElementById('close_div_soundoff'),
                 frame = document.getElementById('form_iframe_soundoff')
             dark.parentNode.removeChild( dark )
             frame.parentNode.removeChild( frame )
+            window.onbeforeunload = null
           }
         }
-  
+        window.onbeforeunload = function(e) {
+          return 'Are you sure you want to cancel your SoundOff?';
+        };
+
         d.body.appendChild( dark )
+        d.body.appendChild( close )
 
         form.style.left = '0px'
         form.style.right = '0px'

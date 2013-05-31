@@ -3,13 +3,43 @@ body.form
 	pointer-events: none
 	#main, &
 		background: transparent
-
+body.dark
+	#popup
+		background: #333
+		h2
+			$light: $darkgrey
+			$dark: $grey
+			background: $light
+			&::after
+				border-color: $dark transparent transparent $dark
+			&::before
+				border-color: $dark $dark transparent transparent
+body.light
+	#popup
+		background: $grey
+		h2
+			$light: #333
+			$dark: $darkgrey
+			background: $light
+			&::after
+				border-color: $dark transparent transparent $dark
+			&::before
+				border-color: $dark $dark transparent transparent
 #popup
 	$width: 644px
 	background: $blue
 	width: $width - 28px*2
 	margin: 0 auto
 	position: relative
+	#close
+		position: absolute
+		top: -5px
+		right: 5px
+		color: white
+		text-transform: uppercase
+		text-decoration: underline
+		cursor: pointer
+
 	h2
 		@include ribbon($yellow, $darkyellow, $width)
 		color: white
