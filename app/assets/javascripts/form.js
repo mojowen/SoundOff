@@ -194,3 +194,9 @@ function addGeocoder() {
 		$scope.geocoder = new google.maps.Geocoder();
 	})
 }
+if ( window.self === window.top && $oundoff_config.form ) {
+	$(document).ready( function() { $('#close').remove() })
+    window.onbeforeunload = function(e) {
+      return 'Are you sure you want to cancel your SoundOff?';
+    };
+}
