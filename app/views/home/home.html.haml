@@ -1,7 +1,7 @@
 %script{ :type => 'text/javascript', :src => '//platform.twitter.com/widgets.js'}
 
 #top
-	= image_tag asset_path('logo.png'), :class => 'home'
+	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png'), :id => 'logo'
 
 	#description
 		%h1 Tweet @ power.

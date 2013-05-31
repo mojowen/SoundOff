@@ -1,18 +1,22 @@
 if( $oundoff_config.home ) {
 
 	var w_top, w_height, w_width, freeze, reset_styles, offset_factor
+	top_offset = 80
 	
 	$(document)
 	.ready( function() {
 		w_top = this.body.scrollTop,
 		w_height = window.innerHeight,
-		w_width = window.innerWidth
+		w_width = window.innerWidth,
 		offset_factor = w_width > 980 ? 0.3 :
-			w_width > 600 ? 0.2 : 0.1;
-		reset_styles = true
-		freeze = false
+			w_width > 600 ? 0.2 : 0.1,
+		reset_styles = true,
+		freeze = false;
 
-		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 ) document.body.classList.add('fixed');
+		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 ) {
+			document.body.classList.add('fixed');
+			$(logo).attr('src','/assets/logo_no_cong.png')
+		}
 		
 	})
 	.scroll( function(e) {
@@ -31,7 +35,7 @@ if( $oundoff_config.home ) {
 					offset_top = campaign_div.offsetTop,
 					campaign = angular.element( campaign_div ).scope().campaign
 
-				if( typeof campaign != 'undefined' && offset_top < w_top + 100 ) {
+				if( typeof campaign != 'undefined' && offset_top < w_top + offset_top ) {
 					angular.element( main ).scope().$apply( function($scope) { $scope.active = campaign; });
 					return false
 				}
@@ -42,10 +46,11 @@ if( $oundoff_config.home ) {
 		if( p < 1 ) {
 			
 			this.body.classList.remove('fixed')
+			$(logo).attr('src','/assets/logo.png')
 
 			var $top = $('#top'),
 				$foot = $('#footer'),
-				$logo = $('img',$top),
+				$logo = $('img.home',$top),
 				$description = $('#description',$top),
 				$menu = $('#menu'),
 				$content = $('#content')
@@ -54,15 +59,14 @@ if( $oundoff_config.home ) {
 			function n_css(number) { return [ number ,'px' ].join(''); };
 
 			if( w_top < 10 ) {
-				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description').attr('style',null).find('img').attr('style',null)
+				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description').attr('style',null).find('#home').attr('style',null).attr('src','/assets/logo.png')
 				reset_styles = true
-
 
 			} else if( w_top > 10 && w_top < w_height ) {
 				var logo_width = window.innerWidth * .5,
 					logo_width_rate = 260 - logo_width,
 					logo_top = w_height * ( offset_factor * .4 ),
-					logo_top_rate = 10 - logo_top,
+					logo_top_rate = 6 - logo_top,
 					logo_left = 0.025 * w_width,
 					logo_left_rate =  180 - logo_left,
 					description_top = w_height*offset_factor,
@@ -72,8 +76,8 @@ if( $oundoff_config.home ) {
 					top_bottom = w_height*.22,
 					top_bottom_rate = ( (w_height-100) - top_bottom ),
 					bottom_top = w_height * ( 1 - .22 ),
-					menu_top = w_height + 120
-					content_margin_top = w_height * 2 + 120
+					menu_top = w_height + 20 + offset_top
+					content_margin_top = w_height * 2 + 20 + offset_top
 
 				$foot.css({ top: n_css( bottom_top - top_bottom_rate * p * 1.4 ) })
 				$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
@@ -89,10 +93,14 @@ if( $oundoff_config.home ) {
 					top: n_css( logo_top + logo_top_rate  * p ),
 					left: n_css(  logo_left_rate  * p + logo_left ) 
 				})
+
+				if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
+
 				$description.css( { top: n_css( description_top - description_top_rate* p) })
 			}
 		} else {
 			if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description').attr('style',null).find('img').attr('style',null)
+
 			reset_styles = true
 
 			this.body.classList.add( 'fixed' )
@@ -103,10 +111,11 @@ if( $oundoff_config.home ) {
 	.on('click','.get_started',function() {
 		scroll_to( w_height )
 	})
-	.on('click','img.home',function() {
+	.on('click','img#logo',function() {
 		angular.element(main).scope().resetHard()
 		window.name = window.name.replace(/soundoff_open/g,'')
 		document.body.classList.remove('fixed')
+		$(this).attr('src','/assets/logo.png')
 		$('body').scrollTop(0)
 	})
 	.on('click','.open_soundoff', function() {
