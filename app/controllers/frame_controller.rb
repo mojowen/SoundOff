@@ -7,9 +7,12 @@ class FrameController < ActionController::Base
   		# ],
   		# :message => 'fuck you'
       :campaign => params[:campaign],
-      :elected => params[:elected]
+      :elected => params[:elected],
+      :form => true
   	}
     @body_class = 'form'
+    @body_class += ' dark' if params[:style] == 'dark'
+    @body_class += ' light' if params[:style] == 'light'
   	@suggestions = [
   		'Maybe you should stop that thing that makes me upset, congress',
   		'This is where suggested tweet would go',

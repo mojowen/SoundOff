@@ -13,12 +13,10 @@
 	%body{ :class => @body_class }
 		#main{ "ng-app" => true, "ng-controller" => 'widgetScope'  }
 			#header
-				= link_to (image_tag ( @body_class.index( 'dark' ).nil? ? 'logo_dark.png' : 'logo.png' ) ), home_path, { :class => 'logo'}
-				{{ campaign }}
+				= link_to (image_tag ( @body_class.index( 'dark' ).nil? ? 'logo_dark.png' : 'logo_small.png' ) ), home_path, { :class => 'logo'}
+				%h1
+					{{ campaign }}
 
-				.attribute 
-					powered by 
-					%a{ :href=> 'http://headcount.org' } HeadCount.org
 
 
 			#content
@@ -39,4 +37,10 @@
 
 					.body {{ tweet.text }}
 
-			%button Sound Off
+			#text-box
+				.inner
+					Tweet @ Your Rep
+
+		#attribute 
+			powered by 
+			%a{ :href=> 'http://headcount.org' } HeadCount.org
