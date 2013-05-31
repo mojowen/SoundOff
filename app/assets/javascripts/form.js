@@ -57,8 +57,11 @@ function formScope($http, $scope) {
 					errors.push( 'you should really write something')
 					message.className += ' oops'
 				} else {
-					message = [ $scope.targets.map( function(el) { return ' @'+el.twitter_id}), $scope.message,$scope.campaign.replace(/\s/g,''),'#soundoff' ].join(' ')
-					window.open('/redirect.html#'+escape(message) );
+					if( $scope.drop_campaign ) message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}),'#soundoff' ].join(' ');
+					else message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}), $scope.message,$scope.campaign.replace(/\s/g,''),'#soundoff' ].join(' ');
+
+					window.open('/redirect.html#'+'​'+escape(message) );
+					// Take them to the campaigns webpage and open 
 				}
 				break;
 		}
