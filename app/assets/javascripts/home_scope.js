@@ -40,7 +40,7 @@ function homePageScope($http, $scope) {
 	$scope.raw_reps = random_reps
 	$scope.reps = function() {
 		var search = $scope.search.toLowerCase();
-		return $scope.raw_reps.filter( function(el) {
+		if( $scope.mode.toLowerCase() == 'reps' )  return $scope.raw_reps.filter( function(el) {
 			if( search.length > 1 && $scope.single_item == null ) {
 				return (
 					el.first_name.toLowerCase().search( search ) !== -1
@@ -133,7 +133,7 @@ function homePageScope($http, $scope) {
 
 	$scope.campaigns = function() {
 		var search = $scope.search.toLowerCase();
-		return $scope.raw_campaigns.filter( function(el) {
+		if( $scope.mode.toLowerCase() != 'reps' ) return $scope.raw_campaigns.filter( function(el) {
 			if( search.length > 1 && $scope.single_item == null ) {
 				return (
 					el.name.toLowerCase().search( search ) !== -1

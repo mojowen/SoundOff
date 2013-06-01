@@ -130,6 +130,7 @@ if( $oundoff_config.home ) {
 		window.name = window.name.replace(/soundoff_open/g,'')
 		document.body.classList.remove('fixed')
 		$('body').scrollTop(0)
+		setTimeout( function() { $(logo).attr('src','/assets/logo.png') },50)
 	})
 	.on('click','.open_soundoff', function() {
 		var $this = $(this),
