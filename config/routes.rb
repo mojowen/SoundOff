@@ -1,11 +1,17 @@
 SoundOff::Application.routes.draw do
 
   match '/form' => 'frame#form'
-  match '/home' => 'home#home', :as => 'home'
   match '/widget' => 'frame#widget'
   match '/widget_create' => 'frame#demo', :as => 'widget_create'
 
-  match '/:short_url' => 'home#home', :as => 'short_path'
+  match '/home' => 'home#home', :as => 'home'
+
+  match '/all_reps' => 'rep#index', :as => 'all_reps'
+  match '/find_reps' => 'rep#search', :as => 'all_reps'
+  
+
+  match '/:short_url' => 'home#home', :as => 'short'
+  match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

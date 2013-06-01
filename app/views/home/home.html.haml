@@ -61,14 +61,16 @@
 
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope'  }
 
-	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => '{true: "single", false: "" }[single_item != null]' }
+	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => '{true: "single", false: "" }[single_item != null] + \' \'+ {true: "reps", false: "" }[mode.toLowerCase() == "reps"]' }
 		%h2 Campaigns & Elected Reps
 
 		= image_tag 'search.png', :class => 'search'
 		%input{ :placeholder => 'search', "ng-model" => "search", :type => 'text'}
 		.messages
-			%a.rest.single{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all campaigns
+			%a.rest.single.campaign{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all campaigns
+			%a.rest.single.rep{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all rep
 			%a.rest.many{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} clear search
+			%span.loading Loading More...
 
 		#tabs
 			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Scoreboard
@@ -79,12 +81,17 @@
 
 		.inner
 			.items
-				.campaign{ "ng-repeat" => "campaign in items()", "ng-class" => "isActive($index,campaign)" }
+				.campaign{ "ng-repeat" => "campaign in campaigns()", "ng-class" => "isActive($index,campaign)" }
 					%h3.score {{campaign.score}}
 					%h3 {{campaign.name}}
 
 					.description {{campaign.description}}
-	#more-info
+				.rep{ "ng-repeat" => "rep in reps()", "ng-class" => "isActive($index,rep)" }
+					%h3 {{rep.title}} {{rep.first_name}} {{rep.last_name}}
+					%p 
+						{{rep.state_name}} 
+						%span{ 'ng-hide' => 'rep.district == "0"' }{{rep.district}}
+	#more-info{ 'ng-class' => '{true: "reps", false: "" }[mode.toLowerCase() == "reps"]' }
 		%h2 More Info
 		%p
 			Direct Link:
@@ -93,7 +100,7 @@
 			%a{ :href => '{{single_twitter }}', :target => '_blank' } Share on Twitter
 			|
 			%a{ :href => '{{single_facebook }}', :target => '_blank' } Share on Facebook
-		%p
+		%p{ 'ng-hide' => 'mode.toLowerCase() == "reps"'}
 			%a.build_widget{ :href => '{{build_widget}}', :target => '_blank' } Build a Widget
 
 	#powered_by
@@ -103,25 +110,51 @@
 		brought to you by:
 
 	#content
-		.item{ "ng-repeat" => "campaign in items()", "ng-class" => "isActive($index,campaign)" }
-			.description
+		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
+			.description.campaign
 				.title
-					%h1 {{campaign.name}}
-					%button.open_soundoff{{  :campaign => '{{campaign.name}}'}} #SoundOff
+					%h1 {{item.name}}
+					%button.open_soundoff{{  :campaign => '{{item.name}}'}} #SoundOff
 					-# %h3 
 					-# 	Score
 					-# 	.score {{campaign.score}}
 					
-					{{campaign.description}}
+					{{item.description}}
 
-					%h4 Launched {{ campaign.created_at | date:'d MMMM' }}
+					%h4 Launched {{ item.created_at | date:'d MMMM' }}
+			.description.rep
+				.title
+					
+					%img{ 'ng-src' => 'https://api.twitter.com/1/users/profile_image?screen_name={{item.twitter_screen_name}}&size=bigger' }
+					%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
+
+
+					%p @{{item.twitter_screen_name}}
+
+					%button.open_soundoff{{  :rep => '{{item.twitter_screen_name}}' }} #SoundOff
+
+					.info
+						%p {{longTitle( item )}}
+						%p 
+							%a{ 'ng-href' => '{{item.contact_form}}', :target => '_blank' } Contact Form
+						%p {{ item.phone }}
+
+					-# %h3 
+					-# 	Score
+					-# 	.score {{campaign.score}}
+					
+					{{item.description}}
+
 
 			.tweets
-				%h4
+				%h4.campaign
 					Join the Ranks
-					%span SoundOff with others about {{campaign.name}}
+					%span SoundOff with others about {{item.name}}
+				%h4.rep
+					Join the Ranks
+					%span SoundOff with others @{{item.twitter_screen_name}}
 
-				.tweet{ 'ng-repeat' => 'tweet in campaign.tweets' }
+				.tweet{ 'ng-repeat' => 'tweet in item.tweets' }
 					.actions
 						%a{ :href =>  "https://twitter.com/{{tweet.from_user}}/status/{{tweet.id_str}}", :target => '_blank' }
 							= image_tag 'twitter_logo.png'

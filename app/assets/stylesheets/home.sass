@@ -19,7 +19,7 @@ body.home #main
 
 
 	#content
-		margin: 120px 0 0 ($menu_width + $menu_left)
+		margin: $fixed_header + 20px 0 0 ($menu_width + $menu_left)
 		
 		@media screen and (max-width: $break-small)
 			margin: 120px 0 0 $small_menu_width
@@ -60,6 +60,22 @@ body.home #main
 					button
 						@include button($yellow,$darkyellow)
 						float: right
+			.rep
+				display: none
+				img
+					float: left
+					margin: 20px 10px 0
+				.info
+					font-size: 80%
+					p, a
+						color: #333
+			&.rep 
+				.campaign
+					display: none
+				.rep
+					display: block
+
+
 			.tweets
 				text-align: center
 				.tweet
@@ -75,7 +91,7 @@ body.home #main
 					text-align: center
 					position: relative
 					color: #333
-					padding: 0 22%
+					padding: 0 21%
 					span
 						font-size: 80%
 						font-style: italic
@@ -110,7 +126,7 @@ body.home #main
 		left: $menu_left
 		position: fixed
 		bottom: 2px
-		padding: 30px 20px 0
+		padding: 14px 20px 0px
 		vertical-align: middle
 		font-size: 12px
 		line-height: 14px
@@ -118,30 +134,44 @@ body.home #main
 		transition-property: bottom
 		transition-duration: 0.25s
 		bottom: -200px
+		z-index: 11
+		max-height: 14%
 
 		img
-			width: 30%
+			width: 26%
 			float: right
-			margin-top: -20px
+			margin-top: -22px
 	#menu
 		transition-property: height
 		transition-duration: 0.25s
 		z-index: 10
+		.messages
+			.loading
+				display: none
+				float: right
 		&.single
 			border-bottom: none
 			padding-bottom: 30px
 			height: 250px
 			.inner
 				height: 170px
+			&.reps
+				.messages
+					.single.rep
+						display: block
+					.single.campaign
+						display: none
 			.messages
-				.single
+				.single.rep
+					display: none
+				.single.campaign
 					display: block
 				.many
 					display: none
 
 		position: fixed
 		top: 100%
-		height: 72%
+		height: 80%
 		background: #f3f5f4
 
 
@@ -160,28 +190,43 @@ body.home #main
 
 			overflow: hidden
 			height: 80%
+		
+		&.reps .items 
+			.campaign
+				display: none
+			.rep
+				display: block
+		
 		.items
 			height: 90%
 			overflow-y: auto
 
-			.campaign
+			.campaign, .rep
 				cursor: pointer
 				border-bottom: 2px solid $grey
+				&.active, &:hover
+					background: white
+				h3
+					color: #333
+
+			.campaign
 				padding: 20px
 				.score
 					float: right
 					margin: 8px 20px 0
 					background: image_url('stat.png') top left no-repeat
 					padding: 10px 0 12px 60px
-				h3
-					color: #333
 					
 				p, div
 					font-size: 90%
 					color: $darkgrey
 
-				&.active, &:hover
-					background: white
+			.rep
+				padding: 4px 20px
+				h3, p
+					line-height: 0
+					marign: 0
+
 
 		#tabs
 			width: 90%
@@ -261,7 +306,9 @@ body.home #main
 
 	#more-info
 		display: none
-		top: 420px
+		top: 370px
+		&.reps
+			top: 310px
 		padding: 20px 10px
 		z-index: 0
 		position: fixed
@@ -313,11 +360,11 @@ body.fixed
 
 	#main
 		#menu
-			top: 120px
+			top: $fixed_header + 20px
 		#more-info
 			display: block
 		#powered_by
-			bottom: 2px
+			bottom: 4px
 
 
 #top

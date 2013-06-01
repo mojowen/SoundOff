@@ -21,23 +21,31 @@ if( $oundoff_config.home ) {
 	})
 	.scroll( function(e) {
 
-		// $('body').scrollTop(w_height);
 
 		var w_top = this.body.scrollTop,
 			p = w_top / w_height;
 
 		if( document.body.classList.contains('fixed') ) {
+
 			var divs = content.childNodes,
 				unset = true;
 
 			for (var i = divs.length - 1; i >= 0; i--) {
-				var campaign_div = divs[i],
-					offset_top = campaign_div.offsetTop,
-					campaign = angular.element( campaign_div ).scope().campaign
+				var campaign_div = divs[i];
 
-				if( typeof campaign != 'undefined' && offset_top < w_top + offset_top ) {
-					angular.element( main ).scope().$apply( function($scope) { $scope.active = campaign; });
-					return false
+				if( campaign_div.tagName == 'DIV' ) {
+
+					var offset_top = campaign_div.offsetTop,
+						type = campaign_div.classList.contains('campaign') ? 'campaign' : 'rep',
+						item = angular.element( campaign_div ).scope().item
+
+
+					if( typeof item != 'undefined' && offset_top < w_top + top_offset ) {
+						// could do some check in here to make sure $('#menu .inner .items') is scrolling accordingly
+						angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
+						return false
+					}
+
 				}
 			};
 			return false;
@@ -82,8 +90,8 @@ if( $oundoff_config.home ) {
 					top_bottom_rate = ( (w_height-100) - top_bottom ),
 					
 					bottom_top = w_height * ( 1 - .22 ),
-					menu_top = w_height + 20 + offset_top
-					content_margin_top = w_height * 2 + 20 + offset_top
+					menu_top = w_height + 20 + top_offset
+					content_margin_top = w_height * 2 + 20 + top_offset
 
 				$foot.css({ top: n_css( bottom_top - top_bottom_rate * p * 1.4 ) })
 				$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
@@ -121,20 +129,22 @@ if( $oundoff_config.home ) {
 		angular.element(main).scope().resetHard()
 		window.name = window.name.replace(/soundoff_open/g,'')
 		document.body.classList.remove('fixed')
-		// $(this).attr('src','/assets/logo.png')
 		$('body').scrollTop(0)
 	})
 	.on('click','.open_soundoff', function() {
 		var $this = $(this),
 			config = {}
 		if( $this.attr('campaign') ) config.campaign = $this.attr('campaign');
+		if( $this.attr('rep') ) config.targets = $this.attr('rep');
 
 		openSoundOff(config)
 		return false;
 	})
-	.on('click','.campaign',function() {
-		var campaign = angular.element( this ).scope().campaign
-		angular.element( main ).scope().$apply( function($scope) { $scope.active = campaign; });
+	.on('click','.campaign, .rep',function() {
+		var type = this.classList.contains('campaign') ? 'campaign' : 'rep',
+			item = angular.element( this ).scope()[type]
+
+		angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
 		scroll_to( $('#content .active').offset().top - 120 )
 	})
 
