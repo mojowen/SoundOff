@@ -72,7 +72,6 @@ function homePageScope($http, $scope) {
 	}
 	$scope.$watch('search',function() {
 		if( typeof fetch != 'undefined' ) clearTimeout( fetch);
-		if( $scope.search.length > 1 && $scope.mode.toLowerCase() == 'reps' && $scope.single_item == null ) $('.messages .loading').show()
 
 		fetch = setTimeout( function() { 
 
@@ -207,15 +206,14 @@ function homePageScope($http, $scope) {
 			}
 		}
 		if( typeof state == 'object' && state != null ) {
-
-			$scope.reps.push( state )
-			$scope.active = state
+			state.tweets = []
+			$scope.raw_reps.push( state )
 			
 
 			$scope.search = '@'+state.twitter_screen_name
 			$scope.mode = 'reps'
 
-			setTimeout( function() { $scope.single_item = state; },1)
+			setTimeout( function() { $scope.single_item = state; $scope.active = state; },1)
 		}
 
 	}

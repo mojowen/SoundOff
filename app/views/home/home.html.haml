@@ -70,7 +70,7 @@
 			%a.rest.single.campaign{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all campaigns
 			%a.rest.single.rep{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all rep
 			%a.rest.many{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} clear search
-			%span.loading Loading More...
+			%span.loading{ 'ng-hide' => 'search.length < 1 '} Loading...
 
 		#tabs
 			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Scoreboard
