@@ -1,7 +1,15 @@
 %script{ :type => 'text/javascript', :src => '//platform.twitter.com/widgets.js'}
 
 #top
-	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png'), :id => 'logo'
+	#start_campaign
+		%em Want to partner up with #SoundOff? 
+		%button.start_campaign Start a Campaign
+
+	#banner
+		powered by
+		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
+
+	= image_tag asset_path( 'logo.png' ), :id => 'logo'
 
 	#description
 		%h1 Tweet @ power.
@@ -12,10 +20,11 @@
 			%br
 			decision makers on issues that matter to you
 
-		%button.create_campaign{ :href => '#', :onclick => 'alert("Create Your Own Campaign!")' } Get Started
-		%a.get_started Join the Conversation
+		%button.get_started{ :href => '#' } Get Started
 
 	#fixed
+		%button.start_campaign Start a Campaign
+
 		%a.facebook{ :href => 'https://www.facebook.com/HeadCountOrg', :target => '_blank' }
 			= image_tag 'facebook.png'
 		%a.twitter{ :href => 'https://twitter.com/headcountorg', :target => '_blank' }
@@ -86,6 +95,12 @@
 			%a{ :href => '{{single_facebook }}', :target => '_blank' } Share on Facebook
 		%p
 			%a.build_widget{ :href => '{{build_widget}}', :target => '_blank' } Build a Widget
+
+	#powered_by
+		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
+		\#SoundOff and it's campaigns are
+		%br
+		brought to you by:
 
 	#content
 		.item{ "ng-repeat" => "campaign in items()", "ng-class" => "isActive($index,campaign)" }

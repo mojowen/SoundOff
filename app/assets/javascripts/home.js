@@ -50,31 +50,37 @@ if( $oundoff_config.home ) {
 
 			var $top = $('#top'),
 				$foot = $('#footer'),
-				$logo = $('img.home',$top),
+				$logo = $('img#logo',$top),
 				$description = $('#description',$top),
 				$menu = $('#menu'),
-				$content = $('#content')
+				$content = $('#content'),
+				$banner = $('#banner,#start_campaign')
 
 			function p_css(percent) { return [ percent * 100,'%' ].join(''); };
 			function n_css(number) { return [ number ,'px' ].join(''); };
 
 			if( w_top < 10 ) {
-				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description').attr('style',null).find('#home').attr('style',null).attr('src','/assets/logo.png')
+				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner,#start_campaign').attr('style',null).find('#home').attr('style',null) //.attr('src','/assets/logo.png')
 				reset_styles = true
 
 			} else if( w_top > 10 && w_top < w_height ) {
-				var logo_width = window.innerWidth * .5,
-					logo_width_rate = 260 - logo_width,
-					logo_top = w_height * ( offset_factor * .4 ),
+				var logo_width = window.innerWidth * .4,
+					logo_width_rate = 210 - logo_width,
+					
+					logo_top = w_height * ( offset_factor * .9 ),
 					logo_top_rate = 6 - logo_top,
-					logo_left = 0.025 * w_width,
-					logo_left_rate =  180 - logo_left,
+
 					description_top = w_height*offset_factor,
 					description_top_rate = w_height*1.25 - description_top,
+					
+					banner_top = 0,
+					banner_top_rate = 180 - ( - 200 ),
+					
 					top_border_width = 15,
 					top_border_width_rate =  (4 - 15),
 					top_bottom = w_height*.22,
 					top_bottom_rate = ( (w_height-100) - top_bottom ),
+					
 					bottom_top = w_height * ( 1 - .22 ),
 					menu_top = w_height + 20 + offset_top
 					content_margin_top = w_height * 2 + 20 + offset_top
@@ -91,15 +97,15 @@ if( $oundoff_config.home ) {
 				$logo.css( { 
 					width: n_css( logo_width + logo_width_rate * p ), 
 					top: n_css( logo_top + logo_top_rate  * p ),
-					left: n_css(  logo_left_rate  * p + logo_left ) 
 				})
 
 				if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
 
 				$description.css( { top: n_css( description_top - description_top_rate* p) })
+				$banner.css( { top: n_css( banner_top - banner_top_rate* p) })
 			}
 		} else {
-			if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description').attr('style',null).find('img').attr('style',null)
+			if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner,#start_campaign').attr('style',null).find('img').attr('style',null)
 
 			reset_styles = true
 
@@ -115,7 +121,7 @@ if( $oundoff_config.home ) {
 		angular.element(main).scope().resetHard()
 		window.name = window.name.replace(/soundoff_open/g,'')
 		document.body.classList.remove('fixed')
-		$(this).attr('src','/assets/logo.png')
+		// $(this).attr('src','/assets/logo.png')
 		$('body').scrollTop(0)
 	})
 	.on('click','.open_soundoff', function() {

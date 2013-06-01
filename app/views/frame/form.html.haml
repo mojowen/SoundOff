@@ -30,7 +30,7 @@
 				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
 				%p 
-					%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;'  } Suggestions?
+					%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;', 'ng-hide' => "campaign == 'Tweet @ Your Rep' "  } Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
 

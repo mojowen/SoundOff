@@ -1,6 +1,6 @@
 class FrameController < ActionController::Base
   layout 'application.html'
-  def start
+  def form
   	@config = {
   		# :targets => [
   		# 	{ :twitter_id => 'blumenauermedia'}

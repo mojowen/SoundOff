@@ -1,6 +1,6 @@
 SoundOff::Application.routes.draw do
 
-  match '/form' => 'frame#start'
+  match '/form' => 'frame#form'
   match '/home' => 'home#home', :as => 'home'
   match '/widget' => 'frame#widget'
   match '/widget_create' => 'frame#demo', :as => 'widget_create'
