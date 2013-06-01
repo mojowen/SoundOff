@@ -20,8 +20,8 @@ function goToUri(uri, href) {
 (function() {
   message = document.location.hash.replace(/\#/,'')
   if( navigator.userAgent.match(/iPad|iPhone|android|iPod/i) != null ) {
-    goToUri('twitter://post?message='+message,'https://twitter.com/intent/tweet?&text='+message )
-  } else document.location = 'https://twitter.com/intent/tweet?&text='+message
+    goToUri('twitter://post?message='+message,'https://twitter.com/intent/tweet?related=HeadCountOrg&text='+message )
+  } else document.location = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='+message
 })()
 
 
