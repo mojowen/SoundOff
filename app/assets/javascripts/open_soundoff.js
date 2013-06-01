@@ -6,7 +6,8 @@ function openSoundOff( args ) {
 
   if( typeof args == 'string' ) args = { campaign: args }
   for( var i in args ) {
-    if( i == 'campaign' ) args[i] = args[i].replace(/\#/g,'')
+    if( i == 'campaign' ) args['campaign'] = args[i].replace(/\#/g,'')
+    if( i == 'reps' ) args['reps'] = args[i].replace(/\@/g,'').join(',')
     config += i + '=' + args[i] +'&';
   }
 

@@ -7,8 +7,10 @@ class FrameController < ActionController::Base
   		# ],
   		# :message => 'fuck you'
       :campaign => params[:campaign],
-      :elected => params[:elected],
-      :form => true
+      :targets => (params[:targets] || '' ).split(',').map{ |t| { :twitter_id => t } },
+      :form => true,
+      :email => params[:email],
+      :zip => params[:zip]
   	}
     @body_class = 'form'
     @body_class += ' dark' if params[:style] == 'dark'
