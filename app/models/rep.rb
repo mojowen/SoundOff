@@ -12,7 +12,7 @@ class Rep < ActiveRecord::Base
 	def self.search search
 		all( 
 			:conditions => [ 
-					'LOWER(first_name) LIKE :search OR LOWER(last_name) LIKE :search OR LOWER(state_name) LIKE :search OR LOWER(twitter_screen_name) LIKE :search', 
+					'LOWER(first_name) || \' \' || LOWER(last_name) LIKE :search OR LOWER(state_name) LIKE :search OR LOWER(twitter_screen_name) LIKE :search', 
 					{ :search => "%#{search.downcase}%" }
 				] 
 			)
