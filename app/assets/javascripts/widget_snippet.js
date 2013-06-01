@@ -17,7 +17,10 @@ ready( function() {
 				widget_bottom_button = d.createElement('div'),
 				widget_top_button = d.createElement('div'),
 				config = [],
-				style = add_link.className.replace(/soundoff_widget|\_|\s/g,'')
+				style = add_link.className.replace(/soundoff_widget|\_|\s/g,''),
+				width = '100%',
+				minWidth = '180px',
+				height = 500
 
 			config.push( 'style='+style  )
 			config.push( 'campaign='+campaign.replace(/\#/,'') )
@@ -31,8 +34,9 @@ ready( function() {
 
 			widget_frame.style.border = 'none'
 			widget_frame.style.overflow = 'hidden'
-			widget_frame.style.height = '510px'
-			widget_frame.style.width = '302px'
+			widget_frame.style.height = height + 6 + 'px'
+			widget_frame.style.width = width,
+			widget_frame.style.minWidth = minWidth,
 			widget_frame.style.borderRadius = '3px'
 
 			// The top "button"
@@ -42,7 +46,8 @@ ready( function() {
 			widget_top_button.style.cursor = 'pointer'
 			widget_top_button.style.zIndex = '100'
 			widget_top_button.style.top = '0px'
-			widget_top_button.style.width = '302px'
+			widget_top_button.style.width = width
+			widget_top_button.style.width = minWidth
 			widget_top_button.style.height = '64px'
 
 			// The bottom "button"
@@ -52,14 +57,15 @@ ready( function() {
 			widget_bottom_button.style.cursor = 'pointer'
 			widget_bottom_button.style.zIndex = '100'
 			widget_bottom_button.style.bottom = '18px'
-			widget_bottom_button.style.width = '302px'
+			widget_bottom_button.style.width = width
+			widget_bottom_button.style.minWidth = minWidth
 			widget_bottom_button.style.height = '60px'
 
 			
 			// The container
 			container.style.position = 'relative'
-			container.style.height = '510px'
-			container.style.width = '302px'
+			container.style.height = height + 10 +'px'
+			container.style.width = width
 
 			container.appendChild(widget_frame)
 			container.appendChild(widget_top_button)
