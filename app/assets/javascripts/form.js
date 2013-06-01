@@ -81,11 +81,15 @@ function formScope($http, $scope) {
 	$scope.sunligh_fetching = false
 
 	$scope.electeds = []
+
 	$scope.targets = $oundoff_config.targets || []
-	if( $scope.targets.length > 0 ) $scope.stage = 3
+	if( $scope.targets.length > 0 ) {
+		$scope.campaign = 'Tweet @'+$scope.targets.map(function(el) { return el.twitter_id }).join(' @')
+		if( $scope.zip != '' && $scope.email != '' ) $scope.stage = 3;
+	}
 	
 	$scope.$watch( 'zip', function(newValue){
-		if( typeof newValue != 'undefined' && newValue.length == 5 ) {
+		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.targets.length == 0 ) {
 				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
 				$scope.sunligh_fetching = true
 				$http.jsonp(query,{})
@@ -162,14 +166,13 @@ function formScope($http, $scope) {
 	$scope.drop_campaign = $oundoff_config.campaign == null ? true : false
 
 	$scope.removeCampaign = function() {
-		console.log('going')
 		$scope.drop_campaign = true
 	}
 
 	$scope.targets_list = function() { return $scope.targets.map( function(el) { return '@'+el.twitter_id }).join(' ') }
 	
 
-	$scope.counter = 140
+	$scope.counter = 139
 	$scope.$watch('message',setCounter);
 	$scope.$watch('drop_campaign',setCounter);
 	
