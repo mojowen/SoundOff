@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require base_domain
+//= require is_mobile
 //= require form
 //= require home
 //= require home_scope

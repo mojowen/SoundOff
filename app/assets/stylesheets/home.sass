@@ -21,18 +21,18 @@ body.home #main
 	#content
 		margin: $fixed_header + 20px 0 0 ($menu_width + $menu_left)
 		
-		@media screen and (max-width: $break-small)
+		@media (max-width: $break-small)
 			margin: 120px 0 0 $small_menu_width
-		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+		@media (max-width: $break-medium) and (min-width: $break-small)
 			margin: 120px 0 0 ($medium_menu_width + $medium_menu_left)
 		
 		.item
 			min-height: 400px
 			width: 95%
 			margin: 50px 20px
-			@media screen and (max-width: $break-small)
+			@media (max-width: $break-small)
 				margin: 50px 4px
-			@media screen and (max-width: $break-medium) and (min-width: $break-small)
+			@media (max-width: $break-medium) and (min-width: $break-small)
 				margin: 50px 8px
 
 			background: white
@@ -178,10 +178,10 @@ body.home #main
 
 		width: $menu_width - 28px*2
 		left: $menu_left
-		@media screen and (max-width: $break-small)
+		@media (max-width: $break-small)
 			width: $small_menu_width - 28px*2
 			left: 28px
-		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+		@media (max-width: $break-medium) and (min-width: $break-small)
 			width: $medium_menu_width - 28px*2
 			left: $medium_menu_left
 
@@ -258,9 +258,9 @@ body.home #main
 		h2
 			@include ribbon($darkred, $red, $menu_width,36px)
 
-			@media screen and (max-width: $break-small)
+			@media (max-width: $break-small)
 				@include ribbon($darkred, $red, $small_menu_width,54px)
-			@media screen and (max-width: $break-medium) and (min-width: $break-small)
+			@media (max-width: $break-medium) and (min-width: $break-small)
 				@include ribbon($darkred, $red, $medium_menu_width,54px)
 			
 			text-align: center
@@ -316,10 +316,10 @@ body.home #main
 		position: fixed
 		left: $menu_left
 		width: $menu_width - 28px*2
-		@media screen and (max-width: $break-small)
+		@media (max-width: $break-small)
 			width: $small_menu_width - 28px*2
 			left: 28px
-		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+		@media (max-width: $break-medium) and (min-width: $break-small)
 			width: $medium_menu_width - 28px*2
 			left: $medium_menu_left
 
@@ -437,11 +437,11 @@ body.fixed
 		top: $offset * 0.9
 		transition-property: width, top, left
 
-		@media screen and (max-width: $break-small)
+		@media (max-width: $break-small)
 			position: relative
 			margin: 0 auto
 			clear: both
-		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+		@media (max-width: $break-medium) and (min-width: $break-small)
 			top: $offset_medium * 0.4
 		left: 7%
 		width: 40%
@@ -450,13 +450,13 @@ body.fixed
 	#description
 		position: absolute
 		top: $offset
-		@media screen and (max-width: $break-small)
+		@media (max-width: $break-small)
 			position: relative
 			right: 10%
 			width: 80%
 			float: right
 			margin-top: 10%
-		@media screen and (max-width: $break-medium) and (min-width: $break-small)
+		@media (max-width: $break-medium) and (min-width: $break-small)
 			top: $offset_medium
 
 		right: 7%

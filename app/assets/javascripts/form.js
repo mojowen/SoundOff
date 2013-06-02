@@ -57,11 +57,13 @@ function formScope($http, $scope) {
 					errors.push( 'you should really write something')
 					message.className += ' oops'
 				} else {
-					if( $scope.drop_campaign ) message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}),$scope.message,'#soundoff' ].join(' ');
-					else message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}), $scope.message,$scope.campaign.replace(/\s/g,''),'#soundoff' ].join(' ');
+					if( $scope.drop_campaign ) message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' '),$scope.message,'#soundoff' ].join(' ');
+					else message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' '), $scope.message,$scope.campaign.replace(/\s/g,''),'#soundoff' ].join(' ');
+					
+					window.onbeforeunload = null;
 
-					window.open('/redirect.html#'+'​'+escape(message) );
-					// Take them to the campaigns webpage and open 
+					if( isMobile ) document.location = '/redirect.html#'+'​'+escape(message)
+					else window.open('/redirect.html#'+'​'+escape(message) );
 				}
 				break;
 		}
@@ -191,15 +193,40 @@ function formScope($http, $scope) {
 
 		$scope.counter = 140 - [targets,$scope.message,tags].join(' ').length
 	}
+
+	// Stage 4
+	$scope.default_message
+	$scope.url
+	
+	if( $oundoff_config.campaign != null )  {
+		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
+		$scope.default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.campaign.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more! '
+		$scope.url = $oundoff_base_domain + '/' + ( config.short_url || '' )
+	} else {
+		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
+		$scope.default_message += 'I just sent a %23SoundOff to my Rep. Do it to and help us %23SoundOff more! '
+		$scope.url = $oundoff_base_domain
+	}
+
+	$scope.twitter_link = function() { return $scope.default_message + $scope.url }
+	$scope.facebook_link = function() { return 'http://facebook.com/sharer/sharer.php?u='+$scope.url }
+
+	$scope.$watch('targets',function() {
+		if( $oundoff_config.campaign == null && $scope.targets.length > 0) {
+			$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
+			$scope.default_message += 'I just sent a %23SoundOff to my Rep '+ $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' ')+'. Do it to and help us %23SoundOff more! '
+		}
+	})
+
 }
 function addGeocoder() {
-	angular.element( document.getElementById('popup') ).scope().$apply( function($scope) {
+	angular.element( popup ).scope().$apply( function($scope) {
 		$scope.geocoder = new google.maps.Geocoder();
 	})
 }
 if ( window.self === window.top && $oundoff_config.form ) {
 	$(document).ready( function() { $('#close').remove() })
-    window.onbeforeunload = function(e) {
+ 	window.onbeforeunload = function(e) {
       return 'Are you sure you want to cancel your SoundOff?';
     };
 }

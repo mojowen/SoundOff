@@ -34,6 +34,23 @@
 					%span{ :style => 'float:right'}
 						{{counter}}
 
+			#stage_4
+				%h1 Thanks!
+				%h1 You're Almost Done
+				%h3 Tell Your Friends and Set the #SoundOff
+				.line
+					%a.twitter{ 'ng-href' => '{{ twitter_link() }}', :target => '_blank' }
+						.box
+							= image_tag 'twitter_dark.png'
+						Share on Twitter
+
+				.line
+					%a.facebook{ 'ng-href' => '{{ facebook_link() }}', :target => '_blank' }
+						.box
+							= image_tag 'facebook.png'
+						Share on Facebook
+
+
 			#notice
 			%button.stage_1.stage_2 Continue
 

@@ -1,4 +1,5 @@
 //= require base_domain
+//= require is_mobile
 //= require open_soundoff
 //= require ready
 
