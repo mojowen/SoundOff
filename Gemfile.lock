@@ -30,6 +30,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.3.4)
     arel (3.0.2)
+    bcrypt-ruby (3.0.1)
     bootstrap-sass (2.3.1.0)
       sass (~> 3.2)
     builder (3.0.4)
@@ -42,6 +43,11 @@ GEM
       compass (>= 0.12.2, < 0.14)
     cookiejar (0.3.0)
     daemons (1.1.9)
+    devise (2.2.3)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (~> 3.1)
+      warden (~> 1.2.1)
     dotenv (0.7.0)
     em-http-request (1.0.3)
       addressable (>= 2.2.3)
@@ -72,6 +78,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashie (2.0.5)
     hike (1.2.2)
     http_parser.rb (0.5.3)
     i18n (0.6.1)
@@ -89,6 +96,10 @@ GEM
     multi_json (1.7.2)
     multipart-post (1.2.0)
     nokogiri (1.5.9)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    orm_adapter (0.4.0)
     pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -154,6 +165,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    warden (1.2.1)
+      rack (>= 1.0)
     yajl-ruby (1.1.0)
 
 PLATFORMS
@@ -162,10 +175,12 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 2.3.1.0)
   compass-rails
+  devise
   foreman
   haml-rails
   jquery-rails
   nokogiri
+  omniauth
   pg
   rails (= 3.2.13)
   rake
