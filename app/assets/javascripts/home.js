@@ -21,7 +21,6 @@ if( $oundoff_config.home ) {
 	})
 	.scroll( function(e) {
 
-
 		var w_top = this.body.scrollTop,
 			p = w_top / w_height;
 
@@ -167,13 +166,14 @@ if( $oundoff_config.home ) {
 				Math.abs( target_height - w_top ) < 1000 ? 100  : 250
 
 		if( 
-			Math.floor(w_top / next_increment) < Math.floor(target_height / next_increment) && direction > 0
+			Math.floor(w_top / next_increment) < Math.floor(target_height / next_increment) && direction > 0 && w_top > 0
 			||
-			Math.floor(w_top / next_increment) > Math.floor(target_height / next_increment) && direction < 0
+			Math.floor(w_top / next_increment) > Math.floor(target_height / next_increment) && direction < 0 && w_top > 0
 		) { 
 			setTimeout( function() { scroll_to(target_height,direction) }, 1);
-		} else window.scrollTo(0 , target_height );
-		
+		} else {
+			window.scrollTo(0 , target_height );
+		}
 
 	}
 }
