@@ -20,6 +20,7 @@ ready( function() {
 				style = add_link.className.replace(/soundoff_widget|\_|\s/g,''),
 				width = '100%',
 				minWidth = '180px',
+				maxWidth = '600px',
 				height = 500
 
 			config.push( 'style='+style  )
@@ -47,7 +48,8 @@ ready( function() {
 			widget_top_button.style.zIndex = '100'
 			widget_top_button.style.top = '0px'
 			widget_top_button.style.width = width
-			widget_top_button.style.width = minWidth
+			widget_top_button.style.minWidth = width
+			widget_top_button.style.maxWidth = maxWidth
 			widget_top_button.style.height = '64px'
 
 			// The bottom "button"
@@ -59,6 +61,7 @@ ready( function() {
 			widget_bottom_button.style.bottom = '18px'
 			widget_bottom_button.style.width = width
 			widget_bottom_button.style.minWidth = minWidth
+			widget_bottom_button.style.maxWidth = maxWidth
 			widget_bottom_button.style.height = '60px'
 
 			
