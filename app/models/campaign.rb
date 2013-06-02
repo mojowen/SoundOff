@@ -1,6 +1,6 @@
 class Campaign < ActiveRecord::Base
-  attr_accessible :description, :hashtag, :name, :partner, :background
-  	:email_optional, :end, :goal, :suggested
+  attr_accessible :description, :hashtag, :name, :partner, :background,
+  	:email_required, :end, :goal, :suggested
 
   serialize :suggested, JSON
 

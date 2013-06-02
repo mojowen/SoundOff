@@ -21,7 +21,7 @@ task :deploy, :remote, :branch do |t,args|
       system "git checkout -B compiled"
       system "git merge -s recursive -Xtheirs #{branch_to_push}"
       
-      blue 'Rewriting Base Domain to #{base_domain}'
+      blue "Rewriting Base Domain to #{base_domain}"
       File.open('app/assets/javascripts/base_domain.js','w+'){ |f| f.write( "$oundoff_base_domain = '#{base_domain}'; " ) }
 
       blue 'Precompiling Assets'
