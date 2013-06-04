@@ -18,4 +18,7 @@ class Rep < ActiveRecord::Base
 			)
   	end	
 
+  	def name
+  		return [title,first_name,last_name].join(' ')
+  	end
 end
