@@ -11,7 +11,7 @@ function openSoundOff( args ) {
     config += i + '=' + args[i] +'&';
   }
 
-  if ( isMobile ) {
+  if ( isMobile.any() ) {
     window.open($oundoff_base_domain+'/form?'+config)
   } else { // if not mobile - open form and append
     if( typeof form_iframe_soundoff != 'undefined' ) return false

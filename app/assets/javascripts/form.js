@@ -62,8 +62,11 @@ function formScope($http, $scope) {
 					
 					window.onbeforeunload = null;
 
-					if( isMobile ) document.location = '/redirect.html#'+'​'+escape(message)
-					else window.open('/redirect.html#'+'​'+escape(message) );
+					if( isMobile.any() ) document.location = '/redirect.html#'+'​'+escape(message)
+					else {
+						window.open('/redirect.html#'+'​'+escape(message) );
+						next = 4
+					}
 				}
 				break;
 		}
