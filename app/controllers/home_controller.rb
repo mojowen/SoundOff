@@ -11,7 +11,7 @@ class HomeController < ActionController::Base
       @title = rep.name
       @og_title = @title+' | #SoundOff @ Congress'
       @og_description = "#SoundOff @#{rep.twitter_screen_name} (#{rep.name} from #{rep.state_name}) and see what others are saying. #SoundOff is an advocacy tool created and maintained by HeadCount.org."
-      @og_image = rep.twitter_profile_image
+      @og_image = 'https://api.twitter.com/1/users/profile_image?screen_name='+rep.screen_name
       
       @title = [rep.title,rep.first_name,rep.last_name,'|','#SoundOff @ Congress'].join(' ') 
   	end

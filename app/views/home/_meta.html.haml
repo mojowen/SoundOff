@@ -1,12 +1,12 @@
-%meta{ :property => 'og:title', :value => @og_title || '#SoundOff @ Congress' }
+%meta{ :property => 'og:title', :content => @og_title || '#SoundOff @ Congress' }
 
-%meta{ :property => 'og:image', :value => @og_image || asset_path( 'opengraph_default.png') }
+%meta{ :property => 'og:image', :content => @og_image || asset_path( 'opengraph_default.png') }
 
-%meta{ :property => 'og:url', :value => (ENV['BASE_DOMAIN'] || '') + request.path }
+%meta{ :property => 'og:url', :content => (ENV['BASE_DOMAIN'] || '') + request.path }
 
-%meta{ :property => 'og:type', :value => 'website' }
+%meta{ :property => 'og:type', :content => 'website' }
 
-%meta{ :property => 'og:description', :value => @og_description || '#SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in goverment.' }
+%meta{ :property => 'og:description', :content => @og_description || '#SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in goverment.' }
 
 
 %link{ :rel => "shortcut icon", :href => asset_path( 'icon.png' ) }
