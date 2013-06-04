@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602074036) do
+ActiveRecord::Schema.define(:version => 20130604042445) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(:version => 20130602074036) do
   end
 
   add_index "campaigns", ["partner_id"], :name => "index_campaigns_on_partner_id"
+
+  create_table "options", :force => true do |t|
+    t.string "name"
+    t.text   "data", :default => "", :null => false
+  end
 
   create_table "partners", :force => true do |t|
     t.string   "name"
