@@ -8,8 +8,9 @@
 	#banner
 		powered by
 		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
+		%a.small{ :href=> 'http://headcount.org', :target => '_blank' } HeadCount
 
-	= image_tag asset_path( 'logo.png' ), :id => 'logo'
+	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png' ), :id => 'logo'
 
 	#description
 		%h1 Tweet @ power.

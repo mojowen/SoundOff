@@ -28,7 +28,7 @@ if( $oundoff_config.home ) {
 
 			var divs = content.childNodes,
 				unset = true;
-
+			
 			for (var i = divs.length - 1; i >= 0; i--) {
 				var campaign_div = divs[i];
 
@@ -40,7 +40,6 @@ if( $oundoff_config.home ) {
 
 
 					if( typeof item != 'undefined' && offset_top < w_top + top_offset ) {
-						// could do some check in here to make sure $('#menu .inner .items') is scrolling accordingly
 						angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
 						return false
 					}
@@ -128,8 +127,9 @@ if( $oundoff_config.home ) {
 		angular.element(main).scope().resetHard()
 		window.name = window.name.replace(/soundoff_open/g,'')
 		document.body.classList.remove('fixed')
+		var $hide = $('#powered_by,#fixed').hide()
 		$('body').scrollTop(0)
-		setTimeout( function() { $(logo).attr('src','/assets/logo.png') },50)
+		setTimeout( function() { $(logo).attr('src','/assets/logo.png'); $hide.show(); },10)
 	})
 	.on('click','.open_soundoff', function() {
 		var $this = $(this),
