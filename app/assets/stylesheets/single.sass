@@ -1,0 +1,30 @@
+.single
+	$width: 980px
+	#main
+		margin: 140px
+		#content
+			background: white
+			width: $width - 28px*2
+			margin: 0 auto
+			padding: 60px 100px 120px
+			min-height: 500px
+			font-size: 140%
+			color: #333
+	a
+		color: $red
+	h1
+		@include ribbon($darkred,$red, $width )
+		color: white
+		margin: 0 auto
+		text-align: center
+		left: inherit
+		top: inherit
+		font-size: 400%
+		height: 60px
+		
+		&::after, &::before 
+			top: 60px
+
+	h3
+		color: $darkblue
+		text-transform: normal

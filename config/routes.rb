@@ -11,8 +11,12 @@ SoundOff::Application.routes.draw do
   match '/all_reps' => 'rep#index', :as => 'all_reps'
   match '/find_reps' => 'rep#search', :as => 'all_reps'
   
+  match '/press' => 'pages#press', :as => 'press'
+  match '/about' => 'pages#about', :as => 'about'
+  match '/contact' => 'pages#contact', :as => 'contact'
 
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
   
+
 end

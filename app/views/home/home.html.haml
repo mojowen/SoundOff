@@ -32,26 +32,22 @@
 				SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in goverment. This tool is available to all organizations and individuals regardless of their beliefs or affilations, so long as they comply with the Terms of Service. HeadCount does not endorse, censor or take responsiblity for any of the content of any campaign using this service, Organizations or individuals using this service do so independently and with no affiliation with HeadCount.
 
 	.column
+		%p= link_to 'About', about_path
+		%p= link_to 'Press', press_path
+		%p= link_to 'Donate', 'http://www.HeadCount/donate'
+	.column
+		%p 
+			%a Partners
 		%p
-			%a Link
 		%p
-			%a Link
+			%a Privacy Policy
 		%p
-			%a Link
+			%a Terms and Conditions
 	.column
 		%p
-			%a Link
-		%p
-			%a Link
-		%p
-			%a Link
-	.column
-		%p
-			%a Link
-		%p
-			%a Link
-		%p
-			%a Link
+		%p= link_to 'Register to Vote', 'http://headcount.org/register-to-vote', :target => '_blank'
+		%p= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
+		%p= link_to 'Contact', contact_path
 
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope'  }
 
