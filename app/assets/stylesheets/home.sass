@@ -136,11 +136,16 @@ body.home #main
 		bottom: -200px
 		z-index: 11
 		max-height: 14%
+		
+		.small
+			display: none
 
 		img
 			width: 26%
 			float: right
 			margin-top: -22px
+		
+
 	#menu
 		transition-property: height
 		transition-duration: 0.25s
@@ -391,13 +396,18 @@ body.fixed
 		text-align: right
 		width: 100%
 		color: white
-		height: 50px
+		min-height: 50px
+		max-height: 74px
 		font-size: 80%
-		padding: 4px 0
+		padding: 4px 10px 0 140px
+
+		@media (max-width: $break-small)
+			display: none
+		
 		button.start_campaign
 			@include button($darkgrey, $darkblue)
 			font-size: 16px
-			margin: -2px 4px 0
+			margin: 6px 4px 6px 0
 
 
 
@@ -413,12 +423,15 @@ body.fixed
 		z-index: 12
 		position: relative
 		padding-top: 30px
-		
+		position: absolute
 		@include gradient( darken($darkgrey,25%), darken($darkgrey,75%) )
 
 		img
 			width: 80%
 			margin: 10px auto
+		.small
+			display: none
+
 		&::after
 			content: ' '
 			border-color: transparent transparent $blue transparent
@@ -431,46 +444,78 @@ body.fixed
 			z-index: -3
 			position: absolute
 			left: 0
+		@media (max-width: $break-medium)
+			height: 160px
+			padding-top: 10px
+		@media (max-width: $break-small)
+			a img
+				display: none
+			.small
+				display: block
+				margin-top: 10px
+				font-size: 150%
+			height: 80px
+			padding-top: 10px
+			&::after
+				border-width: 15px 70px
 
 	img#logo
 		position: absolute
 		top: $offset * 0.9
 		transition-property: width, top, left
 
-		@media (max-width: $break-small)
+		@media (max-width: $break-medium)
 			position: relative
-			margin: 0 auto
+			margin: 0 auto 10%
 			clear: both
-		@media (max-width: $break-medium) and (min-width: $break-small)
-			top: $offset_medium * 0.4
+			width: 90%
+			top: 100px
+		// @media (max-width: $break-medium) and (min-width: $break-small)
+		// 	top: $offset_medium * 2
 		left: 7%
 		width: 40%
 
 
 	#description
 		position: absolute
-		top: $offset
-		@media (max-width: $break-small)
-			position: relative
-			right: 10%
-			width: 80%
-			float: right
-			margin-top: 10%
-		@media (max-width: $break-medium) and (min-width: $break-small)
-			top: $offset_medium
+		top: $offset * 1.2
 
-		right: 7%
-		width: 40%
+		@media (max-width: $break-medium)
+			position: relative
+			right: 5%
+			width: 90%
+			float: right
+			margin: 5% 0
+			font-size: 100%
+			line-height: 1em
+			text-align: center
+			h1
+				display: none
+			button.get_started
+				margin: 0 auto 0
+		@media (max-width: 1150px) and (min-width: $break-medium)
+			top: $offset * 1.2
+			font-size: 90%
+			h1
+				line-height: 1em
+				margin-bottom: 0
+			button.get_started
+				margin-top: 5%
+		@media (max-width: $break-small)
+			margin-top: 20%
+
+		right: 0
+		width: 47%
 
 		h1
 			color: $grey
 			font-size: 350%
-			margin-top: 0
+			margin: 0
 		p
 			color: white
 
 		button
-			margin-top: 8%
+			margin-top: 5%
 			display: block
 			min-width: 330px
 			text-align: center
@@ -534,12 +579,18 @@ body.fixed
 	.disclaimer
 		width: 54%
 
+	@media (max-width: $break-medium)
+		.column
+			display: none
+		.disclaimer
+			width: 100% 
+
+
 	.column
 		width: 12%
 		p
-			
-			text-align: center
-		margin: 0 1%
+			text-align: left
+		margin: 0 0 0 2%
 		vertical-align: top
 		img
 			width: 100%
