@@ -184,7 +184,7 @@ function homePageScope($http, $scope) {
 		$scope.single_item = null
 		history.pushState( {campaign: $scope.items[0] }, 'Sound Off',  '/home' );
 		$(logo).attr('src','/assets/logo_no_cong.png')
-		document.title = 'Sound Off'
+		document.title = '#SoundOff @ Congress'
 	}
 	$scope.resetHard = function() {
 		$scope.search = ''
