@@ -16,6 +16,7 @@ class HomeController < ActionController::Base
       @title = [rep.title,rep.first_name,rep.last_name,'|','#SoundOff @ Congress'].join(' ') 
   	end
 
+    # Will want to do something here with campaigns
 
     @config = { 
     	:home => true, 

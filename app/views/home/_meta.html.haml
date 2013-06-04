@@ -2,6 +2,10 @@
 
 %meta{ :property => 'og:image', :value => @og_image || asset_path( 'opengraph_default.png') }
 
+%meta{ :property => 'og:url', :value => (ENV['BASE_DOMAIN'] || '') + request.path }
+
+%meta{ :property => 'og:type', :value => 'website' }
+
 %meta{ :property => 'og:description', :value => @og_description || '#SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in goverment.' }
 
 
