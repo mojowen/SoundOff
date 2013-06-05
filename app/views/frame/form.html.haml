@@ -18,7 +18,7 @@
 				%p We need more information to find your Congressional Representative - help us out by providing your street address and city.
 
 			#stage_3
-				
+
 				.target{ "ng-repeat" => "target in targets" }
 					%img.profile_img{ 'ng-src' => "https://api.twitter.com/1/users/profile_image?screen_name={{target.twitter_id}}&size=bigger" }
 					%h1 @{{ target.twitter_id }}
@@ -29,7 +29,7 @@
 
 				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
-				%p 
+				%p
 					%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;', 'ng-hide' => "campaign.search('Tweet @') !== -1 "  } Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
@@ -62,7 +62,7 @@
 
 			%button.stage_3 #SoundOff
 		#suggest
-			%h3 
+			%h3
 				Need Help?
 				%br
 				Try one of these:
