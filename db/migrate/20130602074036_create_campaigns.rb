@@ -8,9 +8,9 @@ class CreateCampaigns < ActiveRecord::Migration
 
       t.date :end
       t.integer :goal
-      t.boolean :email_required, :default => false
+      t.boolean :email_option
       t.text :suggested, :default => '[]'
-      
+
       t.integer :partner_id
 
       t.timestamps
