@@ -2,6 +2,8 @@ SoundOff::Application.routes.draw do
 
   devise_for :users, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout'}
 
+  resources :partners
+  match '/sign_up' => 'partners#new', :as => 'registration'
   match '/form' => 'frame#form'
   match '/widget' => 'frame#widget'
   match '/widget_create' => 'frame#demo', :as => 'widget_create'
