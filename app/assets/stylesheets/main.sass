@@ -34,3 +34,36 @@ input.oops, textarea.oops
 button
 	@include button($red,$darkred)
 	font-family: $headerFont
+
+#top
+	#fixed
+		#menu
+			a
+				padding: 0 10px
+				margin-left: 14px
+			.inner
+				position: absolute
+				display: none
+				background-color: $darkblue
+				top: 62px
+				width: 120px
+				right: 24px + 10px + 10px + 3px
+				padding: 10px 4px 20px
+				a
+					color: white
+					display: block
+					font-size: 80%
+					text-align: right
+					margin: 4px 0
+					float: none
+					&:hover
+						text-decoration: underline
+			&:hover
+				a.menu
+					background-color: $darkblue
+					padding-bottom: 20px
+					margin-bottom: -20px
+
+				background-color: $darkblue
+				.inner
+					display: block

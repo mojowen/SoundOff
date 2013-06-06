@@ -5,4 +5,13 @@
 		= image_tag 'facebook.png'
 	%a.twitter{ :href => 'https://twitter.com/headcountorg', :target => '_blank' }
 		= image_tag 'twitter_dark.png'
-	%a.menu{ :href => '#'} &#9776;
+	#menu
+		%a.menu{ :href => '#'} &#9776;
+		.inner
+			= link_to 'About', about_path
+			%a Partners
+			= link_to 'Press', press_path
+			= link_to 'Donate', 'http://www.HeadCount/donate'
+			%a Privacy Policy
+			%a Terms and Conditions
+			= link_to 'Contact', contact_path
