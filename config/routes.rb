@@ -16,6 +16,7 @@ SoundOff::Application.routes.draw do
   match '/press' => 'pages#press', :as => 'press'
   match '/about' => 'pages#about', :as => 'about'
   match '/contact' => 'pages#contact', :as => 'contact'
+  match '/tos' => 'pages#tos', :as => 'tos'
 
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
