@@ -1,3 +1,3 @@
-class PagesController < ActionController::Base
-    layout 'single.html'
+class PagesController < ApplicationController
+    layout 'application.html'
 end

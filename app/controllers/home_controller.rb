@@ -1,5 +1,5 @@
-class HomeController < ActionController::Base
-  layout 'application.html'
+class HomeController < ApplicationController
+  layout 'home.html'
 
   def home
 
