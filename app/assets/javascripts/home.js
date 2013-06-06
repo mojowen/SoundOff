@@ -2,13 +2,13 @@ if( $oundoff_config.home ) {
 
 	var w_top, w_height, w_width, freeze, reset_styles, offset_factor
 	top_offset = 80
-	
+
 	$(document)
 	.ready( function() {
 		w_top = this.body.scrollTop,
 		w_height = window.innerHeight,
 		w_width = window.innerWidth,
-		offset_factor = w_width > 980 ? 0.3 :
+		offset_factor = w_width > 980 ? 0.5 :
 			w_width > 600 ? 0.2 : 0.1,
 		reset_styles = true,
 		freeze = false;
@@ -17,7 +17,7 @@ if( $oundoff_config.home ) {
 			document.body.classList.add('fixed');
 			$(logo).attr('src','/assets/logo_no_cong.png')
 		}
-		
+
 	})
 	.scroll( function(e) {
 
@@ -28,7 +28,7 @@ if( $oundoff_config.home ) {
 
 			var divs = content.childNodes,
 				unset = true;
-			
+
 			for (var i = divs.length - 1; i >= 0; i--) {
 				var campaign_div = divs[i];
 
@@ -50,7 +50,7 @@ if( $oundoff_config.home ) {
 		}
 
 		if( p < 1 ) {
-			
+
 			this.body.classList.remove('fixed')
 			$(logo).attr('src','/assets/logo.png')
 
@@ -60,33 +60,33 @@ if( $oundoff_config.home ) {
 				$description = $('#description',$top),
 				$menu = $('#menu'),
 				$content = $('#content'),
-				$banner = $('#banner,#start_campaign')
+				$banner = $('#banner')
 
 			function p_css(percent) { return [ percent * 100,'%' ].join(''); };
 			function n_css(number) { return [ number ,'px' ].join(''); };
 
 			if( w_top < 10 ) {
-				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner,#start_campaign').attr('style',null).find('#home').attr('style',null) //.attr('src','/assets/logo.png')
+				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('#home').attr('style',null) //.attr('src','/assets/logo.png')
 				reset_styles = true
 
 			} else if( w_top > 10 && w_top < w_height ) {
-				var logo_width = window.innerWidth * .4,
+				var logo_width = window.innerWidth * .5,
 					logo_width_rate = 210 - logo_width,
-					
-					logo_top = w_height * ( offset_factor * .9 ),
+
+					logo_top = w_height * ( offset_factor * .4 ),
 					logo_top_rate = 6 - logo_top,
 
 					description_top = w_height*offset_factor,
 					description_top_rate = w_height*1.25 - description_top,
-					
+
 					banner_top = 0,
 					banner_top_rate = 180 - ( - 200 ),
-					
+
 					top_border_width = 15,
 					top_border_width_rate =  (4 - 15),
 					top_bottom = w_height*.22,
 					top_bottom_rate = ( (w_height-100) - top_bottom ),
-					
+
 					bottom_top = w_height * ( 1 - .22 ),
 					menu_top = w_height + 20 + top_offset
 					content_margin_top = w_height * 2 + 20 + top_offset
@@ -94,14 +94,14 @@ if( $oundoff_config.home ) {
 				$foot.css({ top: n_css( bottom_top - top_bottom_rate * p * 1.4 ) })
 				$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
 				$content.css({ marginTop: n_css( content_margin_top - top_bottom_rate * p *1.4 ) })
-				$top.css({ 
+				$top.css({
 					minHeight: 0,
 					borderBottomWidth: n_css( top_border_width + top_border_width_rate*p ),
-					bottom: n_css( top_bottom + top_bottom_rate * p ) 
+					bottom: n_css( top_bottom + top_bottom_rate * p )
 				})
 
-				$logo.css( { 
-					width: n_css( logo_width + logo_width_rate * p ), 
+				$logo.css( {
+					width: n_css( logo_width + logo_width_rate * p ),
 					top: n_css( logo_top + logo_top_rate  * p ),
 				})
 
@@ -111,7 +111,7 @@ if( $oundoff_config.home ) {
 				$banner.css( { top: n_css( banner_top - banner_top_rate* p) })
 			}
 		} else {
-			if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner,#start_campaign').attr('style',null).find('img').attr('style',null)
+			if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
 
 			reset_styles = true
 
@@ -149,27 +149,27 @@ if( $oundoff_config.home ) {
 	})
 
 	function scroll_to(target_height,direction) {
-		var increment = 
-				Math.abs( target_height - w_top ) < 10 ? 1  : 
-				Math.abs( target_height - w_top ) < 50 ? 5  : 
-				Math.abs( target_height - w_top ) < 300 ? 15  : 
+		var increment =
+				Math.abs( target_height - w_top ) < 10 ? 1  :
+				Math.abs( target_height - w_top ) < 50 ? 5  :
+				Math.abs( target_height - w_top ) < 300 ? 15  :
 				Math.abs( target_height - w_top ) < 1000 ? 100  : 250,
 			direction = direction || ( target_height > w_top ? 1 : -1 )
 
 		window.scrollBy(0,increment * direction);
 		w_top = document.body.scrollTop;
 
-		var next_increment = 
-				Math.abs( target_height - w_top ) < 10 ? 1  : 
-				Math.abs( target_height - w_top ) < 50 ? 5  : 
-				Math.abs( target_height - w_top ) < 300 ? 15  : 
+		var next_increment =
+				Math.abs( target_height - w_top ) < 10 ? 1  :
+				Math.abs( target_height - w_top ) < 50 ? 5  :
+				Math.abs( target_height - w_top ) < 300 ? 15  :
 				Math.abs( target_height - w_top ) < 1000 ? 100  : 250
 
-		if( 
+		if(
 			Math.floor(w_top / next_increment) < Math.floor(target_height / next_increment) && direction > 0 && w_top > 0
 			||
 			Math.floor(w_top / next_increment) > Math.floor(target_height / next_increment) && direction < 0 && w_top > 0
-		) { 
+		) {
 			setTimeout( function() { scroll_to(target_height,direction) }, 1);
 		} else {
 			window.scrollTo(0 , target_height );

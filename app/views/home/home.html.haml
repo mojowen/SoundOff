@@ -1,10 +1,6 @@
 %script{ :type => 'text/javascript', :src => '//platform.twitter.com/widgets.js'}
 
 #top
-	#start_campaign
-		%em Want to partner up with #SoundOff? 
-		%button.start_campaign Start a Campaign
-
 	#banner
 		powered by
 		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
@@ -13,8 +9,7 @@
 	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png' ), :id => 'logo'
 
 	#description
-		%h1 Tweet @ power.
-		%p 
+		%p
 			Run your own campaign or just send one tweet. We'll make sure your message goes directly to the decision makers on issues that matter to you
 
 		%button.get_started{ :href => '#' } Get Started
@@ -28,20 +23,21 @@
 				SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in goverment. This tool is available to all organizations and individuals regardless of their beliefs or affilations, so long as they comply with the Terms of Service. HeadCount does not endorse, censor or take responsiblity for any of the content of any campaign using this service, Organizations or individuals using this service do so independently and with no affiliation with HeadCount.
 
 	.column
-		%p= link_to 'About', about_path
-		%p= link_to 'Press', press_path
-		%p= link_to 'Donate', 'http://www.HeadCount/donate'
+		%p= link_to 'Register to Vote', 'http://headcount.org/register-to-vote', :target => '_blank'
+		%p= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
+		%p= link_to 'Contact', contact_path
+
 	.column
-		%p 
+		%p
 			%a Partners
 		%p
 			%a Privacy Policy
 		%p
 			%a Terms and Conditions
 	.column
-		%p= link_to 'Register to Vote', 'http://headcount.org/register-to-vote', :target => '_blank'
-		%p= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
-		%p= link_to 'Contact', contact_path
+		%p= link_to 'About', about_path
+		%p= link_to 'Press', press_path
+		%p= link_to 'Donate', 'http://www.HeadCount/donate'
 
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope'  }
 
@@ -72,8 +68,8 @@
 					.description {{campaign.description}}
 				.rep{ "ng-repeat" => "rep in reps()", "ng-class" => "isActive($index,rep)" }
 					%h3 {{rep.title}} {{rep.first_name}} {{rep.last_name}}
-					%p 
-						{{rep.state_name}} 
+					%p
+						{{rep.state_name}}
 						%span{ 'ng-hide' => 'rep.district == "0"' }{{rep.district}}
 	#more-info{ 'ng-class' => '{true: "reps", false: "" }[mode.toLowerCase() == "reps"]' }
 		%h2 More Info
@@ -89,9 +85,13 @@
 
 	#powered_by
 		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
-		\#SoundOff and it's campaigns are
-		%br
-		brought to you by:
+		\#SoundOff is powered by
+		%a{ :href=> 'http://headcount.org', :target => '_blank' } HeadCount.org
+		%p.mark
+			Built by
+			%a{ :href => 'http://twitter.com/sduncombe', :target => '_blank' } Scott Duncombe
+			\& designed by
+			%a{ :href => 'http://www.linkedin.com/pub/bryan-chiem/3b/100/181', :target => '_blank' } Bryan Chiem
 
 	#content
 		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
@@ -106,13 +106,13 @@
 					-# %h3
 					-# 	Score
 					-# 	.score {{campaign.score}}
-					
+
 					{{item.description}}
 
 					%h4 Launched {{ item.created_at | date:'d MMMM' }}
 			.description.rep
 				.title
-					
+
 					%img{ 'ng-src' => 'https://api.twitter.com/1/users/profile_image?screen_name={{item.twitter_screen_name}}&size=bigger' }
 					%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
 
@@ -130,7 +130,7 @@
 					-# %h3 
 					-# 	Score
 					-# 	.score {{campaign.score}}
-					
+
 					{{item.description}}
 
 
