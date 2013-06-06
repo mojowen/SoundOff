@@ -1,5 +1,5 @@
 class FrameController < ActionController::Base
-  layout 'application.html'
+  layout 'frame.html'
   def form
   	@config = {
   		# :targets => [
