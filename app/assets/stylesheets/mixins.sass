@@ -127,6 +127,41 @@
 					background-position: -34px
 					&:hover
 						background-position-x: -50px
+@mixin input
+	padding: 10px 30px
+	border-radius: 5px
+	border: none
+	width: 90%
+	line-height: 1.4em
+
+	&::-webkit-input-placeholder
+		color: $darkgrey
+		line-height: 1.4em
+	&:-moz-placeholder
+		color: $darkgrey
+		line-height: 1.4em
+	&::-moz-placeholder
+		color: $darkgrey
+		line-height: 1.4em
+	&:-ms-input-placeholder
+		color: $darkgrey
+		line-height: 1.4em
+
+
+@mixin placeholder($color)
+	&::-webkit-input-placeholder
+		color: $color
+		line-height: 1.4em
+	&:-moz-placeholder
+		color: $color
+		line-height: 1.4em
+	&::-moz-placeholder
+		color: $color
+		line-height: 1.4em
+	&:-ms-input-placeholder
+		color: $color
+		line-height: 1.4em
+
 
 @mixin gradient($from, $to)
 	background-color: $from
