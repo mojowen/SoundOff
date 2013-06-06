@@ -1,0 +1,35 @@
+%h1 Welcome
+
+#content
+	= form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
+
+		= f.email_field :email, :placeholder => 'Email'
+
+		= f.password_field :password, :placeholder => 'Password'
+
+		= f.hidden_field :remember_me, :value => true
+
+		.row
+			= link_to 'Forgot Password?', new_user_password_path, :class => 'forgot'
+			%button Sign In
+
+
+	= form_for User.new, :as => 'account', :url => registration_path do |f|
+
+		%h3
+			New To #SoundOff?
+			%strong
+				Sign Up
+
+		= f.text_field :name, :placeholder => 'Full Name'
+
+		= f.email_field :email, :placeholder => 'Email'
+
+		= f.password_field :password, :placeholder => 'Password'
+
+		%button
+			Sign Up for&nbsp;
+			%span #S
+			ound
+			%span O
+			ff
