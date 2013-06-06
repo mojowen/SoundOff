@@ -1,30 +1,129 @@
 .single
 	$width: 980px
 	#main
-		margin: 140px
+		margin: 120px
 		#content
-			background: white
+			background: #f9f9f9
 			width: $width - 28px*2
 			margin: 0 auto
 			padding: 60px 100px 120px
 			min-height: 500px
 			font-size: 140%
 			color: #333
+			overflow: hidden
+			position: relative
+			z-index: 9
 	a
 		color: $red
 	h1
-		@include ribbon($darkred,$red, $width )
+		@include ribbon(#333,#555, $width )
 		color: white
-		margin: 0 auto
+		margin: 0 auto -42px
 		text-align: center
 		left: inherit
 		top: inherit
-		font-size: 400%
 		height: 60px
-		
-		&::after, &::before 
-			top: 60px
+		padding-top: 4px
+		height: 36px
+		position: relative
+		z-index: 10
 
+		&::after, &::before
+			top: 36px
 	h3
 		color: $darkblue
 		text-transform: normal
+
+	form
+		width: 60%
+		margin: 0 auto 80px
+		padding: 10px
+
+		.row, input
+			margin: 10px 0
+			width: 90%
+
+		input, textarea
+			@include input
+			border: 1px $grey solid
+			font-size: 20px
+			resize: none
+		input[type=radio], input[type=checkbox]
+			width: auto
+		a
+			color: $darkgrey
+			font-size: 14px
+
+		button
+			@include button($red,$darkred)
+			font-size: 90%
+
+		h3
+			color: #333
+			font-size: 90%
+			strong
+				font-size: 130%
+		&.new_user
+			button
+				float: right
+		&.new_account
+			button
+				@include button($blue,$darkblue)
+				width: 90%
+				font-size: 90%
+				padding: 10px
+		&.new_partner, &.edit_campaign, &.new_campaign
+			button
+				@include button($blue,$darkblue)
+				width: 90%
+				font-size: 90%
+				padding: 10px
+			.radio
+				label
+					font-size: 90%
+					&:hover
+						text-decoration: underline
+						cursor: pointer
+			input
+				transition-property: margin-left
+				transition-duration: 0.8s
+
+				&.off
+					margin-left: 800px
+				&.oops
+					@include placeholder($red)
+					border-color: $red
+
+			.help
+				transition-property: right
+				transition-duration: 0.5s
+				transition-delay: 0.1s
+
+				position: absolute
+				margin: -52px 0 0 0
+				font-size: 60%
+				color: $blue
+				right: -400px
+				width: 290px
+				&.on
+					right: 0px
+			.tos
+				font-size: 60%
+				width: 90%
+				a
+					font-size: 100%
+				&.oops
+					color: $red
+					border-bottom: 1px solid $red
+			.extra
+				position: absolute
+				margin: -48px 0 0 16px
+				font-size: 90%
+				color: $darkgrey
+			.count
+				margin: -7px 50px 10px 0
+				font-size: 60%
+				float: right
+				color: $darkgrey
+				&.oops
+					color: $red

@@ -1,0 +1,112 @@
+%h1 Tell Us About Yourself
+
+#content
+	= form_for @partner do |f|
+
+
+		%h3 I am representing
+
+		.partner_type.radio
+
+			= f.radio_button :partner_type, 'nonprofit', :checked => 'checked'
+			%label a non-profit organization
+			%br
+			= f.radio_button :partner_type, 'company'
+			%label a company
+			%br
+			= f.radio_button :partner_type, 'individual'
+			%label myself as an individual
+
+		= f.text_field :name, :placeholder => 'Name of Organization*', :for => 'nonprofit'
+		.help What is the name of your Organization?
+
+		= f.text_field :website, :placeholder => 'Website of Organization*', :for => 'nonprofit'
+		.help
+
+		= f.text_field :name, :placeholder => 'Name of Company*', :for => 'company', :style => 'display:none'
+		.help What is the name of your Organization?
+
+		= f.text_field :website, :placeholder => 'Website of Company*', :for => 'company', :style => 'display:none'
+		.help
+
+		= f.text_field :contact_name, :placeholder => 'Contact Name*', :value => ( @partner.users.first.name rescue '' ), :for => 'company nonprofit individual'
+		.help
+
+		- if (@partner.users.first.password rescue false)
+			= f.hidden_field :contact_password, :value => @partner.users.first.password
+		- else
+			= f.password_field :contact_password, :placeholder => 'Password*', :value => ( @partner.users.first.password rescue '' ), :for => 'company nonprofit individual'
+			.help The Password you'll use to login
+
+		= f.email_field :contact_email, :placeholder => 'Contact Email*', :value => ( @partner.users.first.email rescue '' ), :for => 'company nonprofit individual'
+		.help
+
+		= f.text_field :contact_phone, :placeholder => 'Contact Phone*', :for => 'company nonprofit individual'
+		.help
+
+		= f.text_field :tax_id, :placeholder => 'Tax ID Number*', :for => 'nonprofit'
+		.help
+
+		= f.text_field :website, :placeholder => 'Your Website*', :for => 'individual', :style => 'display:none'
+		.help
+
+		= f.text_field :logo, :placeholder => 'URL for Logo', :for => 'company nonprofit individual'
+		.help A square logo that will be displayed next to your campaigns
+
+		%p.tos
+			%input{ :type => 'checkbox', :checked => 'checked', :id => 'tos', :value => 'true' }
+			I Agree to the
+			= link_to 'Terms of Service', tos_path, :target => '_blank'
+
+		%button
+			Join&nbsp;
+			%span #S
+			ound
+			%span O
+			ff
+
+		%p * Required
+
+:javascript
+	$(document).ready( function() {  })
+	.on('click','.partner_type label',function() {
+		this.previousElementSibling.click()
+	})
+	.on('click','.partner_type input[type=radio]',function() {
+		var type = $(this).val()
+
+		$('.help').removeClass('on')
+		$('input').removeClass('oops').not('[type=radio],[type=checkbox]').each( function() {
+			var $input = $(this)
+			if( ($input.attr('for') || '').search(type) === -1 ) {
+				$input.bind('otransitionend msTransitionEnd transitionend webkitTransitionEnd', function() { $(this).hide().unbind('otransitionend msTransitionEnd transitionend webkitTransitionEnd').removeClass('off')  })
+				$input.addClass('off')
+			} else $input.removeClass('off').show()
+		})
+	})
+	.on('click','#tos',function(){
+		$(this).parent().removeClass('oops')
+	})
+	.on('focus','input',function() {
+		$('.help').removeClass('on')
+		$(this).next().addClass('on')
+	})
+	.on('blur','input',function(){
+		var $this = $(this)
+		if( $this.val().length > 0 ) $this.removeClass('oops')
+	})
+	.on('submit','form',function(e){
+		var errors = [],
+			$tos = $(tos)
+		$('input:visible').removeClass('oops').not('[type=radio],[type=checkbox]').each( function() {
+			var $input = $(this)
+			if( $input.val().length < 1 && $input.attr('placeholder').search(/\*/) !== -1 ) {
+				errors.push( $input.addClass('oops') )
+			}
+		})
+		if( ! $tos.is(':checked') ) {
+			errors.push('tos')
+			$tos.parent().addClass('oops')
+		}
+		if( errors.length ) e.preventDefault();
+	})
