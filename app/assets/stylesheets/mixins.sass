@@ -12,14 +12,14 @@
 		display: block
 		position: absolute
 		border-style: solid
-	
+
 	&:before
 		display: block
 		left: 0
 		top: $height
 		border-width: 14px
 		border-color: $lightcolor $lightcolor transparent transparent
-	
+
 	&:after
 		display: block
 		right: 0
@@ -37,11 +37,11 @@
 	-moz-border-radius: 3px
 	-webkit-border-radius: 3px
 	border-radius: 3px
-	
+
 	border: none
 	&, img
 		cursor: pointer
-		
+
 	display:inline-block
 	color: white
 	font-family:Cubano
@@ -54,6 +54,10 @@
 
 	&:hover
 		background-color: lighten($color,3%)
+
+	span
+		font-size: 120%
+		margin: 0 -.4em
 
 
 @mixin tag
