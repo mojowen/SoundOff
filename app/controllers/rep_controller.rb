@@ -1,4 +1,4 @@
-class RepController < ActionController::Base
+class RepController < ApplicationController
 	def index
 		all_reps = Rep.all
 		render :json => all_reps.map{ |r| r.data = nil; r }
