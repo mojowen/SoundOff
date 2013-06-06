@@ -20,11 +20,12 @@ ActiveRecord::Schema.define(:version => 20130604042445) do
     t.string   "background"
     t.date     "end"
     t.integer  "goal"
-    t.boolean  "email_option"
+    t.string   "email_option", :default => "optional"
+    t.string   "target",       :default => "house"
     t.text     "suggested",    :default => "[]"
     t.integer  "partner_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   add_index "campaigns", ["partner_id"], :name => "index_campaigns_on_partner_id"
