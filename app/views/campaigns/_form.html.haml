@@ -1,0 +1,124 @@
+= form_for @campaign do |f|
+
+	= f.text_field :name, :placeholder => 'Name of Campaign*', :counter => 120
+	.help What is the name of your Campaign?
+
+	.count 120
+
+
+	= f.text_field :hashtag, :placeholder => 'Campaign Hashtag*', :counter => 20
+	.help What Hashtag should we associate with this campaign - will automatically remove spaces
+	.count 20
+	.extra #
+
+	= f.text_area :description, :placeholder => 'Describe Your Campaign*', :counter => 250, :rows => 10
+	.help
+	.count 250
+
+	.email_options.radio
+		%h2 Email Options
+
+		= f.radio_button :email_option, 'optional', :checked => 'checked'
+		%label Optional
+		%span users are prompted for their email address - but it's optional
+		%br
+
+		= f.radio_button :email_option, 'required'
+		%label Required
+		%span users are required to enter their email address
+		%br
+
+		= f.radio_button :email_option, 'hidden'
+		%label Hidden
+		%span users are note prompted for their email address
+
+	.suggested
+		%input{ :type => 'checkbox', :checked => true }
+		%label Include Suggested Tweets
+
+		.suggested_tweets
+			%input{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][1]' }
+			.help These tweets will be displayed when users tweet as helpful suggestions
+
+			%input{ :placeholder => 'Tweet Suggestion #2', :name_off => 'campaign[suggested][2]', :style => 'display:none' }
+			%input{ :placeholder => 'Tweet Suggestion #3', :name_off => 'campaign[suggested][3]', :style => 'display:none' }
+			%input{ :placeholder => 'Tweet Suggestion #4', :name_off => 'campaign[suggested][4]', :style => 'display:none' }
+
+	.targets.radio
+		%h2 Targets
+
+		= f.radio_button :target, 'optional', :checked => 'checked'
+		%label US House of Representatives
+		%br
+		= f.radio_button :target, 'required'
+		%label US Senate
+		%div{ :style => 'display: block; margin-top: -10px' }
+			%span ( Will mention two accounts in tweet )
+
+	.notice
+		Once you submit your campaign it will need to be approved by HeadCount - you'll get a notice when it's good to go.
+	%button
+		Create&nbsp;
+		%span #S
+		ound
+		%span O
+		ff
+:javascript
+	$(document).ready( function() { })
+	.on('click','.radio label',function() {
+		this.previousElementSibling.click()
+	})
+	.on('keydown','textarea, input',function(){
+		var $this = $(this),
+			txt = $this.val()
+
+		if( $this.is('#campaign_hashtag') ) {
+			txt = txt.replace(/\s|\#/,'')
+			$this.val(txt)
+		}
+		var count = parseInt($this.attr('counter')) - txt.length,
+			oops = count < 0 ? 'oops' : ''
+
+		$this.nextAll('.count:first').text( count ).removeClass('oops').addClass(oops)
+
+	})
+	.on('click','.suggested input[type=checkbox]',function() {
+		var $this = $(this)
+
+		if( $this.is(':checked') ) {
+			var $next = $this.nextAll('.suggested_tweets').find('input:first')
+			$next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null );
+		} else $this.nextAll('.suggested_tweets').find('input').hide().each( function(){
+			var $next = $(this)
+			$next.attr('name_off', $next.attr('name') ).attr('name', null )
+		})
+	})
+	.on('keydown change','.suggested_tweets input',function() {
+		var $this = $(this),
+			$next = $this.nextAll('input:first')
+		if( $this.val().length > 0 ) $next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null )
+		else $this.nextAll('input:first').hide().attr('name_off', $next.attr('name') ).attr('name', null )
+	})
+	.on('focus','input',function() {
+		$('.help').removeClass('on')
+		$(this).next().addClass('on')
+	})
+	.on('blur','input',function(){
+		var $this = $(this)
+		if( $this.val().length > 0 ) $this.removeClass('oops')
+	})
+	.on('submit','form',function(e){
+		var errors = []
+
+		$('input:visible').removeClass('oops').not('[type=radio],[type=checkbox]').each( function() {
+			var $input = $(this)
+			if(
+				($input.val().length < 1 && $input.attr('placeholder').search(/\*/) !== -1) ||
+				$input.val().length > parseInt( $input.attr('counter') )
+			) {
+				errors.push( $input.addClass('oops') )
+			}
+		})
+
+		if( errors.length ) e.preventDefault();
+	})
