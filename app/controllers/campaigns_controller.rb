@@ -11,7 +11,11 @@ class CampaignsController < ApplicationController
 	end
 
 	def new
-		@campaign = current_user.partner.campaigns.new
+		if current_user.admin
+			@campaign = Campaign.new
+		else
+			@campaign = current_user.partner.campaigns.new
+		end
 	end
 
 	def create
