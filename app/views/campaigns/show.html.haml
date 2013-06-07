@@ -1,0 +1,42 @@
+%h1 Create Widget for ##{@campaign.hashtag}
+%script{ :src => asset_path( "widget_snippet.js" ) }
+
+#content.show
+	%h2
+		Select Style:
+		%span.light.selected Light
+		%span.dark Dark
+
+	.widget_box.light
+		%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.hashtag}= @campaign.hashtag
+		%textarea
+			:plain
+				<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="##{@campaign.hashtag}">##{@campaign.hashtag}</a>
+
+
+	.widget_box.dark
+		%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.hashtag}= @campaign.hashtag
+		%textarea
+			:plain
+				<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="##{@campaign.hashtag}">##{@campaign.hashtag}</a>
+
+	%p Click to Copy and Paste into Your Website
+
+:javascript
+	$(document)
+	.on('click','textarea',function(){
+		$(this).select()
+	})
+	.on('click','.dark, .light',function() {
+		var $this = $(this)
+		if( $this.addClass('selected').is('.dark') ) {
+			$('.widget_box.light').hide()
+			$('.widget_box.dark').show()
+			$('h2 .light').removeClass('selected')
+		}
+		if( $this.addClass('selected').is('.light') ) {
+			$('.widget_box.light').show()
+			$('.widget_box.dark').hide()
+			$('h2 .dark').removeClass('selected')
+		}
+	})

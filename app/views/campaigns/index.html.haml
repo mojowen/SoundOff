@@ -1,0 +1,22 @@
+%h1 My Campaigns
+
+#content.index
+	%h4 Select a Campaign
+
+	%table
+		%thead
+			%tr
+				%th.name Name
+				%th.url URL
+				%th.pending Status
+				%th.widget Widgets
+				%th.dl Names
+		%tbody
+			- @campaigns.each do |campaign|
+
+				%tr
+					%td.name= campaign.name
+					%td.url= link_to campaign.url, campaign.url
+					%td.pending= campaign.status
+					%td.widget= link_to 'widgets', campaign_path( campaign )
+					%td.dl= link_to 'download', campaign_path( campaign )+'.text'

@@ -20,7 +20,7 @@ ready( function() {
 				config = [],
 				style = add_link.className.replace(/soundoff_widget|\_|\s/g,''),
 				width = '100%',
-				minWidth = '180px',
+				minWidth = '220px',
 				maxWidth = '600px',
 				height = 500
 
@@ -65,7 +65,7 @@ ready( function() {
 			widget_bottom_button.style.maxWidth = maxWidth
 			widget_bottom_button.style.height = '60px'
 
-			
+
 			// The container
 			container.style.position = 'relative'
 			container.style.height = height + 10 +'px'
@@ -74,7 +74,7 @@ ready( function() {
 			container.appendChild(widget_frame)
 			container.appendChild(widget_top_button)
 			container.appendChild(widget_bottom_button)
-			
+
 			the_parent.insertBefore(container,add_link)
 			widget_bottom_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign').replace(/\#/,''), style: this.getAttribute('module_style') } ) }
 			widget_top_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign').replace(/\#/,''), style: this.getAttribute('module_style') } ) }

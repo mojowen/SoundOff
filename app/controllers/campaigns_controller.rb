@@ -2,6 +2,14 @@ class CampaignsController < ApplicationController
 	layout 'application.html'
 	before_filter :only_logged_in
 
+	def index
+		if current_user.admin
+			@campaigns = Campaign.all
+		else
+			@campaigns = current_user.partner.campaigns
+		end
+	end
+
 	def new
 		@campaign = current_user.partner.campaigns.new
 	end
@@ -34,11 +42,21 @@ class CampaignsController < ApplicationController
 			render action 'edit'
 		end
 	end
-
-	def index
-	end
-
 	def show
+		@campaign = Campaign.find( params[:id] )
+
+		respond_to do |format|
+			format.html
+			format.text do
+				if ! current_user.admin && @campaign.partner != current_user.partner
+					result = ''
+				else
+					result =  ['This','is','where','the','emails','would','go'].join("\n")
+				end
+				render :inline => result
+			end
+		end
 	end
+
 
 end
