@@ -33,16 +33,22 @@
 		%span users are note prompted for their email address
 
 	.suggested
-		%input{ :type => 'checkbox', :checked => true }
+		%input{ :type => 'checkbox', :checked => @campaign.new_record? || @campaign.suggested.length > 1 }
 		%label Include Suggested Tweets
 
 		.suggested_tweets
-			%input{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][1]' }
-			.help These tweets will be displayed when users tweet as helpful suggestions
-
-			%input{ :placeholder => 'Tweet Suggestion #2', :name_off => 'campaign[suggested][2]', :style => 'display:none' }
-			%input{ :placeholder => 'Tweet Suggestion #3', :name_off => 'campaign[suggested][3]', :style => 'display:none' }
-			%input{ :placeholder => 'Tweet Suggestion #4', :name_off => 'campaign[suggested][4]', :style => 'display:none' }
+			- 4.times do |index|
+				- if index == 0
+					- if @campaign.new_record? || @campaign.suggested[index]
+						%input{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :value => @campaign.suggested[index] || '' }
+					- else
+						%input{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' }
+					.help These tweets will be displayed when users tweet as helpful suggestions
+				- else
+					- if @campaign.suggested[index]
+						%input{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :value => @campaign.suggested[index] }
+					- else
+						%input{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none' }
 
 	.targets.radio
 		%h2 Targets
@@ -58,13 +64,19 @@
 	.notice
 		Once you submit your campaign it will need to be approved by HeadCount - you'll get a notice when it's good to go.
 	%button
-		Create&nbsp;
+		- if @campaign.new_record?
+			Create
+
+		- else
+			Update
+
+		&nbsp;
 		%span #S
 		ound
 		%span O
 		ff
 :javascript
-	$(document).ready( function() { })
+	$(document).ready( function() { $('.suggested_tweets input').change() })
 	.on('click','.radio label',function() {
 		this.previousElementSibling.click()
 	})
