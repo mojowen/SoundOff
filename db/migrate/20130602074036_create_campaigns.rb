@@ -10,6 +10,8 @@ class CreateCampaigns < ActiveRecord::Migration
       t.integer :goal
 
       t.string :email_option, :default => 'optional'
+      t.string :status, :default => 'pending'
+      t.string :short_url
       t.string :target, :default => 'house'
 
       t.text :suggested, :default => '[]'
@@ -19,5 +21,6 @@ class CreateCampaigns < ActiveRecord::Migration
       t.timestamps
     end
     add_index :campaigns, :partner_id
+    add_index :campaigns, :short_url, :unique => true
   end
 end

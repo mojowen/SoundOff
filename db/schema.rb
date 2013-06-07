@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(:version => 20130604042445) do
     t.date     "end"
     t.integer  "goal"
     t.string   "email_option", :default => "optional"
+    t.string   "status",       :default => "pending"
+    t.string   "short_url"
     t.string   "target",       :default => "house"
     t.text     "suggested",    :default => "[]"
     t.integer  "partner_id"
@@ -29,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130604042445) do
   end
 
   add_index "campaigns", ["partner_id"], :name => "index_campaigns_on_partner_id"
+  add_index "campaigns", ["short_url"], :name => "index_campaigns_on_short_url", :unique => true
 
   create_table "options", :force => true do |t|
     t.string "name"
