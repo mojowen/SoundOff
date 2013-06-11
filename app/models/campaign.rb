@@ -46,9 +46,9 @@ class Campaign < ActiveRecord::Base
 			:score => score,
 			:description => description,
 			:id => id,
-			:partner => (partner.name rescue null),
-			:logo => (partner.logo rescue null),
-			:website => (partner.website rescue null),
+			:partner => (partner.name rescue nil),
+			:logo => (partner.logo rescue nil),
+			:website => (partner.website rescue nil),
 			:tweets => [],
 			:created_at => created_at,
 			:short_url => short_url
