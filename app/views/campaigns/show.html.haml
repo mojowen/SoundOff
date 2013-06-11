@@ -85,7 +85,7 @@
 
 		$('textarea:first').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'script><a class="soundoff_widget_light" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">'+value+'</a>');
 
-		$('textarea:first').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'sscript><a class="soundoff_widget_light" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">'+value+'</a>');
+		$('textarea:last').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'script><a class="soundoff_widget_dark" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">'+value+'</a>');
 
 		$('iframe').contents().find('h1').text(value)
 	})
