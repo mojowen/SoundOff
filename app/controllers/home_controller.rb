@@ -42,7 +42,7 @@ class HomeController < ApplicationController
     	:home => true,
     	:single => params[:short_url] || rep || nil,
       :random_reps => Rep.all( :order => 'RANDOM()', :limit => 10 ).map{ |r| r.data = nil; r },
-      :raw_campaigns => Campaign.all.map(&:to_obj),
+      :raw_campaigns => Campaign.active.map(&:to_obj),
       :open_soundoff => open_soundoff
    	}
     @body_class = 'home'
@@ -77,7 +77,30 @@ class HomeController < ApplicationController
     )
     result =  soundoffs.join("\n")
 
-  render :text => result
+    render :text => result
+  end
+
+  def sitemap
+
+
+    @urls = [
+        # A place to put urls
+        # { :priority => '0.4', :url => ENV['BASE_URL']+'/about', :updated => '2012-10-05'},
+        # { :priority => '0.4', :url => ENV['BASE_URL']+'/guides', :updated => newwest_user > newwest_feedback ? newwest_user.to_date : newwest_feedback.to_date  }
+        { :priority => '0.4', :url => ENV['BASE_URL'], :updated => Soundoff.all( :order => 'created_at DESC',:limit => 1).first.created_at  }
+      ]
+
+    @urls += Campaign.active.map do |campaign|
+      { :priority => '1.0', :url => campaign.url , :updated => campaign.updated.to_date  }
+    end
+
+    @urls += Rep.active.map{ |rep| { :priority => '0.6', :url => rep.url, :updated => rep.updated.to_date } }
+
+    if params[:format] == 'json'
+      render :json => @urls.count
+    else
+      render :template => 'home/sitemap', :layout => false
+    end
   end
 
 end

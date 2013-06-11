@@ -54,5 +54,15 @@ class Campaign < ActiveRecord::Base
 			:short_url => short_url
 		}
 	end
+	def self.active
+    	return all( :conditions => { :status => 'approved'} )
+	end
+	def updated
+		if last_soundoff = Soundoff.all( :limit => 1, :conditions => { :campaign_id => id}, :order => 'created_at DESC' ).first
+			return last_soundoff.created_at
+		else
+			return updated_at
+		end
+	end
 
 end
