@@ -54,10 +54,10 @@
 	.targets.radio
 		%h2 Targets
 
-		= f.radio_button :target, 'optional', :checked => 'checked'
+		= f.radio_button :target, 'house', :checked => 'checked'
 		%label US House of Representatives
 		%br
-		= f.radio_button :target, 'required'
+		= f.radio_button :target, 'senate'
 		%label US Senate
 		%div{ :style => 'display: block; margin-top: -10px' }
 			%span ( Will mention two accounts in tweet )
