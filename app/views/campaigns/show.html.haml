@@ -57,7 +57,7 @@
 			= link_to 'Edit Campaign', edit_campaign_path( @campaign )
 			&nbsp;|&nbsp;
 			= link_to 'See All Your Campaigns', campaigns_path
-			%script{ :src => asset_path( "status.js" ) }
+
 
 :javascript
 	var campaign_short_url = #{ @campaign.url.to_json }
