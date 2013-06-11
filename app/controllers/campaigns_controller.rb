@@ -4,9 +4,9 @@ class CampaignsController < ApplicationController
 
 	def index
 		if current_user.admin
-			@campaigns = Campaign.all
+			@campaigns = Campaign.all.reverse
 		else
-			@campaigns = current_user.partner.campaigns
+			@campaigns = current_user.partner.campaigns.reverse
 		end
 	end
 
@@ -45,6 +45,7 @@ class CampaignsController < ApplicationController
 		end
 
 		if @campaign.save
+			respond_to do |format|
 				format.html { redirect_to campaigns_path }
 				format.json { render :json => { :success => true } }
 			end
