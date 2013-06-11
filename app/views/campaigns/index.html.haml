@@ -13,10 +13,11 @@
 				%th.dl Names
 		%tbody
 			- @campaigns.each do |campaign|
+						%td.pending= render 'status', :campaign => campaign
 
 				%tr
 					%td.name= campaign.name
 					%td.url= link_to campaign.url, campaign.url
 					%td.pending= campaign.status
 					%td.widget= link_to 'widgets', campaign_path( campaign )
-					%td.dl= link_to 'download', campaign_path( campaign )+'.text'
+					%td.dl= link_to 'download', campaign_path( campaign )+'.text'%script{ :src => asset_path( "status.js" ) }

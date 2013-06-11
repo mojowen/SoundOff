@@ -1,0 +1,6 @@
+%select.change_status{ :name => 'status', :campaign => campaign.id, :disabled => campaign.status == 'pending' && !current_user.admin }
+	%option{ :selected => campaign.status == 'approved' } Approved
+	%option{ :selected => campaign.status == 'innactive' } Innactive
+	%option{ :selected => campaign.status == 'pending' } Pending
+	- if current_user.admin
+		%option Destroy

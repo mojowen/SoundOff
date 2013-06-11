@@ -1,0 +1,48 @@
+%h2 #{@campaign.partner.name} Just Submitted #{@campaign.name} Campaign
+
+%p
+	= link_to 'approve campaign here', campaigns_path
+%p
+	%strong Campaign Name:
+	= @campaign.name
+
+%p
+	%strong Hashtag:
+	= @campaign.hashtag
+
+%p
+	%strong Target:
+	= @campaign.target
+
+- if @campaign.collect_email
+	%p
+		%strong Email:
+		= @campaign.email_option
+
+%p
+	%strong Description:
+	:plain
+		#{@campaign.description}
+
+%h2 Partner Info
+
+%p
+	%strong Partner Name:
+	= @campaign.partner.name
+
+%p= link_to 'Partner Website', @campaign.partner.website
+
+%p
+	%strong Partner Type:
+	= @campaign.partner.partner_type
+
+%p
+	%strong Contact Name:
+	= @campaign.partner.users.first.name
+
+%p
+	%strong Contact Email:
+	= @campaign.partner.users.first.name
+%p
+	%strong Contact Phone:
+	= @campaign.partner.users.first.phone

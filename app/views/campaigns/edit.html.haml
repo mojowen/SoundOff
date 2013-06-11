@@ -1,4 +1,9 @@
 %h1 Edit Campaign
 
 #content
+	- if current_user.admin
+		%h3{ :style => 'text-align: center;' }
+			Set Campaign Status
+			= render 'status', :campaign => @campaign
+			%script{ :src => asset_path( "status.js" ) }
 	= render 'form'

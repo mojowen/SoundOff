@@ -40,10 +40,19 @@ class CampaignsController < ApplicationController
 
 		@campaign.assign_attributes( params[:campaign] )
 
+		if current_user.admin && params[:status] || ( current_user.partner == @campaign.partner && @campaign.status != 'pending')
+			@campaign.status = params[:status]
+		end
+
 		if @campaign.save
-			redirect_to campaigns_path
+				format.html { redirect_to campaigns_path }
+				format.json { render :json => { :success => true } }
+			end
 		else
-			render action 'edit'
+			respond_to do |format|
+				render action 'edit'
+				format.json { render :json => { :success => false } }
+			end
 		end
 	end
 	def show

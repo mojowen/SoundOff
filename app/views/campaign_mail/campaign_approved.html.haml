@@ -1,0 +1,15 @@
+%h2 #{@campaign.partner.name} Was Approved!
+
+%p
+	Check out the campaign's page here:
+	= link_to @campaign.url, @campaign.url
+
+%p
+	Create a widget your website here:
+	= link_to ENV['BASE_DOMAIN'] + campaign_path( @campaign ), ENV['BASE_DOMAIN'] + campaign_path( @campaign )
+
+%p
+	Questions? Comments? Don't hesitate to drop us a line:
+	= link_to 'info@soundoffatcongress.org',  'mailto:info@soundoffatcongress.org'
+
+%p \- The SoundOff Team
