@@ -108,5 +108,10 @@
 			errors.push('tos')
 			$tos.parent().addClass('oops')
 		}
+		if( $('input[type=radio]:checked').length == 0 ) {
+			errors.push('partner_type');
+			$('.partner_type').addClass('oops');
+		}
 		if( errors.length ) e.preventDefault();
+		else $('input[type=text]:hidden').remove()
 	})
