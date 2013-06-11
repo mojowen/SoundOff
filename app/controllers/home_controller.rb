@@ -23,7 +23,7 @@ class HomeController < ApplicationController
       @title = campaign.name+' #'+ campaign.hashtag
       @og_title = @title+' | #SoundOff @ Congress'
       @og_description = campaign.description
-      @og_image = campaign.partner.logo
+      @og_image = (campaign.partner.logo rescue nil)
 
     end
 
