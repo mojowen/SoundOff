@@ -166,6 +166,7 @@ function homePageScope($http, $scope) {
 				$scope.search = found[0].name;
 				setTimeout( function() { $scope.single_item = found[0]; },1)
 				window.name += 'soundoff_open'
+				if( $oundoff_config.open_soundoff ) $oundoff_config.open_soundoff.campaign = found[0].id;
 			} else {
 				$scope.setScoreBoard();
 				$scope.search = state
@@ -178,8 +179,12 @@ function homePageScope($http, $scope) {
 
 			$scope.search = '@'+state.twitter_screen_name
 			$scope.mode = 'reps'
+			if( $oundoff_config.open_soundoff ) $oundoff_config.open_soundoff.targets = state.twitter_screen_name
 
 			setTimeout( function() { $scope.single_item = state; $scope.active = state; },1)
+		}
+		if( $oundoff_config.open_soundoff ) {
+			openSoundOff( $oundoff_config.open_soundoff )
 		}
 
 	}

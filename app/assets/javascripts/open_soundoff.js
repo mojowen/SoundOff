@@ -6,9 +6,11 @@ function openSoundOff( args ) {
 
   if( typeof args == 'string' ) args = { campaign: args }
   for( var i in args ) {
-    if( i == 'campaign' ) args['campaign'] = args[i].replace(/\#/g,'')
-    if( i == 'reps' ) args['reps'] = args[i].replace(/\@/g,'').join(',')
-    config += i + '=' + args[i] +'&';
+    if( args[i] != null ) {
+      if( i == 'campaign' ) args['campaign'] = args[i].toString().replace(/\#/g,'')
+      if( i == 'reps' ) args['reps'] = args[i].replace(/\@/g,'').join(',')
+      config += i + '=' + args[i] +'&';
+    }
   }
 
   if ( isMobile.any() ) {
@@ -24,7 +26,7 @@ function openSoundOff( args ) {
       form.id = 'form_iframe_soundoff'
 
       form.src = $oundoff_base_domain+'/form?'+config
-      
+
       form.style.width = '0px'
       form.style.border = 'none'
       form.style.height = '0px'

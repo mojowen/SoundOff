@@ -5,6 +5,8 @@ class HomeController < ApplicationController
 
   	if params[:twitter_screen_name]
   		rep = Rep.find_by_twitter_screen_name( params[:twitter_screen_name] )
+      redirect_to home_path if rep.nil?
+
   		rep.data = nil
       rep[:short_url] = rep_path( rep.twitter_screen_name )
 
@@ -14,14 +16,34 @@ class HomeController < ApplicationController
       @og_image = 'https://api.twitter.com/1/users/profile_image?screen_name='+rep.twitter_screen_name
 
   	end
+    if params[:short_url]
+      campaign = Campaign.find_by_short_url( params[:short_url] )
+      redirect_to home_path if campaign.nil?
 
-    # Will want to do something here with campaigns
+      @title = campaign.name+' #'+ campaign.hashtag
+      @og_title = @title+' | #SoundOff @ Congress'
+      @og_description = campaign.description
+      @og_image = campaign.partner.logo
+
+    end
+
+    if params[:email] || params[:zip] || params[:targets] || params[:message]
+      open_soundoff = {
+        :email => params[:email],
+        :zip => params[:zip],
+        :targets => params[:targets],
+        :message => params[:message]
+      }
+    else
+      open_soundoff = false
+    end
 
     @config = {
     	:home => true,
     	:single => params[:short_url] || rep || nil,
       :random_reps => Rep.all( :order => 'RANDOM()', :limit => 10 ).map{ |r| r.data = nil; r },
       :raw_campaigns => Campaign.all.map(&:to_obj),
+      :open_soundoff => open_soundoff
    	}
     @body_class = 'home'
     @body_class += ' fixed' if params[:short_url] || params[:twitter_screen_name]
