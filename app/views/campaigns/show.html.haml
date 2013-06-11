@@ -1,28 +1,67 @@
-%h1 Create Widget for ##{@campaign.hashtag}
-%script{ :src => asset_path( "widget_snippet.js" ) }
+%h1 #{@campaign.name} ##{@campaign.hashtag}
 
 #content.show
-	%h2
-		Select Style:
-		%span.light.selected Light
-		%span.dark Dark
 
-	.widget_box.light
-		%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.hashtag}= @campaign.hashtag
-		%textarea
-			:plain
-				<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="##{@campaign.hashtag}">##{@campaign.hashtag}</a>
+	- if @campaign.status == 'pending'
+		%h3 Submitted for approval
+		.info
+			%p
+				%strong Campaign Name:
+				= @campaign.name
+
+			%p
+				%strong Hashtag:
+				@campaign.hashtag
+
+			%p
+				%strong Target:
+				= @campaign.target
+
+			%p
+				%strong Description:
+				:plain
+					#{@campaign.description}
+	- else
+		%script{ :src => asset_path( "widget_snippet.js" ) }
+
+		%h2 Create a Widget for #{@campaign.name}
+
+		%h3
+			Customize The Title:
+			%input.title_customize{ :value => @campaign.name }
+
+		%h3
+			Select Style:
+			%span.light.selected Light
+			%span.dark Dark
+
+		.widget_box.light
+			%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.hashtag }= @campaign.hashtag
+			%textarea
+				:plain
+					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.name}</a>
 
 
-	.widget_box.dark
-		%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.hashtag}= @campaign.hashtag
-		%textarea
-			:plain
-				<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="##{@campaign.hashtag}">##{@campaign.hashtag}</a>
+		.widget_box.dark
+			%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.hashtag}= @campaign.hashtag
+			%textarea
+				:plain
+					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.name}</a>
 
-	%p Click to Copy and Paste into Your Website
+		%p Copy and paste into your website to add the widget.
+
+		.menu
+			- if @campaign.collect_email || current_user.admin
+				= link_to 'Download Names', campaign_path( @campaign )+'.text'
+				&nbsp;|&nbsp;
+			= link_to 'Edit Campaign', edit_campaign_path( @campaign )
+			&nbsp;|&nbsp;
+			= link_to 'See All Your Campaigns', campaigns_path
+			%script{ :src => asset_path( "status.js" ) }
 
 :javascript
+	var campaign_short_url = #{ @campaign.url.to_json }
+
 	$(document)
 	.on('click','textarea',function(){
 		$(this).select()
@@ -32,11 +71,22 @@
 		if( $this.addClass('selected').is('.dark') ) {
 			$('.widget_box.light').hide()
 			$('.widget_box.dark').show()
-			$('h2 .light').removeClass('selected')
+			$('h3 .light').removeClass('selected')
 		}
 		if( $this.addClass('selected').is('.light') ) {
 			$('.widget_box.light').show()
 			$('.widget_box.dark').hide()
-			$('h2 .dark').removeClass('selected')
+			$('h3 .dark').removeClass('selected')
 		}
 	})
+	.on('keyup','.title_customize',function() {
+		var $this = $(this),
+		value = $this.val();
+
+		$('textarea:first').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'script><a class="soundoff_widget_light" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">'+value+'</a>');
+
+		$('textarea:first').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'sscript><a class="soundoff_widget_light" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">'+value+'</a>');
+
+		$('iframe').contents().find('h1').text(value)
+	})
+

@@ -37,8 +37,9 @@
 	#main #content.show
 		width: 70%
 		margin: 0 auto
-		h2
+		h3
 			text-align: center
+			margin: 80px 0
 			.dark, .light
 				padding: 20px
 				cursor: pointer
@@ -53,6 +54,11 @@
 				background: white
 			.selected
 				border-color: $darkgrey
+			input
+				font-size: 100%
+				width: 200px
+				border: 2px solid $darkgrey
+				background: white
 
 		textarea
 			width: 300px
@@ -60,8 +66,9 @@
 			resize: none
 			overflow: hidden
 			@include input
-			border: 2px solid #333
+			border: 2px solid $darkgrey
 			margin: 30px auto
+			display: block
 		.widget_box
 			width: 400px
 			margin: 50px auto
@@ -69,11 +76,24 @@
 				display: none
 		p
 			text-align: center
+		.info
+			p
+				text-align: left
+		.menu
+			a
+				font-size: 80%
 
 	#main #content.index
 		padding: 60px 60px 120px
 		%h3
 			color: $darkgrey
+		button
+			font-size: 80%
+			width: 300px
+			padding: 4px 10px
+
+		.dumb_table
+			min-height: 400px
 		table
 			width: 100%
 			font-size: 70%
@@ -86,11 +106,14 @@
 				padding: 0 10px
 			tbody tr td
 				padding: 10px
+				vertical-align: top
 
 			.url, .name
 				width: 300px
 			.pending
 				width: 60px
+			.dl
+				font-size: 60%
 	form
 		width: 60%
 		margin: 0 auto 80px
@@ -145,6 +168,9 @@
 				span
 					font-size: 60%
 					color: $blue
+				&.oops
+					color: $red
+
 			input
 				transition-property: margin-left
 				transition-duration: 0.8s
