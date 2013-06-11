@@ -19,6 +19,7 @@ class FrameController < ActionController::Base
       :name => (@campaign.name rescue nil),
       :campaign => (@campaign.hashtag rescue nil),
       :id => (@campaign.id rescue nil),
+      :short_url => (@campaign.short_url rescue ''),
       :target => (@campaign.target.downcase rescue nil),
       :email_required => (@campaign.email_option == 'required' rescue false),
       :no_email => (@campaign.collect_email rescue true),

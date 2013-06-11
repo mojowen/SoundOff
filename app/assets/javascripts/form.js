@@ -9,7 +9,7 @@ function formScope($http, $scope) {
 
 	$scope.campaign = config.campaign != null ? '#'+config.campaign : ''
 	$scope.name = config.name != null ? config.name : 'Tweet @ Your Rep'
-	$scope.stage = 1
+	$scope.stage = 4
 
 	$scope.nextStage = function() {
 		var $notice = $('#notice').html('').attr('class',''),
@@ -226,7 +226,7 @@ function formScope($http, $scope) {
 	if( $oundoff_config.campaign != null )  {
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
 		$scope.default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.campaign.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more! '
-		$scope.url = $oundoff_base_domain + '/' + ( config.short_url || '' )
+		$scope.url = $oundoff_base_domain + '/' + ( $oundoff_config.short_url || '' )
 	} else {
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
 		$scope.default_message += 'I just sent a %23SoundOff to my Rep. Do it to and help us %23SoundOff more! '
