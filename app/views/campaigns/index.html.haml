@@ -2,22 +2,31 @@
 
 #content.index
 	%h4 Select a Campaign
-
-	%table
-		%thead
-			%tr
-				%th.name Name
-				%th.url URL
-				%th.pending Status
-				%th.widget Widgets
-				%th.dl Names
-		%tbody
-			- @campaigns.each do |campaign|
-						%td.pending= render 'status', :campaign => campaign
-
+	.dumb_table
+		%table
+			%thead
 				%tr
-					%td.name= campaign.name
-					%td.url= link_to campaign.url, campaign.url
-					%td.pending= campaign.status
-					%td.widget= link_to 'widgets', campaign_path( campaign )
-					%td.dl= link_to 'download', campaign_path( campaign )+'.text'%script{ :src => asset_path( "status.js" ) }
+					%th.name Campaign Name
+					%th.url URL
+					%th.pending Status
+					%th{ :colspan => current_user.admin || current_user.partner.partner_type == 'nonprofit' ? 3 : 2 } Menu
+			%tbody
+				- @campaigns.each do |campaign|
+
+					%tr
+						%td.name= campaign.name
+						%td.url= link_to campaign.url, campaign.url
+						%td.pending= render 'status', :campaign => campaign
+						%td.dl= link_to 'create widgets', campaign_path( campaign )
+						- if current_user.admin || current_user.partner.partner_type == 'nonprofit'
+							%td.dl= link_to 'download names', campaign_path( campaign )+'.text'
+						%td.dl= link_to 'edit campaign', edit_campaign_path( campaign )
+
+	%a{ :href => new_campaign_path }
+		%button Launch New Campaign
+
+	- if current_user.admin
+		%a{ :href => all_path+'.text' }
+			%button All HeadCount Singups
+
+%script{ :src => asset_path( "status.js" ) }
