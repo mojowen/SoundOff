@@ -1,6 +1,6 @@
 %meta{ :property => 'og:title', :content => @og_title || '#SoundOff @ Congress' }
 
-%meta{ :property => 'og:image', :content => @og_image || asset_path( 'opengraph_default.png') }
+%meta{ :property => 'og:image', :content => @og_image || (ENV['BASE_DOMAIN'] || '')+asset_path( 'opengraph_default.png') }
 
 %meta{ :property => 'og:url', :content => (ENV['BASE_DOMAIN'] || '') + request.path }
 
@@ -12,7 +12,8 @@
 %link{ :rel => "shortcut icon", :href => asset_path( 'icon.png' ) }
 
 %meta{ :name => "twitter:card", :content => "summary" }
+%meta{ :name => "twitter:domain", :content => ENV['BASE_DOMAIN'] }
 %meta{ :name => "twitter:site", :content => "@headcountorg" }
 %meta{ :name => "twitter:title", :content => @og_title || '#SoundOff @ Congress' }
 %meta{ :name => "twitter:description", :content => @og_description || '#SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in goverment.' }
-%meta{ :name => "twitter:image", :content => @og_image || asset_path( 'opengraph_default.png') }
+%meta{ :name => "twitter:image", :content => @og_image || (ENV['BASE_DOMAIN'] || '')+asset_path( 'opengraph_default.png') }
