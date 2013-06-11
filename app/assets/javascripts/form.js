@@ -81,11 +81,11 @@ function formScope($http, $scope) {
 						}
 					)
 
-					// if( isMobile.any() ) document.location = '/redirect.html#'+'​'+escape(message)
-					// else {
-					// 	window.open('/redirect.html#'+'​'+escape(message) );
-					// 	next = 4
-					// }
+					if( isMobile.any() ) document.location = '/redirect.html#'+'​'+escape(message)
+					else {
+						window.open('/redirect.html#'+'​'+escape(message) );
+						next = 4
+					}
 				}
 				break;
 		}
