@@ -4,16 +4,18 @@ function formScope($http, $scope) {
 			target: $oundoff_config.target || 'house', // Can also be senate
 			campaign: $oundoff_config.campaign || null,
 			email_required: $oundoff_config.email_required || false,
+			name: $oundoff_config.name || null
 		}
 
-	$scope.campaign = config.campaign != null ? '#'+config.campaign : 'Tweet @ Your Rep'
+	$scope.campaign = config.campaign != null ? '#'+config.campaign : ''
+	$scope.name = config.name != null ? config.name : 'Tweet @ Your Rep'
 	$scope.stage = 1
 
 	$scope.nextStage = function() {
 		var $notice = $('#notice').html('').attr('class',''),
 			errors = [],
 			next = 1
-			
+
 		$('input,textarea').blur().removeClass('oops')
 
 		switch( $scope.stage ) {
@@ -57,16 +59,33 @@ function formScope($http, $scope) {
 					errors.push( 'you should really write something')
 					message.className += ' oops'
 				} else {
-					if( $scope.drop_campaign ) message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' '),$scope.message,'#soundoff' ].join(' ');
-					else message = [ $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' '), $scope.message,$scope.campaign.replace(/\s/g,''),'#soundoff' ].join(' ');
-					
-					window.onbeforeunload = null;
+					var targets = $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' ');
 
-					if( isMobile.any() ) document.location = '/redirect.html#'+'​'+escape(message)
-					else {
-						window.open('/redirect.html#'+'​'+escape(message) );
-						next = 4
-					}
+					if( $scope.drop_campaign ) message = [ targets,$scope.message,'#SoundOff' ].join(' ');
+					else message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOff' ].join(' ');
+
+					window.onbeforeunload = null;
+					$.post(
+						'/form',
+						{
+							soundoff: {
+								email: $scope.email,
+								zip: $scope.zip,
+								message: message,
+								targets: targets,
+								campaign_id: $oundoff_config.id,
+								hashtag: $scope.drop_campaign ? null : $scope.campaign,
+								headcount: $scope.add_headcount,
+								partner: $scope.add_partner
+							}
+						}
+					)
+
+					// if( isMobile.any() ) document.location = '/redirect.html#'+'​'+escape(message)
+					// else {
+					// 	window.open('/redirect.html#'+'​'+escape(message) );
+					// 	next = 4
+					// }
 				}
 				break;
 		}
@@ -81,6 +100,9 @@ function formScope($http, $scope) {
 	// Stage 1
 	$scope.zip = $oundoff_config.zip || ''
 	$scope.email = $oundoff_config.email || ''
+	$scope.add_partner = typeof $oundoff_config.no_email != 'undefined' ? $oundoff_config.no_email : true
+	$scope.add_headcount =  typeof $oundoff_config.no_email != 'undefined' ? $oundoff_config.no_email : true
+
 	$scope.ready_for_2 = false
 
 	$scope.sunligh_fetching = false
@@ -89,27 +111,27 @@ function formScope($http, $scope) {
 
 	$scope.targets = $oundoff_config.targets || []
 	if( $scope.targets.length > 0 ) {
-		$scope.campaign = 'Tweet @'+$scope.targets.map(function(el) { return el.twitter_id }).join(' @')
-		if( $scope.zip != '' && $scope.email != '' ) $scope.stage = 3;
+		if( $scope.campaign == '' ) $scope.campaign = 'Tweet @'+$scope.targets.map(function(el) { return el.twitter_id }).join(' @')
+		if( $scope.zip != '' && ( $scope.email != '' || ! config.email_required ) ) $scope.stage = 3;
 	}
-	
+
 	$scope.$watch( 'zip', function(newValue){
 		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.targets.length == 0 ) {
 				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
 				$scope.sunligh_fetching = true
 				$http.jsonp(query,{})
-					.success(function(data,status) { 
+					.success(function(data,status) {
 						$scope.electeds = data.results;
 						var limit = config.target == 'house' ? 1 : 2,
 							targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
 
-						if( targets.length != limit && typeof google_maps == 'undefined' ) addGoogleMaps(); 
+						if( targets.length != limit && typeof google_maps == 'undefined' ) addGoogleMaps();
 						else $scope.targets = targets;
 
 						$scope.sunligh_fetching = false;
 						if( $scope.ready_for_2 ) $scope.nextStage()
 					})
-		}		
+		}
 	})
 
 	// Stage 2 - clarfiy location
@@ -127,7 +149,7 @@ function formScope($http, $scope) {
 	$scope.$watch( 'latlng', getByLatLng )
 
 	function addGoogleMaps() {
-		var script = document.createElement( 'script' ), 
+		var script = document.createElement( 'script' ),
 			fjs = document.head.getElementsByTagName('script')[0]
     	script.type = 'text/javascript';
     	script.id = 'google_maps';
@@ -142,7 +164,7 @@ function formScope($http, $scope) {
 			$scope.geocoder.geocode( { 'address': address}, function(results, status) {
 				var location = results[0].geometry.location,
 					latlng = []
-				for( var i in location ) { 
+				for( var i in location ) {
 					if( typeof location[i] == 'number' ) latlng.push( location[i] )
 				}
 				angular.element( document.getElementById('popup') ).scope().$apply( function() {
@@ -156,7 +178,7 @@ function formScope($http, $scope) {
 		if( $scope.latlng ) {
 				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&latitude='+$scope.latlng[1]+"&longitude="+$scope.latlng[0]
 				$http.jsonp(query,{})
-					.success( function(data,status){ 
+					.success( function(data,status){
 						$scope.electeds = data.results;
 						$scope.targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
 
@@ -165,7 +187,7 @@ function formScope($http, $scope) {
 				})
 		}
 	}
-	
+
 	// Stage 3
 	$scope.message = $oundoff_config.message || ''
 	$scope.drop_campaign = $oundoff_config.campaign == null ? true : false
@@ -175,12 +197,12 @@ function formScope($http, $scope) {
 	}
 
 	$scope.targets_list = function() { return $scope.targets.map( function(el) { return '@'+el.twitter_id }).join(' ') }
-	
+
 
 	$scope.counter = 139
 	$scope.$watch('message',setCounter);
 	$scope.$watch('drop_campaign',setCounter);
-	
+
 	$scope.setMessage = function(message) {
 		$scope.message = message;
 		suggest.style.display = "none";
@@ -190,7 +212,7 @@ function formScope($http, $scope) {
 	function setCounter() {
 		var targets = '.'+$scope.targets_list(),
 			tags = $scope.drop_campaign ? [] : [$scope.campaign]
-		
+
 		tags.push('#soundoff')
 		tags = tags.join(' ')
 
@@ -200,7 +222,7 @@ function formScope($http, $scope) {
 	// Stage 4
 	$scope.default_message
 	$scope.url
-	
+
 	if( $oundoff_config.campaign != null )  {
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
 		$scope.default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.campaign.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more! '

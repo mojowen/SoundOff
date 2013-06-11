@@ -1,6 +1,6 @@
 #main{ "ng-app" => true }
 	#popup{ "ng-controller" => "formScope" }
-		%h2.hash_tag {{campaign}}
+		%h2.hash_tag {{name}}
 		#close X Close
 		%form#form{ :class => 'stage_{{stage}}', 'ng-submit' => 'nextStage()' }
 			= image_tag( @body_class.index('light') ? 'logo_dark.png' : 'logo_small.png' , :class => 'stage_1 stage_2')
@@ -8,7 +8,27 @@
 			#stage_1
 				%input{ :placeholder => "Zip Code", "ng-model" => "zip", :id => 'zip' }
 
-				%input{ :placeholder => "Email", "ng-model" => "email", :id => 'email'  }
+				- unless ( @campaign.email_option == 'hidden' rescue false )
+					%input{ :placeholder => "Email", "ng-model" => "email", :id => 'email'  }
+
+				- if ( @campaign.email_option == 'optional' rescue true )
+					.signups{ 'ng-hide' => 'email != "" '} Email is Optional
+
+				- if ( @campaign.collect_email rescue false ) && params[:email].nil?
+					.signups{ 'ng-hide' => 'email == "" '}
+						It’s OK to add me to the mailing list of:
+						%br
+						%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_headcount' }
+						%span{ :onclick => '$(this).prev().click()' } HeadCount.org
+						%br
+						- if ( @campaign.partner.name rescue false)
+							%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_partner' }
+							%span{ :onclick => '$(this).prev().click()' } #{ @campaign.partner.name }
+							%br
+						I agree to
+						= link_to 'terms and conditions', tos_path, :target => '_blank'
+						and
+						= link_to 'privacy policy', privacy_path, :target => '_blank'
 
 			#stage_2
 				%input{ :placeholder => 'Street Address', "ng-model" => 'street', :id => 'street' }
@@ -30,7 +50,8 @@
 				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
 				%p
-					%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;', 'ng-hide' => "campaign.search('Tweet @') !== -1 "  } Suggestions?
+					- unless @suggestions.empty?
+						%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;' } Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
 

@@ -1,3 +1,5 @@
+$width: 650px
+
 body.form
 	padding: 10px 20px
 	background: $grey
@@ -17,10 +19,14 @@ body.dark
 			$light: $darkgrey
 			$dark: $grey
 			background: $light
+			// width: $width
+			// left: 0
+			// top: 0
 			&::after
 				border-color: $dark transparent transparent $dark
 			&::before
 				border-color: $dark $dark transparent transparent
+			// 	display: none
 body.light
 	#popup
 		background: $grey
@@ -28,16 +34,21 @@ body.light
 			color: $darkgrey
 			h1
 				color: #333
+				&:before, &:after
+					content: ''
 		h2
 			$light: #333
 			$dark: $darkgrey
 			background: $light
+			// width: $width
+			// left: 0
+			// top: 0
 			&::after
 				border-color: $dark transparent transparent $dark
 			&::before
 				border-color: $dark $dark transparent transparent
+			// 	display: none
 #popup
-	$width: 644px
 	background: $blue
 	width: $width - 28px*2
 	@media (max-width: $break-medium)
@@ -55,7 +66,7 @@ body.light
 		cursor: pointer
 
 	h2
-		@include ribbon($yellow, $darkyellow, $width)
+		@include ribbon(#333,#555, $width )
 		color: white
 		padding: 12px 10px
 
@@ -84,6 +95,11 @@ body.light
 		input,textarea
 			@include input
 
+		input[type=checkbox]
+			display: inline
+			width: auto
+			margin: 0 8px
+
 		textarea
 			height: 200px
 			font-size: 30px
@@ -91,6 +107,7 @@ body.light
 
 		#stage_1, #stage_2, #stage_3, .stage_1, .stage_2, .stage_3, #stage_4, .stage_4
 			display: none
+			position: relative
 
 		&.stage_1
 			#stage_1, .stage_1
@@ -119,7 +136,15 @@ body.light
 
 		.counter
 			float: right
-
+		.signups
+			line-height: 1.7
+			padding: 0 40px
+			font-size: 90%
+			margin: -20px 0 -10px
+			span
+				cursor: pointer
+				&:hover
+					text-decoration: underline
 		#stage_3 h1
 			word-wrap: break-word
 			width: 70%
@@ -129,17 +154,15 @@ body.light
 			display: inline-block
 			position: absolute
 			text-decoration: none
-			background: #CDE69C
-			color: #638421
+			background: #333
+			color: #fff
 			font-family: helvetica
 			font-size: 30px
 			line-height: 34px
 			text-align: right
-			right: 17%
-			bottom: 43%
-			@media (max-width: 450px)
-				bottom: 39.5%
-				right: 18%
+			right: 30px
+			bottom: 4px
+
 			span
 				cursor: pointer
 				color: $darkgrey
