@@ -36,14 +36,14 @@
 			%span.dark Dark
 
 		.widget_box.light
-			%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.hashtag }= @campaign.hashtag
+			%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
 			%textarea
 				:plain
 					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.name}</a>
 
 
 		.widget_box.dark
-			%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.hashtag}= @campaign.hashtag
+			%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
 			%textarea
 				:plain
 					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.name}</a>
