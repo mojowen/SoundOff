@@ -15,22 +15,23 @@
 	.help
 	.count 250
 
-	.email_options.radio
-		%h2 Email Options
+	- if current_user.admin || current_user.partner.partner_type == 'nonprofit'
+		.email_options.radio
+			%h2 Email Options
 
-		= f.radio_button :email_option, 'optional', :checked => 'checked'
-		%label Optional
-		%span users are prompted for their email address - but it's optional
-		%br
+			= f.radio_button :email_option, 'optional', :checked => 'checked'
+			%label Optional
+			%span users are prompted for their email address - but it's optional
+			%br
 
-		= f.radio_button :email_option, 'required'
-		%label Required
-		%span users are required to enter their email address
-		%br
+			= f.radio_button :email_option, 'required'
+			%label Required
+			%span users are required to enter their email address
+			%br
 
-		= f.radio_button :email_option, 'hidden'
-		%label Hidden
-		%span users are note prompted for their email address
+			= f.radio_button :email_option, 'hidden'
+			%label Hidden
+			%span users are note prompted for their email address
 
 	.suggested
 		%input{ :type => 'checkbox', :checked => @campaign.new_record? || @campaign.suggested.length > 1 }
