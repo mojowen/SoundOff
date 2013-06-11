@@ -12,12 +12,6 @@ body.dark
 	#main
 		background: #333
 		color: $grey
-		#header
-			color: $grey
-			&:hover
-				border-color: $darkred
-				h1
-					color: $red
 
 		#content .tweet a
 			color: $grey
@@ -63,27 +57,30 @@ body.dark
 		padding: 2px
 		cursor: pointer
 		border-radius: 4px
-
+		background: lightgray
 		border: 1px solid $grey
 
-		&:hover
-			opacity: 0.9
-			border-color: $red
-			h1
-				color: $darkred
-
-		a.logo img
-			height: 40px
-			margin: 4px 0 0 20px
+		img.logo, img.logo_hover
+			height: 30px
+			margin: 14px 0 0 20px
 			float: left
+		img.logo_hover
+			display: none
+
+		&:hover
+			background: $darkgrey
+			h1
+				color: $grey
+			img.logo_hover
+				display: block
+			img.logo
+				display: none
 		h1
 			float: right
 			margin: 20px 20px 0 0
-		@media (max-width: 400px)
-			h1
-				font-size: 150%
-			a.logo img
-				height: 30px
+			color: #999
+			font-size: 230%
+
 		@media (max-width: 300px)
 			h1
 				float: none

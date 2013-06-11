@@ -1,5 +1,5 @@
 function widgetScope($http,$scope) {
-	
+
 	$scope.tweets = []
 	$scope.campaign = $oundoff_config.campaign || 'Yes on B'
 	$scope.campaign = '#'+$scope.campaign
@@ -18,7 +18,7 @@ function widgetScope($http,$scope) {
 				for( var k in data.results[j] ) {
 					tweet[k] = data.results[j][k]
 				}
-				
+
 				tweet.text = unescape( tweet.text)
 				tweet.text = tweet.text.replace(/\&amp;/g,'&')
 				tweet.text = tweet.text.replace(/\#soundoff/gi,$scope.campaign.replace(/\s/g,'')+' #SoundOff')

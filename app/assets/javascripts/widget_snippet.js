@@ -9,7 +9,8 @@ ready( function() {
 
 	for (var i = links.length - 1; i >= 0; i--) {
 		var add_link = links[i],
-			campaign = add_link.getAttribute('campaign')
+			campaign = add_link.getAttribute('campaign'),
+			title = add_link.textContent || add_link.innerText
 
 		if( campaign != null ) {
 			var the_parent = add_link.parentElement,
@@ -26,6 +27,7 @@ ready( function() {
 
 			config.push( 'style='+style  )
 			config.push( 'campaign='+campaign.replace(/\#/,'') )
+			config.push( 'title='+title.replace(/\#/,'') )
 
 			widget_frame.scrolling = 'no'
 			widget_frame.frameborder = '0'
@@ -76,8 +78,9 @@ ready( function() {
 			container.appendChild(widget_bottom_button)
 
 			the_parent.insertBefore(container,add_link)
-			widget_bottom_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign').replace(/\#/,''), style: this.getAttribute('module_style') } ) }
-			widget_top_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign').replace(/\#/,''), style: this.getAttribute('module_style') } ) }
+
+			widget_bottom_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign'), style: this.getAttribute('module_style') } ) }
+			widget_top_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign'), style: this.getAttribute('module_style') } ) }
 
 			the_parent.removeChild(add_link)
 		}
