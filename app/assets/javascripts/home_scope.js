@@ -25,7 +25,7 @@ function homePageScope($http, $scope) {
 					tweet.text = unescape( tweet.text)
 					tweet.text = tweet.text.replace(/\&amp;/g,'&')
 					tweet.text = tweet.text.replace(/\#soundoff/gi,campaign.name.replace(/\s/g,'')+' #SoundOff')
-					tweet.created_at = new Date(tweet.created_at); 
+					tweet.created_at = new Date(tweet.created_at);
 
 					// Give em a false rep
 					var random_rep = random_reps[ Math.floor( random_reps.length * Math.random() ) ]
@@ -73,10 +73,10 @@ function homePageScope($http, $scope) {
 	$scope.$watch('search',function() {
 		if( typeof fetch != 'undefined' ) clearTimeout( fetch);
 
-		fetch = setTimeout( function() { 
+		fetch = setTimeout( function() {
 
 			if( $scope.search.length > 1 && $scope.mode.toLowerCase() == 'reps' && $scope.single_item == null ) {
-				
+
 				query = '/find_reps?q='+$scope.search.replace(/\@/g,'')
 					$http.get(query,{})
 						.success( function(data) {
@@ -110,7 +110,7 @@ function homePageScope($http, $scope) {
 			else return el;
 		})
 	}
-	
+
 	$scope.items = function() {
 		if( $scope.mode.toLowerCase() == 'reps' ) return $scope.reps();
 		else return $scope.campaigns()
@@ -134,7 +134,7 @@ function homePageScope($http, $scope) {
 				$scope.build_widget =  $oundoff_base_domain + '/widget_create?campaign=' + $scope.single_item.name.replace(/\#/g,'')
 			} else {
 				default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
-				default_message += 'I just sent a %23SoundOff to my Rep @'+$scope.single_item.twitter_screen_name+'. Do it to and help us %23SoundOff more! '				
+				default_message += 'I just sent a %23SoundOff to my Rep @'+$scope.single_item.twitter_screen_name+'. Do it to and help us %23SoundOff more! '
 				$scope.build_widget =  ''
 			}
 			$scope.single_twitter =  default_message+url
@@ -175,7 +175,7 @@ function homePageScope($http, $scope) {
 		if( typeof state == 'object' && state != null ) {
 			state.tweets = []
 			$scope.raw_reps.push( state )
-			
+
 
 			$scope.search = '@'+state.twitter_screen_name
 			$scope.mode = 'reps'
@@ -189,13 +189,13 @@ function homePageScope($http, $scope) {
 
 	}
 
-	$scope.$watch('search',function() { 
+	$scope.$watch('search',function() {
 		if( $scope.single_item != null ) $scope.reset();
 		$scope.active = $scope.items()[0];
 	})
 
 	$scope.setScoreBoard = function() {
-		$scope.raw_campaigns.sort( function(a,b) { 
+		$scope.raw_campaigns.sort( function(a,b) {
 			return a.score > b.score ? -1 : 1
 		});
 		$scope.mode = 'Scoreboard'
@@ -204,8 +204,8 @@ function homePageScope($http, $scope) {
 	}
 
 	$scope.setMostRecent = function() {
-		$scope.raw_campaigns.sort( function(a,b) { 
-			return a.created_at > b.created_at ? -1 : 1; 
+		$scope.raw_campaigns.sort( function(a,b) {
+			return a.created_at > b.created_at ? -1 : 1;
 		})
 		$scope.mode = 'Most Recent'
 		if( $scope.single_item != null ) $scope.resetHard();
