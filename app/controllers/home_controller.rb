@@ -20,7 +20,8 @@ class HomeController < ApplicationController
     @config = {
     	:home => true,
     	:single => params[:short_url] || rep || nil,
-      :random_reps => Rep.all( :order => 'RANDOM()', :limit => 10 ).map{ |r| r.data = nil; r }
+      :random_reps => Rep.all( :order => 'RANDOM()', :limit => 10 ).map{ |r| r.data = nil; r },
+      :raw_campaigns => Campaign.all.map(&:to_obj),
    	}
     @body_class = 'home'
     @body_class += ' fixed' if params[:short_url] || params[:twitter_screen_name]

@@ -94,41 +94,7 @@ function homePageScope($http, $scope) {
 	})
 
 	// SecureRandom.urlsafe_base64( 3, false) to generate small ids
-	$scope.raw_campaigns = [
-		{
-			name: '#Yes on 32',
-			score: Math.floor( Math.random() * 100),
-			description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-			tweets: [],
-			created_at: new Date('5/13/2013'),
-			short_url: 'pCE1'
-		},
-		{
-			name: '#Flouride Now',
-			score: Math.floor( Math.random() * 100),
-			description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-			tweets: [],
-			created_at: new Date('5/27/2013'),
-			short_url: '7iw0'
-		},
-		{
-			name: '#Yes on B',
-			score: Math.floor( Math.random() * 100),
-			description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-			tweets: [],
-			created_at: new Date('5/1/2013'),
-			short_url: 'Dxod'
-		},
-		{
-			name: '#NoKXL',
-			score: Math.floor( Math.random() * 100),
-			description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-			tweets: [],
-			created_at: new Date('4/13/2013'),
-			short_url: 'y04f'
-		}
-
-	]
+	$scope.raw_campaigns = $oundoff_config.raw_campaigns
 	$scope.search = ''
 
 	$scope.campaigns = function() {

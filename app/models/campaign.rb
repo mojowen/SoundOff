@@ -37,5 +37,22 @@ class Campaign < ActiveRecord::Base
 			return partner.partner_type == 'nonprofit'
 		end
 	end
+	def score
+		Soundoff.count( :conditions => { :campaign_id => id } )
+	end
+	def to_obj
+		return {
+			:name => name,
+			:score => score,
+			:description => description,
+			:id => id,
+			:partner => (partner.name rescue null),
+			:logo => (partner.logo rescue null),
+			:website => (partner.website rescue null),
+			:tweets => [],
+			:created_at => created_at,
+			:short_url => short_url
+		}
+	end
 
 end
