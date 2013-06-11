@@ -4,12 +4,11 @@ class CampaignMail < ActionMailer::Base
   def new_campaign(campaign)
   	@campaign = campaign
   	puts 'sending email'
-  	mail(:to => 'srduncombe@gmail.com', :subject => "#{campaign.partner.name} Just Submitted #{campaign.name}")
+  	mail(:to => 'info@soundoffatcongress', :subject => "#{campaign.partner.name} Just Submitted #{campaign.name}")
   end
   def campaign_approved(campaign)
   	@campaign = campaign
-  	# @campaign.partner.users.first.email
-  	mail(:to => 'srduncombe@gmail.com', :subject => "#{campaign.partner.name} - #{@campaign.name} Was Just Approved")
+  	mail(:to => @campaign.partner.users.first.email, :subject => "#{campaign.partner.name} - #{@campaign.name} Was Just Approved")
   end
 
 end
