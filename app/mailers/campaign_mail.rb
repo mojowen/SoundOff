@@ -1,10 +1,9 @@
 class CampaignMail < ActionMailer::Base
-  default from: "info@soundoffatcongress.org"
+  default from: "SoundOff@HeadCount.org"
 
   def new_campaign(campaign)
   	@campaign = campaign
-  	puts 'sending email'
-  	mail(:to => 'info@soundoffatcongress', :subject => "#{campaign.partner.name} Just Submitted #{campaign.name}")
+  	mail(:to => 'SoundOff@HeadCount.org', :subject => "#{campaign.partner.name} Just Submitted #{campaign.name}")
   end
   def campaign_approved(campaign)
   	@campaign = campaign
