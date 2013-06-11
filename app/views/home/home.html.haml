@@ -98,7 +98,7 @@
 			.description.campaign
 				.title
 					%h1 {{item.name}}
-					%button.open_soundoff{{  :campaign => '{{item.name}}'}}
+					%button.open_soundoff{{  :campaign => '{{item.id}}' }}
 						%span #S
 						ound
 						%span O
@@ -123,11 +123,11 @@
 
 					.info
 						%p {{longTitle( item )}}
-						%p 
+						%p
 							%a{ 'ng-href' => '{{item.contact_form}}', :target => '_blank' } Contact Form
 						%p {{ item.phone }}
 
-					-# %h3 
+					-# %h3
 					-# 	Score
 					-# 	.score {{campaign.score}}
 
