@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130604042445) do
+ActiveRecord::Schema.define(:version => 20130611072303) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
@@ -68,6 +68,25 @@ ActiveRecord::Schema.define(:version => 20130604042445) do
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
   end
+
+  create_table "soundoffs", :force => true do |t|
+    t.string   "zip"
+    t.string   "email"
+    t.string   "message"
+    t.string   "targets"
+    t.string   "hashtag"
+    t.integer  "campaign_id"
+    t.boolean  "headcount",           :default => false
+    t.boolean  "partner",             :default => false
+    t.string   "tweet_id"
+    t.string   "twitter_screen_name"
+    t.string   "tweet_data",          :default => "{}"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "soundoffs", ["campaign_id"], :name => "index_soundoffs_on_campaign_id"
+  add_index "soundoffs", ["message"], :name => "index_soundoffs_on_message"
 
   create_table "users", :force => true do |t|
     t.string   "email"
