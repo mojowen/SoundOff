@@ -5,5 +5,5 @@
 		%h3{ :style => 'text-align: center;' }
 			Set Campaign Status
 			= render 'status', :campaign => @campaign
-			%script{ :src => asset_path( "status.js" ) }
+			= javascript_include_tag "status.js"
 	= render 'form'
