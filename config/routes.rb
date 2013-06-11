@@ -7,11 +7,12 @@ SoundOff::Application.routes.draw do
 
   match '/sign_up' => 'partners#new', :as => 'registration'
 
-  match '/form' => 'frame#form'
+  match '/form' => 'frame#form', :via => :get
+  match '/form' => 'frame#save', :via => :post
   match '/widget' => 'frame#widget'
-  match '/widget_create' => 'frame#demo', :as => 'widget_create'
 
   match '/home' => 'home#home', :as => 'home'
+  match '/all_names' => 'home#all_names', :as => 'all'
 
   match '/all_reps' => 'rep#index', :as => 'all_reps'
   match '/find_reps' => 'rep#search', :as => 'all_reps'
@@ -20,6 +21,7 @@ SoundOff::Application.routes.draw do
   match '/about' => 'pages#about', :as => 'about'
   match '/contact' => 'pages#contact', :as => 'contact'
   match '/tos' => 'pages#tos', :as => 'tos'
+  match '/privacy' => 'pages#privacy', :as => 'privacy'
 
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
