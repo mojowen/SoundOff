@@ -1,39 +1,40 @@
 = form_for @campaign do |f|
 
 	= f.text_field :name, :placeholder => 'Name of Campaign*', :counter => 120
-	.help What is the name of your Campaign?
+	.help Keep it short and snappy! This name will appear with your campaign.
 
 	.count 120
 
 
 	= f.text_field :hashtag, :placeholder => 'Campaign Hashtag*', :counter => 20
-	.help What Hashtag should we associate with this campaign - will automatically remove spaces
+	.help Make it original! If it’s already been used for a SoundOff campaign, you’ll need to pick another or get permission.
 	.count 20
 	.extra #
 
 	= f.text_area :description, :placeholder => 'Describe Your Campaign*', :counter => 250, :rows => 10
-	.help
+	.help{ :style => 'margin-top: -302px;' } This will appear on your campaign page for all to see. A few ground rules... SoundOff is meant for advocating policy positions, priorities and legislation. You can’t use it to sell a product, promote discrimination or violence, intimidate, defame, or advocate the overthrow of the U.S. government. More details can be found in the Partner Terms of Service
 	.count 250
 
 	- if current_user.admin || current_user.partner.partner_type == 'nonprofit'
 		.email_options.radio
 			%h2 Email Options
 
-			= f.radio_button :email_option, 'optional', :checked => 'checked'
-			%label Optional
-			%span users are prompted for their email address - but it's optional
-			%br
+			.line
+				= f.radio_button :email_option, 'optional', :checked => 'checked'
+				%label Optional
+			.help users are prompted for their email address - but it's optional
 
-			= f.radio_button :email_option, 'required'
-			%label Required
-			%span users are required to enter their email address
-			%br
+			.line
+				= f.radio_button :email_option, 'required'
+				%label Required
+			.help users are required to enter their email address
 
-			= f.radio_button :email_option, 'hidden'
-			%label Hidden
-			%span users are note prompted for their email address
+			.line
+				= f.radio_button :email_option, 'hidden'
+				%label Hidden
+			.help users are not prompted for their email address and emails are not saved
 
-	.suggested
+	.suggested.line
 		%input{ :type => 'checkbox', :checked => @campaign.new_record? || @campaign.suggested.length > 1 }
 		%label Include Suggested Tweets
 
@@ -44,14 +45,14 @@
 						%input{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :value => @campaign.suggested[index] || '' }
 					- else
 						%input{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' }
-					.help These tweets will be displayed when users tweet as helpful suggestions
 				- else
 					- if @campaign.suggested[index]
 						%input{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :value => @campaign.suggested[index] }
 					- else
 						%input{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none' }
+	.help{ :style => 'margin-top: -140px'} Here’s where you can get creative. We suggest making each suggestion distinct from each other. Feel free to add additional hashtags or links. Keep in mind that the campaign hashtag will automatically appear at the end of all the tweets. Don’t write that hashtag into your suggested tweets, unless you want it to appear twice.
 
-	.targets.radio
+	.targets.radio.line
 		%h2 Targets
 
 		= f.radio_button :target, 'house', :checked => 'checked'
@@ -59,8 +60,8 @@
 		%br
 		= f.radio_button :target, 'senate'
 		%label US Senate
-		%div{ :style => 'display: block; margin-top: -10px' }
-			%span ( Will mention two accounts in tweet )
+
+	.help Who do you want to target, one House Rep or two Senators?
 
 	.notice
 		Once you submit your campaign it will need to be approved by HeadCount - you'll get a notice when it's good to go.
@@ -113,7 +114,11 @@
 		else $this.nextAll('input:first').hide().attr('name_off', $next.attr('name') ).attr('name', null )
 		if( e.keyCode == 13 ) e.preventDefault();
 	})
-	.on('focus','input',function() {
+	.on('focus','input, textarea',function() {
+		$('.help').removeClass('on')
+		$(this).next().addClass('on')
+	})
+	.on('mouseover','.line',function(){
 		$('.help').removeClass('on')
 		$(this).next().addClass('on')
 	})

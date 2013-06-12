@@ -16,9 +16,8 @@ class HomeController < ApplicationController
       @og_image = 'https://api.twitter.com/1/users/profile_image?screen_name='+rep.twitter_screen_name
 
   	end
-    if params[:short_url]
-      campaign = Campaign.find_by_short_url( params[:short_url] )
-      redirect_to home_path if campaign.nil?
+    campaign = Campaign.find_by_short_url( params[:short_url] ) if params[:short_url]
+    if campaign
 
       @title = campaign.name+' #'+ campaign.hashtag
       @og_title = @title+' | #SoundOff @ Congress'
