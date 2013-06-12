@@ -171,7 +171,7 @@
 				&.oops
 					color: $red
 
-			input
+			input, .line
 				transition-property: margin-left
 				transition-duration: 0.8s
 
@@ -188,8 +188,9 @@
 
 				position: absolute
 				margin: -52px 0 0 0
-				font-size: 60%
-				color: $blue
+				&, a
+					font-size: 60%
+					color: $blue
 				right: -400px
 				width: 290px
 				&.on
@@ -197,6 +198,9 @@
 			.tos
 				font-size: 60%
 				width: 90%
+				span:hover
+					cursor: pointer
+					text-decoration: underline
 				a
 					font-size: 100%
 				&.oops
