@@ -106,11 +106,12 @@
 			$next.attr('name_off', $next.attr('name') ).attr('name', null )
 		})
 	})
-	.on('keydown change','.suggested_tweets input',function() {
+	.on('keydown change','.suggested_tweets input',function(e) {
 		var $this = $(this),
 			$next = $this.nextAll('input:first')
-		if( $this.val().length > 0 ) $next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null )
+		if( $this.val().length > 0 || e.keyCode == 13 ) $next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null )
 		else $this.nextAll('input:first').hide().attr('name_off', $next.attr('name') ).attr('name', null )
+		if( e.keyCode == 13 ) e.preventDefault();
 	})
 	.on('focus','input',function() {
 		$('.help').removeClass('on')
