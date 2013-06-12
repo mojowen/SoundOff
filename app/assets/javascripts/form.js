@@ -9,7 +9,7 @@ function formScope($http, $scope) {
 
 	$scope.campaign = config.campaign != null ? '#'+config.campaign : ''
 	$scope.name = config.name != null ? config.name : 'Tweet @ Your Rep'
-	$scope.stage = 4
+	$scope.stage = 1
 
 	$scope.nextStage = function() {
 		var $notice = $('#notice').html('').attr('class',''),
