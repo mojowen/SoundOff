@@ -20,13 +20,13 @@
 		color: white
 		margin: 0 auto -42px
 		text-align: center
-		left: inherit
-		top: inherit
+		top: 0px
 		padding-top: 4px
 		font-size: 130%
 		height: 36px
 		position: relative
 		z-index: 10
+		width: $width
 
 		&::after, &::before
 			top: 36px
@@ -95,10 +95,13 @@
 			font-size: 80%
 			width: 300px
 			padding: 4px 10px
-
+		a
+			text-decoration: none
 		.dumb_table
 			min-height: 400px
 			overflow: auto
+			a
+				text-decoration: underline
 		table
 			width: 100%
 			font-size: 70%
