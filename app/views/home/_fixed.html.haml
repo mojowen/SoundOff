@@ -4,7 +4,7 @@
 		%a.item.menu{ :href => '#'} &#9776;
 		.inner
 			= link_to 'About', about_path
-			= link_to 'Log-in', new_user_session_path
+			= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Log in', new_user_session_path )
 			= link_to 'Press', press_path
 			= link_to 'Donate', 'http://www.HeadCount/donate'
 			= link_to 'Privacy Policy', privacy_path, :target => '_blank'

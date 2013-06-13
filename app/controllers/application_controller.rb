@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
   	redirect_to home_path if !!! current_user
   end
 
+  def after_sign_in_path_for(resource)
+    campaigns_path
+  end
+
 end
