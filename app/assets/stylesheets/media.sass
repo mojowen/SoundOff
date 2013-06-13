@@ -12,11 +12,9 @@
 			position: relative
 			left: 10%
 			top: 0
-
 		#powered_by
 			left: 50%
 			margin-left: -222px
-
 
 	#top
 		position: relative
@@ -24,6 +22,8 @@
 		height: auto
 		min-height: inherit
 		padding-bottom: 2%
+		.start_campaign
+			display: none
 		#banner
 			height: 50px
 			padding-top: 10px
@@ -75,7 +75,8 @@
 			position: fixed
 		#main #menu
 			position: fixed !important
-
+		#main #more-info
+			display: none
 		#main.mobile_active
 			#menu, #more-info
 				left: -1000px
@@ -93,12 +94,3 @@
 					text-decoration: underline
 					cursor: pointer
 					display: block
-
-
-@media (min-width: $break-small) and (max-width: $break-medium)
-
-
-
-
-
-@media (max-width: $break-small)

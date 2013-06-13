@@ -27,10 +27,6 @@
 		%h2 Create a Widget for #{@campaign.name}
 
 		%h3
-			Customize The Title:
-			%input.title_customize{ :value => @campaign.name }
-
-		%h3
 			Select Style:
 			%span.light.selected Light
 			%span.dark Dark
@@ -39,14 +35,14 @@
 			%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
 			%textarea
 				:plain
-					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.name}</a>
+					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
 
 
 		.widget_box.dark
 			%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
 			%textarea
 				:plain
-					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.name}</a>
+					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
 
 		%p Copy and paste into your website to add the widget.
 
@@ -83,9 +79,9 @@
 		var $this = $(this),
 		value = $this.val();
 
-		$('textarea:first').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'script><a class="soundoff_widget_light" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">'+value+'</a>');
+		$('textarea:first').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'script><a class="soundoff_widget_light" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">#{@campaign.hashtag}</a>');
 
-		$('textarea:last').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'script><a class="soundoff_widget_dark" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">'+value+'</a>');
+		$('textarea:last').val('<'+'script src="'+$oundoff_base_domain+'/assets/widget_snippet.js">'+'</'+'script><a class="soundoff_widget_dark" href="'+campaign_short_url+'" campaign="#{ @campaign.id}">#{@campaign.hashtag}</a>');
 
 		$('iframe').contents().find('h1').text(value)
 	})

@@ -66,9 +66,11 @@
 			resize: none
 			overflow: hidden
 			@include input
+			padding: 10px
 			border: 2px solid $darkgrey
 			margin: 30px auto
 			display: block
+			font-size: 50%
 		.widget_box
 			width: 400px
 			margin: 50px auto
@@ -85,6 +87,8 @@
 
 	#main #content.index
 		padding: 60px 60px 120px
+		p
+			font-size: 50%
 		%h3
 			color: $darkgrey
 		button
@@ -193,13 +197,17 @@
 
 				position: absolute
 				margin: -52px 0 0 0
-				&, a
-					font-size: 60%
+
+				font-size: 60%
+				color: $blue
+				a
 					color: $blue
+					font-size: 100%
+
 				right: -600px
-				width: 290px
+				width: 240px
 				&.on
-					right: 0px
+					right: 6px
 			.tos
 				font-size: 60%
 				width: 90%

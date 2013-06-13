@@ -1,6 +1,4 @@
 #fixed
-
-
 	#top_menu
 		%a.item.menu{ :href => '#'} &#9776;
 		.inner
@@ -12,9 +10,10 @@
 			= link_to 'Terms and Conditions', tos_path, :target => '_blank'
 			= link_to 'Contact', contact_path
 
-	%a.campaign{ :href => (current_user ? new_campaign_path : registration_path)}
-		%button.start_campaign Start a Campaign,
 	%a.item.facebook{ :href => 'https://www.facebook.com/HeadCountOrg', :target => '_blank' }
 		= image_tag 'facebook.png'
 	%a.item.twitter{ :href => 'https://twitter.com/headcountorg', :target => '_blank' }
 		= image_tag 'twitter_dark.png'
+
+	%a{ :href => (current_user ? new_campaign_path : new_user_session_path)}
+		%button.start_campaign Start a Campaign,

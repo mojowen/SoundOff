@@ -1,7 +1,9 @@
 %h1 My Campaigns
 
 #content.index
-	%h4 Select a Campaign
+	%p Below is the URL for your campaign(s). Send it to your supporters and invite them to SoundOff!
+	%p You also can place a widget for your campaign on any web page (see link below), and download data on your users.
+
 	.dumb_table
 		%table
 			%thead
@@ -17,10 +19,10 @@
 						%td.name= campaign.name
 						%td.url= link_to campaign.url, campaign.url
 						%td.pending= render 'status', :campaign => campaign
-						%td.dl= link_to 'create widgets', campaign_path( campaign )
+						%td.dl= link_to 'Create Widgets', campaign_path( campaign )
 						- if current_user.admin || current_user.partner.partner_type == 'nonprofit'
-							%td.dl= link_to 'download names', campaign_path( campaign )+'.text'
-						%td.dl= link_to 'edit campaign', edit_campaign_path( campaign )
+							%td.dl= link_to 'Download User Data', campaign_path( campaign )+'.text'
+						%td.dl= link_to 'Edit Campaign', edit_campaign_path( campaign )
 
 	%a{ :href => new_campaign_path }
 		%button Launch New Campaign

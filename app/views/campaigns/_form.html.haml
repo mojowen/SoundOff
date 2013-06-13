@@ -42,14 +42,14 @@
 			- 4.times do |index|
 				- if index == 0
 					- if @campaign.new_record? || @campaign.suggested[index]
-						%input{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :value => @campaign.suggested[index] || '' }
+						%input.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :value => @campaign.suggested[index] || '' }
 					- else
-						%input{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' }
+						%input.no_hide{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' }
 				- else
 					- if @campaign.suggested[index]
-						%input{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :value => @campaign.suggested[index] }
+						%input.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :value => @campaign.suggested[index] }
 					- else
-						%input{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none' }
+						%input.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none' }
 	.help{ :style => 'margin-top: -140px'} Here’s where you can get creative. We suggest making each suggestion distinct from each other. Feel free to add additional hashtags or links. Keep in mind that the campaign hashtag will automatically appear at the end of all the tweets. Don’t write that hashtag into your suggested tweets, unless you want it to appear twice.
 
 	.targets.radio.line
@@ -115,8 +115,10 @@
 		if( e.keyCode == 13 ) e.preventDefault();
 	})
 	.on('focus','input, textarea',function() {
-		$('.help').removeClass('on')
-		$(this).next().addClass('on')
+		if( ! $this.hasClass('no_hide') ) {
+			$('.help').removeClass('on')
+			$(this).next().addClass('on')
+		}
 	})
 	.on('mouseover','.line',function(){
 		$('.help').removeClass('on')
