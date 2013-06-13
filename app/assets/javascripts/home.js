@@ -26,7 +26,7 @@ if( $oundoff_config.home ) {
 
 		if( document.body.classList.contains('fixed') ) {
 
-			if( w_height < small_cut_off  ) return false;
+			if( w_width < small_cut_off  ) return false;
 			var divs = content.childNodes,
 				unset = true;
 
@@ -75,7 +75,7 @@ if( $oundoff_config.home ) {
 
 				if( w_width >= small_cut_off ) {
 					var logo_width = w_width * .5,
-						logo_width_rate = 210 - logo_width,
+						logo_width_rate = 170 - logo_width,
 
 						logo_top = w_height * ( offset_factor * .4 ),
 						logo_top_rate = 6 - logo_top,

@@ -1,5 +1,5 @@
 $mid: 22%
-$fixed_header: 80px
+$fixed_header: 60px
 $menu_width: 500px
 $menu_left: 100px
 
@@ -35,20 +35,45 @@ body.home #main
 				.title
 					min-height: 250px
 					opacity: .95
+					position: relative
 					background-color: white
 					padding: 20px
+					font-size: 14px
+					img
+						width: 64px
+						margin: 0 20px 0 0
+						float: left
+						border-radius: 3px
+
 					h1
-						font-size: 300%
+						font-size: 40px
 						color: #333
+						margin: 7px 0
 					h3
-						margin-top: -20px
-						color: white
-						text-shadow: 1px -1px 5px #000, 0px 1px 2px #000
-						font-size: 200%
+						font-size: 14px
+						margin: -10px 0 10px
+						color: $darkgrey
+						font-family: $bodyFont
+						font-weight: normal
+					.copy
+						margin-top: 36px
 
 					button
-						@include button($red,$darkred)
+						@include button($blue,$darkblue)
 						float: right
+						font-size: 18px
+						height: 40px
+						width: 160px
+						padding: 1px 3px
+						letter-spacing: 2px
+						margin: 8px 0
+					.details_right
+						right: 20px
+					.details_left
+						left: 20px
+					.details_right, .details_left
+						position: absolute
+						bottom: 0px
 			.rep
 				display: none
 				img
@@ -253,7 +278,7 @@ body.home #main
 
 		h2
 			@include ribbon($darkred, $red,36px)
-
+			top: 40px
 			text-align: center
 			padding: 4px 0 0
 			margin-bottom: -6px
@@ -335,7 +360,7 @@ body.fixed
 		min-height: 0
 
 		img#logo
-			width: 210px
+			width: 170px
 			top: 6px
 			cursor: pointer
 			left: 7%
@@ -467,7 +492,7 @@ body.fixed
 		transition-duration: 0.25s
 		width: 50%
 
-		bottom: 10px
+		bottom: 0px
 
 		button, a
 			float: right

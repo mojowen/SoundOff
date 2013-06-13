@@ -3,7 +3,7 @@
 		%h2.hash_tag {{name}}
 		#close X Close
 		%form#form{ :class => 'stage_{{stage}}', 'ng-submit' => 'nextStage()' }
-			= image_tag( @body_class.index('light') ? 'logo_dark.png' : 'logo_small.png' , :class => 'stage_1 stage_2')
+			= image_tag( @body_class.index('light') ? 'logo_dark.png' : 'logo_no_cong.png' , :class => 'stage_1 stage_2')
 
 			#stage_1
 				%input{ :placeholder => "Zip Code", "ng-model" => "zip", :id => 'zip' }

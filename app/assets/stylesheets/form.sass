@@ -60,7 +60,7 @@ body.light
 	position: relative
 	#close
 		position: absolute
-		top: -5px
+		top: 16px
 		right: 5px
 		color: white
 		text-transform: uppercase
@@ -68,13 +68,14 @@ body.light
 		cursor: pointer
 
 	h2
-		@include ribbon(#333,#555, $width )
+		@include ribbon(#333,#555)
 		color: white
 		padding: 12px 10px
+		top: -20px
 
 	#form
 		pointer-events: all
-		padding: 0 50px 50px
+		padding: 40px 50px 50px
 		color: white
 
 		input, button

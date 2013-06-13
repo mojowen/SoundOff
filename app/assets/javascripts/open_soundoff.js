@@ -49,7 +49,7 @@ function openSoundOff( args ) {
         dark.onclick = closeWindow
 
         close.style.position = 'fixed'
-        close.style.top = '64px'
+        close.style.top = '74px'
         close.style.left = ( window.innerWidth * .96 )/2 + 560/2 - 50 +'px'
         close.style.zIndex = '110'
         close.style.width = '90px'

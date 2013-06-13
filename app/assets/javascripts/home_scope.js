@@ -143,11 +143,11 @@ function homePageScope($http, $scope) {
 
 	$scope.reset = function() {
 		scroll_to(0)
-		if( w_height > small_cut_off ) $scope.active = $scope.items()[0]
 		menu.classList.remove('single')
 
 		$scope.single_item = null
 		$scope.active = null
+		if( w_width > small_cut_off ) $scope.active = $scope.items()[0]
 		history.pushState( {campaign: $scope.items[0] }, 'Sound Off',  '/home' );
 		$(logo).attr('src','/assets/logo_no_cong.png')
 		document.title = '#SoundOff @ Congress'
@@ -191,7 +191,7 @@ function homePageScope($http, $scope) {
 
 	$scope.$watch('search',function() {
 		if( $scope.single_item != null ) $scope.reset();
-		if( w_height > small_cut_off ) $scope.active = $scope.items()[0];
+		if( w_width > small_cut_off ) $scope.active = $scope.items()[0];
 	})
 
 	$scope.setScoreBoard = function() {

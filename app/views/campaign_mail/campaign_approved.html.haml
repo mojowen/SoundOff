@@ -6,7 +6,7 @@
 
 %p
 	Create a widget your website here:
-	= link_to ENV['BASE_DOMAIN'] + campaign_path( @campaign ), ENV['BASE_DOMAIN'] + campaign_path( @campaign )
+	= link_to (ENV['BASE_DOMAIN'] || '' )+ campaign_path( @campaign ), (ENV['BASE_DOMAIN'] || '' ) + campaign_path( @campaign )
 
 %p
 	Questions? Comments? Don't hesitate to drop us a line:

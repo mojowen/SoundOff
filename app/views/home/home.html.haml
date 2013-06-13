@@ -95,23 +95,30 @@
 			.back{ 'ng-click' => 'reset()'} < Back
 			.description.campaign
 				.title
-					%h1 {{item.name}}
+					%a{ 'ng-href' => '{{item.website}}' }
+						%img{ 'ng-src' => '{{item.logo}}' }
 					%button.open_soundoff{{  :campaign => '{{item.id}}' }}
 						%span #S
 						ound
 						%span O
 						ff
-					-# %h3
-					-# 	Score
-					-# 	.score {{campaign.score}}
+					%h1 {{item.name}}
+					%h3 {{item.hashtag }}
 
-					{{item.description}}
 
-					%h4 Launched {{ item.created_at | date:'d MMMM' }}
+					.copy {{item.description}}
+
+					%p.details_left
+						%strong Launched
+						{{ item.created_at | date:'d MMMM' }}
+
+					%p.details_right{ 'ng-hide' => 'item.partner.length < 1' }
+						%strong Created by
+						%a{ 'ng-href' => '{{item.website}}' } {{item.partner}}
 			.description.rep
 				.title
 
-					%img{ 'ng-src' => 'https://api.twitter.com/1/users/profile_image?screen_name={{item.twitter_screen_name}}&size=bigger' }
+					%img{ 'ng-src' => '{{item.twitter_profile_image}}' }
 					%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
 
 
@@ -124,10 +131,6 @@
 						%p
 							%a{ 'ng-href' => '{{item.contact_form}}', :target => '_blank' } Contact Form
 						%p {{ item.phone }}
-
-					-# %h3
-					-# 	Score
-					-# 	.score {{campaign.score}}
 
 					{{item.description}}
 
