@@ -28,18 +28,15 @@
 		%p= link_to 'Contact', contact_path
 
 	.column
-		%p
-			%a Partners
-		%p
-			%a Privacy Policy
-		%p
-			%a Terms and Conditions
+		%p= link_to 'Log-in', new_user_session_path
+		%p= link_to 'Privacy Policy', privacy_path, :target => '_blank'
+		%p= link_to 'Terms and Conditions', tos_path, :target => '_blank'
 	.column
 		%p= link_to 'About', about_path
 		%p= link_to 'Press', press_path
 		%p= link_to 'Donate', 'http://www.HeadCount/donate'
 
-#main{ "ng-app" => true, "ng-controller" => 'homePageScope'  }
+#main{ "ng-app" => true, "ng-controller" => 'homePageScope', 'ng-class' => 'mobileActive()'  }
 
 	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => '{true: "single", false: "" }[single_item != null] + \' \'+ {true: "reps", false: "" }[mode.toLowerCase() == "reps"]' }
 		%h2 Campaigns & Elected Reps
@@ -95,6 +92,7 @@
 
 	#content
 		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
+			.back{ 'ng-click' => 'reset()'} < Back
 			.description.campaign
 				.title
 					%h1 {{item.name}}
@@ -157,3 +155,6 @@
 					%h3 @{{tweet.from_user }}
 
 					.body {{ tweet.text }}
+
+= image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'
+= image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'

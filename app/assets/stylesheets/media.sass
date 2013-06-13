@@ -1,0 +1,104 @@
+
+
+
+
+@media (max-width: $break-medium)
+	#main
+		#content
+			margin-right: -1000px
+			float: right
+		#menu
+			width: 80%
+			position: relative
+			left: 10%
+			top: 0
+
+		#powered_by
+			left: 50%
+			margin-left: -222px
+
+
+	#top
+		position: relative
+		bottom: inherit
+		height: auto
+		min-height: inherit
+		padding-bottom: 2%
+		#banner
+			height: 50px
+			padding-top: 10px
+			right: 10px
+			.small
+				display: block
+			a img
+				display: none
+			&::after
+				border-width: 8px 70px
+		img#logo
+			width: 80%
+			left: 10%
+			margin-top: 10%
+			position: relative
+		#description
+			margin: 10% 0 0
+			width: 80%
+			left: 10%
+			position: relative
+			text-align: center
+			.get_started
+				margin: 2% auto
+	#footer
+		position: relative
+		padding: 0 0 50% 10%
+		p
+		.column
+			width: 28%
+			margin: 0 2%
+			float: none
+			p
+				text-align: center
+		.disclaimer
+			width: 90%
+			margin-top: 2%
+			text-align: center
+
+	body.fixed
+		#top
+			img#logo
+				position: fixed
+				margin-top: 0
+			.campaign
+				display: none
+			padding-bottom: 0
+		#footer
+			padding-bottom: 0
+			position: fixed
+		#main #menu
+			position: fixed !important
+
+		#main.mobile_active
+			#menu, #more-info
+				left: -1000px
+			#powered_by
+				bottom: -500px
+			#content .active
+				position: absolute
+				left: 7%
+				width: 85%
+				.back
+					color: $red
+					font-size: 130%
+					position: absolute
+					top: -30px
+					text-decoration: underline
+					cursor: pointer
+					display: block
+
+
+@media (min-width: $break-small) and (max-width: $break-medium)
+
+
+
+
+
+@media (max-width: $break-small)

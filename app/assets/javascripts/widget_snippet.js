@@ -27,7 +27,7 @@ ready( function() {
 
 			config.push( 'style='+style  )
 			config.push( 'campaign='+campaign.replace(/\#/,'') )
-			config.push( 'title='+title.replace(/\#/,'') )
+			config.push( 'hashtag='+title.replace(/\#/,'') )
 
 			widget_frame.scrolling = 'no'
 			widget_frame.frameborder = '0'

@@ -7,36 +7,36 @@ function homePageScope($http, $scope) {
 
 	var number = 50,
 		hashtags = '%23'+['soundoff'].join('%23')
-		query = 'https://search.twitter.com/search.json?q='+hashtags+'&rpp='+number+'&include_entities=false&result_type=recent&callback=JSON_CALLBACK'
-	$http.jsonp(query,{})
-		.success(function(data,status) {
+	// 	query = 'https://search.twitter.com/search.json?q='+hashtags+'&rpp='+number+'&include_entities=false&result_type=recent&callback=JSON_CALLBACK'
+	// $http.jsonp(query,{})
+	// 	.success(function(data,status) {
 
-			for (var i = $scope.raw_campaigns.length - 1; i >= 0; i--) {
-				var campaign = $scope.raw_campaigns[i],
-					raw_tweets = data.results.filter( function(el) { return typeof el != 'undefined' })
+	// 		for (var i = $scope.raw_campaigns.length - 1; i >= 0; i--) {
+	// 			var campaign = $scope.raw_campaigns[i],
+	// 				raw_tweets = data.results.filter( function(el) { return typeof el != 'undefined' })
 
-				for (var j = 14 - 1; j >= 0; j--) {
-					var tweet = {}
+	// 			for (var j = 14 - 1; j >= 0; j--) {
+	// 				var tweet = {}
 
-					for( var k in raw_tweets[j] ) {
-						tweet[k] = raw_tweets[j][k]
-					}
+	// 				for( var k in raw_tweets[j] ) {
+	// 					tweet[k] = raw_tweets[j][k]
+	// 				}
 
-					tweet.text = unescape( tweet.text)
-					tweet.text = tweet.text.replace(/\&amp;/g,'&')
-					tweet.text = tweet.text.replace(/\#soundoff/gi,campaign.name.replace(/\s/g,'')+' #SoundOff')
-					tweet.created_at = new Date(tweet.created_at);
+	// 				tweet.text = unescape( tweet.text)
+	// 				tweet.text = tweet.text.replace(/\&amp;/g,'&')
+	// 				tweet.text = tweet.text.replace(/\#soundoff/gi,campaign.name.replace(/\s/g,'')+' #SoundOff')
+	// 				tweet.created_at = new Date(tweet.created_at);
 
-					// Give em a false rep
-					var random_rep = random_reps[ Math.floor( random_reps.length * Math.random() ) ]
-					tweet.text = '@'+random_rep.twitter_screen_name+' '+tweet.text
+	// 				// Give em a false rep
+	// 				var random_rep = random_reps[ Math.floor( random_reps.length * Math.random() ) ]
+	// 				tweet.text = '@'+random_rep.twitter_screen_name+' '+tweet.text
 
 
-					$scope.raw_campaigns[i].tweets.push( tweet )
-					random_rep.tweets.push( tweet )
-				};
-			};
-		})
+	// 				$scope.raw_campaigns[i].tweets.push( tweet )
+	// 				random_rep.tweets.push( tweet )
+	// 			};
+	// 		};
+	// 	})
 	$scope.raw_reps = random_reps
 	$scope.reps = function() {
 		var search = $scope.search.toLowerCase();
@@ -93,7 +93,6 @@ function homePageScope($http, $scope) {
 		},250)
 	})
 
-	// SecureRandom.urlsafe_base64( 3, false) to generate small ids
 	$scope.raw_campaigns = $oundoff_config.raw_campaigns
 	$scope.search = ''
 
@@ -144,10 +143,11 @@ function homePageScope($http, $scope) {
 
 	$scope.reset = function() {
 		scroll_to(0)
-		$scope.active = $scope.items()[0]
+		if( w_height > small_cut_off ) $scope.active = $scope.items()[0]
 		menu.classList.remove('single')
 
 		$scope.single_item = null
+		$scope.active = null
 		history.pushState( {campaign: $scope.items[0] }, 'Sound Off',  '/home' );
 		$(logo).attr('src','/assets/logo_no_cong.png')
 		document.title = '#SoundOff @ Congress'
@@ -191,7 +191,7 @@ function homePageScope($http, $scope) {
 
 	$scope.$watch('search',function() {
 		if( $scope.single_item != null ) $scope.reset();
-		$scope.active = $scope.items()[0];
+		if( w_height > small_cut_off ) $scope.active = $scope.items()[0];
 	})
 
 	$scope.setScoreBoard = function() {
@@ -224,7 +224,9 @@ function homePageScope($http, $scope) {
 
 	$scope.isActive = function($index,campaign) { return campaign == $scope.active ? 'active' : 'non-active' }
 	$scope.isMode = function(mode) { return mode.toLowerCase() == $scope.mode.toLowerCase() ? 'on' : '' }
-
+	$scope.mobileActive = function() {
+		return $scope.active != null ? 'mobile_active' : ''
+	}
 	$scope.mode = 'Scoreboard'
 
 	if( typeof $oundoff_config.single != 'undefined' ) $scope.setState( $oundoff_config.single )

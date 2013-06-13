@@ -55,8 +55,6 @@ body.light
 #popup
 	background: $blue
 	width: $width - 28px*2
-	@media (max-width: $break-medium)
-		width: 100%
 	margin: 0 auto
 
 	position: relative
@@ -73,12 +71,6 @@ body.light
 		@include ribbon(#333,#555, $width )
 		color: white
 		padding: 12px 10px
-
-		@media (max-width: $break-medium)
-			width: 100%
-			left: 0
-			&::after, &::before
-				display: none
 
 	#form
 		pointer-events: all

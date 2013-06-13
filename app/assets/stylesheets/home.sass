@@ -21,19 +21,11 @@ body.home #main
 	#content
 		margin: $fixed_header + 20px 0 0 ($menu_width + $menu_left)
 
-		@media (max-width: $break-small)
-			margin: 120px 0 0 $small_menu_width
-		@media (max-width: $break-medium) and (min-width: $break-small)
-			margin: 120px 0 0 ($medium_menu_width + $medium_menu_left)
 
 		.item
 			min-height: 400px
 			width: 95%
 			margin: 50px 20px
-			@media (max-width: $break-small)
-				margin: 50px 4px
-			@media (max-width: $break-medium) and (min-width: $break-small)
-				margin: 50px 8px
 
 			background: white
 			.description
@@ -113,7 +105,8 @@ body.home #main
 						position: absolute
 						right: 12px
 						top: 10px
-
+			.back
+				display: none
 	#powered_by
 		background: white
 		border: 1px solid #999
@@ -150,14 +143,14 @@ body.home #main
 			margin-top: 10px
 
 	#menu
-		transition-property: height
+		transition-property: height, left
 		transition-duration: 0.25s
 		z-index: 10
 		.messages
 			.loading
 				display: none
 				float: right
-				margin-top: -12px
+
 		&.single
 			border-bottom: none
 			padding-bottom: 30px
@@ -180,18 +173,12 @@ body.home #main
 
 		position: fixed
 		top: 100%
-		height: 76%
+		height: 73%
 		background: #f3f5f4
 
 
 		width: $menu_width - 28px*2
 		left: $menu_left
-		@media (max-width: $break-small)
-			width: $small_menu_width - 28px*2
-			left: 28px
-		@media (max-width: $break-medium) and (min-width: $break-small)
-			width: $medium_menu_width - 28px*2
-			left: $medium_menu_left
 
 		.inner
 			transition-property: height
@@ -241,7 +228,7 @@ body.home #main
 		#tabs
 			clear: both
 			width: 90%
-			margin: 0 5% 6px
+			margin: 50px 5% 6px
 			text-align: center
 			transition-property: margin-top
 			transition-duration: 0.25s
@@ -265,12 +252,7 @@ body.home #main
 
 
 		h2
-			@include ribbon($darkred, $red, $menu_width,36px)
-
-			@media (max-width: $break-small)
-				@include ribbon($darkred, $red, $small_menu_width,54px)
-			@media (max-width: $break-medium) and (min-width: $break-small)
-				@include ribbon($darkred, $red, $medium_menu_width,54px)
+			@include ribbon($darkred, $red,36px)
 
 			text-align: center
 			padding: 4px 0 0
@@ -316,6 +298,9 @@ body.home #main
 				text-align: right
 
 	#more-info
+		transition-property: left
+		transition-duration: 0.25s
+
 		display: none
 		top: 370px
 		&.reps
@@ -325,13 +310,6 @@ body.home #main
 		position: fixed
 		left: $menu_left
 		width: $menu_width - 28px*2
-		@media (max-width: $break-small)
-			width: $small_menu_width - 28px*2
-			left: 28px
-		@media (max-width: $break-medium) and (min-width: $break-small)
-			width: $medium_menu_width - 28px*2
-			left: $medium_menu_left
-
 
 		background: #f3f5f4
 		overflow: hidden
@@ -405,9 +383,6 @@ body.fixed
 		font-size: 80%
 		padding: 4px 10px 0 140px
 
-		@media (max-width: $break-small)
-			display: none
-
 		button.start_campaign
 			@include button($darkgrey, $darkblue)
 			font-size: 16px
@@ -449,31 +424,12 @@ body.fixed
 			position: absolute
 			left: 0
 
-		@media (max-width: $break-small)
-			a img
-				display: none
-			.small
-				display: block
-				margin-top: 10px
-				font-size: 150%
-			height: 80px
-			padding-top: 10px
-			&::after
-				border-width: 15px 70px
 
 	img#logo
 		position: absolute
 		top: $offset * 0.4
 		transition-property: width, top, left
 
-		@media (max-width: $break-medium)
-			position: relative
-			margin: 0 auto 10%
-			clear: both
-			width: 90%
-			top: 100px
-		// @media (max-width: $break-medium) and (min-width: $break-small)
-		// 	top: $offset_medium * 2
 		left: 3%
 		width: 50%
 
@@ -481,30 +437,6 @@ body.fixed
 	#description
 		position: absolute
 		top: $offset
-
-		@media (max-width: $break-medium)
-			position: relative
-			right: 5%
-			width: 90%
-			float: right
-			margin: 5% 0
-			font-size: 100%
-			line-height: 1em
-			text-align: center
-			h1
-				display: none
-			button.get_started
-				margin: 0 auto 0
-		@media (max-width: 1150px) and (min-width: $break-medium)
-			top: $offset * 1.2
-			font-size: 90%
-			h1
-				line-height: 1em
-				margin-bottom: 0
-			button.get_started
-				margin-top: 5%
-		@media (max-width: $break-small)
-			margin-top: 20%
 
 		right: 5%
 		width: 40%
@@ -538,7 +470,7 @@ body.fixed
 		bottom: 10px
 
 		button, a
-			float: left
+			float: right
 		button.start_campaign
 			@include button( $darkblue, darken($darkblue, 3%))
 			font-size: 16px
@@ -580,12 +512,6 @@ body.fixed
 
 	.disclaimer
 		width: 54%
-
-	@media (max-width: $break-medium)
-		.column
-			display: none
-		.disclaimer
-			width: 100%
 
 
 	.column

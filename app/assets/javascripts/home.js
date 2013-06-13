@@ -2,14 +2,14 @@ if( $oundoff_config.home ) {
 
 	var w_top, w_height, w_width, freeze, reset_styles, offset_factor
 	top_offset = 80
+	small_cut_off = 860
 
 	$(document)
 	.ready( function() {
 		w_top = this.body.scrollTop,
 		w_height = window.innerHeight,
 		w_width = window.innerWidth,
-		offset_factor = w_width > 980 ? 0.5 :
-			w_width > 600 ? 0.2 : 0.1,
+		offset_factor =  0.5,
 		reset_styles = true,
 		freeze = false;
 
@@ -26,6 +26,7 @@ if( $oundoff_config.home ) {
 
 		if( document.body.classList.contains('fixed') ) {
 
+			if( w_height < small_cut_off  ) return false;
 			var divs = content.childNodes,
 				unset = true;
 
@@ -46,6 +47,7 @@ if( $oundoff_config.home ) {
 
 				}
 			};
+			$(logo).attr('src','/assets/logo_no_cong.png')
 			return false;
 		}
 
@@ -70,50 +72,81 @@ if( $oundoff_config.home ) {
 				reset_styles = true
 
 			} else if( w_top > 10 && w_top < w_height ) {
-				var logo_width = window.innerWidth * .5,
-					logo_width_rate = 210 - logo_width,
 
-					logo_top = w_height * ( offset_factor * .4 ),
-					logo_top_rate = 6 - logo_top,
+				if( w_width >= small_cut_off ) {
+					var logo_width = w_width * .5,
+						logo_width_rate = 210 - logo_width,
 
-					description_top = w_height*offset_factor,
-					description_top_rate = w_height*1.25 - description_top,
+						logo_top = w_height * ( offset_factor * .4 ),
+						logo_top_rate = 6 - logo_top,
 
-					banner_top = 0,
-					banner_top_rate = 180 - ( - 200 ),
+						description_top = w_height*offset_factor,
+						description_top_rate = w_height*1.25 - description_top,
 
-					top_border_width = 15,
-					top_border_width_rate =  (4 - 15),
-					top_bottom = w_height*.22,
-					top_bottom_rate = ( (w_height-100) - top_bottom ),
+						banner_top = 0,
+						banner_top_rate = 180 - ( - 200 ),
 
-					bottom_top = w_height * ( 1 - .22 ),
-					menu_top = w_height + 20 + top_offset
-					content_margin_top = w_height * 2 + 20 + top_offset
+						top_border_width = 15,
+						top_border_width_rate =  (4 - 15),
+						top_bottom = w_height*.22,
+						top_bottom_rate = ( (w_height-100) - top_bottom ),
 
-				$foot.css({ top: n_css( bottom_top - top_bottom_rate * p * 1.4 ) })
-				$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
-				$content.css({ marginTop: n_css( content_margin_top - top_bottom_rate * p *1.4 ) })
-				$top.css({
-					minHeight: 0,
-					borderBottomWidth: n_css( top_border_width + top_border_width_rate*p ),
-					bottom: n_css( top_bottom + top_bottom_rate * p )
-				})
+						bottom_top = w_height * ( 1 - .22 ),
+						menu_top = w_height + 20 + top_offset
+						content_margin_top = w_height * 2 + 20 + top_offset
 
-				$logo.css( {
-					width: n_css( logo_width + logo_width_rate * p ),
-					top: n_css( logo_top + logo_top_rate  * p ),
-				})
+					$foot.css({ top: n_css( bottom_top - top_bottom_rate * p * 1.4 ), paddingBottom: '0px' })
+					$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
+					$content.css({ marginTop: n_css( content_margin_top - top_bottom_rate * p *1.4 ) })
+					$top.css({
+						minHeight: 0,
+						borderBottomWidth: n_css( top_border_width + top_border_width_rate*p ),
+						bottom: n_css( top_bottom + top_bottom_rate * p ),
+					})
 
-				if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
+					$logo.css( {
+						width: n_css( logo_width + logo_width_rate * p ),
+						top: n_css( logo_top + logo_top_rate  * p ),
+					})
 
-				$description.css( { top: n_css( description_top - description_top_rate* p) })
-				$banner.css( { top: n_css( banner_top - banner_top_rate* p) })
+					if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
+
+					$description.css( { top: n_css( description_top - description_top_rate* p) })
+					$banner.css( { top: n_css( banner_top - banner_top_rate* p) })
+				} else {
+					$description.hide()
+					if( p > .1 ) {
+						$(logo).attr('src','/assets/logo_no_cong.png')
+						$top.css({
+							position: 'fixed',
+							height: '80px',
+							borderBottomWidth: '4px',
+
+						})
+						$logo.css({
+							width: '210px',
+							top: '6px',
+							left: '7%',
+							marginTop: 0
+						})
+					}
+					if( p > 0.3 ) {
+						if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
+
+						reset_styles = true;
+
+						this.body.classList.add( 'fixed' )
+						window.name += 'soundoff_open'
+					}
+					$foot.css({ paddingBottom: '100px' })
+				}
+
 			}
+
 		} else {
 			if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
-
-			reset_styles = true
+			$(logo).attr('src','/assets/logo_no_cong.png')
+			reset_styles = true;
 
 			this.body.classList.add( 'fixed' )
 			$('body').scrollTop(0)
@@ -121,7 +154,12 @@ if( $oundoff_config.home ) {
 		}
 	})
 	.on('click','.get_started',function() {
-		scroll_to( w_height )
+		if( isMobile.any() ) {
+			$(logo).attr('src','/assets/logo_no_cong.png')
+			scroll_to( w_height / 3 + 10 )
+		} else {
+			scroll_to( w_height )
+		}
 	})
 	.on('click','img#logo',function() {
 		angular.element(main).scope().resetHard()
@@ -149,6 +187,8 @@ if( $oundoff_config.home ) {
 	})
 
 	function scroll_to(target_height,direction) {
+		if( isMobile.any() ) return window.scrollTo(0 , target_height );
+
 		var increment =
 				Math.abs( target_height - w_top ) < 10 ? 1  :
 				Math.abs( target_height - w_top ) < 50 ? 5  :
