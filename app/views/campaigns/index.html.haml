@@ -26,7 +26,7 @@
 
 	%a{ :href => new_campaign_path }
 		%button Launch New Campaign
-
+	&nbsp;
 	- if current_user.admin
 		%a{ :href => all_path+'.text' }
 			%button All HeadCount Singups
@@ -43,6 +43,7 @@
 			url: '/campaigns/'+campaign,
 			data: { status: status},
 			type: status == 'destroy' ? 'DELETE' : 'PUT',
-			dataType: 'JSON'
+			dataType: 'JSON',
+			success: function() { $this.parents('tr').remove() }
 		})
 	})

@@ -92,6 +92,11 @@ class CampaignsController < ApplicationController
 			end
 		end
 	end
+	def destroy
+		@campaign = Campaign.find( params[:id] )
+		@campaign.destroy if current_user.admin
+		render :json => { :success => true }
+	end
 
 
 end
