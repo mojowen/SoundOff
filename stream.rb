@@ -2,6 +2,7 @@
 
 require 'tweetstream'
 
+puts 'Daemon system initalizing....'
 
 TweetStream.configure do |config|
   config.consumer_key       = 'J9CJL5Uwn8XvqDVTCwuPlQ'
