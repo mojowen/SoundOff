@@ -10,7 +10,7 @@
 
 	#description
 		%p
-			Run your own campaign or just send one tweet. We'll make sure your message goes directly to the decision makers on issues that matter to you
+			Run your own campaign or just send one tweet. We'll make sure your message goes directly to the decision makers on issues that matter to you.
 
 		%button.get_started{ :href => '#' } Get Started
 
@@ -158,6 +158,16 @@
 					%h3 @{{tweet.from_user }}
 
 					.body {{ tweet.text }}
+			.no-tweets{ 'ng-hide' => 'item.tweets.length > 0'}
+				%h3
+					\... looks like no one's&#160;
+					%span #S
+					ound
+					%span O
+					ff-ed yet.
+					%br
+					%br
+					%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}',:campaign => '{{item.id}}'  } You should get this party started
 
 = image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'
 = image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'
