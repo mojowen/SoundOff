@@ -19,7 +19,6 @@ class Campaign < ActiveRecord::Base
 		self.short_url = SecureRandom.urlsafe_base64( 3, false) if short_url.nil?
 	end
 	def notify_pending
-		puts ! self.partner.nil? && self.new_record?
 		CampaignMail.new_campaign( self ).deliver if ! self.partner.nil? && self.new_record?
 	end
 	def notify_active
