@@ -7,6 +7,8 @@ class Status < ActiveRecord::Base
 	belongs_to :soundoff
 
 	def self.create_from_tweet raw_tweet
+		raw_tweet = JSON::parse(raw_tweet) if raw_tweet.class == String
+
 		hashtags = raw_tweet['entities']['hashtags'].map{ |f| f['text'].downcase }
 		mentions = raw_tweet['entities']['user_mentions'].map{ |f| f['id_str'] }
 
