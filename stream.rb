@@ -37,10 +37,10 @@ daemon.on_reconnect do |timeout, retries|
 end
 
 daemon.track('#soundoff') do |tweet|
-	Tweet.create_from_tweet(tweet)
+	Status.create_from_tweet(tweet)
 end
 
 daemon.follow( all_reps ) do |tweet|
-	Tweet.create_from_tweet(tweet)
+	Status.create_from_tweet(tweet)
 end
 
