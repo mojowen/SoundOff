@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(:version => 20130614010335) do
   add_index "soundoffs", ["campaign_id"], :name => "index_soundoffs_on_campaign_id"
   add_index "soundoffs", ["message"], :name => "index_soundoffs_on_message"
 
-  create_table "tweets", :force => true do |t|
+  create_table "statuses", :force => true do |t|
     t.string   "tweet_id"
     t.datetime "tweet_date"
     t.string   "screen_name"
@@ -105,9 +105,9 @@ ActiveRecord::Schema.define(:version => 20130614010335) do
     t.datetime "updated_at",                    :null => false
   end
 
-  add_index "tweets", ["reply_to"], :name => "index_tweets_on_reply_to"
-  add_index "tweets", ["soundoff_id"], :name => "index_tweets_on_soundoff_id"
-  add_index "tweets", ["tweet_id"], :name => "index_tweets_on_tweet_id"
+  add_index "statuses", ["reply_to"], :name => "index_statuses_on_reply_to"
+  add_index "statuses", ["soundoff_id"], :name => "index_statuses_on_soundoff_id"
+  add_index "statuses", ["tweet_id"], :name => "index_statuses_on_tweet_id"
 
   create_table "users", :force => true do |t|
     t.string   "email"
