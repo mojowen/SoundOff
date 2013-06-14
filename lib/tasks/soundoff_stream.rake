@@ -20,7 +20,7 @@ task :soundoff_stream => :environment  do
 		puts "Timeout #{timeout} with #{retries} retries"
 	end
 
-	stream.new.track('#soundoff','#SoundOff') do |status|
+	stream.track('#soundoff','#SoundOff') do |status|
 	  raw_tweet = status.to_json
 	  Status.create_from_tweet(raw_tweet)
 	end
