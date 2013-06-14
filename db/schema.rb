@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612180513) do
+ActiveRecord::Schema.define(:version => 20130614010335) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
@@ -89,6 +89,25 @@ ActiveRecord::Schema.define(:version => 20130612180513) do
 
   add_index "soundoffs", ["campaign_id"], :name => "index_soundoffs_on_campaign_id"
   add_index "soundoffs", ["message"], :name => "index_soundoffs_on_message"
+
+  create_table "tweets", :force => true do |t|
+    t.string   "tweet_id"
+    t.datetime "tweet_date"
+    t.string   "screen_name"
+    t.string   "user_id"
+    t.string   "hashtags"
+    t.string   "mentions"
+    t.text     "message"
+    t.integer  "soundoff_id"
+    t.integer  "reply_to"
+    t.text     "data",        :default => "{}"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "tweets", ["reply_to"], :name => "index_tweets_on_reply_to"
+  add_index "tweets", ["soundoff_id"], :name => "index_tweets_on_soundoff_id"
+  add_index "tweets", ["tweet_id"], :name => "index_tweets_on_tweet_id"
 
   create_table "users", :force => true do |t|
     t.string   "email"
