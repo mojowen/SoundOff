@@ -28,7 +28,6 @@ task :soundoff_stream => :environment  do
 
 	stream.follow(151545665) do |status|
 	  raw_tweet = status.to_json
-	  puts raw_tweet
 	  Status.create_from_tweet(raw_tweet)
 	end
 
@@ -37,7 +36,6 @@ task :soundoff_stream => :environment  do
 
 	TweetStream::Client.new.follow( all_reps )  do |status|
 		raw_tweet = status.to_json
-		puts raw_tweet
 		Status.create_from_tweet(raw_tweet)
 	end
 
