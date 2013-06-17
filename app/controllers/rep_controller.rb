@@ -5,14 +5,17 @@ class RepController < ApplicationController
 	end
 	def search
 		search = params[:q] || ''
-		list = (params[:sns] || '' ).downcase.split(',')
+		twitter_list = (params[:sns] || '' ).downcase.split(',')
+		bio_list = (params[:bio] || '' ).downcase.split(',')
 
 		if search.length > 3
 			all_reps = Rep.search( search )
 		elsif  search.length == 2
 			all_reps = Rep.find_all_by_state( search.upcase  )
-		elsif list.length > 0 && search.length < 2
-			all_reps = Rep.all( :conditions => ['LOWER(twitter_screen_name) IN(?)',list] )
+		elsif twitter_list.length > 0 && search.length < 2
+			all_reps = Rep.all( :conditions => ['LOWER(twitter_screen_name) IN(?)',twitter_list] )
+		elsif bio_list.length > 0 && search.length < 2
+			all_reps = Rep.all( :conditions => ['LOWER(bioguide_id) IN(?)',bio_list] )
 		else
 			all_reps = {}
 		end
