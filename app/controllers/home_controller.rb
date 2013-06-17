@@ -4,10 +4,10 @@ class HomeController < ApplicationController
   def home
 
   	if params[:twitter_screen_name]
-  		rep = Rep.find_by_twitter_screen_name( params[:twitter_screen_name] )
+  		rep = Rep.where( ['LOWER(twitter_screen_name) = ? ',params[:twitter_screen_name].downcase]).first
       redirect_to home_path if rep.nil?
 
-  		rep.data = nil
+  		rep.data = nil unless rep.data
       rep[:short_url] = rep_path( rep.twitter_screen_name )
       rep[:tweets] = []
 

@@ -254,7 +254,7 @@ body.home #main
 						color: $blue
 				h3
 					color: #7b7a7a
-					margin-bottom: 0
+					margin-bottom: 4px
 
 			.campaign
 				padding: 10px 20px
@@ -276,7 +276,7 @@ body.home #main
 			.rep
 				padding: 4px 20px
 				h3, p
-					line-height: 0
+					line-height: 1em
 				&.active, &:hover
 					h3
 						color: $blue
@@ -286,7 +286,7 @@ body.home #main
 		#tabs
 			clear: both
 			width: 90%
-			margin: 50px 5% 6px
+			margin: 10px 5% 0px
 			text-align: center
 			transition-property: margin-top
 			transition-duration: 0.25s
@@ -295,7 +295,7 @@ body.home #main
 				line-height: 1em
 				margin: 0
 				a.open_soundoff
-					color: $red
+					color: $darkred
 					font-size: 70%
 					text-align: center
 			span
@@ -310,12 +310,11 @@ body.home #main
 
 
 		h2
-			@include ribbon($darkred, $red,36px)
-			top: 40px
+			@include ribbon(#333,#555,50px)
+			top: -14px
 			text-align: center
 			padding: 4px 0 0
-			margin-bottom: -6px
-			color: $darkred
+			color: white
 
 		.messages
 			.single
@@ -328,14 +327,14 @@ body.home #main
 			font-size: 70%
 			height: 20px
 			a
-				color: $red
+				color: $darkred
 				&.clear
 					float: left
 
 		img.search
 			float: right
-			width: 30px
-			margin: 8px 7% 0 0
+			width: 16px
+			margin: 72px 8% 0 0
 		input
 			border: none
 			border-bottom: 1px solid $darkgrey
@@ -343,7 +342,7 @@ body.home #main
 			display: block
 			width: 80%
 			font-size: 100%
-			margin: 14px 5% 0
+			margin: 70px 5% 0
 			background: transparent
 			outline: none
 			&::-webkit-input-placeholder

@@ -189,7 +189,6 @@ if( $oundoff_config.home ) {
 			item = angular.element( this ).scope()[type]
 
 		angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
-		console.log( $('#content .active').offset().top - 120 )
 		scroll_to( $('#content .active').offset().top - 120 )
 	})
 

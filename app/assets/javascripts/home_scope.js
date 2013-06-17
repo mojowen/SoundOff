@@ -9,15 +9,15 @@ function homePageScope($http, $scope) {
 		if( $scope.mode.toLowerCase() == 'reps' )  return $scope.raw_reps.filter( function(el) {
 			if( search.length > 1 && $scope.single_item == null ) {
 				return (
-					el.first_name.toLowerCase().search( search ) !== -1
+					( el.state || '').toLowerCase().search( search ) !== -1
 					||
-					el.last_name.toLowerCase().search( search ) !== -1
+					( el.state || '').toLowerCase().search( search ) !== -1
 					||
-					el.state.toLowerCase().search( search ) !== -1
+					( el.state || '').toLowerCase().search( search ) !== -1
 					||
-					el.twitter_screen_name.toLowerCase().search( search ) !== -1
+					( el.state || '').toLowerCase().search( search ) !== -1
 					||
-					el.state_name.toLowerCase().search( search ) !== -1
+					( el.state || '').toLowerCase().search( search ) !== -1
 				)
 			} else if ( $scope.single_item != null ) return  el == $scope.single_item
 			else return el;
@@ -32,8 +32,10 @@ function homePageScope($http, $scope) {
 					v=n%100;
  			  	return n+(s[(v-20)%10]||s[v]||s[0]) + ' Congressional District | '+rep.state_name
 			}
-		} else {
+		} else if( rep.chamber == 'senate' || rep.chamber == 'upper' ) {
 			return "Senator | "+rep.state_name
+		} else {
+			return null
 		}
 	}
 
@@ -61,13 +63,16 @@ function homePageScope($http, $scope) {
 		query = '/statuses?'+['hashtags='+hashtags,'mentions='+mentions].join('&')
 
 	function loadTweets(data) {
+		var hashtags = $scope.raw_campaigns.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()}),
+			mentions = $scope.raw_reps.map(function(el) { return el.twitter_id })
+
 		for (var i = 0; i < data.length; i++) {
 			var tweet = data[i],
 				tweet_hashtags = tweet.hashtags.replace(/soundoff,/ig,'').split(','),
 				tweet_mentions = tweet.mentions.split(',')
 
 			tweet.mesage = unescape( tweet.message )
-			tweet.created_at = new Date( tweet.data.created_at[0] )
+			tweet.created_at = new Date( tweet.data.created_at )
 
 			for (var tag = tweet_hashtags.length - 1; tag >= 0; tag--) {
 				var found_campaign = hashtags.indexOf( tweet_hashtags[tag] )
@@ -75,7 +80,11 @@ function homePageScope($http, $scope) {
 			};
 			for (var tag = tweet_mentions.length - 1; tag >= 0; tag--) {
 				var found_rep = mentions.indexOf( tweet_mentions[tag] )
-				if( found_rep !== -1 ) $scope.raw_reps[ found_rep ].tweets.push( tweet )
+				if( found_rep !== -1 ) { 
+					$scope.raw_reps[ found_rep ].tweets.push( tweet );
+					console.log( tweet_mentions[tag] )
+					console.log( mentions[ mentions.indexOf( tweet_mentions[tag] ) ] )
+				}
 			};
 
 		};
