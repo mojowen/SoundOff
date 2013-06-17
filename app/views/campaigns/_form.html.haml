@@ -57,18 +57,18 @@
 			- 4.times do |index|
 				- if index == 0
 					- if @campaign.new_record? || @campaign.suggested[index] || @campaign.suggested[index.to_s]
-						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :counter => 60 }= @campaign.suggested[index] || @campaign.suggested[index.to_s] || ''
-						.count 60
+						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :counter => 80 }= ( @campaign.suggested[index] || @campaign.suggested[index.to_s] rescue '' )
+						.count 80
 					- else
-						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' , :counter => 60 }
-						.count{ :style => 'display:none' } 60
+						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' , :counter => 80 }
+						.count{ :style => 'display:none' } 80
 				- else
-					- if @campaign.suggested[index] || @campaign.suggested[index.to_s]
-						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :counter => 60 }= @campaign.suggested[index] || @campaign.suggested[index.to_s]
-						.count 60
+					- if ( @campaign.suggested[index] || @campaign.suggested[index.to_s] rescue false)
+						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :counter => 80 }= ( @campaign.suggested[index] || @campaign.suggested[index.to_s] rescue '')
+						.count 80
 					- else
-						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none', :counter => 60 }
-						.count{ :style => 'display:none' } 60
+						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none', :counter => 80 }
+						.count{ :style => 'display:none' } 80
 	.help{ :style => 'margin-top: -140px'} Here’s where you can get creative. We suggest making each suggestion distinct from each other. Feel free to add additional hashtags or links. Keep in mind that the campaign hashtag will automatically appear at the end of all the tweets. Don’t write that hashtag into your suggested tweets, unless you want it to appear twice.
 
 	.targets.radio.line
@@ -151,7 +151,7 @@
 	.on('submit','form',function(e){
 		var errors = []
 
-		$('input:visible').removeClass('oops').not('[type=radio],[type=checkbox]').each( function() {
+		$('input:visible, textarea:visible').removeClass('oops').not('[type=radio],[type=checkbox]').each( function() {
 			var $input = $(this)
 			if(
 				($input.val().length < 1 && $input.attr('placeholder').search(/\*/) !== -1) ||
