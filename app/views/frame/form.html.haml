@@ -1,34 +1,28 @@
 #main{ "ng-app" => true }
 	#popup{ "ng-controller" => "formScope" }
 		%h2.hash_tag {{name}}
-		#close X Close
+		#close x
 		%form#form{ :class => 'stage_{{stage}}', 'ng-submit' => 'nextStage()' }
-			= image_tag( @body_class.index('light') ? 'logo_dark.png' : 'logo_no_cong.png' , :class => 'stage_1 stage_2')
+			= image_tag 'logo_dark.png' , :class => 'stage_1 stage_2'
 
 			#stage_1
 				%input{ :placeholder => "Zip Code", "ng-model" => "zip", :id => 'zip' }
 
-				- unless ( @campaign.email_option == 'hidden' rescue false )
+				- if ( @campaign.email_option != 'hidden' rescue true ) && params[:email].nil?
 					%input{ :placeholder => "Email", "ng-model" => "email", :id => 'email'  }
 
-				- if ( @campaign.email_option == 'optional' rescue true )
-					.signups{ 'ng-hide' => 'email != "" '} Email is Optional
-
-				- if ( @campaign.collect_email rescue false ) && params[:email].nil?
+					- if ( @campaign.email_option == 'optional' rescue true )
+						.signups{ 'ng-hide' => 'email != "" '} Email is Optional
 					.signups{ 'ng-hide' => 'email == "" '}
 						It’s OK to add me to the mailing list of:
 						%br
 						%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_headcount' }
 						%span{ :onclick => '$(this).prev().click()' } HeadCount.org
 						%br
-						- if ( @campaign.partner.name rescue false)
+						- if ( @campaign.collect_email && ! @campaign.partner.name.nil? rescue false )
 							%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_partner' }
 							%span{ :onclick => '$(this).prev().click()' } #{ @campaign.partner.name }
 							%br
-						I agree to
-						= link_to 'terms and conditions', tos_path, :target => '_blank'
-						and
-						= link_to 'privacy policy', privacy_path, :target => '_blank'
 
 			#stage_2
 				%input{ :placeholder => 'Street Address', "ng-model" => 'street', :id => 'street' }
@@ -40,25 +34,31 @@
 			#stage_3
 
 				.target{ "ng-repeat" => "target in targets" }
-					%img.profile_img{ 'ng-src' => "https://api.twitter.com/1/users/profile_image?screen_name={{target.twitter_id}}&size=bigger" }
-					%h1 @{{ target.twitter_id }}
+					%img.profile_img{ 'ng-src' => "{{target.twitter_profile_image}}" }
+					%h1 @{{ target.twitter_screen_name }}
 
-				.tag{ 'ng-hide' => 'drop_campaign'}
-					{{campaign}}
-					%span{ 'ng-click' => "removeCampaign()" } x
+				.box
+					.tag{ 'ng-hide' => 'drop_campaign'}
+						{{campaign}}
+						%span{ 'ng-click' => "removeCampaign()" } x
 
-				%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
+					%textarea{ :placeholder => 'Enter your message to {{targets_list()}}',"ng-model" => "message", :id => 'message' }
 
 				%p
-					- unless @suggestions.empty?
-						%a{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;' } Suggestions?
+					- unless @campaign.suggested.empty?
+						%a.suggestions{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;' } Need Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
+				%p{ 'ng-hide' => 'function() { return !isMobile.any() }' } Note: You can also add a photo before sending your tweet.
 
 			#stage_4
-				%h1 Thanks!
-				%h1 You're Almost Done
-				%h3 Tell Your Friends and Set the #SoundOff
+				%h1 Thanks! - You're Almost Done
+				%h3
+					Tell Your Friends and Set the&#160;
+					%span #S
+					ound
+					%span O
+					ff
 				.line
 					%a.twitter{ 'ng-href' => '{{ twitter_link() }}', :target => '_blank' }
 						.box
@@ -93,7 +93,7 @@
 				%br
 				Try one of these:
 
-			- @suggestions.each do |suggestion|
+			- @campaign.suggested.each do |k,suggestion|
 				%p.link{ 'ng-click' => "setMessage( #{ suggestion.to_json } )" }
 					=suggestion
 

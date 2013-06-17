@@ -1,6 +1,6 @@
 function openSoundOff( args ) {
   var args = args || {},
-    config = '', 
+    config = '',
     mobile = false, // Check if mobile
     d = document
 
@@ -38,7 +38,7 @@ function openSoundOff( args ) {
       form.onload = function() {
 
         dark.style.opacity = 0.6
-        dark.style.backgroundColor = 'black'
+        dark.style.backgroundColor = '#348DAF'
 
         dark.style.position = 'fixed'
         dark.style.top = '0px'
@@ -50,10 +50,10 @@ function openSoundOff( args ) {
 
         close.style.position = 'fixed'
         close.style.top = '74px'
-        close.style.left = ( window.innerWidth * .96 )/2 + 560/2 - 50 +'px'
+        close.style.left = ( window.innerWidth * .96 )/2 + 396/2 - 36 + 14 +'px'
         close.style.zIndex = '110'
-        close.style.width = '90px'
-        close.style.height= '40px'
+        close.style.width = '30px'
+        close.style.height= '50px'
         close.style.cursor = 'pointer'
         close.onclick = closeWindow
 
@@ -90,7 +90,6 @@ function openSoundOff( args ) {
       d.body.appendChild( form )
 
   }
-  
 
   function el(type) { return d.createElement(type); }
 }

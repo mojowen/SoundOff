@@ -26,7 +26,7 @@ function formScope($http, $scope) {
 					return false
 				}
 				if( $scope.zip.length < 4 ) {
-					errors.push( 'missing a zip code')
+					errors.push( 'missing your zip code')
 					zip.className += ' oops'
 				}
 				if( $scope.email.length < 1 && config.email_required ) {
@@ -101,7 +101,7 @@ function formScope($http, $scope) {
 	$scope.zip = $oundoff_config.zip || ''
 	$scope.email = $oundoff_config.email || ''
 	$scope.add_partner = typeof $oundoff_config.no_email != 'undefined' ? $oundoff_config.no_email : true
-	$scope.add_headcount =  typeof $oundoff_config.no_email != 'undefined' ? $oundoff_config.no_email : true
+	$scope.add_headcount = $oundoff_config.email == null ? true : false
 
 	$scope.ready_for_2 = false
 
@@ -109,14 +109,18 @@ function formScope($http, $scope) {
 
 	$scope.electeds = []
 
-	$scope.targets = $oundoff_config.targets || []
-	if( $scope.targets.length > 0 ) {
-		if( $scope.campaign == '' ) $scope.campaign = 'Tweet @'+$scope.targets.map(function(el) { return el.twitter_id }).join(' @')
+	$scope.raw_targets = $oundoff_config.targets || []
+	$scope.targets = []
+	if( $scope.raw_targets.length > 0 ) {
+		if( $scope.campaign == '' ) $scope.campaign = 'Tweet @'+$scope.raw_targets.map(function(el) { return el.twitter_id }).join(' @')
 		if( $scope.zip != '' && ( $scope.email != '' || ! config.email_required ) ) $scope.stage = 3;
+		var passed_targets = $scope.raw_targets.map( function(el) { return el.twitter_id }).join(',')
+	} else {
+		passed_targets = ''
 	}
 
 	$scope.$watch( 'zip', function(newValue){
-		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.targets.length == 0 ) {
+		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.raw_targets.length == 0 ) {
 				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
 				$scope.sunligh_fetching = true
 				$http.jsonp(query,{})
@@ -126,7 +130,7 @@ function formScope($http, $scope) {
 							targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
 
 						if( targets.length != limit && typeof google_maps == 'undefined' ) addGoogleMaps();
-						else $scope.targets = targets;
+						else $scope.raw_targets = targets;
 
 						$scope.sunligh_fetching = false;
 						if( $scope.ready_for_2 ) $scope.nextStage()
@@ -162,14 +166,21 @@ function formScope($http, $scope) {
 			var address = [$scope.street, $scope.city, $scope.zip].join(' ')
 			$scope.geocoder_fetching = true;
 			$scope.geocoder.geocode( { 'address': address}, function(results, status) {
-				var location = results[0].geometry.location,
-					latlng = []
-				for( var i in location ) {
-					if( typeof location[i] == 'number' ) latlng.push( location[i] )
+				if( typeof  results[0] == 'undefined' ) {
+					$('#notice').html('').attr('class','').text('We couldn\'t match that address to a rep :(')
+					$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
+					$scope.raw_targets = [{twitter_id: 'whitehouse'}]
+					$scope.stage = 3
+				} else {
+					var location = results[0].geometry.location,
+						latlng = []
+					for( var i in location ) {
+						if( typeof location[i] == 'number' ) latlng.push( location[i] )
+					}
+					angular.element( document.getElementById('popup') ).scope().$apply( function() {
+						$scope.latlng = latlng.sort()
+					})
 				}
-				angular.element( document.getElementById('popup') ).scope().$apply( function() {
-					$scope.latlng = latlng.sort()
-				})
 		    });
 		}
 	}
@@ -180,7 +191,7 @@ function formScope($http, $scope) {
 				$http.jsonp(query,{})
 					.success( function(data,status){
 						$scope.electeds = data.results;
-						$scope.targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
+						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
 
 						$scope.geocoder_fetching = false;
 						if( $scope.ready_for_3 ) $scope.nextStage();
@@ -196,10 +207,23 @@ function formScope($http, $scope) {
 		$scope.drop_campaign = true
 	}
 
-	$scope.targets_list = function() { return $scope.targets.map( function(el) { return '@'+el.twitter_id }).join(' ') }
+	$scope.targets_list = function() { return $scope.raw_targets.map( function(el) { return '@'+el.twitter_screen_name }).join(' ') }
 
 
 	$scope.counter = 139
+
+	$scope.$watch('raw_targets',function(targets) {
+		var params = ''
+		if( $oundoff_config.targets.length > 0 ) params += 'sns='+$scope.raw_targets.map( function(el) { return el.twitter_id }).join(',')
+		else params += 'bio='+$scope.raw_targets.map( function(el) { return el.bioguide_id }).join(',')
+
+		if( params.length > 0 ) $http.get( '/find_reps?'+params ).success( function(r) {
+			for (var i = r.length - 1; i >= 0; i--) {
+				$scope.targets.push( r[i] )
+			};
+		});
+	});
+
 	$scope.$watch('message',setCounter);
 	$scope.$watch('drop_campaign',setCounter);
 
@@ -250,7 +274,10 @@ function addGeocoder() {
 	})
 }
 if ( window.self === window.top && $oundoff_config.form ) {
-	$(document).ready( function() { $('#close').remove() })
+	$(document).ready( function() {
+		if( isMobile.any() ) document.body.classList.add('noframe')
+		$('#close').remove();
+	})
  	window.onbeforeunload = function(e) {
       return 'Are you sure you want to cancel your SoundOff?';
     };
