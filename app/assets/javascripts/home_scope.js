@@ -82,8 +82,6 @@ function homePageScope($http, $scope) {
 				var found_rep = mentions.indexOf( tweet_mentions[tag] )
 				if( found_rep !== -1 ) { 
 					$scope.raw_reps[ found_rep ].tweets.push( tweet );
-					console.log( tweet_mentions[tag] )
-					console.log( mentions[ mentions.indexOf( tweet_mentions[tag] ) ] )
 				}
 			};
 
