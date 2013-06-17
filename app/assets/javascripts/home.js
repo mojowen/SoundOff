@@ -4,12 +4,13 @@ if( $oundoff_config.home ) {
 	top_offset = 80
 	small_cut_off = 860
 
+
 	$(document)
 	.ready( function() {
 		w_top = this.body.scrollTop,
 		w_height = window.innerHeight,
 		w_width = window.innerWidth,
-		offset_factor =  0.5,
+		offset_factor =  0.4,
 		reset_styles = true,
 		freeze = false;
 
@@ -23,6 +24,7 @@ if( $oundoff_config.home ) {
 
 		var w_top = this.body.scrollTop,
 			p = w_top / w_height;
+
 
 		if( document.body.classList.contains('fixed') ) {
 
@@ -64,7 +66,7 @@ if( $oundoff_config.home ) {
 				$content = $('#content'),
 				$banner = $('#banner')
 
-			function p_css(percent) { return [ percent * 100,'%' ].join(''); };
+			function p_css(percent) { return [ percent ,'%' ].join(''); };
 			function n_css(number) { return [ number ,'px' ].join(''); };
 
 			if( w_top < 10 ) {
@@ -74,11 +76,14 @@ if( $oundoff_config.home ) {
 			} else if( w_top > 10 && w_top < w_height ) {
 
 				if( w_width >= small_cut_off ) {
-					var logo_width = w_width * .5,
+					var logo_width = w_width * .33,
 						logo_width_rate = 170 - logo_width,
 
-						logo_top = w_height * ( offset_factor * .4 ),
+						logo_top = w_height * .3,
 						logo_top_rate = 6 - logo_top,
+
+						logo_left = 10,
+						logo_left_rate = (7 - 10) / 10,
 
 						description_top = w_height*offset_factor,
 						description_top_rate = w_height*1.25 - description_top,
@@ -107,6 +112,7 @@ if( $oundoff_config.home ) {
 					$logo.css( {
 						width: n_css( logo_width + logo_width_rate * p ),
 						top: n_css( logo_top + logo_top_rate  * p ),
+						left: p_css( logo_left + logo_left_rate * p)
 					})
 
 					if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
@@ -178,11 +184,12 @@ if( $oundoff_config.home ) {
 		openSoundOff(config)
 		return false;
 	})
-	.on('click','.campaign, .rep',function() {
+	.on('click','#menu .campaign, #menu .rep',function() {
 		var type = this.classList.contains('campaign') ? 'campaign' : 'rep',
 			item = angular.element( this ).scope()[type]
 
 		angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
+		console.log( $('#content .active').offset().top - 120 )
 		scroll_to( $('#content .active').offset().top - 120 )
 	})
 
@@ -197,6 +204,7 @@ if( $oundoff_config.home ) {
 			direction = direction || ( target_height > w_top ? 1 : -1 )
 
 		window.scrollBy(0,increment * direction);
+
 		w_top = document.body.scrollTop;
 
 		var next_increment =
@@ -210,7 +218,7 @@ if( $oundoff_config.home ) {
 			||
 			Math.floor(w_top / next_increment) > Math.floor(target_height / next_increment) && direction < 0 && w_top > 0
 		) {
-			setTimeout( function() { scroll_to(target_height,direction) }, 1);
+			machine_scroll = setTimeout( function() { scroll_to(target_height,direction) }, 1);
 		} else {
 			window.scrollTo(0 , target_height );
 		}

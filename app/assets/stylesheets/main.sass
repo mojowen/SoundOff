@@ -1,12 +1,13 @@
 body
 	font-family: $bodyFont, sans-serif
-	letter-spacing: 2.5px
+	letter-spacing: 0px
 	padding: 0
 	margin: 0
 	background-color: $grey
 
 h1, h2, h3, h4
 	font-family: $headerFont, sans-serif
+	letter-spacing: 2.5px
 	span
 		font-size: 120%
 		margin: 0 -.4em
@@ -23,8 +24,10 @@ p
 	@include tag
 	color: $blue
 	text-align: center
+	overflow:hidden
+	white-space: inherit
 	&.oops
-		color: $red
+		color: #db4c6b
 
 input.oops, textarea.oops
 	border: 2px solid $red !important
@@ -35,23 +38,27 @@ input.oops, textarea.oops
 	@include ribbon($red,$darkred,411px)
 
 button
-	@include button($red,$darkred)
+	@include button($blue,$darkblue)
 	font-family: $headerFont
 
 #top
 	#fixed
 		#top_menu
+			width: 120px
+			position: relative
+			float: right
+			margin-left: -27px
+
 			a
-				padding: 0 10px
+				padding: 0 16px 2px
 				margin-left: 14px
 			.inner
 				position: absolute
 				display: none
 				background-color: $darkblue
-				top: 52px
+				top: 54px
 				z-index: 100
-				width: 120px
-				right: 22px
+				right: 24px
 				padding: 10px 4px 20px
 				a
 					color: white
@@ -65,9 +72,8 @@ button
 			&:hover
 				a.menu
 					background-color: $darkblue
-					padding-bottom: 10px
-					margin-bottom: -20px
+					padding-bottom: 12px
+					margin-bottom: -22px
 
-				background-color: $darkblue
 				.inner
 					display: block

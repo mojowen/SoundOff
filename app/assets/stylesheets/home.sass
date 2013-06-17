@@ -1,6 +1,6 @@
 $mid: 22%
 $fixed_header: 60px
-$menu_width: 500px
+$menu_width: 440px
 $menu_left: 100px
 
 $medium_menu_width: 340px
@@ -33,7 +33,6 @@ body.home #main
 				background-color: $darkgrey
 				padding: 20px
 				.title
-					min-height: 250px
 					opacity: .95
 					position: relative
 					background-color: white
@@ -46,7 +45,7 @@ body.home #main
 						border-radius: 3px
 
 					h1
-						font-size: 40px
+						font-size: 35px
 						color: #333
 						margin: 7px 0
 					h3
@@ -55,8 +54,12 @@ body.home #main
 						color: $darkgrey
 						font-family: $bodyFont
 						font-weight: normal
+						a
+							color: $red
+							text-decoration: none
 					.copy
-						margin-top: 36px
+						margin: 36px 0
+						clear: both
 
 					button
 						@include button($blue,$darkblue)
@@ -74,6 +77,8 @@ body.home #main
 					.details_right, .details_left
 						position: absolute
 						bottom: 0px
+						a
+							color: $darkblue
 			.rep
 				display: none
 				img
@@ -105,7 +110,7 @@ body.home #main
 					text-align: center
 					position: relative
 					color: #333
-					padding: 0 21%
+					padding: 0 21% 20px
 					span
 						font-size: 80%
 						font-style: italic
@@ -114,7 +119,7 @@ body.home #main
 						width: 70%
 					&:before
 						content: ' '
-						width: 15%
+						width: 25%
 						height: 16px
 						border-top: 5px solid $blue
 						border-left: 5px solid $blue
@@ -123,7 +128,7 @@ body.home #main
 						top: 10px
 					&:after
 						content: ' '
-						width: 15%
+						width: 25%
 						height: 16px
 						border-top: 5px solid $red
 						border-right: 5px solid $red
@@ -143,14 +148,16 @@ body.home #main
 
 	#powered_by
 		background: white
-		border: 1px solid #999
+		border: 1px solid #cbcbcb
+		border-radius: 3px
 		color: #555
-		font-style: italic
 		width: $menu_width - 28px * 2
 		left: $menu_left
 		position: fixed
+		font-weight: bold
+		text-align: center
 		bottom: 2px
-		padding: 23px 8px 0px
+		height: 68px
 		vertical-align: middle
 		font-size: 12px
 		line-height: 14px
@@ -160,26 +167,33 @@ body.home #main
 		bottom: -200px
 		z-index: 11
 
-		.small
-			display: none
+		h3
+			clear:both
+			margin: 0
+			padding: 14px 0 0
+			width: 50%
 
 		img
-			width: 26%
+			height: 67px
+			opacity: 0.8
 			float: right
-			margin-top: -22px
-		a
-			color: $darkred
+			margin: -28px 50px 0 0
 
 		.mark
-			clear:both
-			font-size: 70%
-			text-align: left
-			margin-top: 10px
+			float: left
+			font-size: 9px
+			margin-top: 8px
+			width: 50%
+			a, &
+				color: #c3c4c4
+				font-weight: normal
 
 	#menu
 		transition-property: height, left
 		transition-duration: 0.25s
+		borer: 1px solid #cbcbcb
 		z-index: 10
+		border-radius: 3px
 		.messages
 			.loading
 				display: none
@@ -207,7 +221,7 @@ body.home #main
 
 		position: fixed
 		top: 100%
-		height: 73%
+		height: 80%
 		background: #f3f5f4
 
 
@@ -228,7 +242,7 @@ body.home #main
 				display: block
 
 		.items
-			height: 90%
+			height: 95.5%
 			overflow-y: auto
 
 			.campaign, .rep
@@ -236,27 +250,36 @@ body.home #main
 				border-bottom: 2px solid $grey
 				&.active, &:hover
 					background: white
+					h3.name
+						color: $blue
 				h3
-					color: #333
+					color: #7b7a7a
 
 			.campaign
-				padding: 20px
+				padding: 10px 20px
+				height: 122px
 				.score
 					float: right
-					margin: 8px 20px 0
-					background: image_url('stat.png') top left no-repeat
+					margin: 8px 0 0
+					background: image_url('stat.png') 0 2px no-repeat
 					padding: 0 0 12px 36px
 					font-size: 200%
 					line-height: 80%
 				p, div
-					font-size: 90%
-					color: $darkgrey
+					font-size: 12px
+					color: #7b7a7a
+					height: 2.8em
+					overflow: hidden
+
 
 			.rep
 				padding: 4px 20px
 				h3, p
 					line-height: 0
-					marign: 0
+				&.active, &:hover
+					h3
+						color: $blue
+
 
 
 		#tabs
@@ -401,89 +424,58 @@ body.fixed
 	min-height: 500px
 
 	border-bottom: 10px solid $darkblue
-	$offset: 50%
+	$offset: 40%
 	$offset_small: 10%
 	$offset_medium: 20%
 
 
-	#start_campaign
-		position: fixed
-		background: $darkblue
-		text-align: right
-		width: 100%
-		color: white
-		min-height: 50px
-		max-height: 74px
-		font-size: 80%
-		padding: 4px 10px 0 140px
-
-		button.start_campaign
-			@include button($darkgrey, $darkblue)
-			font-size: 16px
-			margin: 6px 4px 6px 0
 
 
 
 	#banner
-
-		$width: 140px
-		color: $blue
-		height: 160px
+		color: white
+		height: 150px
 		right: 100px
-		width: $width
-		text-align: center
+		width: 130px
+		text-align: left
 		font-size: 10px
 		z-index: 12
 		position: relative
-		padding-top: 6px
+		padding: 28px 0 0 6px
 		position: absolute
-		@include gradient( darken($darkgrey,25%), darken($darkgrey,75%) )
+		font-weight: normal
+		background: $darkblue
 
 		img
-			width: 80%
+			height: 73px
 			margin: 10px auto
+			display: block
 		.small
 			display: none
 
-		&::after
-			content: ' '
-			border-color: transparent transparent $blue transparent
-			border-width: 50px $width/2
-			border-style: solid
-			height: 0
-			width: 0
-			background: transparent
-			bottom: 0
-			z-index: -3
-			position: absolute
-			left: 0
-
-
 	img#logo
 		position: absolute
-		top: $offset * 0.4
+		top: $offset*.75
 		transition-property: width, top, left
 
-		left: 3%
-		width: 50%
+		left: 10%
+		width: 33%
 
 
 	#description
 		position: absolute
 		top: $offset
 
-		right: 5%
+		right: 10%
 		width: 40%
 
-		h1
-			color: $grey
-			font-size: 350%
-			margin: 0
 		p
 			color: white
-
+			font-size: 22px
+			font-weight: normal
 		button
-			margin-top: 5%
+			@include button($red,$darkred)
+			margin-top: 7%
 			display: block
 			min-width: 330px
 			text-align: center
@@ -494,7 +486,7 @@ body.fixed
 
 
 	#fixed
-		right: -42%
+		right: -1000px
 		position: absolute
 
 		transition-property: right
@@ -506,6 +498,10 @@ body.fixed
 		button, a
 			float: right
 		button.start_campaign
+			@include button( $darkblue, darken($darkblue, 3%))
+			font-size: 16px
+			margin-right: 24px
+		button.my_campaigns
 			@include button( $darkblue, darken($darkblue, 3%))
 			font-size: 16px
 			margin-right: 24px
@@ -532,28 +528,39 @@ body.fixed
 	height: $mid
 	left: 0
 	right: 0
-	padding: 0 5%
+	padding: 30px 5% 0
 
 	p
-		color: $blue
+		color: $darkgrey
 		font-size: 80%
+		text-align: left
 		a
-			color: $blue
+			color: $darkgrey
 			font-size: 90%
+			font-weight: bold
+			text-decoration: none
+
 	div
 		display: inline-block
 		height: 100% - $mid
+		color: $darkgrey
 
 	.disclaimer
-		width: 54%
+		width: 40%
+		font-size: 13px
+		float: left
+		line-height: 1.4em
+		margin: 0 2.5% 0 5%
 
 
 	.column
-		width: 12%
-		float: right
+		width: 12.5%
+		float: left
 		p
-			text-align: right
-		margin: 0 2% 0 0
+			text-align: left
+			font-size: 16px
+			line-height: 15px
+		margin: 0 0 0 2%
 		vertical-align: top
 		img
 			width: 100%
