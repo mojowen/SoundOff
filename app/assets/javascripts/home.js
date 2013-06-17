@@ -1,6 +1,6 @@
 if( $oundoff_config.home ) {
 
-	var w_top, w_height, w_width, freeze, reset_styles, offset_factor
+	var w_top, w_height, w_width, freeze, reset_styles, offset_factor, machine_scroll
 	top_offset = 80
 	small_cut_off = 860
 
@@ -189,6 +189,9 @@ if( $oundoff_config.home ) {
 			item = angular.element( this ).scope()[type]
 
 		angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
+
+		if( machine_scroll ) clearTimeout(machine_scroll);
+
 		scroll_to( $('#content .active').offset().top - 120 )
 	})
 
