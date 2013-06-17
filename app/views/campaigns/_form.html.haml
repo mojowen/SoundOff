@@ -56,15 +56,15 @@
 		.suggested_tweets
 			- 4.times do |index|
 				- if index == 0
-					- if @campaign.new_record? || @campaign.suggested[index.to_s]
-						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :counter => 60 }= @campaign.suggested[index.to_s] || ''
+					- if @campaign.new_record? || @campaign.suggested[index] || @campaign.suggested[index.to_s]
+						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :counter => 60 }= @campaign.suggested[index] || @campaign.suggested[index.to_s] || ''
 						.count 60
 					- else
 						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' , :counter => 60 }
 						.count{ :style => 'display:none' } 60
 				- else
-					- if @campaign.suggested[index.to_s]
-						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :counter => 60 }= @campaign.suggested[index.to_s]
+					- if @campaign.suggested[index] || @campaign.suggested[index.to_s]
+						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :counter => 60 }= @campaign.suggested[index] || @campaign.suggested[index.to_s]
 						.count 60
 					- else
 						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none', :counter => 60 }
