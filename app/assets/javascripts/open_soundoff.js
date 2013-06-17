@@ -14,7 +14,8 @@ function openSoundOff( args ) {
   }
 
   if ( isMobile.any() ) {
-    window.open($oundoff_base_domain+'/form?'+config)
+    if( ! args.no_click ) window.open($oundoff_base_domain+'/form?'+config);
+    else document.location = $oundoff_base_domain+'/form?'+config;
   } else { // if not mobile - open form and append
     if( typeof form_iframe_soundoff != 'undefined' ) return false
     var dark = el('div'),

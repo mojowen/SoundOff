@@ -1,5 +1,4 @@
 $width: 396px
-
 body.form
 	padding: 10px 20px
 	background: $grey
@@ -39,6 +38,8 @@ body.form
 		color: white
 		padding: 12px 10px
 		top: -16px
+		white-space: nowrap
+
 
 	#form
 		pointer-events: all
@@ -79,6 +80,7 @@ body.form
 			height: 120px
 			font-size: 14px
 			resize: none
+			width: 100%
 
 		#stage_1, #stage_2, #stage_3, .stage_1, .stage_2, .stage_3, #stage_4, .stage_4
 			display: none
@@ -130,6 +132,7 @@ body.form
 		.box
 			position: relative
 			height: 128px
+			widthL 90%
 		// use http://twitter.github.io/bootstrap/components.html#labels-badges
 		.tag
 			@include tag
@@ -215,7 +218,6 @@ body.form
 				&.facebook
 					img
 						padding: 10px 0 10px 20px
-
 body.noframe
 	padding: 0
 	#main

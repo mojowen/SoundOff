@@ -49,7 +49,7 @@
 						%a.suggestions{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;' } Need Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
-				%p{ 'ng-hide' => 'function() { return !isMobile.any() }' } Note: You can also add a photo before sending your tweet.
+				%p.mobile{ :style => 'display:none'} Note: You can also add a photo before sending your tweet.
 
 			#stage_4
 				%h1 Thanks! - You're Almost Done

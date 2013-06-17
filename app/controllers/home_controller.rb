@@ -32,7 +32,8 @@ class HomeController < ApplicationController
         :email => params[:email],
         :zip => params[:zip],
         :targets => params[:targets],
-        :message => params[:message]
+        :message => params[:message],
+        :no_click => true
       }
     else
       open_soundoff = false

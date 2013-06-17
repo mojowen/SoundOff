@@ -8,7 +8,7 @@ function formScope($http, $scope) {
 		}
 
 	$scope.campaign = config.campaign != null ? '#'+config.campaign : ''
-	$scope.name = config.name != null ? config.name : 'Tweet @ Your Rep'
+	$scope.name = config.campaign != null ? '#'+config.campaign : 'Tweet @ Your Rep'
 	$scope.stage = 1
 
 	$scope.nextStage = function() {
@@ -275,7 +275,10 @@ function addGeocoder() {
 }
 if ( window.self === window.top && $oundoff_config.form ) {
 	$(document).ready( function() {
-		if( isMobile.any() ) document.body.classList.add('noframe')
+		if( isMobile.any() ) {
+			document.body.classList.add('noframe')
+			$('.mobile').show()
+		}
 		$('#close').remove();
 	})
  	window.onbeforeunload = function(e) {
