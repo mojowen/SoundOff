@@ -4,7 +4,7 @@
 	#banner
 		powered by:
 		%br
-		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount_invert.png'
+		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
 		%a.small{ :href=> 'http://headcount.org', :target => '_blank' }HeadCount
 
 	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png' ), :id => 'logo'
@@ -122,7 +122,12 @@
 				.title
 
 					%img{ 'ng-src' => '{{item.twitter_profile_image.replace("_normal","_bigger") }}' }
-					%button.open_soundoff{{  :rep => '{{item.twitter_screen_name}}' }} #SoundOff
+					%button.open_soundoff{{  :rep => '{{item.twitter_screen_name}}' }}
+						%span #S
+						ound
+						%span O
+						ff
+
 					%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
 					%h3 @{{item.twitter_screen_name}}
 
