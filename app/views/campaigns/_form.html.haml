@@ -1,19 +1,19 @@
 = form_for @campaign do |f|
 
-	= f.text_field :name, :placeholder => 'Name of Campaign*', :counter => 120
+	= f.text_area :name, :placeholder => 'Name of Campaign*', :counter => 40, :rows => 2
 	.help Keep it short and snappy! This name will appear with your campaign.
 
-	.count 120
+	.count 40
 
 
-	= f.text_field :hashtag, :placeholder => 'Campaign Hashtag*', :counter => 20
+	= f.text_field :hashtag, :placeholder => 'Campaign Hashtag*', :counter => 15
 	.help Make it original! If it’s already been used for a SoundOff campaign, you’ll need to pick another or get permission.
-	.count 20
+	.count 15
 	.extra #
 
-	= f.text_area :description, :placeholder => 'Describe Your Campaign*', :counter => 250, :rows => 10
+	= f.text_area :description, :placeholder => 'Describe Your Campaign*', :counter => 175, :rows => 10
 	.help{ :style => 'margin-top: -302px;' } This will appear on your campaign page for all to see. A few ground rules... SoundOff is meant for advocating policy positions, priorities and legislation. You can’t use it to sell a product, promote discrimination or violence, intimidate, defame, or advocate the overthrow of the U.S. government. More details can be found in the Partner Terms of Service
-	.count 250
+	.count 175
 
 	- if current_user.admin || current_user.partner.partner_type == 'nonprofit'
 		.email_options.radio
@@ -97,7 +97,7 @@
 		%span O
 		ff
 :javascript
-	$(document).ready( function() { $('.suggested_tweets input').change() })
+	$(document).ready( function() { $('input,textarea').keydown() })
 	.on('click','.radio label',function() {
 		this.previousElementSibling.click()
 	})
