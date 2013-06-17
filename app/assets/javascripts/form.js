@@ -207,7 +207,7 @@ function formScope($http, $scope) {
 		$scope.drop_campaign = true
 	}
 
-	$scope.targets_list = function() { return $scope.raw_targets.map( function(el) { return '@'+el.twitter_screen_name }).join(' ') }
+	$scope.targets_list = function() { return $scope.targets.map( function(el) { return '@'+el.twitter_screen_name }).join(' ') }
 
 
 	$scope.counter = 139
