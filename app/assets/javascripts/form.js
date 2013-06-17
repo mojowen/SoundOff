@@ -34,7 +34,7 @@ function formScope($http, $scope) {
 					email.className += ' oops'
 				}
 
-				if( $scope.targets.length > 0 ) next = 3;
+				if( $scope.raw_targets.length > 0 ) next = 3;
 				else next = 2;
 				break;
 			case 2:
