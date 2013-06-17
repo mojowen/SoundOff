@@ -140,7 +140,7 @@
 					.actions
 						%a{ :href =>  "https://twitter.com/{{tweet.from_user}}/status/{{tweet.data.id_str}}", :target => '_blank' }
 							= image_tag 'twitter_logo.png'
-							{{  tweet.data.created_at | date: 'd MMM' }}
+							{{  tweet.created_at | date: 'd MMM' }}
 						.buttons
 							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.data.id_str}}', :target => '_blank' }
 							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.data.id_str}}', :target => '_blank' }

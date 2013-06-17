@@ -67,7 +67,7 @@ function homePageScope($http, $scope) {
 				tweet_mentions = tweet.mentions.split(',')
 
 			tweet.mesage = unescape( tweet.message )
-			tweet.created_at = new Date(tweet.created_at);
+			tweet.created_at = new Date( tweet.data.created_at[0] )
 
 			for (var tag = tweet_hashtags.length - 1; tag >= 0; tag--) {
 				var found_campaign = hashtags.indexOf( tweet_hashtags[tag] )
