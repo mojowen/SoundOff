@@ -9,6 +9,7 @@ class HomeController < ApplicationController
 
   		rep.data = nil
       rep[:short_url] = rep_path( rep.twitter_screen_name )
+      rep[:tweets] = []
 
       @title = '@ '+rep.name
       @og_title = @title+' | #SoundOff @ Congress'
@@ -37,13 +38,14 @@ class HomeController < ApplicationController
       open_soundoff = false
     end
 
+
     @config = {
     	:home => true,
     	:single => params[:short_url] || rep || nil,
-      :random_reps => Rep.all( :order => 'RANDOM()', :limit => 10 ).map{ |r| r.data = nil; r },
+      :raw_reps => Rep.mentioned.reject{ |r| r == rep }.map{ |r| r.data = nil; r[:tweets] = []; r },
       :raw_campaigns => Campaign.active.map(&:to_obj),
       :open_soundoff => open_soundoff
-   	}
+    }
     @body_class = 'home'
     @body_class += ' fixed' if params[:short_url] || params[:twitter_screen_name]
   end
@@ -77,6 +79,12 @@ class HomeController < ApplicationController
     result =  soundoffs.join("\n")
 
     render :text => result
+  end
+
+  def statuses
+    tweets = Status.hashtag( params[:hashtags] )
+    tweets = Status.mention( params[:mentions] )
+    render :json => tweets #.sort_by(&:created_at).reverse
   end
 
   def sitemap

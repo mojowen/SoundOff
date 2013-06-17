@@ -58,6 +58,24 @@ class Status < ActiveRecord::Base
 			end
 		end
 	end
+	def self.hashtag hashtags, limit=200,  offset=0
+		hashtags = hashtags.split(',') if hashtags.class != Array
+		hashtags = hashtags.map{ |v| "%#{v}%" }.join('|')
+
+		return all( :limit => limit,
+			:order => 'created_at DESC',
+			:conditions => ['lower(hashtags) SIMILAR TO ?',hashtags]
+		)
+	end
+	def self.mention mentions,limit=200, offset=0
+		mentions = mentions.split(',') if mentions.class != Array
+		mentions = mentions.map{ |v| "%#{v}%" }.join('|')
+
+		return all( :limit => limit,
+			:order => 'created_at DESC',
+			:conditions => ['LOWER(mentions) SIMILAR TO ?',mentions]
+		)
+	end
 
 
 end

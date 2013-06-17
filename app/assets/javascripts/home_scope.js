@@ -2,42 +2,8 @@ function homePageScope($http, $scope) {
 
 	$scope.mode = 'scoreboard'
 
-	// Included reps
-	var random_reps = $oundoff_config.random_reps.map( function(el) { el.tweets =[]; return el })
-
-	var number = 50,
-		hashtags = '%23'+['soundoff'].join('%23')
-	// 	query = 'https://search.twitter.com/search.json?q='+hashtags+'&rpp='+number+'&include_entities=false&result_type=recent&callback=JSON_CALLBACK'
-	// $http.jsonp(query,{})
-	// 	.success(function(data,status) {
-
-	// 		for (var i = $scope.raw_campaigns.length - 1; i >= 0; i--) {
-	// 			var campaign = $scope.raw_campaigns[i],
-	// 				raw_tweets = data.results.filter( function(el) { return typeof el != 'undefined' })
-
-	// 			for (var j = 14 - 1; j >= 0; j--) {
-	// 				var tweet = {}
-
-	// 				for( var k in raw_tweets[j] ) {
-	// 					tweet[k] = raw_tweets[j][k]
-	// 				}
-
-	// 				tweet.text = unescape( tweet.text)
-	// 				tweet.text = tweet.text.replace(/\&amp;/g,'&')
-	// 				tweet.text = tweet.text.replace(/\#soundoff/gi,campaign.name.replace(/\s/g,'')+' #SoundOff')
-	// 				tweet.created_at = new Date(tweet.created_at);
-
-	// 				// Give em a false rep
-	// 				var random_rep = random_reps[ Math.floor( random_reps.length * Math.random() ) ]
-	// 				tweet.text = '@'+random_rep.twitter_screen_name+' '+tweet.text
-
-
-	// 				$scope.raw_campaigns[i].tweets.push( tweet )
-	// 				random_rep.tweets.push( tweet )
-	// 			};
-	// 		};
-	// 	})
-	$scope.raw_reps = random_reps
+	// Reps
+	$scope.raw_reps = $oundoff_config.raw_reps
 	$scope.reps = function() {
 		var search = $scope.search.toLowerCase();
 		if( $scope.mode.toLowerCase() == 'reps' )  return $scope.raw_reps.filter( function(el) {
@@ -64,11 +30,65 @@ function homePageScope($http, $scope) {
 				var n = parseInt( rep.district ),
 					s=["th","st","nd","rd"],
 					v=n%100;
- 			  	return n+(s[(v-20)%10]||s[v]||s[0]) + 'Congressional Distriction | '+rep.state_name
+ 			  	return n+(s[(v-20)%10]||s[v]||s[0]) + ' Congressional District | '+rep.state_name
 			}
 		} else {
 			return "Senator | "+rep.state_name
 		}
+	}
+
+	// Campaigns
+	$scope.raw_campaigns = $oundoff_config.raw_campaigns
+	$scope.campaigns = function() {
+		var search = $scope.search.toLowerCase();
+		if( $scope.mode.toLowerCase() != 'reps' ) return $scope.raw_campaigns.filter( function(el) {
+			if( search.length > 1 && $scope.single_item == null ) {
+				return (
+					el.name.toLowerCase().search( search ) !== -1
+					||
+					el.description.toLowerCase().search( search ) !== -1
+				)
+			} else if ( $scope.single_item != null ) return  el == $scope.single_item
+			else return el;
+		})
+	}
+
+	// Tweets
+	$scope.raw_tweets = [];
+
+	var hashtags = $scope.raw_campaigns.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()}),
+		mentions = $scope.raw_reps.map(function(el) { return el.twitter_id })
+		query = '/statuses?'+['hashtags='+hashtags,'mentions='+mentions].join('&')
+
+	function loadTweets(data) {
+		for (var i = 0; i < data.length; i++) {
+			var tweet = data[i],
+				tweet_hashtags = tweet.hashtags.replace(/soundoff,/ig,'').split(','),
+				tweet_mentions = tweet.mentions.split(',')
+
+			tweet.mesage = unescape( tweet.message )
+			tweet.created_at = new Date(tweet.created_at);
+
+			for (var tag = tweet_hashtags.length - 1; tag >= 0; tag--) {
+				var found_campaign = hashtags.indexOf( tweet_hashtags[tag] )
+				if( found_campaign !== -1 ) $scope.raw_campaigns[ found_campaign ].tweets.push( tweet )
+			};
+			for (var tag = tweet_mentions.length - 1; tag >= 0; tag--) {
+				var found_rep = mentions.indexOf( tweet_mentions[tag] )
+				if( found_rep !== -1 ) $scope.raw_reps[ found_rep ].tweets.push( tweet )
+			};
+
+		};
+	}
+
+	loadTweets($oundoff_config.raw_tweets || [] );
+	$http.get(query,{}).success(function(data,status) { loadTweets(data) })
+
+	// Search and items
+	$scope.search = ''
+	$scope.items = function() {
+		if( $scope.mode.toLowerCase() == 'reps' ) return $scope.reps();
+		else return $scope.campaigns()
 	}
 	$scope.$watch('search',function() {
 		if( typeof fetch != 'undefined' ) clearTimeout( fetch);
@@ -92,28 +112,6 @@ function homePageScope($http, $scope) {
 			}
 		},250)
 	})
-
-	$scope.raw_campaigns = $oundoff_config.raw_campaigns
-	$scope.search = ''
-
-	$scope.campaigns = function() {
-		var search = $scope.search.toLowerCase();
-		if( $scope.mode.toLowerCase() != 'reps' ) return $scope.raw_campaigns.filter( function(el) {
-			if( search.length > 1 && $scope.single_item == null ) {
-				return (
-					el.name.toLowerCase().search( search ) !== -1
-					||
-					el.description.toLowerCase().search( search ) !== -1
-				)
-			} else if ( $scope.single_item != null ) return  el == $scope.single_item
-			else return el;
-		})
-	}
-
-	$scope.items = function() {
-		if( $scope.mode.toLowerCase() == 'reps' ) return $scope.reps();
-		else return $scope.campaigns()
-	}
 
 	$scope.single_item =  null;
 	$scope.single_url = ''
@@ -173,8 +171,8 @@ function homePageScope($http, $scope) {
 			}
 		}
 		if( typeof state == 'object' && state != null ) {
-			state.tweets = []
-			$scope.raw_reps.push( state )
+
+			$scope.raw_reps.unshift( state )
 
 
 			$scope.search = '@'+state.twitter_screen_name

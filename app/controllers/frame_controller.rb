@@ -39,8 +39,15 @@ class FrameController < ActionController::Base
   def widget
     @body_class = 'form'
     @body_class += ' dark' if params[:style] == 'dark'
+
+    campaign = Campaign.find( params[:campaign] )
+    tweets = Status.hashtag campaign.hashtag, 20
+
+    tweets = campaign.sample_tweets if tweets.length < 1
+
     @config = {
-      :campaign => params[:campaign]
+      :campaign => params[:campaign],
+      :raw_tweets => tweets
     }
     render 'frame/widget.html', :layout => false
   end

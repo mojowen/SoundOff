@@ -31,9 +31,9 @@
 							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}', :target => '_blank' }
 							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}', :target => '_blank' }
 
-					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}' }
-					%h2 {{tweet.from_user_name}}
-					%h3 @{{tweet.from_user }}
+					%img.profile_img{ 'ng-src' => '{{ tweet.user.profile_image_url.replace("_normal","_bigger") }}' }
+					%h2 {{tweet.user.name }}
+					%h3 @{{tweet.user.screen_name }}
 
 					.body {{ tweet.text }}
 

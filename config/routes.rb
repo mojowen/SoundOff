@@ -13,7 +13,8 @@ SoundOff::Application.routes.draw do
 
   match '/home' => 'home#home', :as => 'home'
   match '/all_names' => 'home#all_names', :as => 'all'
-  match '/sitemap' => 'home#sitemap', :as => 'all'
+  match '/statuses' => 'home#statuses', :as => 'statuses'
+  match '/sitemap' => 'home#sitemap'
 
   match '/all_reps' => 'rep#index', :as => 'all_reps'
   match '/find_reps' => 'rep#search', :as => 'all_reps'
