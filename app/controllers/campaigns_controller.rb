@@ -38,6 +38,8 @@ class CampaignsController < ApplicationController
 		@campaign = Campaign.find( params[:id] )
 		redirect_to root_path if ! current_user.admin && @campaign.partner != current_user.partner
 
+		@campaign.status = 'pending' unless current_user.admin
+
 		@campaign.assign_attributes( params[:campaign] )
 
 		if current_user.admin && params[:status] || ( current_user.partner == @campaign.partner && @campaign.status != 'pending')
