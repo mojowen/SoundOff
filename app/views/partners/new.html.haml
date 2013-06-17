@@ -82,6 +82,8 @@
 
 		%p * Required
 
+		.errors
+
 :javascript
 	$(document).ready( function() {  })
 	.on('click','.partner_type label, .line span',function() {
@@ -116,26 +118,34 @@
 	})
 	.on('submit','form',function(e){
 		var errors = [],
+			$errors = $('.errors').html('')
 			$tos = $(tos),
 			$privacy = $(privacy)
-		$('input:visible').removeClass('oops').not('[type=radio],[type=checkbox]').each( function() {
+		$('input:visible, textarea:visible').removeClass('oops').not('input[type=radio],input[type=checkbox]').each( function() {
 			var $input = $(this)
 			if( $input.val().length < 1 && $input.attr('placeholder').search(/\*/) !== -1 ) {
-				errors.push( $input.addClass('oops') )
+				errors.push( $input.addClass('oops').attr('placeholder').replace(/\*/g,'').toLowerCase() + ' cannot be empty' )
 			}
 		})
 		if( ! $tos.is(':checked') ) {
-			errors.push('tos')
+			errors.push('you must agree to the terms of service')
 			$tos.parent().addClass('oops')
 		}
 		if( ! $privacy.is(':checked') && $(partner_partner_type_nonprofit).is(':checked') ) {
-			errors.push('privacy')
+			errors.push('you must have a privacy policy')
 			$privacy.parent().addClass('oops')
 		}
 		if( $('input[type=radio]:checked').length == 0 ) {
-			errors.push('partner_type');
+			errors.push('you must select a partner type');
 			$('.partner_type').addClass('oops');
 		}
-		if( errors.length ) e.preventDefault();
+
+		if( errors.length ) {
+			e.preventDefault();
+			last = errors.pop()
+			errors = errors.length == 0 ? last : errors.join(', ') + ', and '+last
+			console.log( errors )
+			$errors.text( errors )
+		}
 		else $('input[type=text]:hidden').remove()
 	})

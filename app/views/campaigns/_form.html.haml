@@ -39,11 +39,11 @@
 			%p If you request or require e-mail addresses, users e-mails will be available for you to download. They’ll also be added to the HeadCount mailing list. However, any user can opt-out of being added to your mailing list by unchecking a permission box, or opt-out of our mailing list by unchecking a separate box.
 
 			%p
-				In addition, any email that is prepulated from a URL parameter will
+				In addition, any email that is prepopulate from a URL parameter will
 				%strong{ :style => 'text-decoration: underline'} not
 				be added to the HeadCount/SoundOff mailing list or be asked to provide any permissions. But that user will be noted as having taken action in the user information download.
 
-			%p Email addresses - along with zip codes, messages, and target's twitter handles - can be added to your campaign's shortlink to open the #SoundOff form automatically and pre-populate that information. This is especially handy if asking users to take action from an email blast wher etheir email and or zip are already known.
+			%p Email addresses - along with zip codes, messages, and target's twitter handles - can be added to your campaign's shortlink to open the #SoundOff form automatically and prepopulate that information. This is especially handy if asking users to take action from an email blast wher etheir email and or zip are already known.
 
 			%p Emails will still be collected in this case - but they will not be asked to opt-in to HeadCount mailing list nor will they be shared with HeadCount.
 
@@ -56,7 +56,7 @@
 		.suggested_tweets
 			- 4.times do |index|
 				- if index == 0
-					- if @campaign.new_record? || @campaign.suggested[index] || @campaign.suggested[index.to_s]
+					- if @campaign.new_record? || ( @campaign.suggested[index]  rescue false) || ( @campaign.suggested[index.to_s]  rescue false)
 						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :counter => 80 }= ( @campaign.suggested[index] || @campaign.suggested[index.to_s] rescue '' )
 						.count 80
 					- else
@@ -96,6 +96,8 @@
 		ound
 		%span O
 		ff
+	.errors
+
 :javascript
 	$(document).ready( function() { $('input,textarea').keydown() })
 	.on('click','.radio label',function() {
@@ -149,17 +151,24 @@
 		if( $this.val().length > 0 ) $this.removeClass('oops')
 	})
 	.on('submit','form',function(e){
-		var errors = []
+		var errors = [],
+			$errors = $('.errors').html('')
 
 		$('input:visible, textarea:visible').removeClass('oops').not('[type=radio],[type=checkbox]').each( function() {
 			var $input = $(this)
-			if(
-				($input.val().length < 1 && $input.attr('placeholder').search(/\*/) !== -1) ||
-				$input.val().length > parseInt( $input.attr('counter') )
-			) {
-				errors.push( $input.addClass('oops') )
+			if( ($input.val().length < 1 && $input.attr('placeholder').search(/\*/) !== -1) ) {
+				errors.push( $input.addClass('oops').attr('placeholder').replace(/\*/g,'').toLowerCase() + ' cannot be empty' )
+			}
+			if( $input.val().length > parseInt( $input.attr('counter') ) ) {
+				errors.push( $input.addClass('oops').attr('placeholder').replace(/\*/g,'').toLowerCase() + ' is too long' )
 			}
 		})
 
-		if( errors.length ) e.preventDefault();
+		if( errors.length ) {
+			e.preventDefault();
+			last = errors.pop()
+			errors = errors.length == 0 ? last : errors.join(', ') + ', and '+last
+			console.log( errors )
+			$errors.text( errors )
+		}
 	})
