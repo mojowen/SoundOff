@@ -15,7 +15,7 @@ class HomeController < ApplicationController
       @og_title = @title+' | #SoundOff @ Congress'
       @og_description = "#SoundOff @ #{rep.name} from #{rep.state_name} and see what others are saying. #SoundOff is an advocacy tool created and maintained by HeadCount.org."
       @og_image = 'https://api.twitter.com/1/users/profile_image?screen_name='+rep.twitter_screen_name
-
+      raw_tweets = Status.mention rep.twitter_id
   	end
     campaign = Campaign.find_by_short_url( params[:short_url] ) if params[:short_url]
     if campaign
@@ -24,7 +24,6 @@ class HomeController < ApplicationController
       @og_title = @title+' | #SoundOff @ Congress'
       @og_description = campaign.description
       @og_image = (campaign.partner.logo rescue nil)
-
     end
 
     if params[:email] || params[:zip] || params[:targets] || params[:message]
@@ -45,7 +44,8 @@ class HomeController < ApplicationController
     	:single => params[:short_url] || rep || nil,
       :raw_reps => Rep.mentioned.reject{ |r| r == rep }.map{ |r| r.data = nil; r[:tweets] = []; r },
       :raw_campaigns => Campaign.active.map(&:to_obj),
-      :open_soundoff => open_soundoff
+      :open_soundoff => open_soundoff,
+      :raw_tweets => (raw_tweets || [])
     }
     @body_class = 'home'
     @body_class += ' fixed' if params[:short_url] || params[:twitter_screen_name]
