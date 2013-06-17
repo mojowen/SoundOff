@@ -6,10 +6,8 @@ class Campaign < ActiveRecord::Base
 
 	belongs_to :partner
 
-	# has_many :tweets
-	# has_many :emails
 
-	before_save :fix_suggested, :fix_short_url, :notify_pending, :notify_active
+	before_save :fix_suggested, :fix_short_url, :notify_pending, :notify_active, :check_hashtag
 	def fix_suggested
 		if suggested.class == Hash
 			self.suggested = self.suggested.map{ |k,v| v }.reject{ |l| l.empty? }
@@ -18,11 +16,14 @@ class Campaign < ActiveRecord::Base
 	def fix_short_url
 		self.short_url = SecureRandom.urlsafe_base64( 3, false) if short_url.nil?
 	end
+	def check_hashtag
+		throw "That Hashtag wont work sport" if ['soundoff'].index( hashtag.downcase )
+	end
 	def notify_pending
 		CampaignMail.new_campaign( self ).deliver if ! self.partner.nil? && self.new_record?
 	end
 	def notify_active
-		CampaignMail.campaign_approved( self ).deliver if !self.partner.nil? && self.status == 'approved'
+		CampaignMail.campaign_approved( self ).deliver if ! self.partner.nil? && self.status == 'approved' && status_changed?
 	end
 
 	# Normal methods
@@ -64,7 +65,9 @@ class Campaign < ActiveRecord::Base
 			:id => id,
 			:hashtag => '#'+hashtag,
 			:partner => (partner.name rescue nil),
-			:logo => ( (partner.logo.empty? ? '/assets/sq_icon.jpg' : partner.logo) rescue '/assets/sq_icon.jpg' ),
+			:twitter_screen_name => ( '@'+partner.twitter_screen_name rescue '@HeadCountOrg' ),
+			:twitter_profile => ( 'http://twitter.com/'+partner.twitter_screen_name rescue 'http://twitter.com/headcountorg' ),
+			:logo => ( (partner.logo.empty? ? '/assets/sq_icon.jpg' : partner.logo) rescue 'https://si0.twimg.com/profile_images/1163579547/FacebookLogo.jpg' ),
 			:website => (partner.website rescue nil),
 			:tweets => [],
 			:created_at => created_at,
