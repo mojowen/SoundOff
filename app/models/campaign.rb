@@ -39,6 +39,23 @@ class Campaign < ActiveRecord::Base
 	def score
 		Soundoff.count( :conditions => { :campaign_id => id } )
 	end
+
+	def sample_tweets
+		tweets = []
+		sample_hashtags = "#SoundOff ##{hashtag}"
+		sample_status = Status.all( :limit => 4, :offset => rand( Status.count -4 ), :conditions => { :reply_to => nil } )
+
+		self.suggested.each do |k,suggestion|
+			if suggestion.class == String && suggestion.length > 1
+				sample = sample_status[k.to_i].nil? ? sample_status[0] : sample_status[k.to_i]
+				sample.message = "#{suggestion} #{sample_hashtags}"
+				tweets.push sample
+			end
+		end
+
+		return tweets
+	end
+
 	def to_obj
 		return {
 			:name => name,
