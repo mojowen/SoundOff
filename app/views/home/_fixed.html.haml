@@ -17,4 +17,8 @@
 		= image_tag 'twitter_dark.png'
 
 	%a{ :href => (current_user ? new_campaign_path : new_user_session_path)}
-		%button.start_campaign Start a Campaign,
+		%button.start_campaign Start a Campaign
+
+	- if current_user
+		%a{ :href => campaigns_path }
+			%button.my_campaigns My Campaigns
