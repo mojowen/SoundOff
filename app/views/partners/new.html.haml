@@ -51,7 +51,7 @@
 			= f.hidden_field :contact_password, :value => @partner.users.first.password
 		- else
 			= f.password_field :contact_password, :placeholder => 'Password*', :value => ( @partner.users.first.password rescue '' ), :for => 'company nonprofit individual'
-			.help The Password you'll use to login
+			.help The password you'll use to login
 
 		= f.email_field :contact_email, :placeholder => 'Contact Email*', :value => ( @partner.users.first.email rescue '' ), :for => 'company nonprofit individual'
 		.help We’ll email you a confirmation that your campaign has been approved, or hit you with any questions.
@@ -65,8 +65,8 @@
 		= f.text_field :website, :placeholder => 'Your Website*', :for => 'individual', :style => 'display:none'
 		.help You must provide a website for folks to learn more about you - something like your Twitter Profile, Facebook, Tumblr, or blog will work.
 
-		= f.text_field :logo, :placeholder => 'URL for Logo', :for => 'company nonprofit individual'
-		.help A square logo that will be displayed next to your campaigns. Should be wider than 80px.
+		= f.text_field :twitter_screen_name, :placeholder => 'Twitter Handle*', :for => 'company nonprofit individual'
+		.help Your Twitter avatar and handle will appear with your campaign
 
 		%p.tos
 			%input{ :type => 'checkbox', :checked => 'checked', :id => 'tos', :value => 'true' }
@@ -128,8 +128,8 @@
 			errors.push('tos')
 			$tos.parent().addClass('oops')
 		}
-		if( ! $privacy.is(':checked') ) {
-			errors.push('tos')
+		if( ! $privacy.is(':checked') && $(partner_partner_type_nonprofit).is(':checked') ) {
+			errors.push('privacy')
 			$privacy.parent().addClass('oops')
 		}
 		if( $('input[type=radio]:checked').length == 0 ) {
