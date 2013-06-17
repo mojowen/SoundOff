@@ -217,7 +217,7 @@ function formScope($http, $scope) {
 		if( $oundoff_config.targets.length > 0 ) params += 'sns='+$scope.raw_targets.map( function(el) { return el.twitter_id }).join(',')
 		else params += 'bio='+$scope.raw_targets.map( function(el) { return el.bioguide_id }).join(',')
 
-		if( params.length > 0 ) $http.get( '/find_reps?'+params ).success( function(r) {
+		if( params.length > 1 ) $http.get( '/find_reps?'+params ).success( function(r) {
 			for (var i = r.length - 1; i >= 0; i--) {
 				$scope.targets.push( r[i] )
 			};
