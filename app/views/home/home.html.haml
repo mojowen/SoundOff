@@ -2,9 +2,10 @@
 
 #top
 	#banner
-		powered by
+		powered by:
+		%br
 		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount_invert.png'
-		%a.small{ :href=> 'http://headcount.org', :target => '_blank' } HeadCount
+		%a.small{ :href=> 'http://headcount.org', :target => '_blank' }HeadCount
 
 	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png' ), :id => 'logo'
 
@@ -156,7 +157,8 @@
 					Let’s get this party started!
 					%br
 					%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}',:campaign => '{{item.id}}'  }
-						Be the first to &#160;
+						Be the first to
+						%br
 						%span #S
 						ound
 						%span O

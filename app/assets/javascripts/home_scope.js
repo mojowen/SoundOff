@@ -5,17 +5,17 @@ function homePageScope($http, $scope) {
 	// Reps
 	$scope.raw_reps = $oundoff_config.raw_reps
 	$scope.reps = function() {
-		var search = $scope.search.toLowerCase();
+		var search = $scope.search.toLowerCase().replace(/(\#|\@)/g,'');
 		if( $scope.mode.toLowerCase() == 'reps' )  return $scope.raw_reps.filter( function(el) {
 			if( search.length > 1 && $scope.single_item == null ) {
 				return (
-					( el.state || '').toLowerCase().search( search ) !== -1
+					( el.first_name || '').toLowerCase().search( search ) !== -1
 					||
-					( el.state || '').toLowerCase().search( search ) !== -1
+					( el.last_nae || '').toLowerCase().search( search ) !== -1
 					||
-					( el.state || '').toLowerCase().search( search ) !== -1
+					( el.state_name || '').toLowerCase().search( search ) !== -1
 					||
-					( el.state || '').toLowerCase().search( search ) !== -1
+					( el.twitter_screen_name || '').toLowerCase().search( search ) !== -1
 					||
 					( el.state || '').toLowerCase().search( search ) !== -1
 				)
@@ -80,7 +80,7 @@ function homePageScope($http, $scope) {
 			};
 			for (var tag = tweet_mentions.length - 1; tag >= 0; tag--) {
 				var found_rep = mentions.indexOf( tweet_mentions[tag] )
-				if( found_rep !== -1 ) { 
+				if( found_rep !== -1 ) {
 					$scope.raw_reps[ found_rep ].tweets.push( tweet );
 				}
 			};
@@ -88,7 +88,6 @@ function homePageScope($http, $scope) {
 		};
 	}
 
-	loadTweets($oundoff_config.raw_tweets || [] );
 	$http.get(query,{}).success(function(data,status) { loadTweets(data) })
 
 	// Search and items
@@ -191,6 +190,8 @@ function homePageScope($http, $scope) {
 		if( $oundoff_config.open_soundoff ) {
 			openSoundOff( $oundoff_config.open_soundoff )
 		}
+		loadTweets($oundoff_config.raw_tweets || [] );
+
 
 	}
 
