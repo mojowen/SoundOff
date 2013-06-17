@@ -13,9 +13,7 @@
 			.start_campaign, .my_campaigns
 				display: none
 
-	body.fixed
-
-		&.single #main
+	body.fixed.single #main
 			h1
 				left: -1.5%
 				width: 103%
@@ -24,10 +22,10 @@
 
 
 @media (max-width: $break-medium)
-	body.fixed
+	body.fixed.single
 		$width: 680px
 		min-width: $width + 28*2
-		&.single #main
+		#main
 			min-width: $width + 28px*2
 			h1
 				left: 0
