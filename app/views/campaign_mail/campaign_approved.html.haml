@@ -1,15 +1,19 @@
-%h2 #{@campaign.partner.name} Was Approved!
+%h2 Your Campaign Was Approved!
 
 %p
 	Check out the campaign's page here:
 	= link_to @campaign.url, @campaign.url
 
+%p You can send that link to any supporters and let them SoundOff! (Note that it’s optimized for mobile devices too!)
+
 %p
-	Create a widget your website here:
+	Or, create a widget for your website here:
 	= link_to (ENV['BASE_DOMAIN'] || '' )+ campaign_path( @campaign ), (ENV['BASE_DOMAIN'] || '' ) + campaign_path( @campaign )
+
+%p Embed it on any web page and direct your users there.
 
 %p
 	Questions? Comments? Don't hesitate to drop us a line:
 	= link_to 'SoundOff@HeadCount.org',  'mailto:SoundOff@HeadCount.org'
 
-%p - The SoundOff Team
+%p- Your friends at HeadCount.Org
