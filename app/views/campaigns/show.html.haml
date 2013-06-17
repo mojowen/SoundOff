@@ -24,35 +24,40 @@
 	- else
 		%script{ :src => asset_path( "widget_snippet.js" ) }
 
-		%p Place a widget on your website so your supporters can SoundOff about #{@campaign.name}
-
-		%h3
-			Select Style:
-			%span.light.selected Light
-			%span.dark Dark
-
-		.widget_box.light
-			%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
-			%textarea
-				:plain
-					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
-
-
-		.widget_box.dark
-			%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
-			%textarea
-				:plain
-					<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
-
-		%p Copy and paste into your website to add the widget.
-
 		.menu
 			- if @campaign.collect_email || current_user.admin
 				= link_to 'Download Names', campaign_path( @campaign )+'.text'
 				&nbsp;|&nbsp;
 			= link_to 'Edit Campaign', edit_campaign_path( @campaign )
-			&nbsp;|&nbsp;
-			= link_to 'See All Your Campaigns', campaigns_path
+
+		%p Place a widget on your website so your supporters can #SoundOff about #{@campaign.name}
+
+		%h3
+			Select Style:
+			&nbsp;
+			%span.light.selected Light
+			&nbsp;
+			%span.dark Dark
+
+		.widget_box.light
+			.widget
+				%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
+			.explanation
+				%p Copy and paste into your website to add the widget.
+				%textarea
+					:plain
+						<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_light" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
+
+
+		.widget_box.dark
+			.widget
+				%a.soundoff_widget_dark{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
+			.explanation
+				%p Copy and paste into your website to add the widget.
+				%textarea
+					:plain
+						<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
+
 
 
 :javascript

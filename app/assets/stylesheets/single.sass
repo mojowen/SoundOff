@@ -36,13 +36,12 @@
 		text-transform: normal
 
 	#main #content.show
-		width: 70%
 		margin: 0 auto
 		h3
 			text-align: center
-			margin: 80px 0
+			margin: 30px 0
 			.dark, .light
-				padding: 20px
+				padding: 10px
 				cursor: pointer
 				border: 2px solid transparent
 				&:hover
@@ -73,8 +72,15 @@
 			display: block
 			font-size: 50%
 		.widget_box
-			width: 400px
-			margin: 50px auto
+			width: 780px
+			.widget
+				width: 350px
+				float: left
+				margin-right: 30px
+			.explanation
+				float: left
+				width: 350px
+			margin: 20px auto 50px
 			&.dark
 				display: none
 		p
@@ -83,6 +89,8 @@
 			p
 				text-align: left
 		.menu
+			clear: both
+			text-align: center
 			a
 				font-size: 80%
 
