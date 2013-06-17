@@ -2,10 +2,10 @@
 task :soundoff_stream => :environment  do
 
 	TweetStream.configure do |config|
-	  config.consumer_key       = 'J9CJL5Uwn8XvqDVTCwuPlQ'
-	  config.consumer_secret    = '4x3MWKVAB5oOTcgxdmjvTKr5uVpZTaEHeZxSGcFNU'
-	  config.oauth_token        = '14759621-MO6xonCXtdg9zJm1eAgk9CO05Rq6lZ48NZV0lgaNN'
-	  config.oauth_token_secret = 'iRZMVx4Gg6ejARtGdLADykkBB06rvNsf1QmvJ4L1Z5U'
+	  config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
+	  config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']
+	  config.oauth_token        = ENV['TWITTER_OAUTH_TOKEN']
+	  config.oauth_token_secret = ENV['TWITTER_OATH_SECRET']
 	  config.auth_method        = :oauth
 	end
 

@@ -1,18 +1,24 @@
 class Partner < ActiveRecord::Base
   	attr_accessible :name, :website, :tax_id, :logo, :partner_type,
-  		:contact_email, :contact_phone, :contact_name, :contact_password
+  		:contact_email, :contact_phone, :contact_name, :contact_password, :twitter_screen_name, :twitter_data, :privacy_policy, :mailing_address
 	attr_accessor :contact_email, :contact_phone, :contact_name, :contact_password
 
+	serialize :twitter, JSON
   	has_many :users, :dependent => :delete_all
   	has_many :campaigns
 
-	before_save :set_up_individual_partner
+	before_save :set_up_individual_partner, :twitter_data
 
 	def set_up_individual_partner
 		if self.partner_type == 'individual'
 			self.name = self.contact_name
 		end
 		self.errors.add :tax_id, 'Nonprofits require tax ids' if self.partner_type == 'nonprofit' && self.tax_id.nil?
+	end
+	def twitter_data
+		tw = Twitter.user(twitter_screen_name)
+		self.twitter_data = tw.to_json
+		self.logo = tw.profile_image_url
 	end
 
 	after_save :update_user
@@ -27,7 +33,7 @@ class Partner < ActiveRecord::Base
 			user.password = contact_password if ! contact_password.nil? && ! contact_password.empty?
 			user.password_confirmation = contact_password if ! contact_password.nil? && ! contact_password.empty?
 
-			user.save
+			user.save rescue errors << "Bad email"
 		end
 	end
 

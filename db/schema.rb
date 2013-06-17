@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614010335) do
+ActiveRecord::Schema.define(:version => 20130616200056) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
@@ -44,10 +44,12 @@ ActiveRecord::Schema.define(:version => 20130614010335) do
     t.string   "tax_id"
     t.string   "partner_type"
     t.string   "logo"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "mailing_address"
     t.string   "privacy_policy"
+    t.string   "twitter_screen_name"
+    t.text     "twitter_data",        :default => "{}"
   end
 
   create_table "reps", :force => true do |t|
