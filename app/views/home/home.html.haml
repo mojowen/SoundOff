@@ -3,7 +3,7 @@
 #top
 	#banner
 		powered by
-		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
+		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount_invert.png'
 		%a.small{ :href=> 'http://headcount.org', :target => '_blank' } HeadCount
 
 	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png' ), :id => 'logo'
@@ -23,18 +23,18 @@
 				SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in government. This tool is available to all organizations and individuals regardless of their beliefs or affiliations, so long as they comply with the Terms of Service. HeadCount does not endorse, censor or take responsibility for any of the content of any campaign using this service.
 
 	.column
-		%p= link_to 'Register to Vote', 'http://headcount.org/register-to-vote', :target => '_blank'
-		%p= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
-		%p= link_to 'Contact', contact_path
-
-	.column
-		%p= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Log in', new_user_session_path )
-		%p= link_to 'Privacy Policy', privacy_path, :target => '_blank'
-		%p= link_to 'Terms and Conditions', tos_path, :target => '_blank'
-	.column
 		%p= link_to 'About', about_path
 		%p= link_to 'Press', press_path
 		%p= link_to 'Donate', 'http://www.HeadCount/donate'
+	.column
+		%p= link_to 'Privacy Policy', privacy_path, :target => '_blank'
+		%p= link_to 'Terms & Conditions', tos_path, :target => '_blank'
+		%p= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
+	.column
+		%p= link_to 'Contact', contact_path
+		%p= link_to 'Register to Vote', 'http://headcount.org/register-to-vote', :target => '_blank'
+		%p= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Sign In / Register', new_user_session_path )
+
 
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope', 'ng-class' => 'mobileActive()'  }
 
@@ -60,7 +60,7 @@
 			.items
 				.campaign{ "ng-repeat" => "campaign in campaigns()", "ng-class" => "isActive($index,campaign)" }
 					%h3.score {{campaign.score}}
-					%h3 {{campaign.name}}
+					%h3.name {{campaign.name}}
 
 					.description {{campaign.description}}
 				.rep{ "ng-repeat" => "rep in reps()", "ng-class" => "isActive($index,rep)" }
@@ -81,14 +81,14 @@
 			%a.build_widget{ :href => '{{build_widget}}', :target => '_blank' } Build a Widget
 
 	#powered_by
-		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
-		\#SoundOff is powered by
-		%a{ :href=> 'http://headcount.org', :target => '_blank' } HeadCount.org
+		%h3 POWERED BY
 		%p.mark
 			Built by
 			%a{ :href => 'http://twitter.com/sduncombe', :target => '_blank' } Scott Duncombe
+			%br
 			\& designed by
 			%a{ :href => 'http://www.linkedin.com/pub/bryan-chiem/3b/100/181', :target => '_blank' } Bryan Chiem
+		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
 
 	#content
 		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
@@ -96,7 +96,7 @@
 			.description.campaign
 				.title
 					%a{ 'ng-href' => '{{item.website}}' }
-						%img{ 'ng-src' => '{{item.logo}}' }
+						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}' }
 					%button.open_soundoff{{  :campaign => '{{item.id}}' }}
 						%span #S
 						ound
@@ -104,6 +104,8 @@
 						ff
 					%h1 {{item.name}}
 					%h3 {{item.hashtag }}
+					%h3
+						%a{ 'ng-href' => 'item.twitter_profile' } {{item.twitter_screen_name}}
 
 
 					.copy {{item.description}}
@@ -118,56 +120,47 @@
 			.description.rep
 				.title
 
-					%img{ 'ng-src' => '{{item.twitter_profile_image}}' }
-					%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
-
-
-					%p @{{item.twitter_screen_name}}
-
+					%img{ 'ng-src' => '{{item.twitter_profile_image.replace("_normal","_bigger") }}' }
 					%button.open_soundoff{{  :rep => '{{item.twitter_screen_name}}' }} #SoundOff
+					%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
+					%h3 @{{item.twitter_screen_name}}
 
-					.info
-						%p {{longTitle( item )}}
-						%p
-							%a{ 'ng-href' => '{{item.contact_form}}', :target => '_blank' } Contact Form
-						%p {{ item.phone }}
 
-					{{item.description}}
+					%p.details_left
+						%strong {{longTitle( item )}}
+
+					.copy
 
 
 			.tweets
-				%h4.campaign
-					Join the Ranks
-					%span SoundOff with others about {{item.name}}
-				%h4.rep
-					Join the Ranks
-					%span SoundOff with others @{{item.twitter_screen_name}}
+				%h4
+
 
 				.tweet{ 'ng-repeat' => 'tweet in item.tweets' }
 					.actions
-						%a{ :href =>  "https://twitter.com/{{tweet.from_user}}/status/{{tweet.id_str}}", :target => '_blank' }
+						%a{ :href =>  "https://twitter.com/{{tweet.from_user}}/status/{{tweet.data.id_str}}", :target => '_blank' }
 							= image_tag 'twitter_logo.png'
-							{{  tweet.created_at | date: 'd MMM' }}
+							{{  tweet.data.created_at | date: 'd MMM' }}
 						.buttons
-							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}', :target => '_blank' }
-							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}', :target => '_blank' }
-							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}', :target => '_blank' }
+							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.data.id_str}}', :target => '_blank' }
+							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.data.id_str}}', :target => '_blank' }
+							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.data.id_str}}', :target => '_blank' }
 
-					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}' }
-					%h2 {{tweet.from_user_name}}
-					%h3 @{{tweet.from_user }}
+					%img.profile_img{ 'ng-src' => '{{tweet.data.user.profile_image_url}}' }
+					%h2 {{tweet.data.user.name }}
+					%h3 @{{tweet.data.user.screen_name }}
 
-					.body {{ tweet.text }}
+					.body {{ tweet.message }}
 			.no-tweets{ 'ng-hide' => 'item.tweets.length > 0'}
 				%h3
-					\... looks like no one's&#160;
-					%span #S
-					ound
-					%span O
-					ff-ed yet.
+					Let’s get this party started!
 					%br
-					%br
-					%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}',:campaign => '{{item.id}}'  } You should get this party started
+					%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}',:campaign => '{{item.id}}'  }
+						Be the first to &#160;
+						%span #S
+						ound
+						%span O
+						ff!
 
 = image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'
 = image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'
