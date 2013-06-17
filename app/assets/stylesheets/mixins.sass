@@ -172,3 +172,14 @@
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to))
 	background-image: -webkit-linear-gradient($from, $to)
 	background-image: -o-linear-gradient($from, $to)
+
+// from http://stackoverflow.com/questions/7154705/sass-scss-mixin-for-clearfix-best-approach
+@mixin clearfix
+	zoom:1
+	&:before, &:after
+		content: "\0020"
+		display: block
+		height: 0
+		overflow: hidden
+	&:after
+		clear: both
