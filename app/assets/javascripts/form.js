@@ -59,7 +59,7 @@ function formScope($http, $scope) {
 					errors.push( 'you should really write something')
 					message.className += ' oops'
 				} else {
-					var targets = $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' ');
+					var targets = $scope.targets.map( function(el) { return '@'+el.twitter_screen_name}).join(' ');
 
 					if( $scope.drop_campaign ) message = [ targets,$scope.message,'#SoundOff' ].join(' ');
 					else message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOff' ].join(' ');
