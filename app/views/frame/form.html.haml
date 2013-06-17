@@ -95,6 +95,6 @@
 
 			- @campaign.suggested.each do |k,suggestion|
 				%p.link{ 'ng-click' => "setMessage( #{ suggestion.to_json } )" }
-					=suggestion
+					= suggestion || k
 
 			%a.no_thanks{ :href => '#', :onclick => 'suggest.style.display = "none"; return false;' } No Thanks
