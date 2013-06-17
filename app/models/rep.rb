@@ -34,4 +34,19 @@ class Rep < ActiveRecord::Base
   	def self.active
   		all( :conditions => ['char_length("twitter_screen_name") > 0'] )
   	end
+  	def self.mentioned
+  		sql = <<EOF
+  		SELECT "reps".*, COUNT("statuses".*) FROM "reps"
+  		LEFT JOIN "statuses" ON "statuses"."mentions" LIKE('%'||"reps"."twitter_id"||'%')
+  		GROUP BY "reps"."id"
+  		HAVING count("statuses".*) > 0
+EOF
+  		find_by_sql(sql)
+  	end
+  	def self.add_custom_rep args
+  		t = Twitter.user( args[:twitter_screen_name] )
+  		args[:twitter_id] = t.id.to_s
+  		args[:twitter_profile_image] = t.profile_image_url
+  		new( args )
+  	end
 end
