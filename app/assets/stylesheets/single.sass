@@ -6,7 +6,7 @@
 			background: #f9f9f9
 			width: $width - 28px*2
 			margin: 0 auto
-			padding: 60px 100px 120px
+			padding: 60px 100px 10px
 			min-height: 500px
 			font-size: 140%
 			color: #333
@@ -213,10 +213,10 @@
 					color: $blue
 					font-size: 100%
 
-				right: -600px
-				width: 240px
+				right: -800px
+				width: 220px
 				&.on
-					right: 6px
+					right: 40px
 			.tos
 				font-size: 60%
 				width: 90%
@@ -249,3 +249,27 @@
 				font-size: 70%
 				.help
 					font-size: 80%
+			.more
+				display: none
+				font-size: 60%
+				color: $blue
+			.click_more
+				color: $darkblue
+				text-decoration: underline
+				margin-top: 14px
+
+.small
+	font-size: 10px
+	text-align:center
+	float: right
+.single.error
+	h1
+		font-size: 250px
+		height: 280px
+		&::after, &::before
+			top: 280px
+	#main #content
+		font-size: 90%
+		text-align: center
+		min-height: 200px
+		height: 200px

@@ -22,17 +22,32 @@
 			.line
 				= f.radio_button :email_option, 'optional', :checked => 'checked'
 				%label Optional
-			.help users are prompted for their email address - but it's optional
+			.help Users are prompted for their email address - but it's optional
 
 			.line
 				= f.radio_button :email_option, 'required'
 				%label Required
-			.help users are required to enter their email address
+			.help Users are required to enter their email address - but can still opt out of email lists
 
 			.line
 				= f.radio_button :email_option, 'hidden'
 				%label Hidden
-			.help users are not prompted for their email address and emails are not saved
+			.help Users are not prompted for their email address and emails are not saved
+		%a.click_more{ :onclick => '$(this).next(".more").slideToggle(); $(".help").removeClass("on")' } Learn More About Email Address Collection
+
+		%div.more
+			%p If you request or require e-mail addresses, users e-mails will be available for you to download. They’ll also be added to the HeadCount mailing list. However, any user can opt-out of being added to your mailing list by unchecking a permission box, or opt-out of our mailing list by unchecking a separate box.
+
+			%p
+				In addition, any email that is prepulated from a URL parameter will
+				%strong{ :style => 'text-decoration: underline'} not
+				be added to the HeadCount/SoundOff mailing list or be asked to provide any permissions. But that user will be noted as having taken action in the user information download.
+
+			%p Email address - along with zip codes, messages, and target's twitter handles - can be p to your campaign's shortlink to open the #SoundOff box automatically and pre-populate that information. This is especially handy if asking users to take action from an email blast wher etheir email and or zip are already known.
+
+			%p Emails will still be collected in this case - but they will not be asked to opt-in to HeadCount mailing list nor will they be shared with HeadCount.
+
+
 
 	.suggested.line
 		%input{ :type => 'checkbox', :checked => @campaign.new_record? || @campaign.suggested.length > 1 }
@@ -41,15 +56,19 @@
 		.suggested_tweets
 			- 4.times do |index|
 				- if index == 0
-					- if @campaign.new_record? || @campaign.suggested[index]
-						%input.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :value => @campaign.suggested[index] || '' }
+					- if @campaign.new_record? || @campaign.suggested[index.to_s]
+						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name => 'campaign[suggested][0]', :counter => 60 }= @campaign.suggested[index.to_s] || ''
+						.count 60
 					- else
-						%input.no_hide{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' }
+						%textarea.no_hide{ :placeholder => 'Tweet Suggestion #1', :name_off => 'campaign[suggested][0]', :style => 'display:none' , :counter => 60 }
+						.count{ :style => 'display:none' } 60
 				- else
-					- if @campaign.suggested[index]
-						%input.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :value => @campaign.suggested[index] }
+					- if @campaign.suggested[index.to_s]
+						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name => "campaign[suggested][#{index}]", :counter => 60 }= @campaign.suggested[index.to_s]
+						.count 60
 					- else
-						%input.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none' }
+						%textarea.no_hide{ :placeholder => "Tweet Suggestion \##{index+1}", :name_off => "campaign[suggested][#{index}]", :style => 'display:none', :counter => 60 }
+						.count{ :style => 'display:none' } 60
 	.help{ :style => 'margin-top: -140px'} Here’s where you can get creative. We suggest making each suggestion distinct from each other. Feel free to add additional hashtags or links. Keep in mind that the campaign hashtag will automatically appear at the end of all the tweets. Don’t write that hashtag into your suggested tweets, unless you want it to appear twice.
 
 	.targets.radio.line
@@ -96,28 +115,29 @@
 		$this.nextAll('.count:first').text( count ).removeClass('oops').addClass(oops)
 
 	})
-	.on('click','.suggested input[type=checkbox]',function() {
+	.on('click','.suggested textarea[type=checkbox]',function() {
 		var $this = $(this)
 
 		if( $this.is(':checked') ) {
-			var $next = $this.nextAll('.suggested_tweets').find('input:first')
-			$next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null );
-		} else $this.nextAll('.suggested_tweets').find('input').hide().each( function(){
+			var $next = $this.nextAll('.suggested_tweets').find('textarea:first')
+			$next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null ).next('.count').show();
+		} else $this.nextAll('.suggested_tweets').find('textarea').hide().each( function(){
 			var $next = $(this)
-			$next.attr('name_off', $next.attr('name') ).attr('name', null )
+			$next.attr('name_off', $next.attr('name') ).attr('name', null ).next('.count').hide()
 		})
 	})
-	.on('keydown change','.suggested_tweets input',function(e) {
+	.on('keydown change','.suggested_tweets textarea',function(e) {
 		var $this = $(this),
-			$next = $this.nextAll('input:first')
-		if( $this.val().length > 0 || e.keyCode == 13 ) $next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null )
-		else $this.nextAll('input:first').hide().attr('name_off', $next.attr('name') ).attr('name', null )
+			$next = $this.nextAll('textarea:first')
+		if( $this.val().length > 0 || e.keyCode == 13 ) $next.show().change().attr('name', $next.attr('name_off') ).attr('name_off', null ).next('.count').show()
+		else $this.nextAll('textarea:first').hide().attr('name_off', $next.attr('name') ).attr('name', null ).next('.count').hide()
 		if( e.keyCode == 13 ) e.preventDefault();
 	})
 	.on('focus','input, textarea',function() {
+		var $this = $(this)
 		if( ! $this.hasClass('no_hide') ) {
 			$('.help').removeClass('on')
-			$(this).next().addClass('on')
+			$this.next().addClass('on')
 		}
 	})
 	.on('mouseover','.line',function(){
