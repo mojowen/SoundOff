@@ -1,0 +1,13 @@
+%h1 ¡Error!
+
+#content
+	%p
+		Woah there partner - looks like we've got an error on our hands. Want to
+	%p
+		= link_to 'drop us a line', 'mailto:SoundOff@HeadCount.org'
+		and break talk us through how it all went wrong.
+- if !!current_user && current_user.admin || params[:debug_me] == 'PLEASE'
+	/
+		Errors
+		= @msg
+		= @backtrace

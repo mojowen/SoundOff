@@ -1,0 +1,13 @@
+%h1 Lost?
+
+#content
+	%p
+		Maybe try the back button?
+	%p
+		= link_to 'And don\'t be a stranger', 'mailto:SoundOff@HeadCount.org'
+		if this keeps happening.
+- if !!current_user && current_user.admin || params[:debug_me] == 'PLEASE'
+	/
+		Errors
+		= @msg
+		= @backtrace
