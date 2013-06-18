@@ -22,7 +22,7 @@
 			#content
 				.tweet{ 'ng-repeat' => 'tweet in tweets' }
 					.actions
-						%a{ :href =>  "https://twitter.com/{{tweet.from_user}}/status/{{tweet.id_str}}", :target => '_blank' }
+						%a{ :href =>  "https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}", :target => '_blank' }
 							= image_tag @body_class.index( 'dark' ).nil? ? 'twitter_logo.png' : 'twitter_dark.png'
 							{{  tweet.created_at | date: 'd MMM' }}
 

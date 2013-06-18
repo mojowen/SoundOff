@@ -148,7 +148,7 @@
 
 				.tweet{ 'ng-repeat' => 'tweet in item.tweets' }
 					.actions
-						%a{ :href =>  "https://twitter.com/{{tweet.from_user}}/status/{{tweet.data.id_str}}", :target => '_blank' }
+						%a{ :href =>  "https://twitter.com/{{tweet.data.user.screen_name }}/status/{{tweet.data.id_str}}", :target => '_blank' }
 							= image_tag 'twitter_logo.png'
 							{{  tweet.created_at | date: 'd MMM' }}
 						.buttons
