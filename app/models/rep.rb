@@ -40,6 +40,8 @@ class Rep < ActiveRecord::Base
   		LEFT JOIN "statuses" ON "statuses"."mentions" LIKE('%'||"reps"."twitter_id"||'%')
   		GROUP BY "reps"."id"
   		HAVING count("statuses".*) > 0
+      ORDER BY count("statuses".*)
+      LIMIT 50
 EOF
   		find_by_sql(sql)
   	end
