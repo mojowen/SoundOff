@@ -65,12 +65,28 @@ function openSoundOff( args ) {
                 frame = document.getElementById('form_iframe_soundoff')
             dark.parentNode.removeChild( dark )
             frame.parentNode.removeChild( frame )
+            close.parentNode.removeChild( close )
             window.onbeforeunload = null
           }
         }
         window.onbeforeunload = function(e) {
           return 'Are you sure you want to cancel your SoundOff?';
         };
+        try {
+          window.addEventListener("message", function(e) {
+            console.log(e);
+            window.onbeforeunload = null;
+            close.onclick = function() {
+              var dark = document.getElementById('dark_div_soundoff'),
+                  close = document.getElementById('close_div_soundoff'),
+                  frame = document.getElementById('form_iframe_soundoff')
+                frame.parentNode.removeChild( frame )
+                dark.parentNode.removeChild( dark )
+                close.parentNode.removeChild( close )
+            }
+          }, false);
+        } catch(e) {}
+
 
         d.body.appendChild( dark )
         d.body.appendChild( close )
