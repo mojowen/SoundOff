@@ -18,7 +18,9 @@ if( $oundoff_config.home ) {
 			document.body.classList.add('fixed');
 			$(logo).attr('src','/assets/logo_no_cong.png')
 		}
-
+		if( isMobile.any() ) {
+			$(menu).height( window.innerHeight - 60 -20 ).find('.inner').height(  window.innerHeight - 60 -20 -130 )
+		}
 	})
 	.scroll( function(e) {
 
@@ -73,7 +75,7 @@ if( $oundoff_config.home ) {
 				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('#home').attr('style',null) //.attr('src','/assets/logo.png')
 				reset_styles = true
 
-			} else if( w_top > 10 && w_top < w_height ) {
+			} else if( w_top > 10 && w_top < w_height && ! isMobile.any() ) {
 
 				if( w_width >= small_cut_off ) {
 					var logo_width = w_width * .33,
@@ -162,7 +164,8 @@ if( $oundoff_config.home ) {
 	.on('click','.get_started',function() {
 		if( isMobile.any() ) {
 			$(logo).attr('src','/assets/logo_no_cong.png')
-			scroll_to( w_height / 3 + 10 )
+			$('body').addClass('fixed')
+			window.name += 'soundoff_open'
 		} else {
 			scroll_to( w_height )
 		}

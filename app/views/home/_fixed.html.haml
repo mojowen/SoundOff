@@ -1,7 +1,7 @@
 #fixed
 
 	#top_menu
-		%a.item.menu{ :href => '#'} &#9776;
+		%a.item.menu{ :href => '#'} &#x2630;
 		.inner
 			= link_to 'About', about_path
 			= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Log in', new_user_session_path )

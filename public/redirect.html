@@ -3,22 +3,30 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>Tweeting...</title>
-  
+
 
 
 <script type='text/javascript'>
+var next = function() {
+  window.close();
+}
+
 function goToUri(uri, href) {
     var start, end, elapsed;
     start = new Date().getTime();
     document.location = uri;
     end = new Date().getTime();
-    
+
     elapsed = (end - start);
 
-    if (elapsed < 1) { document.location = href; }
+    if (elapsed < 1) {
+      document.location = href;
+      next = function() { document.location = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='+message; }; 
+    }
 }
 (function() {
   message = document.location.hash.replace(/\#/,'')
+  setTimeout( function() { next() }, 500)
   if( navigator.userAgent.match(/iPad|iPhone|android|iPod/i) != null ) {
     goToUri('twitter://post?message='+message,'https://twitter.com/intent/tweet?related=HeadCountOrg&text='+message )
   } else document.location = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='+message

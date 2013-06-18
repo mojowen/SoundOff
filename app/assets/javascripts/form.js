@@ -85,11 +85,8 @@ function formScope($http, $scope) {
 						}
 					)
 
-					if( isMobile.any() ) document.location = '/redirect.html#'+'​'+escape(message)
-					else {
-						window.open('/redirect.html#'+'​'+escape(message) );
-						next = 4
-					}
+					window.open('/redirect.html#'+'​'+escape(message) );
+					next = 4
 				}
 				break;
 		}
@@ -114,6 +111,7 @@ function formScope($http, $scope) {
 	$scope.electeds = []
 
 	$scope.raw_targets = $oundoff_config.targets || []
+
 	$scope.targets = []
 	if( $scope.raw_targets.length > 0 ) {
 		if( $scope.campaign == '' ) $scope.campaign = 'Tweet @'+$scope.raw_targets.map(function(el) { return el.twitter_id }).join(' @')
@@ -217,6 +215,7 @@ function formScope($http, $scope) {
 	$scope.counter = 139
 
 	$scope.$watch('raw_targets',function(targets) {
+
 		var params = '',
 			sns = $scope.raw_targets.map( function(el) { return el.twitter_id }).join(','),
 			bios = $scope.raw_targets
@@ -224,10 +223,10 @@ function formScope($http, $scope) {
 				.filter( function(el) { return $scope.targets.map(function(t){ return t.bioguide_id; }).indexOf(el) === -1;  })
 				.join(',')
 
-		if( sns.length > 1 && bios.length > 1 )  {
+		if( sns.length > 1 || bios.length > 1 )  {
 
-			if( $oundoff_config.targets.length > 0 ) params += 'sns='+sns
-			else params += 'bio='+bios
+			if( $oundoff_config.targets.length > 0 ) params = 'sns='+sns
+			else params = 'bio='+bios
 
 			$http.get( '/find_reps?'+params ).success( function(r) { $scope.targets = r; });
 		}
@@ -286,7 +285,7 @@ if ( window.self === window.top && $oundoff_config.form ) {
 	$(document).ready( function() {
 		if( isMobile.any() ) {
 			document.body.classList.add('noframe')
-			$('.mobile').show()
+			$('.mobile').show();
 		}
 		$('#close').remove();
 	})
