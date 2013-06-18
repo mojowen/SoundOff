@@ -86,6 +86,7 @@ function homePageScope($http, $scope) {
 			};
 
 		};
+		$scope.setScoreBoard();
 	}
 
 	$http.get(query,{}).success(function(data,status) { loadTweets(data) })
