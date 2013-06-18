@@ -85,7 +85,7 @@ class HomeController < ApplicationController
   def statuses
     tweets = Status.hashtag( params[:hashtags] )
     tweets = Status.mention( params[:mentions] )
-    render :json => tweets #.sort_by(&:created_at).reverse
+    render :json => tweets.sort_by(&:created_at).reverse
   end
 
   def sitemap
