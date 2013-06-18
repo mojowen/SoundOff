@@ -5,9 +5,9 @@
 @media (max-width: $break-medium-large)
 	#main
 		#menu, #more-info, #powered_by
-			left: 40px
+			left: 80px
 		#content
-			margin-left: 440px + 40px
+			margin-left: 440px + 80px
 			.item .description
 				.title
 					.title_line
@@ -17,15 +17,9 @@
 							width: 100%
 					img
 						margin-bottom: 0px
-	#top
-		position: relative
-		bottom: inherit
-		height: auto
-		min-height: inherit
-		padding-bottom: 2%
-		#fixed
-			.start_campaign, .my_campaigns
-				display: none
+	#top #fixed
+		.start_campaign, .my_campaigns
+			display: none
 
 	body.fixed.single #main
 		h1
@@ -78,7 +72,7 @@
 			top: 0
 			height: 75%
 			.items
-				height: 76%
+				height: 90%
 		#powered_by
 			left: 0
 			width: 100%
@@ -93,6 +87,11 @@
 		form
 			width: 100%
 	#top
+		position: relative
+		bottom: inherit
+		height: auto
+		min-height: inherit
+		padding-bottom: 2%
 		#fixed
 			#top_menu
 				margin-left: -40px
@@ -144,7 +143,7 @@
 		min-width: 400px
 		#top
 			img#logo
-				position: fixed
+				position: absolute
 				margin-top: 0
 			.campaign
 				display: none

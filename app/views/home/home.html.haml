@@ -129,9 +129,10 @@
 						ound
 						%span O
 						ff
-
-					%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
-					%h3 @{{item.twitter_screen_name}}
+					.title_line
+						%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
+						%h3
+							%a{ 'ng-href' => 'item.twitter_screen_name' } @{{item.twitter_screen_name}}
 
 
 					%p.details_left
