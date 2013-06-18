@@ -225,7 +225,7 @@ function formScope($http, $scope) {
 			if( $oundoff_config.targets.length > 0 ) params += 'sns='+sns
 			else params += 'bio='+bios
 
-			$http.get( '/find_reps?'+params ).success( function(r) { $scope.targets = r[i]; });
+			$http.get( '/find_reps?'+params ).success( function(r) { $scope.targets = r; });
 		}
 	});
 
