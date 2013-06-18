@@ -213,15 +213,20 @@ function formScope($http, $scope) {
 	$scope.counter = 139
 
 	$scope.$watch('raw_targets',function(targets) {
-		var params = ''
-		if( $oundoff_config.targets.length > 0 ) params += 'sns='+$scope.raw_targets.map( function(el) { return el.twitter_id }).join(',')
-		else params += 'bio='+$scope.raw_targets.map( function(el) { return el.bioguide_id }).join(',')
+		var params = '',
+			sns = $scope.raw_targets.map( function(el) { return el.twitter_id }).join(','),
+			bios = $scope.raw_targets
+				.map( function(el) { return el.bioguide_id })
+				.filter( function(el) { return $scope.targets.map(function(t){ return t.bioguide_id; }).indexOf(el) === -1;  })
+				.join(',')
 
-		if( params.length > 1 ) $http.get( '/find_reps?'+params ).success( function(r) {
-			for (var i = r.length - 1; i >= 0; i--) {
-				$scope.targets.push( r[i] )
-			};
-		});
+		if( sns.length > 1 && bios.length > 1 )  {
+
+			if( $oundoff_config.targets.length > 0 ) params += 'sns='+sns
+			else params += 'bio='+bios
+
+			$http.get( '/find_reps?'+params ).success( function(r) { $scope.targets = r[i]; });
+		}
 	});
 
 	$scope.$watch('message',setCounter);
