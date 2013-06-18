@@ -41,6 +41,7 @@ function homePageScope($http, $scope) {
 
 	// Campaigns
 	$scope.raw_campaigns = $oundoff_config.raw_campaigns
+	$scope.raw_campaigns.sort( function(a,b) { return a.score > b.score ? -1 : 1 });
 	$scope.campaigns = function() {
 		var search = $scope.search.toLowerCase();
 		if( $scope.mode.toLowerCase() != 'reps' ) return $scope.raw_campaigns.filter( function(el) {
@@ -86,7 +87,6 @@ function homePageScope($http, $scope) {
 			};
 
 		};
-		$scope.setScoreBoard();
 	}
 
 	$http.get(query,{}).success(function(data,status) { loadTweets(data) })
@@ -162,21 +162,6 @@ function homePageScope($http, $scope) {
 		$scope.reset()
 	}
 	$scope.setState = function(state) {
-		if( typeof state == 'string' ) {
-			var found = $scope.raw_campaigns.filter( function(el) { return el.short_url == state ; });
-
-			if( typeof found[0] != 'undefined' ) {
-				$scope.active = found[0];
-
-				$scope.search = found[0].name;
-				setTimeout( function() { $scope.single_item = found[0]; },1)
-				window.name += 'soundoff_open'
-				if( $oundoff_config.open_soundoff ) $oundoff_config.open_soundoff.campaign = found[0].id;
-			} else {
-				$scope.setScoreBoard();
-				$scope.search = state
-			}
-		}
 		if( typeof state == 'object' && state != null ) {
 
 			$scope.raw_reps.unshift( state )
@@ -193,7 +178,22 @@ function homePageScope($http, $scope) {
 		}
 		loadTweets($oundoff_config.raw_tweets || [] );
 
+		if( typeof state == 'string' ) {
+			var found = $scope.raw_campaigns.filter( function(el) { return el.short_url == state; });
 
+			if( typeof found[0] != 'undefined' ) {
+				$scope.active = found[0];
+
+				$scope.search = found[0].name;
+
+				setTimeout( function() { $scope.single_item = found[0]; },1)
+				window.name += 'soundoff_open'
+				if( $oundoff_config.open_soundoff ) $oundoff_config.open_soundoff.campaign = found[0].id;
+			} else {
+				$scope.setScoreBoard();
+				$scope.search = state
+			}
+		}
 	}
 
 	$scope.$watch('search',function() {
