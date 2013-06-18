@@ -62,6 +62,7 @@
 				.campaign{ "ng-repeat" => "campaign in campaigns()", "ng-class" => "isActive($index,campaign)" }
 					%h3.score {{campaign.score}}
 					%h3.name {{campaign.name}}
+					%h4.twitter {{campaign.twitter_screen_name}}
 
 					.description {{campaign.description}}
 				.rep{ "ng-repeat" => "rep in reps()", "ng-class" => "isActive($index,rep)" }
@@ -96,17 +97,20 @@
 			.back{ 'ng-click' => 'reset()'} < Back
 			.description.campaign
 				.title
-					%a{ 'ng-href' => '{{item.website}}' }
-						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}' }
 					%button.open_soundoff{{  :campaign => '{{item.id}}' }}
 						%span #S
 						ound
 						%span O
 						ff
-					%h1 {{item.name}}
-					%h3 {{item.hashtag }}
-					%h3
-						%a{ 'ng-href' => 'item.twitter_profile' } {{item.twitter_screen_name}}
+
+
+					%a{ 'ng-href' => '{{item.website}}' }
+						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}' }
+					.title_line
+						%h1 {{item.name}}
+						%h3 {{item.hashtag }}
+						%h3
+							%a{ 'ng-href' => 'item.twitter_profile' } {{item.twitter_screen_name}}
 
 
 					.copy {{item.description}}
