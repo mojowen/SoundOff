@@ -16,7 +16,7 @@
 						h1,h3,h4
 							width: 100%
 					img
-						margin-bottom: 0px
+						margin-bottom: 10px
 	#top #fixed
 		.start_campaign, .my_campaigns
 			display: none
@@ -28,12 +28,19 @@
 		#content
 			width: 96%
 
+	body.fixed.single #main
+		h1
+			left: -1.5%
+			width: 103%
+		#content
+			width: 96%
+
+
 
 @media (max-width: $break-medium)
 	body.fixed.single
 		$width: 680px
 		min-width: $width + 28*2
-
 		#main
 			min-width: $width + 28px*2
 			h1
