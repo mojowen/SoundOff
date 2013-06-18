@@ -30,6 +30,10 @@
 	%strong Partner Name:
 	= @campaign.partner.name
 
+%p
+	%strong Partner Twitter:
+	= link_to '@'+@campaign.partner.twitter_screen_name, 'http://twitter.com/'+@campaign.partner.twitter_screen_name
+
 %p= link_to 'Partner Website', @campaign.partner.website
 
 %p
@@ -46,3 +50,16 @@
 %p
 	%strong Contact Phone:
 	= @campaign.partner.users.first.phone
+
+- if @campaign.partner.partner_type == 'nonprofit'
+	%p
+		%strong Tax ID:
+		= @campaign.partner.tax_id
+
+	%p
+		%strong Mailing Address
+		= @campaign.partner.mailing_address
+
+	%p
+		%strong Privacy Policy
+		= @campaign.partner.privacy_policy

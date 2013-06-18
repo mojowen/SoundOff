@@ -20,7 +20,7 @@ class Campaign < ActiveRecord::Base
 		throw "That Hashtag wont work sport" if ['soundoff'].index( hashtag.downcase )
 	end
 	def notify_pending
-		CampaignMail.new_campaign( self ).deliver if ! self.partner.nil? && self.new_record?
+		CampaignMail.new_campaign( self ).deliver if ! self.partner.nil? && new_record?
 	end
 	def notify_active
 		CampaignMail.campaign_approved( self ).deliver if ! self.partner.nil? && self.status == 'approved' && status_changed?
