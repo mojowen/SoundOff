@@ -196,6 +196,7 @@ if( $oundoff_config.home ) {
 		if( machine_scroll ) clearTimeout(machine_scroll);
 
 		scroll_to( $('#content .active').offset().top - 120 )
+		setTimeout( function() { clearTimeout(machine_scroll); },1000)
 	})
 
 	function scroll_to(target_height,direction) {
