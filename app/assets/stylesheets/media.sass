@@ -156,7 +156,7 @@
 		#main
 			#menu
 				top: 60px
-	body.fixed
+	body.fixed.home
 		min-width: 400px
 		#top
 			img#logo
@@ -197,12 +197,14 @@
 						font-size: 14px
 						width: 120px
 					.title_line
-						width: 100%
+						width: 100% !important
 						padding-top: 10px
 						h1
 							font-size: 24px
 					.copy
 						margin: 12px 0
+					.title_line, .copy, .details_right, .details_left
+						text-align: center
 					.details_right, .details_left
 						position: relative
 						display: block
