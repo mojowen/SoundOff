@@ -1,13 +1,9 @@
-
-
-
-
 @media (max-width: $break-medium-large)
-	#main
+	body.home #main
 		#menu, #more-info, #powered_by
 			left: 80px
 		#content
-			margin-left: 440px + 80px
+			margin-left: 490px
 			.item .description
 				.title
 					.title_line
@@ -25,6 +21,13 @@
 			margin-right: 14px
 		a.item
 			margin: 0 14px
+		#top_menu
+			&:hover
+				a.menu
+					padding-bottom: 0
+					margin-bottom: 0
+			.inner
+				margin-top: -12px
 
 	body.fixed.single #main
 		h1
@@ -54,11 +57,9 @@
 			#content
 				width: 96%
 				height: auto
-	#main
-		min-width: 400px
+	body.home #main
 
 		#content
-			min-width: 400px
 			margin-right: 1000px
 			float: right
 			height: 0px
@@ -84,8 +85,8 @@
 			.items
 				height: 90%
 		#powered_by
-			left: 0
-			width: 100%
+			left: -2px
+			width: 102%
 			padding: 0 2%
 
 	.single
@@ -115,7 +116,7 @@
 		#banner
 			height: 50px
 			padding-top: 10px
-			right: 29%
+			right: 2%
 			text-align: center
 			.small
 				display: block
@@ -124,13 +125,13 @@
 			&::after
 				border-width: 8px 70px
 		img#logo
-			width: 60%
+			width: 90%
 			left: 5%
 			margin-top: 10%
 			position: relative
 		#description
 			margin: 10% 0 0
-			width: 60%
+			width: 90%
 			left: 5%
 			position: relative
 			text-align: center
@@ -168,7 +169,14 @@
 			padding-bottom: 0
 			position: fixed
 		#main #menu
-			position: fixed !important
+			position: absolute !important
+			height: auto
+			top: 68px
+			#tabs
+				marign: 0
+				span
+					padding: 2px 12px
+
 		#main #powered_by
 			bottom: 0px
 		#main #more-info
@@ -181,8 +189,25 @@
 			#content .active
 				position: absolute
 				top: 60px
-				left: 0%
-				width: 70%
+				margin: 50px 1%
+				width: 98%
+				left: 0px
+				.description .title
+					button.open_soundoff
+						font-size: 14px
+						width: 120px
+					.title_line
+						width: 100%
+						padding-top: 10px
+						h1
+							font-size: 24px
+					.copy
+						margin: 12px 0
+					.details_right, .details_left
+						position: relative
+						display: block
+						left: 0px
+
 				.back
 					color: $red
 					font-size: 130%
@@ -193,20 +218,44 @@
 					display: block
 
 @media (max-width: $break-small)
-	#main #powered_by, #fixed a.facebook, #fixed a.twitter
-		display: none
-	#main #menu
-		display: none
-	#footer
-		padding: 0
-		.column
-			width: 20%
-		.disclaimer
-			width: 70%
-	body.fixed #main #menu
+	body.home
+		min-width: 320px !important
+
+		#top
+			#fixed
+				width: 30%
+				a.facebook, a.twitter
+					display: none
+			#logo
+				margin-top: 60px
+			#description
+				p
+					font-size: 15px
+				button
+					font-size: 20px
+					min-width: 50%
+					margin: 0 auto
+					display: block
+		#main
+			display: none
+
+		#footer
+			padding: 0
+			.column
+				width: 28%
+			.disclaimer
+				width: 90%
+				clear: both
+
+	body.fixed #main
 		display: block
-		h2
-			font-size: 20px
-		#tabs
-			span
-				padding: 2px 8px
+		#menu
+			min-width: 258px
+			h2
+				font-size: 18px
+	#main 
+		#powered_by
+			position: absolute !important
+			bottom: 0
+		&.mobile_active
+			display: none

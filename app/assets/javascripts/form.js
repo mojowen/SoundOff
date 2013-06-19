@@ -235,6 +235,13 @@ function formScope($http, $scope) {
 	$scope.$watch('message',setCounter);
 	$scope.$watch('drop_campaign',setCounter);
 
+	$scope.seeSuggestions = function() {
+		suggest.style.display = "block";
+
+		if( isMobile.any() ) setTimeout( function() { window.scroll_to($(suggest).offset().top,0) }, 2)
+
+		return false;
+	}
 	$scope.setMessage = function(message) {
 		$scope.message = message;
 		suggest.style.display = "none";

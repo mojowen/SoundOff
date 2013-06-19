@@ -46,7 +46,7 @@
 
 				%p
 					- if !@campaign.nil? && ! @campaign.suggested.empty?
-						%a.suggestions{ :href => '#', :onclick => 'suggest.style.display = "block"; return false;' } Need Suggestions?
+						%a.suggestions{ :href => '#', 'ng-click' => 'seeSuggestions()' } Need Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
 				%p.mobile{ :style => 'display:none'} Note: You can also add a photo before sending your tweet.
@@ -55,7 +55,6 @@
 				%h1 Thanks! - You're Almost Done
 				%h3
 					Tell Your Friends and Set the
-					%br
 					%span #S
 					ound
 					%span O

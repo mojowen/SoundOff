@@ -221,7 +221,7 @@ body.form
 body.noframe
 	padding: 0
 	#main
-		background-color: rgba(52, 141, 175,0.7)
+		background-color: #f3f5f4
 		padding: 40px 10px
 		bottom: 0px
 		position: absolute
@@ -234,7 +234,7 @@ body.noframe
 				top: inherit
 				position: relative
 				width: 100%
-				height: 290px
+				height: auto
 				overflow-y: scroll
 @media (max-width: 1090px)
 	#main #popup #suggest
@@ -247,10 +247,23 @@ body.noframe
 
 @media (max-width: 540px)
 	body.noframe #main
+		padding: 0
 		height: 400px
 		#popup
-			width: 90%
-			min-width: 312px
+			width: 100%
 			margin: 0 auto
+			h2
+				left: 0
+				right: 0
+				position: relative
+				top: 20px
+				&::before, &::after
+					content: ''
+					border: 0
+			form
+				padding-top: 0
+				#stage_4 .line
+					width: 100%
+					margin: 0
 			.target
 				margin: 38px 0 0

@@ -48,3 +48,7 @@ if (!Array.prototype.filter) {
   };
 }
 var months = ['Jan', 'Feb', 'March', 'April', 'May', 'June','July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+if( isMobile.any() ) $(document).on('click touchstart','#top_menu a.menu',function() {f
+    var $this = $(this)
+    if( $this.next('.inner').is(':visible') ) $this.blur()
+})

@@ -18,9 +18,6 @@ if( $oundoff_config.home ) {
 			document.body.classList.add('fixed');
 			$(logo).attr('src','/assets/logo_no_cong.png')
 		}
-		if( isMobile.any() ) {
-			$(menu).height( window.innerHeight - 60 -20 ).find('.inner').height(  window.innerHeight - 60 -20 -130 )
-		}
 	})
 	.scroll( function(e) {
 
@@ -55,114 +52,117 @@ if( $oundoff_config.home ) {
 			return false;
 		}
 
-		if( p < 1 ) {
+		if( w_width > 500 ) {
 
-			this.body.classList.remove('fixed')
-			$(logo).attr('src','/assets/logo.png')
+			if( p < 1 ) {
 
-			var $top = $('#top'),
-				$foot = $('#footer'),
-				$logo = $('img#logo',$top),
-				$description = $('#description',$top),
-				$menu = $('#menu'),
-				$content = $('#content'),
-				$banner = $('#banner')
+				this.body.classList.remove('fixed')
+				$(logo).attr('src','/assets/logo.png')
 
-			function p_css(percent) { return [ percent ,'%' ].join(''); };
-			function n_css(number) { return [ number ,'px' ].join(''); };
+				var $top = $('#top'),
+					$foot = $('#footer'),
+					$logo = $('img#logo',$top),
+					$description = $('#description',$top),
+					$menu = $('#menu'),
+					$content = $('#content'),
+					$banner = $('#banner')
 
-			if( w_top < 10 ) {
-				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('#home').attr('style',null) //.attr('src','/assets/logo.png')
-				reset_styles = true
+				function p_css(percent) { return [ percent ,'%' ].join(''); };
+				function n_css(number) { return [ number ,'px' ].join(''); };
 
-			} else if( w_top > 10 && w_top < w_height && ! isMobile.any() ) {
+				if( w_top < 10 ) {
+					if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('#home').attr('style',null) //.attr('src','/assets/logo.png')
+					reset_styles = true
 
-				if( w_width >= small_cut_off ) {
-					var logo_width = w_width * .33,
-						logo_width_rate = 170 - logo_width,
+				} else if( w_top > 10 && w_top < w_height ) {
 
-						logo_top = w_height * .3,
-						logo_top_rate = 6 - logo_top,
+					if( w_width >= small_cut_off ) {
+						var logo_width = w_width * .33,
+							logo_width_rate = 170 - logo_width,
 
-						logo_left = 10,
-						logo_left_rate = (7 - 10) / 10,
+							logo_top = w_height * .3,
+							logo_top_rate = 6 - logo_top,
 
-						description_top = w_height*offset_factor,
-						description_top_rate = w_height*1.25 - description_top,
+							logo_left = 10,
+							logo_left_rate = (7 - 10) / 10,
 
-						banner_top = 0,
-						banner_top_rate = 180 - ( - 200 ),
+							description_top = w_height*offset_factor,
+							description_top_rate = w_height*1.25 - description_top,
 
-						top_border_width = 15,
-						top_border_width_rate =  (4 - 15),
-						top_bottom = w_height*.22,
-						top_bottom_rate = ( (w_height-100) - top_bottom ),
+							banner_top = 0,
+							banner_top_rate = 180 - ( - 200 ),
 
-						bottom_top = w_height * ( 1 - .22 ),
-						menu_top = w_height + 20 + top_offset
-						content_margin_top = w_height * 2 + 20 + top_offset
+							top_border_width = 15,
+							top_border_width_rate =  (4 - 15),
+							top_bottom = w_height*.22,
+							top_bottom_rate = ( (w_height-100) - top_bottom ),
 
-					$foot.css({ top: n_css( bottom_top - top_bottom_rate * p * 1.4 ), paddingBottom: '0px' })
-					$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
-					$content.css({ marginTop: n_css( content_margin_top - top_bottom_rate * p *1.4 ) })
-					$top.css({
-						minHeight: 0,
-						borderBottomWidth: n_css( top_border_width + top_border_width_rate*p ),
-						bottom: n_css( top_bottom + top_bottom_rate * p ),
-					})
+							bottom_top = w_height * ( 1 - .22 ),
+							menu_top = w_height + 20 + top_offset
+							content_margin_top = w_height * 2 + 20 + top_offset
 
-					$logo.css( {
-						width: n_css( logo_width + logo_width_rate * p ),
-						top: n_css( logo_top + logo_top_rate  * p ),
-						left: p_css( logo_left + logo_left_rate * p)
-					})
-
-					if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
-
-					$description.css( { top: n_css( description_top - description_top_rate* p) })
-					$banner.css( { top: n_css( banner_top - banner_top_rate* p) })
-				} else {
-					$description.hide()
-					if( p > .1 ) {
-						$(logo).attr('src','/assets/logo_no_cong.png')
+						$foot.css({ top: n_css( bottom_top - top_bottom_rate * p * 1.4 ), paddingBottom: '0px' })
+						$menu.css({ top: n_css( menu_top - top_bottom_rate * p *1.4) })
+						$content.css({ marginTop: n_css( content_margin_top - top_bottom_rate * p *1.4 ) })
 						$top.css({
-							position: 'fixed',
-							height: '80px',
-							borderBottomWidth: '4px',
-
+							minHeight: 0,
+							borderBottomWidth: n_css( top_border_width + top_border_width_rate*p ),
+							bottom: n_css( top_bottom + top_bottom_rate * p ),
 						})
-						$logo.css({
-							width: '210px',
-							top: '6px',
-							left: '7%',
-							marginTop: 0
+
+						$logo.css( {
+							width: n_css( logo_width + logo_width_rate * p ),
+							top: n_css( logo_top + logo_top_rate  * p ),
+							left: p_css( logo_left + logo_left_rate * p)
 						})
-					}
-					if( p > 0.3 ) {
-						if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
 
-						reset_styles = true;
+						if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
 
-						this.body.classList.add( 'fixed' )
-						window.name += 'soundoff_open'
+						$description.css( { top: n_css( description_top - description_top_rate* p) })
+						$banner.css( { top: n_css( banner_top - banner_top_rate* p) })
+					} else {
+						$description.hide()
+						if( p > .1 ) {
+							$(logo).attr('src','/assets/logo_no_cong.png')
+							$top.css({
+								position: 'fixed',
+								height: '80px',
+								borderBottomWidth: '4px',
+
+							})
+							$logo.css({
+								width: '210px',
+								top: '6px',
+								left: '7%',
+								marginTop: 0
+							})
+						}
+						if( p > 0.3 ) {
+							if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
+
+							reset_styles = true;
+
+							this.body.classList.add( 'fixed' )
+							window.name += 'soundoff_open'
+						}
+						$foot.css({ paddingBottom: '100px' })
 					}
-					$foot.css({ paddingBottom: '100px' })
+
 				}
 
+			} else {
+				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
+				$(logo).attr('src','/assets/logo_no_cong.png')
+				reset_styles = true;
+
+				this.body.classList.add( 'fixed' )
+				$('body').scrollTop(0)
+				window.name += 'soundoff_open'
 			}
-
-		} else {
-			if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
-			$(logo).attr('src','/assets/logo_no_cong.png')
-			reset_styles = true;
-
-			this.body.classList.add( 'fixed' )
-			$('body').scrollTop(0)
-			window.name += 'soundoff_open'
 		}
 	})
 	.on('click','.get_started',function() {
-		if( isMobile.any() ) {
+		if( w_width < 500 ) {
 			$(logo).attr('src','/assets/logo_no_cong.png')
 			$('body').addClass('fixed')
 			window.name += 'soundoff_open'
@@ -199,7 +199,7 @@ if( $oundoff_config.home ) {
 	})
 
 	function scroll_to(target_height,direction) {
-		if( isMobile.any() ) return window.scrollTo(0 , target_height );
+		if( w_width < 500 ) return window.scrollTo(0 , target_height );
 
 		var increment =
 				Math.abs( target_height - w_top ) < 10 ? 1  :

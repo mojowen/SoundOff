@@ -102,13 +102,13 @@
 						ff
 
 
-					%a{ 'ng-href' => '{{item.website}}' }
+					%a{ 'ng-href' => '{{item.website}}', :target => '_blank' }
 						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}' }
 					.title_line
 						%h1 {{item.name}}
 						%h3 {{item.hashtag }}
 						%h3
-							%a{ 'ng-href' => 'item.twitter_profile' } {{item.twitter_screen_name}}
+							%a{ 'ng-href' => 'http://twiter.com/{{item.twitter_screen_name}}', :target => '_blank' } {{item.twitter_screen_name}}
 
 
 					.copy {{item.description}}
@@ -119,7 +119,7 @@
 
 					%p.details_right{ 'ng-hide' => 'item.partner.length < 1' }
 						%strong Created by
-						%a{ 'ng-href' => '{{item.website}}' } {{item.partner}}
+						%a{ 'ng-href' => '{{item.website}}', :target => '_blank' } {{item.partner}}
 			.description.rep
 				.title
 
@@ -132,7 +132,7 @@
 					.title_line
 						%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
 						%h3
-							%a{ 'ng-href' => 'item.twitter_screen_name' } @{{item.twitter_screen_name}}
+							%a{ 'ng-href' => 'http://twiter.com/{{item.twitter_screen_name}}', :target => '_blank' } @{{item.twitter_screen_name}}
 
 
 					%p.details_left
