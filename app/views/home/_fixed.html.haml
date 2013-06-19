@@ -1,7 +1,8 @@
 #fixed
 
 	#top_menu
-		%a.item.menu{ :href => '#' } &#x2630;
+		%a.item.menu{ :href => '#' }
+			= image_tag 'icon-menu.svg'
 		.inner
 			= link_to 'About', about_path
 			= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Log in', new_user_session_path )
