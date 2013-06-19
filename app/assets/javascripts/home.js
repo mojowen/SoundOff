@@ -1,6 +1,6 @@
 if( $oundoff_config.home ) {
 
-	var w_top, w_height, w_width, freeze, reset_styles, offset_factor, machine_scroll
+	var w_top, w_height, w_width, freeze, reset_styles, offset_factor, machine_scroll, kill_machine_scroll
 	top_offset = 80
 	small_cut_off = 860
 
@@ -196,7 +196,7 @@ if( $oundoff_config.home ) {
 		if( machine_scroll ) clearTimeout(machine_scroll);
 
 		scroll_to( $('#content .active').offset().top - 120 )
-		setTimeout( function() { clearTimeout(machine_scroll); },1000)
+		kill_machine_scroll = setTimeout( function() { clearTimeout(machine_scroll); },1000)
 	})
 
 	function scroll_to(target_height,direction) {
@@ -227,6 +227,7 @@ if( $oundoff_config.home ) {
 			machine_scroll = setTimeout( function() { scroll_to(target_height,direction) }, 1);
 		} else {
 			window.scrollTo(0 , target_height );
+			clearTimeout(kill_machine_scroll);
 		}
 
 	}
