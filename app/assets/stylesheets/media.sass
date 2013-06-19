@@ -169,7 +169,7 @@
 			padding-bottom: 0
 			position: fixed
 		#main #menu
-			position: absolute !important
+			position: relative !important
 			height: auto
 			top: 68px
 			#tabs
@@ -225,9 +225,13 @@
 
 		#top
 			#fixed
-				width: 30%
+				width: 30%;
+				position: absolute
+				top: 10px
 				a.facebook, a.twitter
 					display: none
+				#top_menu a.menu
+					position: absolute
 			#logo
 				margin-top: 60px
 			#description
