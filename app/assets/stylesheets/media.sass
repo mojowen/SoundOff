@@ -58,37 +58,9 @@
 				width: 96%
 				height: auto
 	body.home #main
-
-		#content
-			margin-right: 1000px
-			float: right
-			height: 0px
-			overflow: hidden
-			.item
-				.description
-					.title
-						img
-							margin-bottom: 0
-						h1
-							clear: both
-				.tweets
-					.tweet
-						width: 90%
-						max-width: 90%
-		#menu
-			min-width: 290px
-			width: 80%
-			position: relative
-			left: 10%
-			top: 0
-			height: 75%
-			.items
-				height: 90%
-		#powered_by
-			left: -2px
-			width: 102%
-			padding: 0 2%
-
+		min-height: 0px
+		#content, #menu, #powered_by
+			display: none
 	.single
 		#main
 			#content
@@ -104,6 +76,9 @@
 		min-height: inherit
 		padding-bottom: 2%
 		#fixed
+			width: 30%
+			position: absolute
+			top: 10px
 			.start_campaign, .my_campaigns
 				display: none
 
@@ -139,7 +114,7 @@
 				margin: 2% auto
 	#footer
 		position: relative
-		padding: 0 0 50% 10%
+		padding: 0 0 30px 10%
 		p
 		.column
 			width: 28%
@@ -151,13 +126,8 @@
 			width: 90%
 			margin-top: 2%
 			text-align: center
-	body.fixed
-		min-width: 400px
-		#main
-			#menu
-				top: 60px
-	body.fixed.home
-		min-width: 400px
+
+	body.home.fixed
 		#top
 			img#logo
 				position: absolute
@@ -168,57 +138,95 @@
 		#footer
 			padding-bottom: 0
 			position: fixed
-		#main #menu
-			position: relative !important
-			height: auto
-			top: 0px
-			#tabs
-				marign: 0
-				span
-					padding: 2px 12px
+		#main
+			$top: 60px
+			padding-bottom: 85px
 
-		#main #powered_by
-			bottom: 0px
-		#main #more-info
-			display: none
-		#main.mobile_active
+			#content, #menu, #powered_by
+				display: block
+
 			#menu
-				left: -1000px
-				position: absolute
-			#powered_by
-				display: none
-			#content .active
-				position: absolute
-				top: -14px
-				margin: 50px 1%
-				width: 98%
-				left: 0px
-				.description .title
-					button.open_soundoff
-						font-size: 14px
-						width: 120px
-					.title_line
-						width: 100% !important
-						padding-top: 10px
-						h1
-							font-size: 24px
-					.copy
-						margin: 12px 0
-					.title_line, .copy, .details_right, .details_left
-						text-align: center
-					.details_right, .details_left
-						position: relative
-						display: block
-						left: 0px
+				position: relative !important
+				height: auto
+				top: 0px
+				width: 80%
+				left: 10%
+				top: $top
+				.items
+					height: 90%
+				#tabs
+					marign: 0
+					span
+						padding: 2px 12px
 
-				.back
-					color: $red
-					font-size: 130%
+			#powered_by
+				bottom: 0px
+				left: -2px
+				width: 102%
+				padding: 0 2%
+
+			#more-info
+				display: none
+			#content .item
+				display: none
+
+			&.mobile_active
+				#menu
+					left: -1000px
 					position: absolute
-					top: -30px
-					text-decoration: underline
-					cursor: pointer
+					height: 0px
+					overflow: hidden
+				#powered_by
+					display: none
+				#content
 					display: block
+					float: right
+					height: 0px
+					overflow: hidden
+					.item
+						.description
+							.title
+								img
+									margin-bottom: 0
+								.title_line
+									width: 100% !important
+									padding-top: 10px
+									h1
+										font-size: 24px
+										clear: both
+								button.open_soundoff
+									font-size: 14px
+									width: 120px
+								.copy
+									margin: 12px 0
+								.title_line, .copy, .details_right, .details_left
+									text-align: center
+								.details_right, .details_left
+									position: relative
+									display: block
+									left: 0px
+						.tweets
+							.tweet
+								width: 90%
+								max-width: 90%
+						&.active
+							padding: 0 0 50px
+							display: block
+							position: absolute
+							top: $top
+							margin: 50px 1%
+							width: 98%
+							left: 0px
+
+
+					.back
+						color: $red
+						font-size: 130%
+						position: absolute
+						top: -30px
+						text-decoration: underline
+						cursor: pointer
+						display: block
 
 @media (max-width: $break-small)
 	body.home
@@ -226,9 +234,6 @@
 
 		#top
 			#fixed
-				width: 30%
-				position: absolute
-				top: 10px
 				a.facebook, a.twitter
 					display: none
 				#top_menu a.menu
@@ -256,7 +261,6 @@
 				clear: both
 
 	body.fixed #main
-		padding-bottom: 85px
 		min-height: 0px
 		display: block
 		#menu

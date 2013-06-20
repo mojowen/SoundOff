@@ -2,7 +2,7 @@ if( $oundoff_config.home ) {
 
 	var w_top, w_height, w_width, freeze, reset_styles, offset_factor, machine_scroll, kill_machine_scroll
 	top_offset = 80
-	small_cut_off = 860
+	med_cut_off = 860
 
 
 	$(document)
@@ -27,7 +27,7 @@ if( $oundoff_config.home ) {
 
 		if( document.body.classList.contains('fixed') ) {
 
-			if( w_width < small_cut_off  ) return false;
+			if( w_width < med_cut_off  ) return false;
 			var divs = content.childNodes,
 				unset = true;
 
@@ -52,7 +52,7 @@ if( $oundoff_config.home ) {
 			return false;
 		}
 
-		if( w_width > 500 ) {
+		if( w_width > med_cut_off ) {
 
 			if( p < 1 ) {
 
@@ -76,7 +76,7 @@ if( $oundoff_config.home ) {
 
 				} else if( w_top > 10 && w_top < w_height ) {
 
-					if( w_width >= small_cut_off ) {
+					if( w_width >= med_cut_off ) {
 						var logo_width = w_width * .33,
 							logo_width_rate = 170 - logo_width,
 
@@ -162,7 +162,7 @@ if( $oundoff_config.home ) {
 		}
 	})
 	.on('click','.get_started',function() {
-		if( w_width < 500 ) {
+		if( w_width < med_cut_off ) {
 			$(logo).attr('src','/assets/logo_no_cong.png')
 			$('body').addClass('fixed')
 			window.name += 'soundoff_open'
