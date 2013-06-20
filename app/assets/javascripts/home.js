@@ -166,6 +166,7 @@ if( $oundoff_config.home ) {
 			$(logo).attr('src','/assets/logo_no_cong.png')
 			$('body').addClass('fixed')
 			window.name += 'soundoff_open'
+			window.scroll_to(0,0);
 		} else {
 			scroll_to( w_height )
 		}
