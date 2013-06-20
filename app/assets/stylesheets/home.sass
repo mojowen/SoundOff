@@ -1,4 +1,4 @@
-$mid: 22%
+$mid: 30%
 $fixed_header: 60px
 $menu_width: 440px
 $menu_left: 100px
@@ -397,6 +397,7 @@ body.home #main
 
 body.fixed
 	#top
+		overflow: visible
 		z-index: 20
 		position: fixed
 		height: $fixed_header
@@ -542,7 +543,7 @@ body.fixed
 	height: $mid
 	left: 0
 	right: 0
-	padding: 30px 5% 0
+	padding: 20px 5% 0
 
 	p
 		color: $darkgrey
@@ -561,9 +562,10 @@ body.fixed
 
 	.disclaimer
 		width: 40%
-		font-size: 13px
+		&, p
+			font-size: 14px
+			line-height: 1.4em
 		float: left
-		line-height: 1.4em
 		margin: 0 2.5% 0 5%
 
 
