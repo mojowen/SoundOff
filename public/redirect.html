@@ -7,9 +7,7 @@
 
 
 <script type='text/javascript'>
-var next = function() {
-  window.close();
-}
+var next = function() { }
 
 function goToUri(uri, href) {
     var start, end, elapsed;
@@ -28,6 +26,7 @@ function goToUri(uri, href) {
   message = document.location.hash.replace(/\#/,'')
   setTimeout( function() { next() }, 500)
   if( navigator.userAgent.match(/iPad|iPhone|android|iPod/i) != null ) {
+    next = function() { window.close(); }
     goToUri('twitter://post?message='+message,'https://twitter.com/intent/tweet?related=HeadCountOrg&text='+message )
   } else document.location = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='+message
 })()
