@@ -182,13 +182,14 @@
 		#main #more-info
 			display: none
 		#main.mobile_active
-			#menu, #more-info
+			#menu
 				left: -1000px
+				position: absolute
 			#powered_by
-				bottom: -500px
+				display: none
 			#content .active
 				position: absolute
-				top: 60px
+				top: -14px
 				margin: 50px 1%
 				width: 98%
 				left: 0px
@@ -255,14 +256,16 @@
 				clear: both
 
 	body.fixed #main
+		padding-bottom: 85px
+		min-height: 0px
 		display: block
 		#menu
 			min-width: 258px
 			h2
 				font-size: 18px
-	#main 
+	#main
 		#powered_by
 			position: absolute !important
 			bottom: 0
-		&.mobile_active
+		&.mobile_active #powered_by
 			display: none
