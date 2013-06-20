@@ -1,7 +1,7 @@
 %h2 #{@campaign.partner.name} Just Submitted #{@campaign.name} Campaign
 
 %p
-	= link_to 'approve campaign here', campaigns_path
+	= link_to 'approve campaign here', (ENV['BASE_DOMAIN'] || '' ) +campaigns_path
 %p
 	%strong Campaign Name:
 	= @campaign.name
