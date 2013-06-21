@@ -3,7 +3,7 @@ if( $oundoff_config.home ) {
 	var w_top, w_height, w_width, freeze, reset_styles, offset_factor, machine_scroll, kill_machine_scroll
 	top_offset = 80
 	med_cut_off = 860
-
+	height_cut_off = 600
 
 	$(document)
 	.ready( function() {
@@ -11,8 +11,7 @@ if( $oundoff_config.home ) {
 		w_height = window.innerHeight,
 		w_width = window.innerWidth,
 		offset_factor =  0.4,
-		reset_styles = true,
-		freeze = false;
+		reset_styles = true
 
 		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 ) {
 			document.body.classList.add('fixed');
@@ -58,7 +57,7 @@ if( $oundoff_config.home ) {
 			return false;
 		}
 
-		if( w_width > med_cut_off ) {
+		if( w_width > med_cut_off && w_height > height_cut_off ) {
 
 			if( p < 1 ) {
 
@@ -77,11 +76,8 @@ if( $oundoff_config.home ) {
 				function n_css(number) { return [ number ,'px' ].join(''); };
 
 				if( w_top < 10 ) {
-					if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('#home').attr('style',null) //.attr('src','/assets/logo.png')
-					reset_styles = true
-
-				} else if( w_top > 10 && w_top < w_height ) {
 					resetStyles('SoundOffAtCongressWhiteBeta.svg');
+				} else if( w_top > 10 ) {
 
 					if( w_width >= med_cut_off ) {
 						var logo_width = w_width * .33,
@@ -158,10 +154,6 @@ if( $oundoff_config.home ) {
 				}
 
 			} else {
-				if( reset_styles ) $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img').attr('style',null)
-				$(logo).attr('src','/assets/logo_no_cong.png')
-				reset_styles = true;
-
 				resetStyles('SoundOffWhiteBeta.svg');
 				this.body.classList.add( 'fixed' )
 				$('body').scrollTop(0)
@@ -170,8 +162,8 @@ if( $oundoff_config.home ) {
 		}
 	})
 	.on('click','.get_started',function() {
-		if( w_width < med_cut_off ) {
-			$(logo).attr('src','/assets/logo_no_cong.png')
+		if( w_width < med_cut_off|| w_height < height_cut_off ) {
+			$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 			$('body').addClass('fixed')
 			window.name += 'soundoff_open'
 			window.scroll_to(0,0);
@@ -205,7 +197,7 @@ if( $oundoff_config.home ) {
 		if( machine_scroll ) clearTimeout(machine_scroll);
 
 		scroll_to( $('#content .active').offset().top - 120 )
-		kill_machine_scroll = setTimeout( function() { clearTimeout(machine_scroll); },1000)
+		kill_machine_scroll = setTimeout( function() { clearTimeout(machine_scroll); },1500)
 	})
 	function resetStyles(logo) {
 		if( reset_styles ) var $logo = $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img#logo').attr('style',null)

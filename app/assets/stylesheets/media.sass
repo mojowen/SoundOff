@@ -1,3 +1,30 @@
+@media (max-height: 600px) and (min-width: $break-medium)
+	body.home
+		#top
+			bottom: 37%
+			#logo
+				top: 15%
+			#description
+				top: 20%
+			#banner
+				height: 50px
+				padding-top: 10px
+				right: 2%
+				text-align: center
+				.small
+					display: block
+				a img
+					display: none
+		#footer
+			top: 63%
+			height: 37%
+@media (max-height: 450px) and (min-width: $break-medium)
+	body.home
+		#top #description p
+			font-size: 16px
+		#footer .disclaimer p
+			font-size: 12px
+
 @media (max-width: $break-medium-large)
 	body.home #main
 		#menu, #more-info, #powered_by
@@ -97,8 +124,6 @@
 				display: block
 			a img
 				display: none
-			&::after
-				border-width: 8px 70px
 		img#logo
 			width: 90%
 			left: 5%
@@ -140,7 +165,7 @@
 			padding-bottom: 0
 			position: fixed
 		#main
-			$top: 60px
+			$top: 68px
 			padding-bottom: 85px
 
 			#content, #menu, #powered_by
@@ -149,10 +174,9 @@
 			#menu
 				position: relative !important
 				height: auto
-				top: 0px
 				width: 80%
 				left: 10%
-				top: $top
+				top: $top + 10
 				.items
 					height: 90%
 				#tabs
@@ -267,7 +291,7 @@
 		#menu
 			min-width: 258px
 			h2
-				font-size: 18px
+				font-size: 16px
 	#main
 		#powered_by
 			position: absolute !important
