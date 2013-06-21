@@ -53,12 +53,23 @@
 
 			#stage_4
 				%h1 Thanks! - You're Almost Done
-				%h3
-					Tell Your Friends and Set the
-					%span #S
-					ound
-					%span O
-					ff
+				- unless params[:no_scoreboard].nil? && ! @campaign.nil?
+					%h3
+						Tell Your Friends and Set the
+						%span #S
+						ound
+						%span O
+						ff
+				- else
+					%h3
+						Share with friends and help this campaign rank higher on the
+						&nbsp;
+						%a{ :href => home_path }
+							%span #S
+							ound
+							%span O
+							ff
+							Scoreboard
 				.line
 					%a.twitter{ 'ng-href' => '{{ twitter_link() }}', :target => '_blank' }
 						.box
@@ -76,6 +87,15 @@
 						.box
 							= image_tag 'check.png'
 						Register To Vote
+				- if params[:no_scoreboard].nil? && ! @campaign.nil?
+					%h3{ :style => 'text-align: center'}
+						%a{ :href => @campaign.url, :target => '_blank' }
+							Visit
+							&nbsp;
+							%span #S
+							ound
+							%span O
+							ff
 
 
 			#notice

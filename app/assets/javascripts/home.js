@@ -181,7 +181,7 @@ if( $oundoff_config.home ) {
 	})
 	.on('click','.open_soundoff', function() {
 		var $this = $(this),
-			config = {}
+			config = {no_scoreboard: true}
 		if( $this.attr('campaign') ) config.campaign = $this.attr('campaign');
 		if( $this.attr('rep') ) config.targets = $this.attr('rep');
 
