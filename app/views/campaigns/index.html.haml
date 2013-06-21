@@ -21,7 +21,7 @@
 						%td.pending= render 'status', :campaign => campaign
 						%td.dl= link_to 'Create Widgets', campaign_path( campaign )
 						- if current_user.admin || current_user.partner.partner_type == 'nonprofit'
-							%td.dl= link_to 'Download User Data', campaign_path( campaign )+'.text'
+							%td.dl= link_to 'Download User Data', campaign_path( campaign )+'?export=true'
 						%td.dl= link_to 'Edit Campaign', edit_campaign_path( campaign )
 
 	%a{ :href => new_campaign_path }

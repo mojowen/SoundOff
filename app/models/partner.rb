@@ -5,7 +5,7 @@ class Partner < ActiveRecord::Base
 
 	serialize :twitter, JSON
   	has_many :users, :dependent => :delete_all
-  	has_many :campaigns
+  	has_many :campaigns, :order => 'created_at DESC'
 
 	before_save :set_up_individual_partner, :twitter_data
 

@@ -4,9 +4,9 @@ class CampaignsController < ApplicationController
 
 	def index
 		if current_user.admin
-			@campaigns = Campaign.all.reverse
+			@campaigns = Campaign.all( :order => 'created_at DESC' )
 		else
-			@campaigns = current_user.partner.campaigns.reverse
+			@campaigns = current_user.partner.campaigns
 		end
 	end
 
