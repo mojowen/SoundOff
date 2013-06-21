@@ -16,7 +16,7 @@ if( $oundoff_config.home ) {
 
 		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 ) {
 			document.body.classList.add('fixed');
-			$(logo).attr('src','/assets/logo_no_cong.png')
+			$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 		}
 	})
 	.resize(function() {
@@ -54,7 +54,7 @@ if( $oundoff_config.home ) {
 
 				}
 			};
-			$(logo).attr('src','/assets/logo_no_cong.png')
+			$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 			return false;
 		}
 
@@ -63,7 +63,7 @@ if( $oundoff_config.home ) {
 			if( p < 1 ) {
 
 				this.body.classList.remove('fixed')
-				$(logo).attr('src','/assets/logo.png')
+				$(logo).attr('src','/assets/SoundOffAtCongressWhiteBeta.svg')
 
 				var $top = $('#top'),
 					$foot = $('#footer'),
@@ -81,6 +81,7 @@ if( $oundoff_config.home ) {
 					reset_styles = true
 
 				} else if( w_top > 10 && w_top < w_height ) {
+					resetStyles('SoundOffAtCongressWhiteBeta.svg');
 
 					if( w_width >= med_cut_off ) {
 						var logo_width = w_width * .33,
@@ -122,14 +123,14 @@ if( $oundoff_config.home ) {
 							left: p_css( logo_left + logo_left_rate * p)
 						})
 
-						if( p > 0.25 ) $(logo).attr('src','/assets/logo_no_cong.png')
+						if( p > 0.25 ) $(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 
 						$description.css( { top: n_css( description_top - description_top_rate* p) })
 						$banner.css( { top: n_css( banner_top - banner_top_rate* p) })
 					} else {
 						$description.hide()
 						if( p > .1 ) {
-							$(logo).attr('src','/assets/logo_no_cong.png')
+							$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 							$top.css({
 								position: 'fixed',
 								height: '80px',
@@ -161,6 +162,7 @@ if( $oundoff_config.home ) {
 				$(logo).attr('src','/assets/logo_no_cong.png')
 				reset_styles = true;
 
+				resetStyles('SoundOffWhiteBeta.svg');
 				this.body.classList.add( 'fixed' )
 				$('body').scrollTop(0)
 				window.name += 'soundoff_open'
@@ -183,7 +185,7 @@ if( $oundoff_config.home ) {
 		document.body.classList.remove('fixed')
 		var $hide = $('#powered_by,#fixed').hide()
 		$('body').scrollTop(0)
-		setTimeout( function() { $(logo).attr('src','/assets/logo.png'); $hide.show(); },10)
+		setTimeout( function() { $(logo).attr('src','/assets/SoundOffAtCongressWhiteBeta.svg'); $hide.show(); },10)
 	})
 	.on('click','.open_soundoff', function() {
 		var $this = $(this),

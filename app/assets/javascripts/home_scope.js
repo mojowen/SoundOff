@@ -154,7 +154,7 @@ function homePageScope($http, $scope) {
 		$scope.active = null
 		if( w_width > med_cut_off ) $scope.active = $scope.items()[0]
 		history.pushState( {campaign: $scope.items[0] }, 'Sound Off',  '/home' );
-		$(logo).attr('src','/assets/logo_no_cong.png')
+		$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 		document.title = '#SoundOff @ Congress'
 	}
 	$scope.resetHard = function() {

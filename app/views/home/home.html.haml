@@ -7,7 +7,7 @@
 		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
 		%a.small{ :href=> 'http://headcount.org', :target => '_blank' }HeadCount
 
-	= image_tag asset_path( @body_class.index('fixed') ? 'logo_no_cong.png' : 'logo.png' ), :id => 'logo'
+	= image_tag asset_path( @body_class.index('fixed') ? 'SoundOffWhiteBeta.svg' : 'SoundOffAtCongressWhiteBeta.svg' ), :id => 'logo'
 
 	#description
 		%p
@@ -172,5 +172,5 @@
 						%span O
 						ff!
 
-= image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'
-= image_tag asset_path( 'logo_no_cong.png' ), :style => 'display:none'
+= image_tag asset_path( 'SoundOffWhiteBeta.svg' ), :style => 'display:none'
+= image_tag asset_path( 'SoundOffAtCongressWhiteBeta.svg' ), :style => 'display:none'
