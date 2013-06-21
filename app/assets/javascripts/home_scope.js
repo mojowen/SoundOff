@@ -88,6 +88,10 @@ function homePageScope($http, $scope) {
 
 		};
 	}
+	$scope.loadMore = function(item) {
+		var add = ( item.showing || 8 )
+		item.showing = add + 8
+	}
 
 	$http.get(query,{}).success(function(data,status) { loadTweets(data) })
 

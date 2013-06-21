@@ -145,7 +145,7 @@
 				%h4
 
 
-				.tweet{ 'ng-repeat' => 'tweet in item.tweets' }
+				.tweet{ 'ng-repeat' => 'tweet in item.tweets', 'ng-hide' => '$index > (item.showing || 8) -1' }
 					.actions
 						%a{ :href =>  "https://twitter.com/{{tweet.data.user.screen_name }}/status/{{tweet.data.id_str}}", :target => '_blank' }
 							= image_tag 'twitter_logo.png'
@@ -160,6 +160,10 @@
 					%h3 @{{tweet.data.user.screen_name }}
 
 					.body {{ tweet.message }}
+
+			.more-tweets{ 'ng-hide' => 'item.tweets.length < 1 || item.tweets.length < (item.showing || 8 )'}
+				%a{ 'ng-click' => 'loadMore(item);' } Load More
+
 			.no-tweets{ 'ng-hide' => 'item.tweets.length > 0'}
 				%h3
 					Let’s get this party started!
