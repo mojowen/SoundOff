@@ -44,7 +44,7 @@ class Campaign < ActiveRecord::Base
 	def sample_tweets
 		tweets = []
 		sample_hashtags = "#SoundOff ##{hashtag}"
-		sample_status = Status.all( :limit => 4, :offset => rand( Status.count -4 ), :conditions => { :reply_to => nil } )
+		sample_status = Status.all( :limit => 4, :offset => rand( Status.count -4 ), :conditions => ['reply_to IS NULL'] )
 
 		self.suggested.each do |k,suggestion|
 			if suggestion.class == String && suggestion.length > 1
