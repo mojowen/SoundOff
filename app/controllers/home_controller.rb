@@ -54,32 +54,9 @@ class HomeController < ApplicationController
   def all_names
     redirect_to home_path unless soundoffs = current_user.admin
 
-    soundoffs = Soundoff.find_all_by_headcount( true )
-    soundoffs = soundoffs.map do |soundoff|
-      [
-        soundoff.email,
-        soundoff.zip,
-        soundoff.targets,
-        soundoff.hashtag,
-        soundoff.tweet_id,
-        soundoff.twitter_screen_name,
-        soundoff.message
-      ].join("\t")
-    end
-    soundoffs.unshift(
-      [
-        "email",
-        "zip",
-        "targets",
-        "hashtag",
-        "tweet_id",
-        "twitter_name",
-        "message"
-      ].join("\t")
-    )
-    result =  soundoffs.join("\n")
+    @soundoffs = Soundoff.find_all_by_headcount( true )
 
-    render :text => result
+    render :template => 'home/export', :layout => false
   end
 
   def statuses
