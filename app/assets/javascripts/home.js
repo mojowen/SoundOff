@@ -19,7 +19,13 @@ if( $oundoff_config.home ) {
 			$(logo).attr('src','/assets/logo_no_cong.png')
 		}
 	})
-	.scroll( function(e) {
+	.resize(function() {
+		clearTimeout(machine_scroll);
+		w_top = this.body.scrollTop,
+		w_height = window.innerHeight,
+		w_width = window.innerWidth
+		resetStyles(null);
+	}).scroll( function(e) {
 
 		var w_top = this.body.scrollTop,
 			p = w_top / w_height;
@@ -199,6 +205,11 @@ if( $oundoff_config.home ) {
 		scroll_to( $('#content .active').offset().top - 120 )
 		kill_machine_scroll = setTimeout( function() { clearTimeout(machine_scroll); },1000)
 	})
+	function resetStyles(logo) {
+		if( reset_styles ) var $logo = $('#top, #menu, #content, #footer, #top, #description,#banner').attr('style',null).find('img#logo').attr('style',null)
+		if( logo != null ) $logo.attr('src','/assets/'+logo)
+		reset_styles = true;
+	}
 
 	function scroll_to(target_height,direction) {
 		if( w_width < 500 ) return window.scrollTo(0 , target_height );
