@@ -4,7 +4,8 @@ function formScope($http, $scope) {
 			target: $oundoff_config.target || 'house', // Can also be senate
 			campaign: $oundoff_config.campaign || null,
 			email_required: $oundoff_config.email_required || false,
-			name: $oundoff_config.name || null
+			name: $oundoff_config.name || null,
+			page_url: $oundoff_config.page_url || false,
 		}
 
 	$scope.campaign = config.campaign != null ? '#'+config.campaign : ''
@@ -196,6 +197,7 @@ function formScope($http, $scope) {
 						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
 
 						$scope.geocoder_fetching = false;
+						if( $scope.raw_targets.length == 0 ) $scope.raw_targets = [{twitter_id: 'whitehouse'}];
 						if( $scope.ready_for_3 ) $scope.nextStage();
 				})
 		}
@@ -265,7 +267,8 @@ function formScope($http, $scope) {
 	if( $oundoff_config.campaign != null )  {
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
 		$scope.default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.campaign.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more! '
-		$scope.url = $oundoff_base_domain + '/' + ( $oundoff_config.short_url || '' )
+		if( config.page_url && config.page_url != 'null' ) $scope.url = config.page_url;
+		else $scope.url = $oundoff_base_domain + '/' + ( $oundoff_config.short_url || '' );
 	} else {
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
 		$scope.default_message += 'I just sent a %23SoundOff to my Rep. Do it to and help us %23SoundOff more! '

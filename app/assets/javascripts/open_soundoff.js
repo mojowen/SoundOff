@@ -74,7 +74,6 @@ function openSoundOff( args ) {
         };
         try {
           window.addEventListener("message", function(e) {
-            console.log(e);
             window.onbeforeunload = null;
             close.onclick = function() {
               var dark = document.getElementById('dark_div_soundoff'),

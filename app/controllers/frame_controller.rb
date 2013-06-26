@@ -27,7 +27,8 @@ class FrameController < ActionController::Base
       :targets => (params[:targets] || '' ).split(',').map{ |t| { :twitter_id => t } },
       :email => params[:email],
       :zip => params[:zip],
-      :message => params[:message]
+      :message => params[:message],
+      :page_url => params[:page_url],
   	}
     @body_class = 'form'
     @body_class += ' dark' if params[:style] == 'dark'

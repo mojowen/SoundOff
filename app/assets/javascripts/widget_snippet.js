@@ -20,6 +20,7 @@ ready( function() {
 				widget_top_button = d.createElement('div'),
 				config = [],
 				style = add_link.className.replace(/soundoff_widget|\_|\s/g,''),
+				page_url = add_link.getAttribute('page_url'),
 				width = '100%',
 				minWidth = '220px',
 				maxWidth = '600px',
@@ -46,6 +47,7 @@ ready( function() {
 			// The top "button"
 			widget_top_button.setAttribute('campaign',campaign)
 			widget_top_button.setAttribute('module_style',style)
+			widget_top_button.setAttribute('page_url',page_url)
 			widget_top_button.style.position = 'absolute'
 			widget_top_button.style.cursor = 'pointer'
 			widget_top_button.style.zIndex = '100'
@@ -58,6 +60,7 @@ ready( function() {
 			// The bottom "button"
 			widget_bottom_button.setAttribute('campaign',campaign)
 			widget_bottom_button.setAttribute('module_style',style)
+			widget_bottom_button.setAttribute('page_url',page_url)
 			widget_bottom_button.style.position = 'absolute'
 			widget_bottom_button.style.cursor = 'pointer'
 			widget_bottom_button.style.zIndex = '100'
@@ -79,8 +82,15 @@ ready( function() {
 
 			the_parent.insertBefore(container,add_link)
 
-			widget_bottom_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign'), style: this.getAttribute('module_style') } ) }
-			widget_top_button.onclick = function() { openSoundOff( { campaign: this.getAttribute('campaign'), style: this.getAttribute('module_style') } ) }
+			function launchModule() {
+				openSoundOff( {
+					campaign: this.getAttribute('campaign'),
+					style: this.getAttribute('module_style'),
+					page_url: this.getAttribute('page_url'),
+				} )
+			}
+			widget_bottom_button.onclick = launchModule;
+			widget_top_button.onclick = launchModule;
 
 			the_parent.removeChild(add_link)
 		}
