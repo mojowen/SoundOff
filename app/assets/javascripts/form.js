@@ -66,7 +66,7 @@ function formScope($http, $scope) {
 
 					window.onbeforeunload = null;
 					if( window.self != window.parent ) try {
-						window.parent.postMessage('off','http://localhost:5000/form');
+						window.parent.postMessage('off',$oundoff_base_domain+'/form');
 					} catch(e) {}
 
 					$.post(
