@@ -29,6 +29,7 @@ class FrameController < ActionController::Base
       :zip => params[:zip],
       :message => params[:message],
       :page_url => params[:page_url],
+      :post_message_to => params[:post_message_to]
   	}
     @body_class = 'form'
     @body_class += ' dark' if params[:style] == 'dark'

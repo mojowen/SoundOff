@@ -66,8 +66,8 @@ function formScope($http, $scope) {
 					else message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOff' ].join(' ');
 
 					window.onbeforeunload = null;
-					if( window.self != window.parent ) try {
-						window.parent.postMessage('off',$oundoff_base_domain+'/form');
+					if( window.self != window.parent && typeof $oundoff_config.post_message_to != 'undefined' ) try {
+						window.parent.postMessage('off', $oundoff_config.post_message_to);
 					} catch(e) {}
 
 					$.post(
