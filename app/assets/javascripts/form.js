@@ -219,7 +219,10 @@ function formScope($http, $scope) {
 	$scope.$watch('raw_targets',function(targets) {
 
 		var params = '',
-			sns = $scope.raw_targets.map( function(el) { return el.twitter_id }).join(','),
+			sns = $scope.raw_targets
+				.map( function(el) { return el.twitter_id })
+				.filter( function(el) { return $scope.targets.map(function(t){ return t.twitter_screen_name; }).indexOf(el) === -1;  })
+				.join(','),
 			bios = $scope.raw_targets
 				.map( function(el) { return el.bioguide_id })
 				.filter( function(el) { return $scope.targets.map(function(t){ return t.bioguide_id; }).indexOf(el) === -1;  })
