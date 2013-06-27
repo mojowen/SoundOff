@@ -16,7 +16,8 @@ class Partner < ActiveRecord::Base
 		self.errors.add :tax_id, 'Nonprofits require tax ids' if self.partner_type == 'nonprofit' && self.tax_id.nil?
 	end
 	def twitter_data
-		tw = Twitter.user(twitter_screen_name)
+		self.twitter_screen_name = twitter_screen_name.gsub('@','')
+		tw = Twitter.user(self.twitter_screen_name)
 		self.twitter_data = tw.to_json
 		self.logo = tw.profile_image_url
 	end
