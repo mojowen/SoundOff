@@ -60,7 +60,7 @@ class Status < ActiveRecord::Base
 	end
 	def self.hashtag hashtags, limit=200,  offset=0
 		hashtags = hashtags.split(',') if hashtags.class != Array
-		hashtags = hashtags.map{ |v| "%#{v}%" }.join('|')
+		hashtags = hashtags.map{ |v| "%#{v.downcase}%" }.join('|')
 
 		return all( :limit => limit,
 			:order => 'created_at DESC',
