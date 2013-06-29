@@ -1,8 +1,8 @@
 %table
 	%tr
-		- [ "email", "zip","targets", "hashtag", "tweet_id","twitter_name","message"].each do |label|
+		- [ "email", "zip","targets", "hashtag", "tweet_link","twitter_name","message"].each do |label|
 			%th= label
 	- @soundoffs.each do |soundoff|
 		%tr
-			- [soundoff.email,soundoff.zip,soundoff.targets,soundoff.hashtag,soundoff.tweet_id,soundoff.twitter_screen_name,soundoff.message].each do |line|
+			- [soundoff.email,soundoff.zip,soundoff.targets,soundoff.hashtag,("https://twitter.com/"+soundoff.twitter_screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.twitter_screen_name,soundoff.message].each do |line|
 				%td= line
