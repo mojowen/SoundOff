@@ -38,7 +38,7 @@ class Campaign < ActiveRecord::Base
 		end
 	end
 	def score
-		Soundoff.count( :conditions => { :campaign_id => id } )
+		Status.count( :conditions => ['lower(hashtags) SIMILAR TO ?','%'+self.hashtag.downcase+'%'] )
 	end
 
 	def sample_tweets
