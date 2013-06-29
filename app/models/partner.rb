@@ -7,7 +7,7 @@ class Partner < ActiveRecord::Base
   	has_many :users, :dependent => :delete_all
   	has_many :campaigns, :order => 'created_at DESC'
 
-	before_save :set_up_individual_partner, :twitter_data
+	before_save :set_up_individual_partner, :twitter_data, :partner_url
 
 	def set_up_individual_partner
 		if self.partner_type == 'individual'
@@ -17,9 +17,16 @@ class Partner < ActiveRecord::Base
 	end
 	def twitter_data
 		self.twitter_screen_name = twitter_screen_name.gsub('@','')
-		tw = Twitter.user(self.twitter_screen_name)
-		self.twitter_data = tw.to_json
-		self.logo = tw.profile_image_url
+		begin
+			tw = Twitter.user(self.twitter_screen_name)
+			self.twitter_data = tw.to_json
+			self.logo = tw.profile_image_url
+		rescue
+			return errors[:base] << 'Bad Twitter'
+		end
+	end
+	def partner_url
+		self.website = 'http://'+self.website unless self.website.index('http')
 	end
 
 	after_save :update_user
@@ -34,7 +41,11 @@ class Partner < ActiveRecord::Base
 			user.password = contact_password if ! contact_password.nil? && ! contact_password.empty?
 			user.password_confirmation = contact_password if ! contact_password.nil? && ! contact_password.empty?
 
-			user.save rescue errors << "Bad email"
+			begin
+				user.save
+			rescue
+				return errors[:base] << "Bad email"
+			end
 		end
 	end
 
