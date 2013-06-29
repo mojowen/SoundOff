@@ -11,6 +11,8 @@
 			var $oundoff_config = #{ ( @config || {} ).to_json }
 		= javascript_include_tag "application"
 		= csrf_meta_tags
+		/[if IE]
+			= javascript_include_tag 'placeholder'
 
 	%body{ :class => "#{@body_class} fixed single" }
 		#top
