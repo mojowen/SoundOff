@@ -67,7 +67,7 @@ class HomeController < ApplicationController
     only_logged_in
 
     if current_user.admin
-      @statuses = Status.where('reply_to IS NOT NULL').reverse
+      @statuses = Status.where('reply_to IS NULL').reverse
     else
       @statuses = current_user.partner.all_tweets
     end
