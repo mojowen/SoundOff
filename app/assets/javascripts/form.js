@@ -2,6 +2,7 @@ function formScope($http, $scope) {
 
 	var config = {
 			target: $oundoff_config.target || 'house', // Can also be senate
+			limits: { 'house': 1, 'senate': 2, 'all': 3},
 			campaign: $oundoff_config.campaign || null,
 			email_required: $oundoff_config.email_required || false,
 			name: $oundoff_config.name || null,
@@ -122,6 +123,7 @@ function formScope($http, $scope) {
 		passed_targets = ''
 	}
 
+	if( passed_targets.length == 0 && config.campaign == null ) config.target = 'all'
 	$scope.$watch( 'zip', function(newValue){
 		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.raw_targets.length == 0 ) {
 				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
@@ -129,8 +131,8 @@ function formScope($http, $scope) {
 				$http.jsonp(query,{})
 					.success(function(data,status) {
 						$scope.electeds = data.results;
-						var limit = config.target == 'house' ? 1 : 2,
-							targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
+						var limit = config.limits[ config.target ],
+							targets = $scope.electeds.filter( function(el) { return el.chamber == config.target || config.target == 'all' } )
 
 						if( targets.length != limit && typeof google_maps == 'undefined' ) addGoogleMaps();
 						else $scope.raw_targets = targets;
@@ -194,7 +196,7 @@ function formScope($http, $scope) {
 				$http.jsonp(query,{})
 					.success( function(data,status){
 						$scope.electeds = data.results;
-						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target } )
+						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target || config.target == 'all' } )
 
 						$scope.geocoder_fetching = false;
 						if( $scope.raw_targets.length == 0 ) $scope.raw_targets = [{twitter_id: 'whitehouse'}];
