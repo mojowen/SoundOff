@@ -33,7 +33,8 @@
 		- @partners.each do |partner|
 			.partner
 				%h3
-					= ( image_tag partner.logo unless partner.logo.nil? || partner.logo.empty?)
+					- unless partner.logo.nil? || partner.logo.empty?
+						%img{ :src => partner.logo, :onerror => "$(this).remove()" }
 					= link_to partner.name, partner_path( partner.id )
 				%p= partner.partner_type
 				%p
