@@ -125,6 +125,7 @@ function formScope($http, $scope) {
 
 	if( passed_targets.length == 0 && config.campaign == null ) config.target = 'all'
 	$scope.$watch( 'zip', function(newValue){
+		newValue = newValue.split('-')[0].replace(/\s/,'')
 		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.raw_targets.length == 0 ) {
 				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
 				$scope.sunligh_fetching = true
@@ -140,6 +141,11 @@ function formScope($http, $scope) {
 						$scope.sunligh_fetching = false;
 						if( $scope.ready_for_2 ) $scope.nextStage()
 					})
+		}
+
+		if( newValue.length > 5 ) {
+			$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
+			$scope.raw_targets = [{twitter_id: 'whitehouse'}]
 		}
 	})
 
@@ -199,7 +205,10 @@ function formScope($http, $scope) {
 						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target || config.target == 'all' } )
 
 						$scope.geocoder_fetching = false;
-						if( $scope.raw_targets.length == 0 ) $scope.raw_targets = [{twitter_id: 'whitehouse'}];
+						if( $scope.raw_targets.length == 0 ) {
+							$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
+							$scope.raw_targets = [{twitter_id: 'whitehouse'}];
+						}
 						if( $scope.ready_for_3 ) $scope.nextStage();
 				})
 		}
