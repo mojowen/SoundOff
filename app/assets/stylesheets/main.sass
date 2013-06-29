@@ -50,7 +50,7 @@ button
 			position: relative
 			float: right
 			margin-left: -27px
-
+			z-index: 15
 			a.menu
 				padding: 4px 0 2px 10px
 				margin-left: 14px
@@ -83,3 +83,20 @@ button
 
 				.inner
 					display: block
+
+body.touch #top #fixed #top_menu
+	&:hover
+		.inner
+			display: none
+		a.menu
+			background-color: transparent
+			padding-bottom: 10px
+			margin-bottom: 0
+	&.on
+		a.menu
+			background-color: $darkblue
+			padding-bottom: 12px
+			margin-bottom: -22px
+
+		.inner
+			display: block
