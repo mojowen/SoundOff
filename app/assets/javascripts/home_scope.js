@@ -226,12 +226,9 @@ function homePageScope($http, $scope) {
 	$scope.setReps = function() {
 		$scope.mode = 'Reps'
 		$scope.raw_reps.sort( function(a,b) {
-			// var a_length = (a.tweets || '').length,
-			// 	b_length = (b.tweets || '').length
-			var sort
-
-			if( a.state_name != b.state_name ) sort = a.state_name < b.state_name ;
-			else sort = a.last_name < b.last_name ;
+			var a_length = (a.tweets || '').length,
+				b_length = (b.tweets || '').length,
+				sort = a_length > b_length
 
 			return sort ? -1 : 1
 		})
