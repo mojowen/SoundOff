@@ -70,6 +70,24 @@
 			width: 103%
 		#content
 			width: 96%
+			overflow: visible
+			.widget_box
+				width: 600px
+			form
+				width: 100%
+			.help
+				background: #f3f5f4
+				padding: 4px
+				border: 1px solid #348daf
+				border-radius: 5px
+				right: inherit
+				left: -120px
+				width: 140px
+				display: none
+				&.on
+					display: block
+				a
+					word-break: break-all
 
 
 
@@ -81,22 +99,18 @@
 			min-width: $width + 28px*2
 			h1
 				left: 0
-				width: $width + 28*3
+				width: $width + 28*2
 			#content
-				width: 96%
+				width: 92%
 				height: auto
+				min-width: 680px
+				padding: 60px 20px 10px
+				.widget_box
+					width: 600px
 	body.home #main
 		min-height: 0px
 		#content, #menu, #powered_by
 			display: none
-	.single
-		#main
-			#content
-				width: 90%
-			h1
-				width: 100%
-		form
-			width: 100%
 	#top
 		position: relative
 		bottom: inherit
@@ -104,7 +118,7 @@
 		min-height: inherit
 		padding-bottom: 2%
 		#fixed
-			width: 30%
+			width: 40%
 			position: absolute
 			top: 10px
 			.start_campaign, .my_campaigns

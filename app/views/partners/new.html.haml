@@ -67,7 +67,7 @@
 
 		= f.text_field :twitter_screen_name, :placeholder => 'Twitter Handle*', :for => 'company nonprofit individual'
 		.help Your Twitter avatar and handle will appear with your campaign
-
+		.extra @
 		%p.tos
 			%input{ :type => 'checkbox', :checked => 'checked', :id => 'tos', :value => 'true' }
 			I Agree to the
@@ -116,6 +116,10 @@
 		var $this = $(this)
 		if( $this.val().length > 0 ) $this.removeClass('oops')
 	})
+	.on('keydown','#partner_twitter_screen_name',function() {
+		var $this =  $(this);
+		$this.val( $this.val().replace(/\@/g,'') );
+	})
 	.on('submit','form',function(e){
 		var errors = [],
 			$errors = $('.errors').html('')
@@ -144,7 +148,6 @@
 			e.preventDefault();
 			last = errors.pop()
 			errors = errors.length == 0 ? last : errors.join(', ') + ', and '+last
-			console.log( errors )
 			$errors.text( errors )
 		}
 		else $('input[type=text]:hidden').remove()
