@@ -11,7 +11,7 @@
 
 	#description
 		%p
-			Run your own campaign or just send one tweet. We'll make sure your message goes directly to the decision makers on issues that matter to you.
+			Tweet directly at Congress, or start your own campaign. SoundOff sends the message to your House Rep or Senators on the issues that matter to you.
 
 		%button.get_started{ :href => '#' } Get Started
 
@@ -21,7 +21,8 @@
 	.disclaimer
 		%p
 			:plain
-				SoundOff is an advocacy tool created and maintained by HeadCount.org, for the purpose of encouraging citizens to play an active role in government. This tool is available to all organizations and individuals regardless of their beliefs or affiliations, so long as they comply with the Terms of Service. HeadCount does not endorse, censor or take responsibility for any of the content of any campaign using this service.
+				SoundOff makes it easy to tweet  @ members of Congress. HeadCount.org created this tool to help Americans play a more active role in government. It’s available to all organizations and individuals regardless of their beliefs, as long as they comply with the Terms of Service. HeadCount does not endorse, censor or take responsibility for any content or any campaign using this service.
+
 
 	.column
 		%p= link_to 'About', about_path
@@ -40,7 +41,7 @@
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope', 'ng-class' => 'mobileActive()'  }
 
 	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => '{true: "single", false: "" }[single_item != null] + \' \'+ {true: "reps", false: "" }[mode.toLowerCase() == "reps"]' }
-		%h2 Choose a Campaign or Rep
+		%h2 Tweet @ Congress
 
 		= image_tag 'search.png', :class => 'search'
 		%input{ :placeholder => 'search', "ng-model" => "search", :type => 'text'}
@@ -51,18 +52,18 @@
 			%span.loading{ 'ng-hide' => 'search.length < 1 '} Loading...
 
 		#tabs
-			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Scoreboard
+			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Most Tweeted #
 			%span{ 'ng-click' => 'setMostRecent()', 'ng-class' => 'isMode("Most Recent")' } Most Recent
-			%span{ 'ng-click' => 'setReps()', 'ng-class' => 'isMode("Reps")' } Reps
+			%span{ 'ng-click' => 'setReps()', 'ng-class' => 'isMode("Reps")' } Most Tweeted @
 			%p
-				%a.open_soundoff{ 'ng-hide' => 'mode.toLowerCase() != "reps" || search.length > 0'} Don't know your representative?
+				%a.open_soundoff{ 'ng-hide' => 'search.length > 0'} Tweet directly @ your Rep and Senators
 
 		.inner
 			.items
 				.campaign{ "ng-repeat" => "campaign in campaigns()", "ng-class" => "isActive($index,campaign)" }
 					%h3.score {{campaign.score}}
-					%h3.name {{campaign.name}}
-					%h4.twitter {{campaign.twitter_screen_name}}
+					%h3.name {{campaign.hashtag}}
+					%h4.twitter {{campaign.partner}}
 
 					.description {{campaign.description}}
 				.rep{ "ng-repeat" => "rep in reps()", "ng-class" => "isActive($index,rep)" }
@@ -106,9 +107,10 @@
 						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}' }
 					.title_line
 						%h1 {{item.name}}
-						%h3 {{item.hashtag }}
 						%h3
-							%a{ 'ng-href' => 'http://twiter.com/{{item.twitter_screen_name}}', :target => '_blank' } {{item.twitter_screen_name}}
+							Tweet @ your {{item.target}} with hashtag {{item.hashtag }}. Just click
+							&#160;
+							%a.open_soundoff{ :href => '#', :campaign => '{{item.id}}'  }#SoundOff!
 
 
 					.copy {{item.description}}
@@ -120,6 +122,8 @@
 					%p.details_right{ 'ng-hide' => 'item.partner.length < 1' }
 						%strong Created by
 						%a{ 'ng-href' => '{{item.website}}', :target => '_blank' } {{item.partner}}
+						&#160;
+						{{item.twitter_name}}
 			.description.rep
 				.title
 
@@ -161,14 +165,17 @@
 
 					.body {{ tweet.message }}
 
-			.more-tweets{ 'ng-hide' => 'item.tweets.length < 1 || item.tweets.length < (item.showing || 8 )'}
-				%a{ 'ng-click' => 'loadMore(item);' } Load More
+			.more-tweets
+				%a{ 'ng-click' => 'loadMore(item);', 'ng-hide' => 'item.tweets.length < 1 || item.tweets.length < (item.showing || 8 )' } 	Load More
+				%span{ 'ng-hide' => 'item.tweets.length < 1 || item.tweets.length < (item.showing || 8 )' }
+					|
+				%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}', :campaign => '{{item.id}}', 'ng-hide' => 'item.tweets.length < 1 '  } #SoundOff!
 
 			.no-tweets{ 'ng-hide' => 'item.tweets.length > 0'}
 				%h3
 					Let’s get this party started!
 					%br
-					%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}',:campaign => '{{item.id}}'  }
+					%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}', :campaign => '{{item.id}}'  }
 						Be the first to
 						%br
 						%span #S
