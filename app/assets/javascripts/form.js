@@ -117,7 +117,7 @@ function formScope($http, $scope) {
 	$scope.targets = []
 	if( $scope.raw_targets.length > 0 ) {
 		if( $scope.campaign == '' ) $scope.campaign = 'Tweet @'+$scope.raw_targets.map(function(el) { return el.twitter_id }).join(' @')
-		if( $scope.zip != '' && ( $scope.email != '' || ! config.email_required ) ) $scope.stage = 3;
+		$scope.stage = 3;
 		var passed_targets = $scope.raw_targets.map( function(el) { return el.twitter_id }).join(',')
 	} else {
 		passed_targets = ''
