@@ -1,0 +1,8 @@
+%table
+	%tr
+		- [ "screen_name", "message", "tweet_date", "hashtags","mentions"].each do |label|
+			%th= label
+	- @statuses.each do |soundoff|
+		%tr
+			- [soundoff.screen_name,soundoff.message,soundoff.tweet_date,soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')].each do |line|
+				%td= line

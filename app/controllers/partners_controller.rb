@@ -18,4 +18,21 @@ class PartnersController < ApplicationController
 		end
 	end
 
+	def index
+	    redirect_to new_user_session_path unless current_user.admin
+
+		@partners = Partner.all
+	end
+
+	def show
+	    return redirect_to new_user_session_path unless current_user.admin
+		redirect_to campaigns_path+'?partner='+params[:id]
+	end
+
+	def destroy
+	    return redirect_to new_user_session_path unless current_user.admin
+		Partner.find( params[:id] ).destroy
+		redirect_to partners_path
+	end
+
 end

@@ -25,10 +25,20 @@
 		%script{ :src => asset_path( "widget_snippet.js" ) }
 
 		.menu
-			- if @campaign.collect_email || current_user.admin
-				= link_to 'Download Names', campaign_path( @campaign )+'?export=true'
+			%p
+				%strong Data:
+				Tweets: #{@campaign.count_tweets}, Responses: #{@campaign.count_responses}
+				- if @campaign.collect_email || current_user.admin
+					, Opt-ins: #{@campaign.count_signups}
+				%br
+				- if @campaign.collect_email || current_user.admin
+					= link_to 'Download Names', campaign_path( @campaign )+'?export_names=true'
+					&nbsp;|&nbsp;
+				= link_to 'Edit Campaign', edit_campaign_path( @campaign )
 				&nbsp;|&nbsp;
-			= link_to 'Edit Campaign', edit_campaign_path( @campaign )
+				= link_to 'Download Tweets', campaign_path( @campaign )+'?export_tweets=true'
+				&nbsp;|&nbsp;
+				= link_to 'Download Responses', campaign_path( @campaign )+'?export_responses=true'
 
 		%p Place a widget on your website so your supporters can #SoundOff about #{@campaign.name}
 

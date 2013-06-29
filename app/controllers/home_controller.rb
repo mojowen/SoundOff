@@ -52,11 +52,38 @@ class HomeController < ApplicationController
   end
 
   def all_names
-    redirect_to home_path unless soundoffs = current_user.admin
+    only_logged_in
 
-    @soundoffs = Soundoff.find_all_by_headcount( true )
+    if current_user.admin
+      @soundoffs = Soundoff.find_all_by_headcount( true )
+    else
+      @soundoffs = current_user.partner.all_signups
+    end
 
-    render :template => 'home/export', :layout => false
+    render :template => 'home/soundoff_export', :layout => false
+  end
+
+  def all_tweets
+    only_logged_in
+
+    if current_user.admin
+      @statuses = Status.where('reply_to IS NOT NULL').reverse
+    else
+      @statuses = current_user.partner.all_tweets
+    end
+
+    render :template => 'home/status_export', :layout => false
+  end
+  def all_responses
+    only_logged_in
+
+    if current_user.admin
+      @statuses = Status.where('reply_to IS NOT NULL').reverse
+    else
+      @statuses = current_user.partner.all_responses
+    end
+
+    render :template => 'home/status_export', :layout => false
   end
 
   def statuses

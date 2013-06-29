@@ -48,5 +48,31 @@ class Partner < ActiveRecord::Base
 			end
 		end
 	end
-
+	def count_tweets
+		hashtags = campaigns.all.map(&:hashtag).map{ |v| "%#{v.downcase}%" }.join('|')
+      	Status.count( :conditions => ['reply_to IS NULL AND lower(hashtags) SIMILAR TO ?',hashtags])
+	end
+	def all_tweets
+		hashtags = campaigns.all.map(&:hashtag).map{ |v| "%#{v.downcase}%" }.join('|')
+      	Status.where(['reply_to IS NULL AND lower(hashtags) SIMILAR TO ?',hashtags]).reverse
+	end
+	def count_responses
+		hashtags = campaigns.all.map(&:hashtag).map{ |v| "%#{v.downcase}%" }.join('|')
+      	Status.count( :conditions => ['reply_to IS NOT NULL AND lower(hashtags) SIMILAR TO ?',hashtags])
+	end
+	def all_responses
+		hashtags = campaigns.all.map(&:hashtag).map{ |v| "%#{v.downcase}%" }.join('|')
+      	Status.where(['reply_to IS NOT NULL AND lower(hashtags) SIMILAR TO ?',hashtags]).reverse
+	end
+	def count_signups
+		Soundoff.count( :conditions => ['partner IS TRUE AND campaign_id = ?',self.id] )
+	end
+	def all_signups
+		campaigns = self.campaigns.all.map(&:id)
+      	@soundoffs = Soundoff.where(['partner IS TRUE AND campaign_id IN(?)',campaigns]).reverse
+    end
+	def count_signups
+		campaigns = self.campaigns.all.map(&:id)
+      	@soundoffs = Soundoff.count( :conditions => ['partner IS TRUE AND campaign_id IN(?)',campaigns])
+    end
 end

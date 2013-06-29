@@ -24,12 +24,28 @@
 							%td.dl= link_to 'Download User Data', campaign_path( campaign )+'?export=true'
 						%td.dl= link_to 'Edit Campaign', edit_campaign_path( campaign )
 
-	%a{ :href => new_campaign_path }
-		%button Launch New Campaign
-	&nbsp;
-	- if current_user.admin
-		%a{ :href => all_path }
-			%button All HeadCount Singups
+	.menu
+		%a{ :href => new_campaign_path }
+			%button Launch New Campaign
+		%br
+		%br
+		- if @partner
+			%strong Data:
+			Tweets: #{@partner.count_tweets}, Responses: #{@partner.count_responses}, Signups: #{@partner.count_signups}
+
+		%br
+		- unless @partner
+			%a{ :href => all_path }
+				All HeadCount Singups
+		- else
+			%a{ :href => all_path }
+				All Singups
+		|
+		%a{ :href => tweets_path }
+			All Tweets
+		|
+		%a{ :href => responses_path }
+			All Responses
 
 :javascript
 	$(document).on('change','.change_status',function() {

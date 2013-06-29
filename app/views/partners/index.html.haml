@@ -1,0 +1,65 @@
+%h1 All Partners
+
+#content.index
+	.left{ :style => 'width: 48%; float: left '}
+		%h2 Stats
+		%h3 Total Partners: #{@partners.count}
+		%h3 Total Campaigns: #{Campaign.count}
+		%br
+		%h3 Total Tweets: #{ Status.count( :conditions => 'reply_to IS NULL') }
+		%h5 in Last Day: #{ Status.count( :conditions => ['reply_to IS NULL AND created_at > ?',1.day.ago ] ) }
+		%h5 in Last Week: #{ Status.count( :conditions => ['reply_to IS NULL AND created_at > ?',1.week.ago ] ) }
+		%h5 in Last Month: #{ Status.count( :conditions => ['reply_to IS NULL AND created_at > ?',1.month.ago] ) }
+		%a{ :href => tweets_path }
+			%button All Tweets
+		%br
+		%br
+		%h3 Total Responses: #{ Status.count( :conditions => 'reply_to IS NOT NULL') }
+		%h5 in Last Day: #{ Status.count( :conditions => ['reply_to IS NOT NULL AND created_at > ?',1.day.ago ] ) }
+		%h5 in Last Week: #{ Status.count( :conditions => ['reply_to IS NOT NULL AND created_at > ?',1.week.ago ] ) }
+		%h5 in Last Month: #{ Status.count( :conditions => ['reply_to IS NOT NULL AND created_at > ?',1.month.ago] ) }
+		%a{ :href => responses_path }
+			%button All Responses
+		%br
+		%br
+		%h3 Total Signups: #{ Soundoff.count }
+		%h5 for Headcount: #{ Soundoff.count( :conditions => {:headcount => true }) }
+		%h5 for Partners: #{ Soundoff.count( :conditions => {:partner => true }) }
+		%a{ :href => all_path }
+			%button All HeadCount Singups
+
+	.right{ :style => 'width: 48%; float: right '}
+		%h2 Partners
+		- @partners.each do |partner|
+			.partner
+				%h3
+					= ( image_tag partner.logo unless partner.logo.nil? || partner.logo.empty?)
+					= link_to partner.name, partner_path( partner.id )
+				%p= partner.partner_type
+				%p
+					= ( link_to( partner.users.first.email, 'mailto'+ partner.users.first.email) rescue '')
+					|
+					= ( link_to '@'+partner.twitter_screen_name, 'http://twitter.com/'+partner.twitter_screen_name rescue '')
+
+				%p
+					%strong Joined
+					#{ Time.at( partner.created_at).strftime("%B %e") }
+					|
+					%strong # of Campaigns:
+					#{ partner.campaigns.count }
+					|
+					= link_to 'See All Campaigns', partner_path( partner.id )
+					= link_to 'delete', partner_path( partner.id ), :class => 'destroy'
+
+:javascript
+	$(document).on('click','a.destroy',function(e){
+	var $this = $(this);
+		if( confirm('Are you sure you want to delete '+$this.prevAll('h3:first').text()+'?') ) {
+			$.ajax({
+				url: $this.attr('href'),
+				type: 'DELETE',
+				success: function(r) { document.location.reload() }
+			})
+		}
+		e.preventDefault();
+	})

@@ -4,9 +4,15 @@ class CampaignsController < ApplicationController
 
 	def index
 		if current_user.admin
-			@campaigns = Campaign.all( :order => 'created_at DESC' )
+			unless params[:partner]
+				@campaigns = Campaign.all( :order => 'created_at DESC' )
+			else
+				@partner = Partner.find(params[:partner])
+				@campaigns = @partner.campaigns
+			end
 		else
 			@campaigns = current_user.partner.campaigns
+			@partner = current_user.partner
 		end
 	end
 
@@ -61,9 +67,15 @@ class CampaignsController < ApplicationController
 	def show
 		@campaign = Campaign.find( params[:id] )
 
-		if params[:export]
+		if params[:export_names]
 			@soundoffs = current_user.admin ? Soundoff.find_all_by_campaign_id_and_headcount( @campaign.id.to_i ,true ) : Soundoff.find_all_by_campaign_id_and_partner( @campaign.id.to_i,true )
-			render :template => 'home/export', :layout => false
+			render :template => 'home/soundoff_export', :layout => false
+		elsif params[:export_tweets]
+			@statuses = @campaign.all_tweets
+			render :template => 'home/status_export', :layout => false
+		elsif params[:export_responses]
+			@statuses = @campaign.all_responses
+			render :template => 'home/status_export', :layout => false
 		else
 			render :template => 'campaigns/show'
 		end

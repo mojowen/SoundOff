@@ -23,3 +23,6 @@
 	- if current_user
 		%a{ :href => campaigns_path }
 			%button.my_campaigns My Campaigns
+		- if current_user.admin
+			%a{ :href => partners_path }
+				%button.my_campaigns All Partners
