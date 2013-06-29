@@ -43,7 +43,7 @@
 
 				%p
 					%strong Joined
-					#{ Time.at( partner.created_at).strftime("%B %e") }
+					#{ partner.created_at.strftime("%B %e") }
 					|
 					%strong # of Campaigns:
 					#{ partner.campaigns.count }
