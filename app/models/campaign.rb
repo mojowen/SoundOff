@@ -72,13 +72,14 @@ class Campaign < ActiveRecord::Base
 			:id => id,
 			:hashtag => '#'+hashtag,
 			:partner => (partner.name rescue nil),
-			:twitter_screen_name => ( '@'+partner.twitter_screen_name rescue '@HeadCountOrg' ),
+			:twitter_name => ( '@'+partner.twitter_screen_name rescue '@HeadCountOrg' ),
 			:twitter_profile => ( 'http://twitter.com/'+partner.twitter_screen_name rescue 'http://twitter.com/headcountorg' ),
 			:logo => ( (partner.logo.empty? ? '/assets/sq_icon.jpg' : partner.logo) rescue 'https://si0.twimg.com/profile_images/1163579547/FacebookLogo.jpg' ),
 			:website => (partner.website rescue nil),
 			:tweets => [],
 			:created_at => created_at,
-			:short_url => short_url
+			:short_url => short_url,
+			:target => self.target == 'house' ? 'House Rep' : 'Senator'
 		}
 	end
 	def self.active
