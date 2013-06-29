@@ -49,7 +49,7 @@
 						%a.suggestions{ :href => '#', 'ng-click' => 'seeSuggestions()' } Need Suggestions?
 					%span{ :style => 'float:right'}
 						{{counter}}
-				%p.mobile{ :style => 'display:none'} Note: You can also add a photo before sending your tweet.
+				%p.mobile{ :style => 'display:none'} Note: You can add a photo before sending your tweet.
 
 			#stage_4
 				%h1 Thanks! - You're Almost Done
@@ -62,14 +62,8 @@
 						ff
 				- else
 					%h3
-						Share with friends and help this campaign rank higher on the
-						&nbsp;
-						%a{ :href => home_path }
-							%span #S
-							ound
-							%span O
-							ff
-							Scoreboard
+						Thanks for sounding off. Now, tell friends or pick another
+						%a{ :href => home_path, :target => '_blank' } campaign
 				.line
 					%a.twitter{ 'ng-href' => '{{ twitter_link() }}', :target => '_blank' }
 						.box
@@ -87,7 +81,7 @@
 						.box
 							= image_tag 'check.png'
 						Register To Vote
-				- if params[:no_scoreboard].nil? && params[:page_url].nil?
+				- if params[:no_scoreboard].nil? && params[:page_url].nil? && @campaign
 					%h3{ :style => 'text-align: center'}
 						%a{ :href => @campaign.url, :target => '_blank' }
 							Visit
