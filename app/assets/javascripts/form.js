@@ -313,6 +313,13 @@ if ( window.self === window.top && $oundoff_config.form ) {
 		}
 		$('#close').remove();
 	})
+	.on('keydown keyup','textarea', function() {
+		var $notice = $('#notice').html('').attr('class',''),
+			reps = angular.element(popup).scope().targets.map( function(el) { return '\@'+el.twitter_screen_name }).join('|')
+
+		reps = new RegExp(reps,'i')
+	 	if( $(this).val().match(reps) ) $notice.addClass('oops').text('You don\'t need to add your reps - we\'ll do that for you') ;
+	})
  	window.onbeforeunload = function(e) {
       return 'Are you sure you want to cancel your SoundOff?';
     };
