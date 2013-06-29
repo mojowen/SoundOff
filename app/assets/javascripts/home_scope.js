@@ -138,7 +138,7 @@ function homePageScope($http, $scope) {
 
 			if( $scope.mode.toLowerCase() != 'reps')  {
 				default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
-				default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.single_item.name.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more! '
+				default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.single_item.hashtag.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more! '
 				$scope.build_widget =  $oundoff_base_domain + '/widget_create?campaign=' + $scope.single_item.name.replace(/\#/g,'')
 			} else {
 				default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
