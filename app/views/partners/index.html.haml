@@ -36,11 +36,16 @@
 					- unless partner.logo.nil? || partner.logo.empty?
 						%img{ :src => partner.logo, :onerror => "$(this).remove()" }
 					= link_to partner.name, partner_path( partner.id )
-				%p= partner.partner_type
+				%p
+					= partner.partner_type
+					|
+					= ( link_to 'website', partner.website rescue '')
 				%p
 					= ( link_to( partner.users.first.email, 'mailto'+ partner.users.first.email) rescue '')
 					|
 					= ( link_to '@'+partner.twitter_screen_name, 'http://twitter.com/'+partner.twitter_screen_name rescue '')
+					|
+					= ( partner.users.first.phone rescue '')
 
 				%p
 					%strong Joined
