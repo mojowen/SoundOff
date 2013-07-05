@@ -63,6 +63,7 @@ body.home #main
 						color: $darkgrey
 						font-family: $bodyFont
 						font-weight: normal
+						padding-left: 5px
 						a
 							color: $red
 							text-decoration: none
@@ -252,7 +253,7 @@ body.home #main
 				display: block
 
 		.items
-			height: 95.5%
+			height: 90.0%
 			overflow-y: auto
 			.campaign, .rep
 				overflow: hidden
@@ -260,14 +261,14 @@ body.home #main
 				border-bottom: 2px solid $grey
 				&.active, &:hover
 					background: white
-					h3.name
-						color: $blue
+				h3.name
+					color: $blue
 				h3
 					color: #7b7a7a
 					margin-bottom: 0
 					font-size: 18px
 				h4
-					color: $darkgrey
+					color: $red
 					margin: 2px 0
 					font-size: 13px
 
@@ -320,7 +321,8 @@ body.home #main
 				color: $darkgrey
 				cursor: pointer
 				padding: 2px 10px
-				font-size: 85%
+				font-size: 16px
+				letter-spacing: 1px
 				white-space: nowrap
 				&.on, &:hover
 					color: $darkred
