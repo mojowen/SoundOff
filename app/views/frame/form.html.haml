@@ -53,7 +53,7 @@
 
 			#stage_4
 				%h1 Thanks! - You're Almost Done
-				- if ! params[:no_scoreboard].nil? || !params[:page_url].nil? || @campaign.nil?
+				- if ! params[:page_url].nil? || ! params[:no_scoreboard].nil? || @campaign.nil?
 					%h3
 						Tell Your Friends and Set the&#160;
 						%span #S
