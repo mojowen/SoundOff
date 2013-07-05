@@ -2,38 +2,48 @@
 
 #content
 	%h3
-		SoundOff makes  it easy to tweet at elected officials.
-		It’s a free, online advocacy tool developed by
+		\#SoundOff makes it easy to tweet at elected officials. It’s a free, online advocacy tool developed by
 		%a{ :href => 'http://headcount.org' } HeadCount.org
 
 	%h2 WHO WE ARE:
 
 	%p HeadCount is a nonpartisan organization that has registered 250,000 voters and rallied millions to be informed, active citizens – primarily through our work with musicians. We use culture, technology, and grassroots organizing to drive civic participation.
 
-	%h2 WHY WE CREATED SOUNDOFF
+	%h2 WHY WE CREATED #SOUNDOFF
 
 	%p Social media is the number one forum for political discussion, but very little of that discussion reaches people in power. By directing the conversation at elected officials, we can make Twitter a potent tool to influence policy.
 
-	%h2 HOW TO USE SOUNDOFF
+	%h2 HOW TO USE #SOUNDOFF
 
-	%p If you want to SoundOff at Congress on any issue, just visit our
-	= link_to 'campaign page', home_path
-	and select a campaign. Or, Sound Off on any issue you’d like just by hitting “Rep” and SoundOff will get your tweet to the right elected official. Want to run your own campaign? Click
-	= link_to '“Start a Campaign”', new_campaign_path
-	\. You’ll receive a link to your campaign and the code for an embeddable widget. If you’re from a 501(c)3 or 501(c)4 non-profit organization, you also can collect user email addresses.
+	%p Want to send a message to Congress on an issue you care about? It’s easy.
+	%ol
+		%li
+			Visit the
+			= link_to 'action page', home_path
+			and pick a campaign. You can scroll through a list of the "Most Tweeted #" on the left side. Find other choices by searching for a particular topic or sorting by "Most Recent."
+		%li Click “#SoundOff”, enter your zip code and type your message.
+		%li Tweet it! SoundOff will automatically fill in your legislators’ handles and the campaign hashtag.
 
-	%p A “Scoreboard” ranks SoundOff campaigns based on how many tweets they’ve generated in the last two months. You can also organize campaigns by “Most Recent” or search for specific campaigns or key words. The “Rep” button lets you see a listing of all Senators and House Reps, and tweet at them directly. Want to access this all on a mobile device? You can do that too.
+	%p
+		You can also #SoundOff yourself (not part of a campaign), by clicking
+		"
+		%a.open_soundoff{ :href => '#', :onclick => 'openSoundOff(); return false;' } Tweet directly @ your Rep and Senators
+		"
+		and entering your zip.  Or click “Most Tweeted @” to see a list or Reps and Senators who are getting the most action. Once you do that, other Reps and Senators can be found through the Search bar -- useful if you want to tweet at someone in particular but you’re not in their district.
+
+
+
+	%h2 START YOUR OWN CAMPAIGN
+
+	%p Looking to get your message to Washington in a big way? #{link_to 'Start your own campaign', new_campaign_path}. You’ll just need to pick a hashtag and write a short description. Once your campaign is approved, you’ll get a link to your campaign and the code for an embeddable widget. Send the link to friends and supporters. Or, place the widget on a Web page and direct traffic there. You can then log in any time and check your campaign’s stats and responses.  If you’re from a 501(c)3 or 501(c)4 non-profit organization, you have the option of asking for user email addresses and collecting that data.
 
 	%h2 LET THE MUSIC PLAY
 
 	%p
-		At
-		= link_to 'HeadCount', 'http://headcount.org'
-		, we believe music has unrivaled power to stir people’s souls and rally communities. So, of course, we’re looking to musicians and their fans to help get this off the ground. Check out this Facebook album of musicians who are sounding off on their issues of choice.
+		At #{link_to 'HeadCount', 'http://headcount.org'}, we believe music has unrivaled power to stir people’s souls and rally communities. So, of course, we’re looking to musicians and their fans to help get this off the ground. Check out this 
+		%a{ :href => 'https://www.facebook.com/media/set/?set=a.10151515056341279.1073741841.8382221278&type=1' } Facebook album
+		of musicians who are sounding off on their issues of choice.
 
 	%h2 THE BIG PICTURE:
 
-	%p Twitter and other social media platforms are great places to let elected officials know how voters feel. With SoundOff, HeadCount aims to make this so easy, it becomes the norm.
-
-	%p The public nature of Twitter and social media can create transparency. It can put faces and voices behind popular movements. It can unleash citizen power (yeah!!!). Through SoundOff, we can bring every advocacy organization, any concerned citizen and every member of Congress into a national conversation. So let’s SoundOff!
-
+	%p Twitter is a great ways to let elected officials know how voters feel. The public nature of it can create transparency. It can put faces and voices behind popular movements. It can unleash citizen power (yeah!!!). Through SoundOff, we can bring concerned citizens, advocacy organizations and every member of Congress into a national conversation. So let’s SoundOff!
