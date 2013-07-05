@@ -65,30 +65,37 @@ function homePageScope($http, $scope) {
 
 	function loadTweets(data) {
 		var hashtags = $scope.raw_campaigns.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()}),
-			mentions = $scope.raw_reps.map(function(el) { return el.twitter_id })
+			mentions = $scope.raw_reps.map(function(el) { return el.twitter_id }),
+			ids = $scope.raw_tweets.map( function(el) { return el.tweet_id } )
 
 		for (var i = 0; i < data.length; i++) {
-			var tweet = data[i],
-				tweet_hashtags = tweet.hashtags.replace(/soundoff,/ig,'').split(','),
-				tweet_mentions = tweet.mentions.split(',')
+			if( ids.indexOf( data[i].tweet_id ) === -1 ) {
+				var tweet = data[i],
+					tweet_hashtags = tweet.hashtags.replace(/soundoff,/ig,'').split(','),
+					tweet_mentions = tweet.mentions.split(',')
 
-			tweet.mesage = unescape( tweet.message )
-			tweet.created_at = new Date( tweet.data.created_at )
+				tweet.mesage = unescape( tweet.message )
+				tweet.created_at = new Date( tweet.data.created_at )
 
-			for (var tag = tweet_hashtags.length - 1; tag >= 0; tag--) {
-				var found_campaign = hashtags.indexOf( tweet_hashtags[tag] )
-				if( found_campaign !== -1 ) $scope.raw_campaigns[ found_campaign ].tweets.push( tweet )
-			};
-			for (var tag = tweet_mentions.length - 1; tag >= 0; tag--) {
-				var found_rep = mentions.indexOf( tweet_mentions[tag] )
-				if( found_rep !== -1 ) {
-					$scope.raw_reps[ found_rep ].tweets.push( tweet );
-				}
-			};
+				$scope.raw_tweets.push(tweet);
+
+				for (var tag = tweet_hashtags.length - 1; tag >= 0; tag--) {
+					var found_campaign = hashtags.indexOf( tweet_hashtags[tag] )
+					if( found_campaign !== -1 ) $scope.raw_campaigns[ found_campaign ].tweets.push( tweet )
+				};
+				for (var tag = tweet_mentions.length - 1; tag >= 0; tag--) {
+					var found_rep = mentions.indexOf( tweet_mentions[tag] )
+					if( found_rep !== -1 ) {
+						$scope.raw_reps[ found_rep ].tweets.push( tweet );
+					}
+				};
+			}
 
 		};
 	}
 	$scope.loadMore = function(item) {
+		if( $scope.mode == 'reps' ) $http.get( '/statuses?mentions='+item.twitter_id,{}).success(function(data,status) { loadTweets(data) })
+		else $http.get( '/statuses?hashtags='+item.hashtag.replace(/\#/,''),{}).success(function(data,status) { loadTweets(data) })
 		var add = ( item.showing || 8 )
 		item.showing = add + 8
 	}
@@ -226,9 +233,7 @@ function homePageScope($http, $scope) {
 	$scope.setReps = function() {
 		$scope.mode = 'Reps'
 		$scope.raw_reps.sort( function(a,b) {
-			var a_length = (a.tweets || '').length,
-				b_length = (b.tweets || '').length,
-				sort = a_length > b_length
+				sort = a.score > b.score
 
 			return sort ? -1 : 1
 		})

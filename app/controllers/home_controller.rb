@@ -10,6 +10,7 @@ class HomeController < ApplicationController
   		rep.data = nil unless rep.data
       rep[:short_url] = rep_path( rep.twitter_screen_name )
       rep[:tweets] = []
+      rep[:score] = rep.score
 
       @title = '@ '+rep.name
       @og_title = @title+' | #SoundOff @ Congress'
@@ -24,6 +25,7 @@ class HomeController < ApplicationController
       @og_title = @title+' | #SoundOff @ Congress'
       @og_description = campaign.description
       @og_image = (campaign.partner.logo rescue nil)
+      raw_tweets = Status.hashtag campaign.hashtag
     end
 
     if params[:email] || params[:zip] || params[:targets] || params[:message]
@@ -42,7 +44,7 @@ class HomeController < ApplicationController
     @config = {
     	:home => true,
     	:single => params[:short_url] || rep || nil,
-      :raw_reps => Rep.mentioned.reject{ |r| r == rep }.map{ |r| r.data = nil; r[:tweets] = []; r },
+      :raw_reps => Rep.mentioned.reject{ |r| r == rep }.map{ |r| r.data = nil; r[:tweets] = []; r[:score] = r.score; r },
       :raw_campaigns => Campaign.active.map(&:to_obj),
       :open_soundoff => open_soundoff,
       :raw_tweets => (raw_tweets || [])
@@ -87,8 +89,8 @@ class HomeController < ApplicationController
   end
 
   def statuses
-    tweets = Status.hashtag( params[:hashtags] )
-    tweets = Status.mention( params[:mentions] )
+    tweets = Status.hashtag( params[:hashtags] ) if params[:hashtags]
+    tweets = Status.mention( params[:mentions] ) if params[:mentions]
     render :json => tweets.sort_by(&:created_at).reverse
   end
 
