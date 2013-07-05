@@ -23,10 +23,10 @@
 		%br
 		%br
 		%h3 Total Signups: #{ Soundoff.count }
-		%h5 for Headcount: #{ Soundoff.count( :conditions => {:headcount => true }) }
+		%h5 for HeadCount: #{ Soundoff.count( :conditions => {:headcount => true }) }
 		%h5 for Partners: #{ Soundoff.count( :conditions => {:partner => true }) }
 		%a{ :href => all_path }
-			%button All HeadCount Singups
+			%button All HeadCount Signups
 
 	.right{ :style => 'width: 48%; float: right '}
 		%h2 Partners
