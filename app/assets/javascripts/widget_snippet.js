@@ -86,8 +86,7 @@ ready( function() {
 				openSoundOff( {
 					campaign: this.getAttribute('campaign'),
 					style: this.getAttribute('module_style'),
-					page_url: this.getAttribute('page_url'),
-					post_message_to: document.location
+					page_url: this.getAttribute('page_url')
 				} )
 			}
 			widget_bottom_button.onclick = launchModule;
