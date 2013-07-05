@@ -82,14 +82,14 @@
 			%a{ :href => '{{single_facebook }}', :target => '_blank' } Share on Facebook
 
 	#powered_by
-		%h3 POWERED BY:
+		.inner
+			%h3 POWERED BY:
+			%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
 		%p.mark
 			Built by
 			%a{ :href => 'http://twitter.com/sduncombe', :target => '_blank' } Scott Duncombe
-			%br
 			\& designed by
 			%a{ :href => 'http://www.linkedin.com/pub/bryan-chiem/3b/100/181', :target => '_blank' } Bryan Chiem
-		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
 
 	#content
 		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
