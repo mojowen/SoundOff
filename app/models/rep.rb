@@ -31,6 +31,10 @@ class Rep < ActiveRecord::Base
 			return updated_at
 		end
   	end
+    def score
+      Status.count( :conditions => ['mentions SIMILAR TO ?','%'+self.twitter_id+'%'] )
+    end
+
   	def self.active
   		all( :conditions => ['char_length("twitter_screen_name") > 0'] )
   	end
