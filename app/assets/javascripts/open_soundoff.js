@@ -1,7 +1,6 @@
 function openSoundOff( args ) {
   var args = args || {},
     config = '',
-    mobile = false, // Check if mobile
     d = document
 
   if( typeof args == 'string' ) args = { campaign: args }
@@ -35,7 +34,7 @@ function openSoundOff( args ) {
       form.style.border = 'none'
       form.style.height = '0px'
       form.style.position = 'fixed'
-      form.style.top = '60px'
+      form.style.top = (args.top || '60')+'px'
 
 
 
