@@ -99,10 +99,10 @@ class Campaign < ActiveRecord::Base
 		Status.where(['reply_to IS NOT NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag.downcase+'%']).reverse
 	end
 	def count_tweets
-		Status.count( :conditions => ['reply_to IS NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag+'%'])
+		Status.count( :conditions => ['reply_to IS NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag.downcase+'%'])
 	end
 	def count_responses
-		Status.count( :conditions => ['reply_to IS NOT NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag+'%'])
+		Status.count( :conditions => ['reply_to IS NOT NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag.downcase+'%'])
 	end
 	def count_signups
 		Soundoff.count( :conditions => ['partner IS TRUE AND campaign_id = ?',self.id] )
