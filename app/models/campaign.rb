@@ -31,6 +31,7 @@ class Campaign < ActiveRecord::Base
 		(ENV['BASE_DOMAIN'] || '') + '/' + self.short_url
 	end
 	def collect_email
+		return false if email_option == 'hidden'
 		if partner.nil?
 			return true
 		else

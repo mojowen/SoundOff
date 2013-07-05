@@ -103,10 +103,11 @@ function formScope($http, $scope) {
 	// Stage 1
 	$scope.zip = $oundoff_config.zip || ''
 	$scope.email = $oundoff_config.email || ''
-	$scope.add_partner = typeof $oundoff_config.no_email != 'undefined' ? $oundoff_config.no_email : true
-	$scope.add_headcount = $oundoff_config.email == null ? true : false
+	$scope.add_partner =  $oundoff_config.no_email
+	$scope.add_headcount = $oundoff_config.no_email && $scope.email.length < 1
 
-	$scope.ready_for_2 = false
+	$scope.ready_for_2 = false;
+	if( $scope.zip.length > 4 && ( $scope.email.length > 0 ||  $oundoff_config.no_email || $scope.campaign == '' ) ) $scope.ready_for_2 = true;
 
 	$scope.sunligh_fetching = false
 

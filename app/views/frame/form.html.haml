@@ -8,21 +8,22 @@
 			#stage_1
 				%input{ :placeholder => "Zip Code", "ng-model" => "zip", :id => 'zip' }
 
-				- if ( @campaign.email_option != 'hidden' rescue true ) && params[:email].nil?
+				- if ( @campaign.email_option != 'hidden' rescue true )
 					%input{ :placeholder => "Email", "ng-model" => "email", :id => 'email'  }
 
-					- if ( @campaign.email_option == 'optional' rescue true )
-						.signups{ 'ng-hide' => 'email != "" '} Email is Optional
-					.signups{ 'ng-hide' => 'email == "" '}
-						It’s OK to add me to the mailing list of:
-						%br
-						%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_headcount' }
-						%span{ :onclick => '$(this).prev().click()' } HeadCount.org
-						%br
-						- if ( @campaign.collect_email && ! @campaign.partner.name.nil? rescue false )
-							%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_partner' }
-							%span{ :onclick => '$(this).prev().click()' } #{ @campaign.partner.name }
+					- if params[:email].nil?
+						- if ( @campaign.email_option == 'optional' rescue true )
+							.signups{ 'ng-hide' => 'email != "" '} Email is Optional
+						.signups{ 'ng-hide' => 'email == "" '}
+							It’s OK to add me to the mailing list of:
 							%br
+							%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_headcount' }
+							%span{ :onclick => '$(this).prev().click()' } HeadCount.org
+							%br
+							- if ( @campaign.collect_email && ! @campaign.partner.name.nil? rescue false )
+								%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_partner' }
+								%span{ :onclick => '$(this).prev().click()' } #{ @campaign.partner.name }
+								%br
 
 			#stage_2
 				%input{ :placeholder => 'Street Address', "ng-model" => 'street', :id => 'street' }

@@ -22,7 +22,7 @@ class FrameController < ActionController::Base
       :short_url => (@campaign.short_url rescue ''),
       :target => (@campaign.target.downcase rescue nil),
       :email_required => (@campaign.email_option == 'required' rescue false),
-      :no_email => (@campaign.collect_email rescue true),
+      :no_email => ( ! @campaign.collect_email rescue false),
       :form => true,
       :targets => (params[:targets] || '' ).split(',').map{ |t| { :twitter_id => t } },
       :email => params[:email],
