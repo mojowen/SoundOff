@@ -109,7 +109,6 @@
 						%h1 {{item.name}}
 						%h3
 							Tweet @ your {{item.target}} with hashtag {{item.hashtag }}. Just click
-							&#160;
 							%a.open_soundoff{ :href => '#', :campaign => '{{item.id}}'  }#SoundOff!
 
 
@@ -122,8 +121,7 @@
 					%p.details_right{ 'ng-hide' => 'item.partner.length < 1' }
 						%strong Created by
 						%a{ 'ng-href' => '{{item.website}}', :target => '_blank' } {{item.partner}}
-						&#160;
-						{{item.twitter_name}}
+						%a{ 'ng-href' => 'https://twitter.com/{{item.twitter_name}}', :target => '_blank' } {{item.twitter_name}}
 			.description.rep
 				.title
 
