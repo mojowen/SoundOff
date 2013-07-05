@@ -1,7 +1,7 @@
 if( $oundoff_config.home ) {
 
 	var w_top, w_height, w_width, freeze, reset_styles, offset_factor, machine_scroll, kill_machine_scroll
-	top_offset = 80
+	top_offset = 60
 	med_cut_off = 860
 	height_cut_off = 600
 
@@ -26,33 +26,26 @@ if( $oundoff_config.home ) {
 		resetStyles(null);
 	}).scroll( function(e) {
 
-		var w_top = window.scrollTop,
+		var w_top = window.scrollY,
 			p = w_top / w_height;
 
 
 		if( document.body.classList.contains('fixed') ) {
 
 			if( w_width < med_cut_off  ) return false;
-			var divs = document.getElementById('content').childNodes,
-				unset = true;
+			var $divs = $('#content div.item');
+			for (var i = $divs.length - 1; i >= 0; i--) {
+				var campaign_div = $divs[i],
+					offset_top = campaign_div.offsetTop,
+					item = angular.element( campaign_div ).scope().item
 
-			for (var i = divs.length - 1; i >= 0; i--) {
-				var campaign_div = divs[i];
-
-				if( campaign_div.tagName == 'DIV' ) {
-
-					var offset_top = campaign_div.offsetTop,
-						type = campaign_div.classList.contains('campaign') ? 'campaign' : 'rep',
-						item = angular.element( campaign_div ).scope().item
-
-
-					if( typeof item != 'undefined' && offset_top < w_top + top_offset ) {
-						angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
-						return false
-					}
-
+				if( offset_top < w_top + top_offset ) {
+					angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
+					return false
 				}
-			};
+
+			}
+
 			$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 			return false;
 		}
