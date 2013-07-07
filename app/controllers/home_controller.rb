@@ -57,7 +57,7 @@ class HomeController < ApplicationController
     only_logged_in
 
     if current_user.admin
-      @soundoffs = Soundoff.find_all_by_headcount( true )
+      @soundoffs = Soundoff.where(['headcount = ? AND length(email) > 0 ',true])
     else
       @soundoffs = current_user.partner.all_signups
     end

@@ -69,7 +69,7 @@ class Partner < ActiveRecord::Base
 	end
 	def all_signups
 		campaigns = self.campaigns.all.map(&:id)
-      	@soundoffs = Soundoff.where(['partner IS TRUE AND campaign_id IN(?)',campaigns]).reverse
+		@soundoffs = Soundoff.where(['partner IS TRUE AND campaign_id IN(?) AND length(email) > 0',campaigns]).reverse
     end
 	def count_signups
 		campaigns = self.campaigns.all.map(&:id)
