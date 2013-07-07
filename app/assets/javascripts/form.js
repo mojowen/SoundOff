@@ -322,9 +322,9 @@ if ( window.self === window.top && $oundoff_config.form ) {
     };
 }
 if( $oundoff_config.form ) $(document).on('keydown keyup','textarea', function() {
-		var $notice = $('#notice').html('').attr('class',''),
-			reps = angular.element(popup).scope().targets.map( function(el) { return '\@'+el.twitter_screen_name }).join('|')
+	var $notice = $('#notice').html('').attr('class',''),
+		reps = angular.element(popup).scope().targets.map( function(el) { return '\@'+el.twitter_screen_name }).join('|')
 
-		reps = new RegExp(reps,'i')
-	 	if( $(this).val().match(reps) ) $notice.addClass('oops').text('You don\'t need to add your reps - we\'ll do that for you') ;
-	})
+	reps = new RegExp(reps,'i')
+ 	if( $(this).val().match(reps) ) $notice.addClass('oops').text('You don\'t need to add your reps - we\'ll do that for you') ;
+})
