@@ -193,7 +193,9 @@ function homePageScope($http, $scope) {
 
 		$scope.single_item = null
 		$scope.active = null
+
 		if( w_width > med_cut_off ) $scope.active = $scope.items()[0]
+
 		history.pushState( {campaign: $scope.items[0] }, 'Sound Off',  '/home' );
 		$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 		document.title = '#SoundOff @ Congress'
@@ -203,6 +205,7 @@ function homePageScope($http, $scope) {
 		$scope.reset()
 	}
 	$scope.setState = function(state) {
+
 		if( typeof state == 'object' && state != null ) {
 
 			$scope.raw_reps.unshift( state )
@@ -277,6 +280,6 @@ function homePageScope($http, $scope) {
 	}
 	$scope.mode = 'Scoreboard'
 
-	if( typeof $oundoff_config.single != 'undefined' ) $scope.setState( $oundoff_config.single )
+	if( typeof $oundoff_config.single != 'undefined' && $oundoff_config.single != null ) $scope.setState( $oundoff_config.single )
 	else $scope.setScoreBoard();
 }

@@ -4,6 +4,7 @@ if( $oundoff_config.home ) {
 	top_offset = 60
 	med_cut_off = 860
 	height_cut_off = 600
+	w_width = window.innerWidth
 
 	$(document)
 	.ready( function() {
