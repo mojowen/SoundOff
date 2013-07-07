@@ -154,6 +154,7 @@ function formScope($http, $scope) {
 	$scope.street = ''
 	$scope.city = ''
 	$scope.latlng = false
+	$scope.address = ''
 
 	$scope.geocoder = false
 	$scope.geocoder_fetching = false
@@ -162,7 +163,7 @@ function formScope($http, $scope) {
 	$scope.$watch( 'city', lookupLatLng )
 	$scope.$watch( 'street', lookupLatLng )
 	$scope.$watch( 'geocoder', lookupLatLng )
-	$scope.$watch( 'latlng', getByLatLng )
+
 
 	function addGoogleMaps() {
 		var script = document.createElement( 'script' ),
@@ -174,9 +175,12 @@ function formScope($http, $scope) {
 	}
 
 	function lookupLatLng() {
-		if( $scope.street != '' && $scope.city != '' && $scope.geocoder ) {
-			var address = [$scope.street, $scope.city, $scope.zip].join(' ')
+		var address = [$scope.street, $scope.city, $scope.zip].join(' ')
+
+		if( $scope.street != '' && $scope.city != '' && $scope.geocoder && ! $scope.geocoder_fetching && $scope.address != address) {
 			$scope.geocoder_fetching = true;
+			$scope.address = address;
+
 			$scope.geocoder.geocode( { 'address': address}, function(results, status) {
 				if( typeof  results[0] == 'undefined' ) {
 					$('#notice').html('').attr('class','').text('We couldn\'t match that address to a rep :(')
@@ -189,23 +193,26 @@ function formScope($http, $scope) {
 					for( var i in location ) {
 						if( typeof location[i] == 'number' ) latlng.push( location[i] )
 					}
-					angular.element( document.getElementById('popup') ).scope().$apply( function() {
-						$scope.latlng = latlng.sort()
-					})
+					latlng = latlng.sort()
+					getByLatLng(latlng);
 				}
 		    });
 		}
 	}
 
-	function getByLatLng(newValue) {
-		if( $scope.latlng ) {
-				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&latitude='+$scope.latlng[1]+"&longitude="+$scope.latlng[0]
+	function getByLatLng(latlng) {
+		if( latlng && latlng != $scope.latlng ) {
+
+				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&latitude='+latlng[1]+"&longitude="+latlng[0]
 				$http.jsonp(query,{})
 					.success( function(data,status){
 						$scope.electeds = data.results;
 						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target || config.target == 'all' } )
 
+						console.log(' found '+$scope.electeds.map(function(el){ return el.last_name }) )
+
 						$scope.geocoder_fetching = false;
+						$scope.latlng = latlng
 						if( $scope.raw_targets.length == 0 ) {
 							$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
 							$scope.raw_targets = [{twitter_id: 'whitehouse'}];
