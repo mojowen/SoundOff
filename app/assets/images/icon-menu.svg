@@ -2,12 +2,12 @@
 <!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1"
-	 id="svg1" sodipodi:docbase="/home/danny/flat/scalable/actions" inkscape:version="0.37" sodipodi:docname="1downarrow.svg" sodipodi:version="0.32" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+	 id="svg1" inkscape:version="0.37" sodipodi:docbase="/home/danny/flat/scalable/actions" sodipodi:docname="1downarrow.svg" sodipodi:version="0.32" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="60px"
 	 viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">
-<sodipodi:namedview  inkscape:window-y="0" borderopacity="1.0" inkscape:pageopacity="0.0" pagecolor="#ffffff" inkscape:zoom="4.91194111" inkscape:window-x="0" inkscape:window-width="1016" inkscape:cy="28.3897710" bordercolor="#666666" inkscape:cx="40.8017518" inkscape:window-height="693" id="base" inkscape:pageshadow="2">
+<sodipodi:namedview  borderopacity="1.0" inkscape:window-y="0" inkscape:pageopacity="0.0" pagecolor="#ffffff" inkscape:zoom="4.91194111" inkscape:window-x="0" inkscape:cx="40.8017518" inkscape:window-width="1016" inkscape:cy="28.3897710" bordercolor="#666666" inkscape:window-height="693" id="base" inkscape:pageshadow="2">
 	</sodipodi:namedview>
-<path id="path612" sodipodi:stroke-cmyk="(0 0 0 0.8)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" d="M30.219,4.556
-	c-14.105,0-25.531,11.458-25.531,25.562c0,14.104,11.426,25.531,25.531,25.531c14.105,0,25.562-11.427,25.562-25.531
-	C55.781,16.013,44.324,4.556,30.219,4.556z M11.594,24.962H25.25l11.094,0.125h12.969L30.531,43.899L11.594,24.962z"/>
+<path id="path612" sodipodi:stroke-cmyk="(0 0 0 0.8)" fill="#275263" stroke="#FFFFFF" stroke-width="2.5" stroke-miterlimit="10" d="
+	M30.219,4.556c-14.104,0-25.531,11.458-25.531,25.562c0,14.104,11.426,25.53,25.531,25.53c14.105,0,25.562-11.426,25.562-25.53
+	C55.781,16.013,44.324,4.556,30.219,4.556z M11.594,24.962H25.25l11.094,0.125h12.969L30.531,43.898L11.594,24.962z"/>
 </svg>
