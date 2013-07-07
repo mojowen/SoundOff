@@ -12,13 +12,14 @@
 
 	%body{ :class => @body_class }
 		#main{ "ng-app" => true, "ng-controller" => 'widgetScope'  }
+			%h3.take_action TAKE ACTION
 			#header
 				= image_tag ( 'SoundOffBlack.svg' ) , { :class => 'logo'}
 				= image_tag ( 'SoundOffWhite.svg' ) , { :class => 'logo_hover' }
-				%h1= params[:hashtag]
+				%h1= '#'+params[:hashtag]
 
 
-
+			%button#button= @button
 			#content
 				.tweet{ 'ng-repeat' => 'tweet in tweets' }
 					.actions
@@ -37,10 +38,6 @@
 
 					.body {{ tweet.text }}
 
-			#text-box
-				.inner
-					Tweet @ Your Rep
-
 		#attribute
 			powered by
-			%a{ :href=> 'http://headcount.org', :target => '_parent' } HeadCount.org
+			%a{ :href=> 'http://headcount.org', :target => '_blank' } HeadCount.org

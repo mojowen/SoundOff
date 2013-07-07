@@ -47,6 +47,15 @@ class FrameController < ActionController::Base
 
     tweets = campaign.sample_tweets if tweets.length < 1
 
+    case campaign.target
+        when 'house'
+          @button = 'Tweet @ Your House Rep'
+        when 'senate'
+          @button = 'Tweet @ Your Senators'
+        else
+          @button = 'Tweet @ Congress'
+    end
+
     @config = {
       :campaign => params[:campaign],
       :raw_tweets => tweets

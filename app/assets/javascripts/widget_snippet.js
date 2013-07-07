@@ -16,7 +16,6 @@ ready( function() {
 			var the_parent = add_link.parentElement,
 				container = d.createElement('div')
 				widget_frame = d.createElement('iframe'),
-				widget_bottom_button = d.createElement('div'),
 				widget_top_button = d.createElement('div'),
 				config = [],
 				style = add_link.className.replace(/soundoff_widget|\_|\s/g,''),
@@ -55,21 +54,7 @@ ready( function() {
 			widget_top_button.style.width = width
 			widget_top_button.style.minWidth = width
 			widget_top_button.style.maxWidth = maxWidth
-			widget_top_button.style.height = '64px'
-
-			// The bottom "button"
-			widget_bottom_button.setAttribute('campaign',campaign)
-			widget_bottom_button.setAttribute('module_style',style)
-			widget_bottom_button.setAttribute('page_url',page_url)
-			widget_bottom_button.style.position = 'absolute'
-			widget_bottom_button.style.cursor = 'pointer'
-			widget_bottom_button.style.zIndex = '100'
-			widget_bottom_button.style.bottom = '18px'
-			widget_bottom_button.style.width = width
-			widget_bottom_button.style.minWidth = minWidth
-			widget_bottom_button.style.maxWidth = maxWidth
-			widget_bottom_button.style.height = '60px'
-
+			widget_top_button.style.height = '116px'
 
 			// The container
 			container.style.position = 'relative'
@@ -78,7 +63,6 @@ ready( function() {
 
 			container.appendChild(widget_frame)
 			container.appendChild(widget_top_button)
-			container.appendChild(widget_bottom_button)
 
 			the_parent.insertBefore(container,add_link)
 
@@ -89,7 +73,6 @@ ready( function() {
 					page_url: this.getAttribute('page_url')
 				} )
 			}
-			widget_bottom_button.onclick = launchModule;
 			widget_top_button.onclick = launchModule;
 
 			the_parent.removeChild(add_link)

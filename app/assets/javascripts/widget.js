@@ -24,3 +24,9 @@ function widgetScope($http,$scope) {
 
 	}
 }
+function resizeButtonText() {
+	var scale = window.innerWidth / 14.5
+	if( scale < 36 ) button.style.fontSize =  scale+'px'
+}
+window.onresize = resizeButtonText
+window.onload = resizeButtonText
