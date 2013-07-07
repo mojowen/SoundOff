@@ -22,12 +22,14 @@ function formScope($http, $scope) {
 
 		switch( $scope.stage ) {
 			case 1:
+				$scope.zip = $scope.zip.split('-')[0]
+
 				if( $scope.sunligh_fetching ) {
 					$notice.text('one sec - grabbing some data')
 					$scope.ready_for_2 = true
 					return false
 				}
-				if( $scope.zip.length < 4 ) {
+				if( $scope.zip.length != 5 ) {
 					errors.push( 'missing your zip code')
 					zip.className += ' oops'
 				}
