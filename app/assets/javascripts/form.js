@@ -280,13 +280,16 @@ function formScope($http, $scope) {
 	$scope.url
 
 	if( $oundoff_config.campaign != null )  {
+		var target = config.target == 'senate' ? 'Senators' : config.target == 'all' ? 'Reps in Congress' : 'Rep'
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
-		$scope.default_message += 'I just sent a %23SoundOff to my Rep about '+$scope.campaign.replace(/\#/g,'%23')+'. Do it to and help us %23SoundOff more! '
+		$scope.default_message += 'I just sent a #SoundOff to my '+target+' about '+$scope.campaign.replace(/\#/g,'%23')+'. Would you hit this link and do it too?'
 		if( config.page_url && config.page_url != 'null' ) $scope.url = config.page_url;
 		else $scope.url = $oundoff_base_domain + '/' + ( $oundoff_config.short_url || '' );
 	} else {
+		var target = config.target == 'senate' ? 'Senators' : $scope.targets.length > 2 ? 'Reps in Congress' : 'Rep'
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
-		$scope.default_message += 'I just sent a %23SoundOff to my Rep. Do it to and help us %23SoundOff more! '
+		$scope.default_message += 'I just sent a %23SoundOff to my '+target+'. Hit this link and do it too:'
+		$scope.default_message += 'http://www.soundoff.org'
 		$scope.url = $oundoff_base_domain
 	}
 
