@@ -56,10 +56,15 @@ class Campaign < ActiveRecord::Base
 			end
 
 			if suggestion.class == String && suggestion.length > 1
-				sample = sample_status[k.to_i].nil? ? sample_status[0] : sample_status[k.to_i]
+				sample = sample_status.shift
 				sample.message = "#{suggestion} #{sample_hashtags}"
 				tweets.push sample
 			end
+		end
+
+		(4 - tweets.length).times do
+			tweets.push sample_status.shift
+			tweets.last.message += " ##{hashtag}"
 		end
 
 		return tweets
