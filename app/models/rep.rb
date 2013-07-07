@@ -40,11 +40,10 @@ class Rep < ActiveRecord::Base
   	end
   	def self.mentioned
   		sql = <<EOF
-  		SELECT "reps".*, COUNT("statuses".*) FROM "reps"
-  		LEFT JOIN "statuses" ON "statuses"."mentions" LIKE('%'||"reps"."twitter_id"||'%')
-  		GROUP BY "reps"."id"
-  		HAVING count("statuses".*) > 0
-      ORDER BY count("statuses".*)
+  		SELECT "reps".*, count("statuses"."id") FROM "reps"
+      JOIN "statuses" ON "statuses"."mentions" SIMILAR TO '%'||"reps"."twitter_id"||'%'
+      GROUP BY "reps"."id", "statuses"."mentions"
+      ORDER BY count("statuses"."id") DESC
       LIMIT 50
 EOF
   		find_by_sql(sql)
