@@ -17,13 +17,13 @@
 	= form_for User.new, :as => 'account', :url => registration_path do |f|
 
 		%h3
-			New To&nbsp;
+			%span New To
+			&nbsp;
 			%span #S
 			ound
 			%span O
-			ff
-			%strong
-				Sign Up
+			ff?&nbsp;
+			%span Sign Up
 
 		= f.text_field :name, :placeholder => 'Full Name'
 
