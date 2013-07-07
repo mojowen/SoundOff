@@ -24,6 +24,7 @@
 								%input{ :type => 'checkbox', :checked => true, 'ng-model' => 'add_partner' }
 								%span{ :onclick => '$(this).prev().click()' } #{ @campaign.partner.name }
 								%br
+				%p.helper Help Us Look Up Your Elected Representative
 
 			#stage_2
 				%input{ :placeholder => 'Street Address', "ng-model" => 'street', :id => 'street' }
