@@ -55,13 +55,9 @@
 
 			#stage_4
 				%h1 Thanks! - You're Almost Done
-				- if ! params[:page_url].nil? || ! params[:no_scoreboard].nil? || @campaign.nil?
+				- if ! params[:page_url].nil? || @campaign.nil?
 					%h3
-						Tell Your Friends and Set the&#160;
-						%span #S
-						ound
-						%span O
-						ff
+						Thanks for sounding off. Now, tell friends.
 				- else
 					%h3
 						Thanks for sounding off. Now, tell friends or pick another
