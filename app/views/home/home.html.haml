@@ -163,13 +163,9 @@
 
 					.body {{ tweet.message }}
 
-			.more-tweets
-				%a{ 'ng-click' => 'loadMore(item);', 'ng-hide' => 'item.tweets.length < 1 || item.tweets.length < (item.showing || 8 )' } 	Load More
-				%span{ 'ng-hide' => 'item.tweets.length < 1 || item.tweets.length < (item.showing || 8 )' }
-					|
-				%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}', :campaign => '{{item.id}}', 'ng-hide' => 'item.tweets.length < 1 '  } #SoundOff!
-
-			.no-tweets{ 'ng-hide' => 'item.tweets.length > 0'}
+			.no-tweets{ 'ng-hide' => 'item.score <= item.tweets.length || item.score == 0'}
+				%h3 Loading Tweets...
+			.no-tweets{ 'ng-hide' => 'item.score != 0'}
 				%h3
 					Let’s get this party started!
 					%br
@@ -180,6 +176,13 @@
 						ound
 						%span O
 						ff!
+
+			.more-tweets{ 'ng-hide' => 'item.tweets.length < 1 ' }
+				%a{ 'ng-click' => 'loadMore(item);', 'ng-hide' => 'item.tweets.length < (item.showing || 8 )' } 	Load More
+				%span{ 'ng-hide' => 'item.tweets.length < 1 || item.tweets.length < (item.showing || 8 )' }
+					|
+				%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}', :campaign => '{{item.id}}', 'ng-hide' => 'item.tweets.length < 1 '  } #SoundOff!
+
 
 = image_tag asset_path( 'SoundOffWhiteBeta.svg' ), :style => 'display:none'
 = image_tag asset_path( 'SoundOffAtCongressWhiteBeta.svg' ), :style => 'display:none'

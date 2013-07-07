@@ -63,6 +63,32 @@ function homePageScope($http, $scope) {
 		mentions = $scope.raw_reps.map(function(el) { return el.twitter_id })
 		query = '/statuses?'+['hashtags='+hashtags,'mentions='+mentions].join('&')
 
+	function loadActive(item) {
+		var selector, query
+		if( item.constructor == Object ) {
+			if( item.tweets.length < item.score ) {
+				if( typeof item.hashtag == 'undefined') {
+					selector = 'mentions'
+					query = item.twitter_id
+				} else {
+					selector = 'hashtags'
+					query = item.hashtag.replace(/\#/,'').toLowerCase()
+				}
+			}
+		} else if( item.constructor == Array ) {
+			item = item.filter( function(el) { return el.tweets.length < el.score });
+			if( item.length == 0 ) return false;
+			if( typeof item[0].hashtag == 'undefined') {
+				selector = 'mentions'
+				query = item.map(function(el) { return el.twitter_id })
+			} else {
+				selector = 'hashtags'
+				query = item.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()})
+			}
+			item = item.join(',')
+		}
+		if( query.length > 0 ) $http.get( '/statuses?'+selector+'='+query,{}).success(function(data,status) { loadTweets(data) })
+	}
 	function loadTweets(data) {
 		var hashtags = $scope.raw_campaigns.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()}),
 			mentions = $scope.raw_reps.map(function(el) { return el.twitter_id }),
@@ -94,13 +120,17 @@ function homePageScope($http, $scope) {
 		};
 	}
 	$scope.loadMore = function(item) {
-		if( $scope.mode == 'reps' ) $http.get( '/statuses?mentions='+item.twitter_id,{}).success(function(data,status) { loadTweets(data) })
-		else $http.get( '/statuses?hashtags='+item.hashtag.replace(/\#/,''),{}).success(function(data,status) { loadTweets(data) })
+		loadActive(item)
 		var add = ( item.showing || 8 )
 		item.showing = add + 8
 	}
-
-	$http.get(query,{}).success(function(data,status) { loadTweets(data) })
+	$scope.$watch('active',function() {
+		if( typeof $scope.active != 'undefined' ) {
+			var active_list = $scope.mode.toLowerCase() == 'reps' ? $scope.reps() : $scope.campaigns(),
+				position = active_list.indexOf( $scope.active )
+			loadActive( active_list.slice(position,5) )
+		}
+	})
 
 	// Search and items
 	$scope.search = ''

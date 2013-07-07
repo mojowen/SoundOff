@@ -1,7 +1,7 @@
 class RepController < ApplicationController
 	def index
 		all_reps = Rep.all
-		render :json => all_reps.map{ |r| r.data = nil; r }
+		render :json => all_reps.map{ |r| r.data = nil; r[:score] = r.score; }
 	end
 	def search
 		search = params[:q] || ''
