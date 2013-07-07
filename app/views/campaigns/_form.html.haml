@@ -120,7 +120,10 @@
 		$this.nextAll('.count:first').text( count ).removeClass('oops').addClass(oops)
 
 	})
-	.on('click','.suggested textarea[type=checkbox]',function() {
+	.on('click','.suggested label',function() {
+		return $(this).prev().click()
+	})
+	.on('click','.suggested input[type=checkbox]',function() {
 		var $this = $(this)
 
 		if( $this.is(':checked') ) {
