@@ -64,7 +64,8 @@ function homePageScope($http, $scope) {
 		query = '/statuses?'+['hashtags='+hashtags,'mentions='+mentions].join('&')
 
 	function loadActive(item) {
-		var selector, query
+		var selector = '',
+			query = ''
 		if( item.constructor == Object ) {
 			if( item.tweets.length < item.score ) {
 				if( typeof item.hashtag == 'undefined') {
@@ -93,7 +94,6 @@ function homePageScope($http, $scope) {
 		var hashtags = $scope.raw_campaigns.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()}),
 			mentions = $scope.raw_reps.map(function(el) { return el.twitter_id }),
 			ids = $scope.raw_tweets.map( function(el) { return el.tweet_id } )
-
 		for (var i = 0; i < data.length; i++) {
 			if( ids.indexOf( data[i].tweet_id ) === -1 ) {
 				var tweet = data[i],
@@ -111,9 +111,8 @@ function homePageScope($http, $scope) {
 				};
 				for (var tag = tweet_mentions.length - 1; tag >= 0; tag--) {
 					var found_rep = mentions.indexOf( tweet_mentions[tag] )
-					if( found_rep !== -1 ) {
-						$scope.raw_reps[ found_rep ].tweets.push( tweet );
-					}
+					if( found_rep !== -1 ) $scope.raw_reps[ found_rep ].tweets.push( tweet );
+
 				};
 			}
 
