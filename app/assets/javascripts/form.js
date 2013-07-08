@@ -289,7 +289,7 @@ function formScope($http, $scope) {
 	if( $oundoff_config.campaign != null )  {
 		var target = config.target == 'senate' ? 'Senators' : config.target == 'all' ? 'Reps in Congress' : 'Rep'
 		$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
-		$scope.default_message += 'I just sent a #SoundOff to my '+target+' about '+$scope.campaign.replace(/\#/g,'%23')+'. Would you hit this link and do it too?'
+		$scope.default_message += 'I just sent a %23SoundOff to my '+target+' about '+$scope.campaign.replace(/\#/g,'%23')+'. Would you hit this link and do it too?'
 		if( config.page_url && config.page_url != 'null' ) $scope.url = config.page_url;
 		else $scope.url = $oundoff_base_domain + '/' + ( $oundoff_config.short_url || '' );
 	} else {
