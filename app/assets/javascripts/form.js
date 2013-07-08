@@ -211,8 +211,6 @@ function formScope($http, $scope) {
 						$scope.electeds = data.results;
 						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target || config.target == 'all' } )
 
-						console.log(' found '+$scope.electeds.map(function(el){ return el.last_name }) )
-
 						$scope.geocoder_fetching = false;
 						$scope.latlng = latlng
 						if( $scope.raw_targets.length == 0 ) {
