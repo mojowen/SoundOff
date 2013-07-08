@@ -40,7 +40,7 @@
 
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope', 'ng-class' => 'mobileActive()'  }
 
-	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => '{true: "single", false: "" }[single_item != null] + \' \'+ {true: "reps", false: "" }[mode.toLowerCase() == "reps"]' }
+	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => 'menuClass()' }
 		%h2 Tweet @ Congress
 
 		= image_tag 'search.png', :class => 'search'

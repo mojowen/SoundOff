@@ -215,7 +215,8 @@ function homePageScope($http, $scope) {
 			$scope.mode = 'reps'
 			if( $oundoff_config.open_soundoff ) $oundoff_config.open_soundoff.targets = state.twitter_screen_name
 
-			setTimeout( function() { $scope.single_item = state; $scope.active = state; },1)
+			$scope.single_item = state;
+			$scope.active = state;
 		}
 		if( $oundoff_config.open_soundoff ) {
 			openSoundOff( $oundoff_config.open_soundoff )
@@ -239,9 +240,14 @@ function homePageScope($http, $scope) {
 			}
 		}
 	}
-
+	$scope.menuClass = function() {
+		var style = []
+		if( $scope.single_item != null ) style.push('single')
+		if( $scope.mode.toLowerCase() == "reps" ) style.push('reps')
+		return style.join(' ')
+	}
 	$scope.$watch('search',function() {
-		if( $scope.single_item != null ) $scope.reset();
+		if( $scope.single_item != null && $scope.search != '@'+$scope.single_item.twitter_screen_name && $scope.search != $scope.single_item.name ) $scope.reset();
 		if( w_width > med_cut_off ) $scope.active = $scope.items()[0];
 	})
 

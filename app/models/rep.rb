@@ -42,7 +42,7 @@ class Rep < ActiveRecord::Base
   		sql = <<EOF
   		SELECT "reps".*, count("statuses"."id") FROM "reps"
       JOIN "statuses" ON "statuses"."mentions" SIMILAR TO '%'||"reps"."twitter_id"||'%'
-      GROUP BY "reps"."id", "statuses"."mentions"
+      GROUP BY "reps"."id"
       ORDER BY count("statuses"."id") DESC
       LIMIT 50
 EOF
