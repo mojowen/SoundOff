@@ -21,6 +21,7 @@ SoundOff::Application.routes.draw do
   match '/all_reps' => 'rep#index', :as => 'all_reps'
   match '/find_reps' => 'rep#search', :as => 'find_reps'
 
+  match '/press' => 'pages#help', :as => 'help'
   match '/press' => 'pages#press', :as => 'press'
   match '/about' => 'pages#about', :as => 'about'
   match '/contact' => 'pages#contact', :as => 'contact'
