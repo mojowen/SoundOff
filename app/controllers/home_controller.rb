@@ -55,6 +55,7 @@ class HomeController < ApplicationController
 
   def all_names
     only_logged_in
+    require 'csv'
 
     if current_user.admin
       soundoffs = Soundoff.where(['headcount = ? AND length(email) > 0 ',true])

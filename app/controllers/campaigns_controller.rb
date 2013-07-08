@@ -66,6 +66,7 @@ class CampaignsController < ApplicationController
 	end
 	def show
 		@campaign = Campaign.find( params[:id] )
+		require 'csv'
 
 		if params[:export_names]
 			soundoffs = current_user.admin ? Soundoff.find_all_by_campaign_id_and_headcount( @campaign.id.to_i ,true ) : Soundoff.find_all_by_campaign_id_and_partner( @campaign.id.to_i,true )
