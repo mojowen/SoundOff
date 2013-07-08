@@ -64,6 +64,7 @@ function homePageScope($http, $scope) {
 		query = '/statuses?'+['hashtags='+hashtags,'mentions='+mentions].join('&')
 
 	function loadActive(item) {
+		console.log(item)
 		var selector = '',
 			query = ''
 		if( item.constructor == Object ) {
@@ -127,7 +128,8 @@ function homePageScope($http, $scope) {
 		if( typeof $scope.active != 'undefined' ) {
 			var active_list = $scope.mode.toLowerCase() == 'reps' ? $scope.reps() : $scope.campaigns(),
 				position = active_list.indexOf( $scope.active )
-			loadActive( active_list.slice(position,3) )
+			console.log( position )
+			loadActive( active_list.slice(position, position + 3) )
 		}
 	})
 
