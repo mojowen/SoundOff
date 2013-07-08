@@ -163,7 +163,7 @@
 
 					.body {{ tweet.message }}
 
-			.no-tweets{ 'ng-hide' => 'item.score <= item.tweets.length || item.score == 0'}
+			.no-tweets{ 'ng-hide' => 'item.score <= item.tweets.length || item.tweets.length > 8 || item.score == 0'}
 				%h3 Loading Tweets...
 			.no-tweets{ 'ng-hide' => 'item.score != 0'}
 				%h3
