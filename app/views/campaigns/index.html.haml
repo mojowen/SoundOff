@@ -11,7 +11,7 @@
 					%th.name Campaign Name
 					%th.url URL
 					%th.pending Status
-					%th{ :colspan => current_user.admin || current_user.partner.partner_type == 'nonprofit' ? 3 : 2 } Menu
+					%th{ :colspan =>  2 } Menu
 			%tbody
 				- @campaigns.each do |campaign|
 
@@ -19,10 +19,8 @@
 						%td.name= campaign.name
 						%td.url= link_to campaign.url, campaign.url
 						%td.pending= render 'status', :campaign => campaign
-						%td.dl= link_to 'Create Widgets', campaign_path( campaign )
-						- if current_user.admin || current_user.partner.partner_type == 'nonprofit'
-							%td.dl= link_to 'Download User Data', campaign_path( campaign )+'?export_names=true'
-						%td.dl= link_to 'Edit Campaign', edit_campaign_path( campaign )
+						%td.dl= link_to 'Create a Widget & Get User Data', campaign_path( campaign )
+						%td.dl.edit= link_to 'Edit Campaign', edit_campaign_path( campaign )
 
 	.menu
 		%a{ :href => new_campaign_path }
