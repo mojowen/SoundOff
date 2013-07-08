@@ -11,7 +11,7 @@ SoundOff::Application.routes.draw do
   match '/form' => 'frame#save', :via => :post
   match '/widget' => 'frame#widget'
 
-  match '/home' => 'home#home', :as => 'home'
+  match '/' => 'home#home', :as => 'home'
   match '/all_names' => 'home#all_names', :as => 'all'
   match '/all_tweets' => 'home#all_tweets', :as => 'tweets'
   match '/all_responses' => 'home#all_responses', :as => 'responses'

@@ -40,7 +40,7 @@ class HomeController < ApplicationController
       open_soundoff = false
     end
 
-
+    params[:short_url] = nil if params[:short_url] == 'home'
     @config = {
     	:home => true,
     	:single => params[:short_url] || rep || nil,
