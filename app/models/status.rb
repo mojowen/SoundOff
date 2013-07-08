@@ -58,7 +58,7 @@ class Status < ActiveRecord::Base
 			end
 		end
 	end
-	def self.hashtag hashtags, limit=100,  offset=0
+	def self.hashtag hashtags, limit=50,  offset=0
 		hashtags = hashtags.split(',') if hashtags.class != Array
 		hashtags = hashtags.map{ |v| "%#{v.downcase}%" }.join('|')
 
@@ -67,7 +67,7 @@ class Status < ActiveRecord::Base
 			:conditions => ['lower(hashtags) SIMILAR TO ?',hashtags]
 		)
 	end
-	def self.mention mentions,limit=100, offset=0
+	def self.mention mentions,limit=50, offset=0
 		mentions = mentions.split(',') if mentions.class != Array
 		mentions = mentions.map{ |v| "%#{v}%" }.join('|')
 
