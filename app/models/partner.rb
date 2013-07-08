@@ -23,6 +23,7 @@ class Partner < ActiveRecord::Base
 			self.logo = tw.profile_image_url
 		rescue
 			return errors[:base] << 'Bad Twitter'
+			self.logo = '/assets/sq_icon.jpg'
 		end
 	end
 	def partner_url
