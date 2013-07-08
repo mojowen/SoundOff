@@ -54,7 +54,7 @@ ready( function() {
 			widget_top_button.style.width = width
 			widget_top_button.style.minWidth = width
 			widget_top_button.style.maxWidth = maxWidth
-			widget_top_button.style.height = '116px'
+			widget_top_button.style.height = '136px'
 
 			// The container
 			container.style.position = 'relative'

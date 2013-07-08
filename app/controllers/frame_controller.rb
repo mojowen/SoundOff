@@ -46,14 +46,14 @@ class FrameController < ActionController::Base
     tweets = Status.hashtag campaign.hashtag, 20
 
     tweets = campaign.sample_tweets if tweets.length < 1
-
+    params[:hashtag] ||= campaign.hashtag
     case campaign.target
         when 'house'
-          @button = 'Tweet @ Your House Rep'
+          @button = "@ Your House Rep"
         when 'senate'
-          @button = 'Tweet @ Your Senators'
+          @button = '@ Your Senators'
         else
-          @button = 'Tweet @ Congress'
+          @button = '@ Congress'
     end
 
     @config = {

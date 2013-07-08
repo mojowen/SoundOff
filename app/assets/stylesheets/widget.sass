@@ -96,12 +96,20 @@ body.dark
 
 	button#button
 		@include button($red,$darkred)
-		width: 100%
-		margin: -1px 4px 0 0
+		width: 80%
+		margin: 2px auto 0
 		padding: 2px 0
 		text-align: center
 		z-index: 10
 		position: relative
+		font-size: 20px
+		height: 50px
+		min-width: 260px
+		&::after
+			content: " \00BB"
+			margin: -0.7em 0 0 10px
+			position: absolute
+
 
 	#text-box
 		position: relative
