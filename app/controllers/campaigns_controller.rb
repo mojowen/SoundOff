@@ -68,14 +68,39 @@ class CampaignsController < ApplicationController
 		@campaign = Campaign.find( params[:id] )
 
 		if params[:export_names]
-			@soundoffs = current_user.admin ? Soundoff.find_all_by_campaign_id_and_headcount( @campaign.id.to_i ,true ) : Soundoff.find_all_by_campaign_id_and_partner( @campaign.id.to_i,true )
-			render :template => 'home/soundoff_export', :layout => false
+			soundoffs = current_user.admin ? Soundoff.find_all_by_campaign_id_and_headcount( @campaign.id.to_i ,true ) : Soundoff.find_all_by_campaign_id_and_partner( @campaign.id.to_i,true )
+
+		    result = CSV.generate do |csv|
+		      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
+		      soundoffs.each do |soundoff|
+		        csv << [soundoff.screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+		      end
+		    end
+
+		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{@campaign.name.downcase.gsub(' ','_')}_emails.csv", :filename => "#{@campaign.name.downcase.gsub(' ','_')}_emails.csv"
+
 		elsif params[:export_tweets]
-			@statuses = @campaign.all_tweets
-			render :template => 'home/status_export', :layout => false
+			statuses = @campaign.all_tweets
+		    result = CSV.generate do |csv|
+		      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
+		      statuses.each do |soundoff|
+		        csv << [soundoff.screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+		      end
+		    end
+
+		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{@campaign.name.downcase.gsub(' ','_')}_tweets.csv", :filename => "#{@campaign.name.downcase.gsub(' ','_')}_tweets.csv"
+
 		elsif params[:export_responses]
-			@statuses = @campaign.all_responses
-			render :template => 'home/status_export', :layout => false
+			statuses = @campaign.all_responses
+		    result = CSV.generate do |csv|
+		      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
+		      statuses.each do |soundoff|
+		        csv << [soundoff.screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+		      end
+		    end
+
+		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{@campaign.name.downcase.gsub(' ','_')}_responses.csv", :filename => "#{@campaign.name.downcase.gsub(' ','_')}_responses.csv"
+
 		else
 			render :template => 'campaigns/show'
 		end

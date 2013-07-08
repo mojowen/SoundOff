@@ -57,35 +57,59 @@ class HomeController < ApplicationController
     only_logged_in
 
     if current_user.admin
-      @soundoffs = Soundoff.where(['headcount = ? AND length(email) > 0 ',true])
+      soundoffs = Soundoff.where(['headcount = ? AND length(email) > 0 ',true])
     else
-      @soundoffs = current_user.partner.all_signups
+      soundoffs = current_user.partner.all_signups
     end
 
-    render :template => 'home/soundoff_export', :layout => false
+    result = CSV.generate do |csv|
+      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
+      soundoffs.each do |soundoff|
+        csv << [soundoff.screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+      end
+    end
+
+    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=all_emails.csv", :filename => "all_emails.csv"
+
   end
 
   def all_tweets
     only_logged_in
+    require 'csv'
 
     if current_user.admin
-      @statuses = Status.where('reply_to IS NULL').reverse
+      statuses = Status.where('reply_to IS NULL').reverse
     else
-      @statuses = current_user.partner.all_tweets
+      statuses = current_user.partner.all_tweets
     end
 
-    render :template => 'home/status_export', :layout => false
+    result = CSV.generate do |csv|
+      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
+      statuses.each do |soundoff|
+        csv << [soundoff.screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+      end
+    end
+
+    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=all_tweets.csv", :filename => "all_tweets.csv"
   end
   def all_responses
     only_logged_in
+    require 'csv'
 
     if current_user.admin
-      @statuses = Status.where('reply_to IS NOT NULL').reverse
+      statuses = Status.where('reply_to IS NOT NULL').reverse
     else
-      @statuses = current_user.partner.all_responses
+      statuses = current_user.partner.all_responses
     end
 
-    render :template => 'home/status_export', :layout => false
+    result = CSV.generate do |csv|
+      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
+      statuses.each do |soundoff|
+        csv << [soundoff.screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+      end
+    end
+
+    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=all_responses.csv", :filename => "all_responses.csv"
   end
 
   def statuses
