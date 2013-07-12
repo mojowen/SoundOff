@@ -21,7 +21,7 @@ ready( function() {
 				style = add_link.className.replace(/soundoff_widget|\_|\s/g,''),
 				page_url = add_link.getAttribute('page_url'),
 				width = '100%',
-				minWidth = '220px',
+				minWidth = '280px',
 				maxWidth = '600px',
 				height = 500
 
@@ -54,7 +54,7 @@ ready( function() {
 			widget_top_button.style.width = width
 			widget_top_button.style.minWidth = width
 			widget_top_button.style.maxWidth = maxWidth
-			widget_top_button.style.height = '136px'
+			widget_top_button.style.height = '133px'
 
 			// The container
 			container.style.position = 'relative'

@@ -19,10 +19,10 @@
 				%h1= '#'+params[:hashtag]
 
 
-			%button#button
-				Tweet
-				%br
-				= @button
+				%button#button
+					Tweet @
+					%br
+					= @button
 			#content
 				.tweet{ 'ng-repeat' => 'tweet in tweets' }
 					.actions

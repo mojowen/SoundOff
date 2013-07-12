@@ -49,11 +49,11 @@ class FrameController < ActionController::Base
     params[:hashtag] ||= campaign.hashtag
     case campaign.target
         when 'house'
-          @button = "@ Your House Rep"
+          @button = "Your House Rep"
         when 'senate'
-          @button = '@ Your Senators'
+          @button = 'Your Senators'
         else
-          @button = '@ Congress'
+          @button = 'Congress'
     end
 
     @config = {
