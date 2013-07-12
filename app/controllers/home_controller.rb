@@ -40,17 +40,25 @@ class HomeController < ApplicationController
       open_soundoff = false
     end
 
-    params[:short_url] = nil if params[:short_url] == 'home'
+    if params[:short_url] == 'home'
+      params[:short_url] = nil
+      is_home = true
+    else
+      is_home = false
+    end
+
     @config = {
-    	:home => true,
+      :home => true,
     	:single => params[:short_url] || rep || nil,
       :raw_reps => Rep.mentioned.reject{ |r| r == rep }.map{ |r| r.data = nil; r[:tweets] = []; r[:score] = r.score; r },
       :raw_campaigns => Campaign.active.map(&:to_obj),
       :open_soundoff => open_soundoff,
-      :raw_tweets => (raw_tweets || [])
+      :raw_tweets => (raw_tweets || []),
+      :skip_landing => is_home
     }
+
     @body_class = 'home'
-    @body_class += ' fixed' if params[:short_url] || params[:twitter_screen_name]
+    @body_class += ' fixed' if params[:short_url] || params[:twitter_screen_name] || is_home
   end
 
   def all_names

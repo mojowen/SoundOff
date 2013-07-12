@@ -14,7 +14,7 @@ if( $oundoff_config.home ) {
 		offset_factor =  0.4,
 		reset_styles = true
 
-		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 ) {
+		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 || $oundoff_config.skip_landing ) {
 			document.body.classList.add('fixed');
 			$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 		}

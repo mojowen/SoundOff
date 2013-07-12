@@ -12,6 +12,7 @@ SoundOff::Application.routes.draw do
   match '/widget' => 'frame#widget'
 
   match '/' => 'home#home', :as => 'home'
+  match '/home' => 'home#home', :as => 'action', :defaults => { :short_url => 'home'}
   match '/all_names' => 'home#all_names', :as => 'all'
   match '/all_tweets' => 'home#all_tweets', :as => 'tweets'
   match '/all_responses' => 'home#all_responses', :as => 'responses'
