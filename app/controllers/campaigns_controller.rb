@@ -72,9 +72,9 @@ class CampaignsController < ApplicationController
 			soundoffs = current_user.admin ? Soundoff.find_all_by_campaign_id_and_headcount( @campaign.id.to_i ,true ) : Soundoff.find_all_by_campaign_id_and_partner( @campaign.id.to_i,true )
 
 		    result = CSV.generate do |csv|
-		      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
+		      csv << [ "email", "message", "zip", "sent_date",'tweet link', "screen name"]
 		      soundoffs.each do |soundoff|
-		        csv << [soundoff.twitter_screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+		        csv << [soundoff.email,soundoff.message,soundoff.zip,soundoff.created_at,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''), soundoff.twitter_screen_name]
 		      end
 		    end
 
