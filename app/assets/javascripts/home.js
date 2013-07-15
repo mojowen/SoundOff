@@ -15,7 +15,7 @@ if( $oundoff_config.home ) {
 		reset_styles = true
 
 		if( w_top / w_height > 1 || window.name.indexOf('soundoff_open') !== -1 || $oundoff_config.skip_landing ) {
-			document.body.classList.add('fixed');
+			$(document.body).addClass('fixed');
 			$(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 		}
 	})
@@ -31,7 +31,7 @@ if( $oundoff_config.home ) {
 			p = w_top / w_height;
 
 
-		if( document.body.classList.contains('fixed') ) {
+		if( $(document.body).hasClass('fixed') ) {
 
 			if( w_width < med_cut_off  ) return false;
 			var $divs = $('#content div.item');
@@ -53,11 +53,11 @@ if( $oundoff_config.home ) {
 		if( w_width > med_cut_off && w_height > height_cut_off ) {
 
 			if( p < 1 ) {
-				this.body.classList.remove('fixed')
+				$(this.body).removeClass('fixed')
 				$(logo).attr('src','/assets/SoundOffAtCongressWhiteBeta.svg')
 			} else {
 				resetStyles('SoundOffWhiteBeta.svg');
-				this.body.classList.add( 'fixed' )
+				$(this.body).addClass( 'fixed' )
 				$('body').scrollTop(0)
 				window.name += 'soundoff_open'
 			}
@@ -72,7 +72,7 @@ if( $oundoff_config.home ) {
 	.on('click','img#logo',function() {
 		angular.element(main).scope().resetHard()
 		window.name = window.name.replace(/soundoff_open/g,'')
-		document.body.classList.remove('fixed')
+		$(document.body).removeClass('fixed')
 		var $hide = $('#powered_by,#fixed').hide()
 		$('body').scrollTop(0)
 		setTimeout( function() { $(logo).attr('src','/assets/SoundOffAtCongressWhiteBeta.svg'); $hide.show(); },10)
@@ -87,7 +87,7 @@ if( $oundoff_config.home ) {
 		return false;
 	})
 	.on('click','#menu .campaign, #menu .rep',function() {
-		var type = this.classList.contains('campaign') ? 'campaign' : 'rep',
+		var type = $(this).hasClass('campaign') ? 'campaign' : 'rep',
 			item = angular.element( this ).scope()[type]
 
 		angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
