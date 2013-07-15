@@ -90,6 +90,16 @@ class Status < ActiveRecord::Base
 		mentions = mentions.split(',') if mentions.class != Array
 		return Status.limit(limit).offset(offset).order('created_at DESC').joins(:found_reps).where(['"reps"."twitter_id" IN(?)',mentions])
 	end
-
+	def to_json
+		{
+			:tweet_id => tweet_id,
+			:screen_name => screen_name,
+			:profile_image_url => data['user']['profile_image_url'],
+			:message => message,
+			:hashtags => hashtags,
+			:mentions => mentions,
+			:created_at => data['created_at']
+		}
+	end
 
 end

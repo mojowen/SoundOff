@@ -109,9 +109,10 @@ function homePageScope($http, $scope) {
 					tweet_mentions = tweet.mentions.split(',')
 
 				tweet.mesage = unescape( tweet.message )
-				tweet.created_at = new Date( tweet.data.created_at )
+				tweet.created_at = new Date( tweet.created_at )
 
 				$scope.raw_tweets.push(tweet);
+				ids.push( tweet.tweet_id );
 
 				for (var tag = tweet_hashtags.length - 1; tag >= 0; tag--) {
 					var found_campaign = hashtags.indexOf( tweet_hashtags[tag] )
@@ -294,5 +295,8 @@ function homePageScope($http, $scope) {
 	$scope.mode = 'Scoreboard'
 
 	if( typeof $oundoff_config.single != 'undefined' && $oundoff_config.single != null ) $scope.setState( $oundoff_config.single )
-	else $scope.setScoreBoard();
+	else {
+		$scope.setScoreBoard();
+		loadActive( $scope.raw_reps.slice(0,3) );
+	}
 }

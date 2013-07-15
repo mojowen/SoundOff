@@ -149,17 +149,17 @@
 
 				.tweet{ 'ng-repeat' => 'tweet in item.tweets', 'ng-hide' => '$index > (item.showing || 8) -1' }
 					.actions
-						%a{ :href =>  "https://twitter.com/{{tweet.data.user.screen_name }}/status/{{tweet.data.id_str}}", :target => '_blank' }
+						%a{ :href =>  "https://twitter.com/{{tweet.screen_name }}/status/{{tweet.tweet_id}}", :target => '_blank' }
 							= image_tag 'twitter_logo.png'
 							{{  tweet.created_at | date: 'd MMM' }}
 						.buttons
-							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.data.id_str}}', :target => '_blank' }
-							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.data.id_str}}', :target => '_blank' }
-							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.data.id_str}}', :target => '_blank' }
+							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.tweet_id}}', :target => '_blank' }
+							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
+							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
 
-					%img.profile_img{ 'ng-src' => '{{tweet.data.user.profile_image_url}}' }
-					%h2 {{tweet.data.user.name }}
-					%h3 @{{tweet.data.user.screen_name }}
+					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}' }
+					%h2 {{tweet.sceren_name }}
+					%h3 @{{tweet.screen_name }}
 
 					.body {{ tweet.message }}
 
