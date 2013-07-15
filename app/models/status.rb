@@ -5,6 +5,8 @@ class Status < ActiveRecord::Base
 	serialize :data, JSON
 
 	belongs_to :soundoff
+	has_and_belongs_to_many :found_reps, class_name: 'Rep'
+	has_and_belongs_to_many :found_hashtags, class_name: 'Hashtag'
 
 	def self.create_from_tweet raw_tweet
 		raw_tweet = JSON::parse(raw_tweet) if raw_tweet.class == String
@@ -26,10 +28,12 @@ class Status < ActiveRecord::Base
 		)
 
 		# Matching campaigns
-		match_campaign = Campaign.count( :conditions => ['lower(hashtag) IN(?)', hashtags ] ) > 0
+		campaigns = Campaign.all( :conditions => ['lower(hashtag) IN(?)', hashtags ] )
+		match_campaign = campaigns.length > 0
 
 		# Matching Reps
-		match_reps = Rep.count( :conditions => ['twitter_id IN(?)', mentions ] ) > 0
+		reps = Rep.all( :conditions => ['twitter_id IN(?)', mentions ] )
+		match_reps = reps.length > 0
 
 		# Match reply
 		reply = self.find_by_tweet_id( raw_tweet["in_reply_to_status_id_str"] )
@@ -41,11 +45,13 @@ class Status < ActiveRecord::Base
 			match_reply = false
 		end
 
-	 	tweet.save if match_reply || match_campaign || match_reps
+		if match_reply || match_campaign || match_reps
+			tweet.save
+			index_to_reps_and_hashtags reps, campaigns
+		end
 	end
 
 	before_create :match_soundoff
-
 	def match_soundoff
 		if new_record?
 			match = Soundoff.where([' message LIKE ? AND tweet_id IS NULL',message]).first
@@ -58,23 +64,31 @@ class Status < ActiveRecord::Base
 			end
 		end
 	end
-	def self.hashtag hashtags, limit=50,  offset=0
-		hashtags = hashtags.split(',') if hashtags.class != Array
-		hashtags = hashtags.map{ |v| "%#{v.downcase}%" }.join('|')
+	def index_to_reps_and_hashtags reps=nil,campaigns=nil
+		campaigns = Campaign.all( :conditions => ['lower(hashtag) IN(?)', hashtags.downcase.split(',') ] ) if campaigns.nil?
+		reps = Rep.all( :conditions => ['twitter_id IN(?)', mentions.split(',') ] ) if reps.nil?
 
-		return all( :limit => limit,
-			:order => 'created_at DESC',
-			:conditions => ['lower(hashtags) SIMILAR TO ?',hashtags]
-		)
+		reps.each{ |r| r.statuses << self }
+
+		campaigns.each do |r|
+			hashtag = Hashtag.find_by_keyword(r.hashtag.downcase)
+			if hashtag.nil?
+				hashtag = Hashtag.new( :keyword => r.hashtag.downcase)
+				hashtag.save
+			end
+			hashtag.statuses << self
+		end
 	end
-	def self.mention mentions,limit=50, offset=0
-		mentions = mentions.split(',') if mentions.class != Array
-		mentions = mentions.map{ |v| "%#{v}%" }.join('|')
 
-		return all( :limit => limit,
-			:order => 'created_at DESC',
-			:conditions => ['LOWER(mentions) SIMILAR TO ?',mentions]
-		)
+	def self.hashtag hashtags, offset=0, limit=30
+		hashtags = hashtags.downcase.split(',') if hashtags.class != Array
+		hashtags.map!{ |v| v.downcase }
+
+		return Status.limit(limit).offset(offset).order('created_at DESC').joins(:found_hashtags).where(['lower("hashtags"."keyword") IN(?)',hashtags])
+	end
+	def self.mention mentions, offset=0, limit=30
+		mentions = mentions.split(',') if mentions.class != Array
+		return Status.limit(limit).offset(offset).order('created_at DESC').joins(:found_reps).where(['"reps"."twitter_id" IN(?)',mentions])
 	end
 
 

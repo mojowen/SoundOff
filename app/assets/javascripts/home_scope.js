@@ -63,9 +63,13 @@ function homePageScope($http, $scope) {
 		mentions = $scope.raw_reps.map(function(el) { return el.twitter_id })
 		query = '/statuses?'+['hashtags='+hashtags,'mentions='+mentions].join('&')
 
-	function loadActive(item) {
+	function loadActive(item,offset) {
 		var selector = '',
-			query = ''
+			query = '',
+			main = {},
+			offset = offset || 0,
+			offset_string = "&offset="+offset;
+
 		if( item.constructor == Object ) {
 			if( item.tweets.length < item.score ) {
 				if( typeof item.hashtag == 'undefined') {
@@ -76,6 +80,7 @@ function homePageScope($http, $scope) {
 					query = item.hashtag.replace(/\#/,'').toLowerCase()
 				}
 			}
+			main = item
 		} else if( item.constructor == Array ) {
 			item = item.filter( function(el) { return el.tweets.length < el.score });
 			if( item.length == 0 ) return false;
@@ -86,9 +91,12 @@ function homePageScope($http, $scope) {
 				selector = 'hashtags'
 				query = item.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()})
 			}
-			item = item.join(',')
+			main = item[0]
 		}
-		if( query.length > 0 ) $http.get( '/statuses?'+selector+'='+query,{}).success(function(data,status) { loadTweets(data) })
+		if( query.length > 0 ) $http.get( '/statuses?'+selector+'='+query+offset_string,{}).success(function(data,status) {
+			loadTweets(data);
+			if( main.tweets.length < 8 ) loadActive(main, offset + main.tweets.length );
+		})
 	}
 	function loadTweets(data) {
 		var hashtags = $scope.raw_campaigns.map(function(el) { return el.hashtag.replace(/\#/,'').toLowerCase()}),
