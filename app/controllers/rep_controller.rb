@@ -20,6 +20,6 @@ class RepController < ApplicationController
 			all_reps = {}
 		end
 
-		render :json => all_reps.map{ |r| r.data = nil;  r }
+		render :json => all_reps.map{ |r| r.data = nil;  r[:score] = r.score; r }
 	end
 end
