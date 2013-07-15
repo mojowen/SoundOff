@@ -46,9 +46,9 @@ class Status < ActiveRecord::Base
 		end
 
 		if match_reply || match_campaign || match_reps
-		 	tweet.save
-		 	index_to_reps_and_hashtags reps, campaigns
-		 end
+			tweet.save
+			index_to_reps_and_hashtags reps, campaigns
+		end
 	end
 
 	before_create :match_soundoff
@@ -70,14 +70,14 @@ class Status < ActiveRecord::Base
 
 		reps.each{ |r| r.statuses << self }
 
-	 	campaigns.each do |r|
-	 		hashtag = Hashtag.find_by_keyword(r.hashtag.downcase)
-	 		if hashtag.nil?
-	 			hashtag = Hashtag.new( :keyword => r.hashtag.downcase)
-	 			hashtag.save
-	 		end
-	 		hashtag.statuses << self
-	 	end
+		campaigns.each do |r|
+			hashtag = Hashtag.find_by_keyword(r.hashtag.downcase)
+			if hashtag.nil?
+				hashtag = Hashtag.new( :keyword => r.hashtag.downcase)
+				hashtag.save
+			end
+			hashtag.statuses << self
+		end
 	end
 
 	def self.hashtag hashtags, offset=0, limit=30
