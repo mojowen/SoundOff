@@ -74,7 +74,7 @@ class CampaignsController < ApplicationController
 		    result = CSV.generate do |csv|
 		      csv << [ "screen name", "message", "tweet date",'tweet link', "hashtags","mentions"]
 		      soundoffs.each do |soundoff|
-		        csv << [soundoff.screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
+		        csv << [soundoff.twitter_screen_name,soundoff.message,soundoff.tweet_date,("https://twitter.com/"+soundoff.screen_name+"/status/"+soundoff.tweet_id rescue ''),soundoff.data['entities']['hashtags'].map{|r| r['text'] }.join(', '), soundoff.data['entities']['user_mentions'].map{|r| r['screen_name'] }.join(', ')]
 		      end
 		    end
 
