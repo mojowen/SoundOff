@@ -159,7 +159,7 @@ function homePageScope($http, $scope) {
 							var reps_twitter_ids = $scope.raw_reps.map( function(el) { return el.twitter_screen_name })
 							for (var i = 0; i < data.length; i++) {
 								if( reps_twitter_ids.indexOf( data[i].twitter_screen_name ) === -1 ) {
-									data[i].tweets = []
+									data[i].tweets = $scope.raw_tweets.filter(function(el) { return el.mentions.indexOf(data[i].twitter_id) !== -1  })
 									$scope.raw_reps.push( data[i] )
 								}
 							};
