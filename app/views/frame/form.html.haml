@@ -41,7 +41,7 @@
 
 				.box
 
-					%textarea{ :placeholder => 'Type your message to {{targets_list()}} here.. Handles and {{campaign}} will be added automatically',"ng-model" => "message", :id => 'message' }
+					%textarea{ :placeholder => 'Type your message to {{targets_list()}} here. Handles and {{campaign}} will be added automatically.',"ng-model" => "message", :id => 'message' }
 
 				%p
 					- if !@campaign.nil? && ! @campaign.suggested.empty?
