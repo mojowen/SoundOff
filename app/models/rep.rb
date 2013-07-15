@@ -6,6 +6,7 @@ class Rep < ActiveRecord::Base
 		:short_url
 
 	serialize :data, JSON
+  has_and_belongs_to_many :statuses
 
 	validates_uniqueness_of :bioguide_id
 

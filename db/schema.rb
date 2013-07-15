@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130616200056) do
+ActiveRecord::Schema.define(:version => 20130714215938) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,21 @@ ActiveRecord::Schema.define(:version => 20130616200056) do
 
   add_index "campaigns", ["partner_id"], :name => "index_campaigns_on_partner_id"
   add_index "campaigns", ["short_url"], :name => "index_campaigns_on_short_url", :unique => true
+
+  create_table "hashtags", :force => true do |t|
+    t.string   "keyword"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "hashtags", ["keyword"], :name => "index_hashtags_on_keyword"
+
+  create_table "hashtags_statuses", :force => true do |t|
+    t.integer "status_id",  :null => false
+    t.integer "hashtag_id", :null => false
+  end
+
+  add_index "hashtags_statuses", ["hashtag_id", "status_id"], :name => "index_hashtags_statuses_on_hashtag_id_and_status_id"
 
   create_table "options", :force => true do |t|
     t.string "name"
@@ -72,6 +87,15 @@ ActiveRecord::Schema.define(:version => 20130616200056) do
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
   end
+
+  add_index "reps", ["twitter_id"], :name => "index_reps_on_twitter_id"
+
+  create_table "reps_statuses", :force => true do |t|
+    t.integer "status_id", :null => false
+    t.integer "rep_id",    :null => false
+  end
+
+  add_index "reps_statuses", ["rep_id", "status_id"], :name => "index_reps_statuses_on_rep_id_and_status_id"
 
   create_table "soundoffs", :force => true do |t|
     t.string   "zip"

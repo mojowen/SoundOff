@@ -122,8 +122,8 @@ class HomeController < ApplicationController
   end
 
   def statuses
-    tweets = Status.hashtag( params[:hashtags] ) if params[:hashtags]
-    tweets = Status.mention( params[:mentions] ) if params[:mentions]
+    tweets = Status.hashtag( params[:hashtags], params[:offset] ) if params[:hashtags]
+    tweets = Status.mention( params[:mentions], params[:offset] ) if params[:mentions]
     render :json => tweets.sort_by(&:created_at).reverse
   end
 
