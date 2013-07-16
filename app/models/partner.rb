@@ -27,6 +27,7 @@ class Partner < ActiveRecord::Base
 		end
 	end
 	def partner_url
+		return false if self.website.nil? || self.website.empty?
 		self.website = 'http://'+self.website unless self.website.index('http')
 	end
 
