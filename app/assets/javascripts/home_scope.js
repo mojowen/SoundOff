@@ -95,7 +95,7 @@ function homePageScope($http, $scope) {
 		}
 		if( query.length > 0 ) $http.get( '/statuses?'+selector+'='+query+offset_string,{}).success(function(data,status) {
 			loadTweets(data);
-			if( main.tweets.length < 8 ) loadActive(main, offset + main.tweets.length );
+			if( main.tweets.length < 8 && main.tweets < main.score ) loadActive(main, offset + main.tweets.length );
 		})
 	}
 	function loadTweets(data) {
