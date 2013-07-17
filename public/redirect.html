@@ -23,7 +23,7 @@ function goToUri(uri, href) {
     }
 }
 (function() {
-  message = document.location.hash.replace(/\#/,'').replace(/\#/g,'%23')
+  message = document.location.hash.replace(/\#/,'').replace(/\#/g,'%23').replace(/\&/g,'%26')
   setTimeout( function() { next() }, 500)
   if( navigator.userAgent.match(/iPad|iPhone|android|iPod/i) != null ) {
     next = function() { window.close(); }
