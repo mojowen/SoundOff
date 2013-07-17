@@ -47,7 +47,7 @@ class Status < ActiveRecord::Base
 
 		if match_reply || match_campaign || match_reps
 			tweet.save
-			index_to_reps_and_hashtags reps, campaigns
+			tweet.index_to_reps_and_hashtags reps, campaigns
 		end
 	end
 
