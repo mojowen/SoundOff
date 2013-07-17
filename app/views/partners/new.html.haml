@@ -126,9 +126,22 @@
 			$tos = $(tos),
 			$privacy = $(privacy)
 		$('input:visible, textarea:visible').removeClass('oops').not('input[type=radio],input[type=checkbox]').each( function() {
-			var $input = $(this)
-			if( $input.val().length < 1 && $input.attr('placeholder').search(/\*/) !== -1 ) {
-				errors.push( $input.addClass('oops').attr('placeholder').replace(/\*/g,'').toLowerCase() + ' cannot be empty' )
+			var $input = $(this),
+				val = $input.val(),
+				readable_name = $input.attr('placeholder').replace(/\*/g,'').toLowerCase(),
+				name = $input.attr('name')
+
+			if( val.length < 1 && $input.attr('placeholder').search(/\*/) !== -1 ) {
+				errors.push( readable_name + ' cannot be empty' )
+				$input.addClass('oops');
+			}
+			if( name == 'partner[privacy_policy]' || name == 'partner[website]'  ) {
+				var url = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+				var regex = new RegExp(url);
+				if( ! val.match( regex ) ) {
+					errors.push( readable_name + ' must be a valid url' )
+					$input.addClass('oops')
+				}
 			}
 		})
 		if( ! $tos.is(':checked') ) {
