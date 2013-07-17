@@ -89,7 +89,7 @@ function formScope($http, $scope) {
 						}
 					)
 
-					window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23') );
+					window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
 					next = 4
 				}
 				break;
