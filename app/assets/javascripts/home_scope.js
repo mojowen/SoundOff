@@ -226,9 +226,6 @@ function homePageScope($http, $scope) {
 			$scope.single_item = state;
 			$scope.active = state;
 		}
-		if( $oundoff_config.open_soundoff ) {
-			openSoundOff( $oundoff_config.open_soundoff )
-		}
 		loadTweets($oundoff_config.raw_tweets || [] );
 
 		if( typeof state == 'string' ) {
@@ -247,6 +244,10 @@ function homePageScope($http, $scope) {
 				$scope.search = state
 			}
 		}
+		if( $oundoff_config.open_soundoff ) {
+			openSoundOff( $oundoff_config.open_soundoff )
+		}
+
 	}
 	$scope.menuClass = function() {
 		var style = []
