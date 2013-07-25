@@ -26,28 +26,21 @@ class Rep < ActiveRecord::Base
 		(ENV['BASE_DOMAIN'] || '') + '/rep/' + self.twitter_screen_name
   	end
   	def updated
-		if last_soundoff = Soundoff.all( :limit => 1, :conditions => ['"targets" LIKE(?)','%'+twitter_screen_name+'%'], :order => 'created_at DESC' ).first
-			return last_soundoff.created_at
-		else
-			return updated_at
-		end
+  		if last_soundoff = Status.joins(:found_reps).where(['"reps"."twitter_id" = ?',twitter_id]).order('created_at DESC' ).limit(1).first
+  			return last_soundoff.created_at
+  		else
+  			return updated_at
+  		end
   	end
     def score
-      Status.count( :conditions => ['mentions SIMILAR TO ?','%'+self.twitter_id+'%'] )
+      return Status.joins(:found_reps).where(['"reps"."twitter_id" = ?',twitter_id]).count
     end
 
   	def self.active
   		all( :conditions => ['char_length("twitter_screen_name") > 0'] )
   	end
   	def self.mentioned
-  		sql = <<EOF
-  		SELECT "reps".*, count("statuses"."id") FROM "reps"
-      JOIN "statuses" ON "statuses"."mentions" SIMILAR TO '%'||"reps"."twitter_id"||'%'
-      GROUP BY "reps"."id"
-      ORDER BY count("statuses"."id") DESC
-      LIMIT 50
-EOF
-  		find_by_sql(sql)
+  		return Rep.joins(:statuses).limit(50).group('reps.id').order('count("statuses"."id") DESC')
   	end
   	def self.add_custom_rep args
   		t = Twitter.user( args[:twitter_screen_name] )
