@@ -10,7 +10,7 @@ function formScope($http, $scope) {
 		}
 
 	$scope.campaign = config.campaign != null ? '#'+config.campaign : ''
-	$scope.name = config.campaign != null ? '#'+config.campaign : 'Tweet @ Your Rep'
+	$scope.name = config.campaign != null ? '#'+config.campaign : 'Tweet @ Congress'
 	$scope.stage = 1
 
 	$scope.nextStage = function() {
@@ -231,7 +231,9 @@ function formScope($http, $scope) {
 	}
 
 	$scope.targets_list = function() { return $scope.targets.map( function(el) { return '@'+el.twitter_screen_name }).join(' ') }
-
+	$scope.placeholder = function() {
+		return "Type your message to "+$scope.targets_list()+" here. Handles"+( $oundoff_config.campaign == null ? '' : ' and '+$scope.campaign )+" will be added automatically."
+	}
 
 	$scope.counter = 139
 
