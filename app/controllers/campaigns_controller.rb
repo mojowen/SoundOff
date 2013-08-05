@@ -66,6 +66,7 @@ class CampaignsController < ApplicationController
 	end
 	def show
 		@campaign = Campaign.find( params[:id] )
+		filename = @campaign.name.downcase.gsub(' ','_').gsub(/[^0-9a-z|_]/i, '')
 		require 'csv'
 
 		if params[:export_names]
@@ -78,7 +79,7 @@ class CampaignsController < ApplicationController
 		      end
 		    end
 
-		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{@campaign.name.downcase.gsub(' ','_')}_emails.csv", :filename => "#{@campaign.name.downcase.gsub(' ','_')}_emails.csv"
+		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{filename}_emails.csv", :filename => "#{filename}_emails.csv"
 
 		elsif params[:export_tweets]
 			statuses = @campaign.all_tweets
@@ -89,7 +90,7 @@ class CampaignsController < ApplicationController
 		      end
 		    end
 
-		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{@campaign.name.downcase.gsub(' ','_')}_tweets.csv", :filename => "#{@campaign.name.downcase.gsub(' ','_')}_tweets.csv"
+		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{filename}_tweets.csv", :filename => "#{filename}_tweets.csv"
 
 		elsif params[:export_responses]
 			statuses = @campaign.all_responses
@@ -100,7 +101,7 @@ class CampaignsController < ApplicationController
 		      end
 		    end
 
-		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{@campaign.name.downcase.gsub(' ','_')}_responses.csv", :filename => "#{@campaign.name.downcase.gsub(' ','_')}_responses.csv"
+		    send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=#{filename}_responses.csv", :filename => "#{filename}_responses.csv"
 
 		else
 			render :template => 'campaigns/show'
