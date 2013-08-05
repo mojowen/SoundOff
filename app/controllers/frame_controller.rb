@@ -45,7 +45,7 @@ class FrameController < ActionController::Base
     campaign = Campaign.find( params[:campaign] )
     tweets = Status.hashtag campaign.hashtag, 20
 
-    tweets = campaign.sample_tweets if tweets.length < 1
+    tweets = campaign.sample_tweets if tweets.length < 1 && params[:demo]
     params[:hashtag] ||= campaign.hashtag
     case campaign.target
         when 'house'

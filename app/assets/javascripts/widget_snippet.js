@@ -28,6 +28,8 @@ ready( function() {
 			config.push( 'style='+style  )
 			config.push( 'campaign='+campaign.replace(/\#/,'') )
 			config.push( 'hashtag='+title.replace(/\#/,'') )
+			// If $oundoff_demo is defined - then load sample tweets
+			if( typeof $oundoff_demo != 'undefined' ) config.push( 'demo=true' );
 
 			widget_frame.scrolling = 'no'
 			widget_frame.frameborder = '0'

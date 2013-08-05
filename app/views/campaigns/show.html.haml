@@ -71,7 +71,8 @@
 
 
 :javascript
-	var campaign_short_url = #{ @campaign.url.to_json }
+	var campaign_short_url = #{ @campaign.url.to_json },
+		$oundoff_demo = true;
 
 	$(document)
 	.on('click','textarea',function(){
