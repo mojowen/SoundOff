@@ -26,16 +26,14 @@
 
 	%p
 		You can also #SoundOff yourself (not part of a campaign), by clicking
-		"
-		%a.open_soundoff{ :href => '#', :onclick => 'openSoundOff(); return false;' } Tweet directly @ your Rep and Senators
-		"
+		"#{ link_to "Tweet directly @ your Rep and Senators", "#", :class => 'open_soundoff', :onclick => 'openSoundOff(); return false;'}"
 		and entering your zip.  Or click “Most Tweeted @” to see a list or Reps and Senators who are getting the most action. Once you do that, other Reps and Senators can be found through the Search bar -- useful if you want to tweet at someone in particular but you’re not in their district.
 
 
 
 	%h2 START YOUR OWN CAMPAIGN
 
-	%p Looking to get your message to Washington in a big way? #{link_to 'Start your own campaign', new_campaign_path}. You’ll just need to pick a hashtag and write a short description. Once your campaign is approved, you’ll get a link to your campaign and the code for an embeddable widget. Send the link to friends and supporters. Or, place the widget on a Web page and direct traffic there. You can then log in any time and check your campaign’s stats and responses.  If you’re from a 501(c)3 or 501(c)4 non-profit organization, you have the option of asking for user email addresses and collecting that data.
+	%p Looking to get your message to Washington in a big way? #{link_to 'Start your own campaign', new_campaign_path}. You’ll just need to pick a hashtag and write a short description. Once your campaign is approved, you’ll get a link to your campaign and the code for an embeddable widget. Send the link to friends and supporters. Or, place the widget on a Web page and direct traffic there. You can then log in any time and check your campaign’s stats and responses.  If you’re from a 501(c)3 or 501(c)4 non-profit organization, you have the option of asking for user email addresses and then downloading those email addresses in a CSV file (yes, you can add them to your mailing list, unless they opt out). If you have any questions about how to start a campaign, email us at #{ link_to 'SoundOff@HeadCount.org', 'mailto:SoundOff@HeadCount.org'} and we’ll help you out.
 
 	%h2 LET THE MUSIC PLAY
 
