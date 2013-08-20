@@ -98,11 +98,13 @@ function formScope($http, $scope) {
 		if( errors.length > 0 ) $notice.addClass('oops').html( errors.join(' and ') )
 		else $scope.stage = next;
 
-		if( $oundoff_config.skip_when_matched && next == 3 ) {
+		if( $oundoff_config.skip_when_matched && next == 3 && $scope.raw_targets.length == config.limits[ config.target ] ) {
 			window.onbeforeunload = null;
 
-			var targets = $scope.targets.map( function(el) { return '@'+el.twitter_screen_name}).join(' ');
-			message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOff' ].join(' ');
+			if( $scope.targets.length == 0 ) var targets = $scope.raw_targets.map( function(el) { return '@'+el.twitter_id }).join(' ');
+			else var targets = $scope.targets.map( function(el) { return '@'+el.twitter_screen_name}).join(' ');
+
+			message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOfef' ].join(' ');
 			document.location = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26');
 		}
 
