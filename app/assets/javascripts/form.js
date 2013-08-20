@@ -63,33 +63,7 @@ function formScope($http, $scope) {
 					errors.push( 'you should really write something')
 					message.className += ' oops'
 				} else {
-					var targets = $scope.targets.map( function(el) { return '@'+el.twitter_screen_name}).join(' ');
-
-					if( $scope.drop_campaign ) message = [ targets,$scope.message,'#SoundOff' ].join(' ');
-					else message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOff' ].join(' ');
-
-					window.onbeforeunload = null;
-					if( window.self != window.parent && typeof $oundoff_config.post_message_to != 'undefined' ) try {
-						window.parent.postMessage('off', $oundoff_config.post_message_to);
-					} catch(e) {}
-
-					$.post(
-						'/form',
-						{
-							soundoff: {
-								email: $scope.email,
-								zip: $scope.zip,
-								message: message,
-								targets: targets,
-								campaign_id: $oundoff_config.id,
-								hashtag: $scope.drop_campaign ? null : $scope.campaign,
-								headcount: $scope.add_headcount,
-								partner: $scope.add_partner
-							}
-						}
-					)
-
-					window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
+					send_message();
 					next = 4
 				}
 				break;
@@ -99,18 +73,46 @@ function formScope($http, $scope) {
 		else $scope.stage = next;
 
 		if( $oundoff_config.skip_when_matched && next == 3 && $scope.raw_targets.length == config.limits[ config.target ] ) {
-			window.onbeforeunload = null;
-
-			if( $scope.targets.length == 0 ) var targets = $scope.raw_targets.map( function(el) { return '@'+el.twitter_id }).join(' ');
-			else var targets = $scope.targets.map( function(el) { return '@'+el.twitter_screen_name}).join(' ');
-
-			message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOfef' ].join(' ');
-			document.location = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26');
+			send_message(false);
 		}
 
 		return false
 	}
 
+	function send_message( direct ) {
+		var direct = direct || false;
+
+		if( $scope.targets.length == 0 ) var targets = $scope.raw_targets.map( function(el) { return '@'+el.twitter_id }).join(' ');
+		else var targets = $scope.targets.map( function(el) { return '@'+el.twitter_screen_name}).join(' ');
+
+
+		if( $scope.drop_campaign ) message = [ targets,$scope.message,'#SoundOff' ].join(' ');
+		else message = [ targets, $scope.message,$scope.campaign.replace(/\s/g,''),'#SoundOff' ].join(' ');
+
+		window.onbeforeunload = null;
+		if( window.self != window.parent && typeof $oundoff_config.post_message_to != 'undefined' ) try {
+			window.parent.postMessage('off', $oundoff_config.post_message_to);
+		} catch(e) {}
+
+		$.post(
+			'/form',
+			{
+				soundoff: {
+					email: $scope.email,
+					zip: $scope.zip,
+					message: message,
+					targets: targets,
+					campaign_id: $oundoff_config.id,
+					hashtag: $scope.drop_campaign ? null : $scope.campaign,
+					headcount: $scope.add_headcount,
+					partner: $scope.add_partner
+				}
+			}
+		)
+
+		if( direct ) document.location = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26');
+		else window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
+	}
 
 	// Stage 1
 	$scope.zip = $oundoff_config.zip || ''
