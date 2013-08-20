@@ -107,11 +107,11 @@ function formScope($http, $scope) {
 					headcount: $scope.add_headcount,
 					partner: $scope.add_partner
 				}
-			}
+			},
+			function() { if( direct ) document.location = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26'); }
 		)
 
-		if( direct ) document.location = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26');
-		else window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
+		if( ! direct ) window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
 	}
 
 	// Stage 1
