@@ -81,12 +81,16 @@ class FrameController < ActionController::Base
     end
 
     if reps.length < limit
-      redirect_to :action => 'form', :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true
+      redirect_to :action => 'form', :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true
     elsif reps.length > limit
-      redirect_to :action => 'form', :zip => params[:zip], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true
+      redirect_to :action => 'form', :zip => params[:zip], :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true
     else
       targets = reps.map{ |s| "@"+Rep.find_by_bioguide_id( s['bioguide_id'] ).twitter_screen_name }.join(' ')
-      message = ["\u200B"+targets,( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ),'#'+campaign.hashtag].join(' ')
+      message = ["\u200B"+targets, ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ),'#'+campaign.hashtag].join(' ')
+      headcount = campaign.partner.nil?
+
+      Soundoff.new( { :message => message, :targets =>  targets, :hashtag => campaign.hashtag, :zip => params[:zip], :campaign_id => campaign.id, :email => params[:email], :partner => true, :headcount => headcount } ).save
+
       redirect_to '/redirect#'+URI.escape(message).gsub(/\#/,'%23').gsub(/\&/,'%26')
     end
 
