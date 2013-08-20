@@ -63,7 +63,7 @@ function formScope($http, $scope) {
 					errors.push( 'you should really write something')
 					message.className += ' oops'
 				} else {
-					send_message();
+					send_message(false);
 					next = 4
 				}
 				break;
@@ -73,7 +73,7 @@ function formScope($http, $scope) {
 		else $scope.stage = next;
 
 		if( $oundoff_config.skip_when_matched && next == 3 && $scope.raw_targets.length == config.limits[ config.target ] ) {
-			send_message(false);
+			send_message(true);
 		}
 
 		return false
