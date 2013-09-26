@@ -44,7 +44,7 @@ class FrameController < ActionController::Base
     @body_class += ' dark' if params[:style] == 'dark'
 
     campaign = Campaign.find( params[:campaign] )
-    tweets = Status.hashtag campaign.hashtag, 20
+    tweets = Status.hashtag( campaign.hashtag, 0, 20 )
 
     tweets = campaign.sample_tweets if tweets.length < 1 && params[:demo]
     params[:hashtag] ||= campaign.hashtag
