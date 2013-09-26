@@ -12,6 +12,7 @@ function formScope($http, $scope) {
 	$scope.campaign = config.campaign != null ? '#'+config.campaign : ''
 	$scope.name = config.campaign != null ? '#'+config.campaign : 'Tweet @ Congress'
 	$scope.stage = 1
+	$scope.target_type = config.target
 
 	$scope.nextStage = function() {
 		var $notice = $('#notice').html('').attr('class',''),

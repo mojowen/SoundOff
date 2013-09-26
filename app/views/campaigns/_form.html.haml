@@ -79,9 +79,9 @@
 		%br
 		= f.radio_button :target, 'senate'
 		%label US Senate
-		-# %br
-		-# = f.radio_button :target, 'all'
-		-# %label Both Chambers
+		%br
+		= f.radio_button :target, 'all'
+		%label Both Chambers
 
 	.help Who do you want to target, one House Rep, two Senators, or all three?
 
@@ -176,4 +176,12 @@
 			errors = errors.length == 0 ? last : errors.join(', ') + ', and '+last
 			$errors.text( errors )
 		}
+	})
+	.on('change', '.targets.radio', function(e){
+		var counter = $(campaign_target_all).is(':checked') ? 15 : 80;
+
+		$('.suggested_tweets textarea').each( function() {
+			$(this).attr('counter',counter).trigger('keydown');
+		})
+
 	})
