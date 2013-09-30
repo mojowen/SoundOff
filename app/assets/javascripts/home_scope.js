@@ -170,7 +170,7 @@ function homePageScope($http, $scope) {
 	})
 
 	$scope.single_item =  null;
-	$scope.single_url = ''
+	$scope.single_url = $oundoff_base_domain + ($scope.single_item.short_url.slice(0,1) == '/' ? '' : '/') + $scope.single_item.short_url
 	$scope.single_twitter = ''
 	$scope.single_facebook = ''
 	$scope.build_widget = ''
