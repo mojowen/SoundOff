@@ -68,6 +68,10 @@
 		= f.text_field :twitter_screen_name, :placeholder => 'Twitter Handle*', :for => 'company nonprofit individual'
 		.help Your Twitter avatar and handle will appear with your campaign
 		.extra @
+
+		= f.select :hear_about_soundoff, [['How Did You Hear About #SoundOff?',nil],['Twitter','twitter'],['Facebook','facebook'],['E-mail for a campaign','campaign email'],['Website promoting a campaign','campaign website'],['Search','search'],['A media outlet','media'],['HeadCount','headcount'],['Other','other']], :for => 'company nonprofit individual', :class => 'off'
+		%input#other_hear{ :name_off => 'partner[hear_about_soundoff]', :type => 'text', :style => 'display:none', :placeholder => 'Where Did You Hear About #SoundOff?' }
+
 		%p.tos
 			%input{ :type => 'checkbox', :checked => 'checked', :id => 'tos', :value => 'true' }
 			I Agree to the
@@ -120,11 +124,22 @@
 		var $this =  $(this);
 		$this.val( $this.val().replace(/\@/g,'') );
 	})
+	.on('change','#partner_hear_about_soundoff',function() {
+		var $this = $(this)
+		if( $this.val() == '' ) $this.removeClass('on');
+		else $this.addClass('on')
+
+		if( $this.val() == 'other' ) $this.next('input').show().attr('name',$this.attr('name'));
+		else $this.next('input').hide().attr('name',null);
+
+	})
 	.on('submit','form',function(e){
 		var errors = [],
 			$errors = $('.errors').html('')
 			$tos = $(tos),
-			$privacy = $(privacy)
+			$privacy = $(privacy),
+			$hear = $(partner_hear_about_soundoff)
+
 		$('input:visible, textarea:visible').removeClass('oops').not('input[type=radio],input[type=checkbox]').each( function() {
 			var $input = $(this),
 				val = $input.val(),
@@ -144,6 +159,10 @@
 				}
 			}
 		})
+		if( $hear.val().length == 0 ) {
+			$hear.addClass('oops')
+			errors.push('you must tell us where you heard about #SoundOff')
+		}
 		if( ! $tos.is(':checked') ) {
 			errors.push('you must agree to the terms of service')
 			$tos.parent().addClass('oops')
