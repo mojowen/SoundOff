@@ -5,6 +5,8 @@
 		%h2 Stats
 		%h3 Total Partners: #{@partners.count}
 		%h3 Total Campaigns: #{Campaign.count}
+		%a{ :href => partners_path+'.csv' }
+			%button Download Partners
 		%br
 		%h3 Total Tweets: #{ Status.count( :conditions => 'reply_to IS NULL') }
 		%h5 in Last Day: #{ Status.count( :conditions => ['reply_to IS NULL AND created_at > ?',1.day.ago ] ) }

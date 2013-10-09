@@ -3,7 +3,8 @@ class CampaignMail < ActionMailer::Base
 
   def new_campaign(campaign)
   	@campaign = campaign
-  	mail(:to => 'SoundOff@HeadCount.org', :subject => "#{campaign.partner.name} Just Submitted #{campaign.name}")
+    verb = @campaign.new_record? ? 'Submitted' : 'Updated'
+    mail(:to => 'SoundOff@HeadCount.org', :subject => "#{campaign.partner.name} Just #{verb} #{campaign.name}")
   end
   def campaign_approved(campaign)
   	@campaign = campaign

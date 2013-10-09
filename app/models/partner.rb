@@ -50,6 +50,18 @@ class Partner < ActiveRecord::Base
 			end
 		end
 	end
+	def contact_user
+		self.users.first || self.users.new
+	end
+	def contact_email
+		contact_user.email
+	end
+	def contact_phone
+		contact_user.phone
+	end
+	def contact_name
+		contact_user.name
+	end
 	def count_tweets
 		hashtags = campaigns.all.map(&:hashtag).map{ |v| "%#{v.downcase}%" }.join('|')
       	Status.count( :conditions => ['reply_to IS NULL AND lower(hashtags) SIMILAR TO ?',hashtags])
