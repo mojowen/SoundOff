@@ -44,7 +44,7 @@
 		%h2 Tweet @ Congress
 
 		= image_tag 'search.png', :class => 'search'
-		%input{ :placeholder => 'search', "ng-model" => "search", :type => 'text'}
+		%input{ :placeholder => '{{search_placeholder()}}', "ng-model" => "search", :type => 'text', 'ng-click' => 'reset();'}
 		.messages
 			%a.rest.single.campaign{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all campaigns
 			%a.rest.single.rep{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all rep

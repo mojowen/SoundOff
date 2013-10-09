@@ -142,6 +142,12 @@ function homePageScope($http, $scope) {
 
 	// Search and items
 	$scope.search = ''
+	$scope.search_placeholder = function() {
+		return $scope.mode.toLowerCase() == 'reps' ? 'Search Reps' : 'Search Campaigns'
+	}
+	$scope.search_reset = function() {
+		if( $scope.single_item != null ) $scope.reset();
+	}
 	$scope.items = function() {
 		if( $scope.mode.toLowerCase() == 'reps' ) return $scope.reps();
 		else return $scope.campaigns()
@@ -176,6 +182,7 @@ function homePageScope($http, $scope) {
 	$scope.single_facebook = ''
 	$scope.build_widget = ''
 	$scope.$watch('single_item', function() {
+
 		if( $scope.single_item != null  ) {
 			var url = $oundoff_base_domain + ($scope.single_item.short_url.slice(0,1) == '/' ? '' : '/') + $scope.single_item.short_url
 			$scope.single_url =  url
@@ -219,8 +226,6 @@ function homePageScope($http, $scope) {
 
 			$scope.raw_reps.unshift( state )
 
-
-			$scope.search = '@'+state.twitter_screen_name
 			$scope.mode = 'reps'
 			if( $oundoff_config.open_soundoff ) $oundoff_config.open_soundoff.targets = state.twitter_screen_name
 
@@ -231,13 +236,11 @@ function homePageScope($http, $scope) {
 
 		if( typeof state == 'string' ) {
 			var found = $scope.raw_campaigns.filter( function(el) { return el.short_url == state; });
-
 			if( typeof found[0] != 'undefined' ) {
 				$scope.active = found[0];
 
-				$scope.search = found[0].name;
+				$scope.single_item = found[0];
 
-				setTimeout( function() { $scope.single_item = found[0]; },1)
 				window.name += 'soundoff_open'
 				if( $oundoff_config.open_soundoff ) $oundoff_config.open_soundoff.campaign = found[0].id;
 			} else {
@@ -256,11 +259,6 @@ function homePageScope($http, $scope) {
 		if( $scope.mode.toLowerCase() == "reps" ) style.push('reps')
 		return style.join(' ')
 	}
-	$scope.$watch('search',function() {
-		if( $scope.single_item != null && $scope.search != '@'+$scope.single_item.twitter_screen_name && $scope.search != $scope.single_item.name ) $scope.reset();
-		if( w_width > med_cut_off ) $scope.active = $scope.items()[0];
-	})
-
 	$scope.setScoreBoard = function() {
 		$scope.raw_campaigns.sort( function(a,b) {
 			return a.score > b.score ? -1 : 1
