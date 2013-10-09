@@ -49,6 +49,12 @@
 			&nbsp;
 			%span.dark Dark
 
+		%h3
+			Preview Width:
+			%input#set_width{ :value => 350, :type => 'number', :style => 'width: 90px' }
+			px
+		%p.small The widget can be anywhere from 280px to 700px wide.
+
 		.widget_box.light
 			.widget
 				%a.soundoff_widget_light{ :href => @campaign.url, :campaign => @campaign.id }= @campaign.hashtag
@@ -77,6 +83,20 @@
 	$(document)
 	.on('click','textarea',function(){
 		$(this).select()
+	})
+	.on('change','#set_width',function() {
+		var $this = $(this),
+			new_width = $this.val();
+
+		if( new_width > 700 ) $this.val( 700 );
+		if( new_width < 280 ) $this.val( 280 );
+
+		new_width = $this.val();
+
+		if( new_width <= 700 && new_width >= 280 ) {
+			$('.widget_box .widget').width( new_width )
+			$('.widget_box .explanation').width( 700 - new_width )
+		}
 	})
 	.on('click','.dark, .light',function() {
 		var $this = $(this)
