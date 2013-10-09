@@ -106,7 +106,8 @@
 					%a{ 'ng-href' => '{{item.website}}', :target => '_blank' }
 						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}' }
 					.title_line
-						%h1 {{item.name}}
+						%h1
+							%a{ 'ng-href' => '/{{item.short_url }}' }{{item.name}}
 						%h3
 							Tweet @ your {{item.target}} with hashtag {{item.hashtag }}. Just click
 							%a.open_soundoff{ :href => '#', :campaign => '{{item.id}}'  }#SoundOff!
@@ -132,7 +133,8 @@
 						%span O
 						ff
 					.title_line
-						%h1 {{item.title}} {{item.first_name}} {{item.last_name}}
+						%h1
+							%a{ 'ng-href' => '/rep/{{item.twitter_screen_name}}'}{{item.title}} {{item.first_name}} {{item.last_name}}
 						%h3
 							%a{ 'ng-href' => 'http://twiter.com/{{item.twitter_screen_name}}', :target => '_blank' } @{{item.twitter_screen_name}}
 
