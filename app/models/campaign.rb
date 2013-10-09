@@ -85,7 +85,7 @@ class Campaign < ActiveRecord::Base
 			:tweets => [],
 			:created_at => created_at,
 			:short_url => short_url,
-			:target => self.target == 'house' ? 'House Rep' : 'Senator'
+			:target => (self.target == 'house' ? 'House Rep' : self.target == 'senate' ? 'Senator' : 'Senators and House Rep' )
 		}
 	end
 	def self.active
