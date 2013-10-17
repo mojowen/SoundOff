@@ -24,7 +24,7 @@ class PartnersController < ApplicationController
 
 		if params['format'] == 'csv'
 			require 'csv'
-			fields = ["name",'contact_name','contact_email','contact_phone',"website","tax_id","partner_type","created_at","mailing_address","privacy_policy","twitter_screen_name","hear_about_soundoff"]
+			fields = ["name",'show_contact_name','show_contact_email','show_contact_phone',"website","tax_id","partner_type","created_at","mailing_address","privacy_policy","twitter_screen_name","hear_about_soundoff"]
 
 			result = CSV.generate do |csv|
 			  csv << ["Partner Name",'Contact Name','Contact Email','Contact Phone',"Partner Website","Tax ID","Partner Type","Created At","Mailing Address","Privacy Policy","Twitter Name","How Did You Hear About SoundOff"]

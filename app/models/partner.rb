@@ -35,6 +35,7 @@ class Partner < ActiveRecord::Base
 
 	def update_user
 		if contact_name || contact_phone || contact_password || contact_email
+
 			user = self.users.first || self.users.new
 
 			user[:email] = contact_email if ! contact_email.nil? && ! contact_email.empty?
@@ -53,13 +54,13 @@ class Partner < ActiveRecord::Base
 	def contact_user
 		self.users.first || self.users.new
 	end
-	def contact_email
+	def show_contact_email
 		contact_user.email
 	end
-	def contact_phone
+	def show_contact_phone
 		contact_user.phone
 	end
-	def contact_name
+	def show_contact_name
 		contact_user.name
 	end
 	def count_tweets
