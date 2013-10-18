@@ -39,7 +39,7 @@ class Status < ActiveRecord::Base
 		reply = self.find_by_tweet_id( raw_tweet["in_reply_to_status_id_str"] )
 
 		unless reply.nil?
-			tweet.reply_id = reply.id
+			tweet.reply_to = reply.id
 			match_reply = true
 		else
 			match_reply = false
