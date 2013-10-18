@@ -40,6 +40,7 @@ class Status < ActiveRecord::Base
 
 		unless reply.nil?
 			tweet.reply_to = reply.id
+			tweet.hashtags = reply.hashtags
 			match_reply = true
 		else
 			match_reply = false
