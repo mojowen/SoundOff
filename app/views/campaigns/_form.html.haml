@@ -47,7 +47,19 @@
 
 			%p Emails will still be collected in this case - but they will not be asked to opt-in to HeadCount mailing list nor will they be shared with HeadCount.
 
+	.targets.radio.line
+		%h2 Targets
 
+		= f.radio_button :target, 'house', :checked => 'checked'
+		%label US House of Representatives
+		%br
+		= f.radio_button :target, 'senate'
+		%label US Senate
+		%br
+		= f.radio_button :target, 'all'
+		%label Both Chambers
+
+	.help Who do you want to target, one House Rep, two Senators, or all three?
 
 	.suggested.line
 		%input{ :type => 'checkbox', :checked => @campaign.new_record? || @campaign.suggested.length > 1 }
@@ -71,20 +83,6 @@
 						.count{ :style => 'display:none' } 80
 	.help{ :style => 'margin-top: -140px'} Here’s where you can get creative. We suggest making each suggestion distinct from each other. Feel free to add additional hashtags or links. Keep in mind that the campaign hashtag will automatically appear at the end of all the tweets. Don’t write that hashtag into your suggested tweets, unless you want it to appear twice.
 
-	.targets.radio.line
-		%h2 Targets
-
-		= f.radio_button :target, 'house', :checked => 'checked'
-		%label US House of Representatives
-		%br
-		= f.radio_button :target, 'senate'
-		%label US Senate
-		%br
-		= f.radio_button :target, 'all'
-		%label Both Chambers
-
-	.help Who do you want to target, one House Rep, two Senators, or all three?
-
 	.notice
 		Once you submit your campaign it will need to be approved by HeadCount - you'll get a notice when it's good to go.
 	%button
@@ -106,10 +104,13 @@
 	.on('click','.radio label',function() {
 		this.previousElementSibling.click()
 	})
-	.on('keydown','textarea, input',function(){
+	.on('keydown change','textarea, input',function(e){
 		var $this = $(this),
 			txt = $this.val()
-
+		if( e.metaKey && ( e.keyCode == 67 || e.keyCode == 88 || e.keyCode == 86 || e.keyCode == 90 ) ) {
+			return setTimeout( function() { $this.change() },10)
+		}
+		console.log(e)
 		if( $this.is('#campaign_hashtag') ) {
 			txt = txt.replace(/\s|\#/,'')
 			$this.val(txt)
@@ -178,7 +179,7 @@
 		}
 	})
 	.on('change', '.targets.radio', function(e){
-		var counter = $(campaign_target_all).is(':checked') ? 15 : 80;
+		var counter = $(campaign_target_all).is(':checked') ? 65 : 80;
 
 		$('.suggested_tweets textarea').each( function() {
 			$(this).attr('counter',counter).trigger('keydown');
