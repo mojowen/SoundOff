@@ -41,9 +41,11 @@ if( $oundoff_config.home ) {
 		else $(terrible).hide();
 
 		if( w_top > $welcome.height() ) {
-			$welcome.hide();
 			$('#terrible .step').removeClass('on')
-			scroll_to(0, w_top -  $welcome.height() )
+			if( $welcome.is(':visible') ) {
+				scroll_to(0, w_top -  $welcome.height() )
+				$welcome.hide();
+			}
 		}
 		var $divs = $('#content div.item');
 		for (var i = $divs.length - 1; i >= 0; i--) {
