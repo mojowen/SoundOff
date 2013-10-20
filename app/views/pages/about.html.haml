@@ -41,7 +41,8 @@
 			%h3 Widget Preview
 			%a.close{ :onclick => '$(this).parent().hide(); return false;', :href => '#' } close
 			%script{ :src => "#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js" }
-			%a(class="soundoff_widget_light" href="http://www.soundoffatcongress.org/Fg-2" campaign="79")ShowLeadership
+			%div{ :style => 'width: 300px;margin: 0 auto;' }
+				%a(class="soundoff_widget_light" href="http://www.soundoffatcongress.org/Fg-2" campaign="79")ShowLeadership
 
 		Send the link to friends and supporters. Or, place the widget on a Web page and direct traffic there. You can then log in any view your campaign dashboard to check your stats and responses (
 		%a{ :onclick => '$(this).next(".hidden_widget").show(); return false;', :href => '#' } click for example
