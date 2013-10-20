@@ -3,6 +3,7 @@
 	#top_menu
 		%a.item.menu{ :href => '#' }
 			= image_tag 'icon-menu.svg'
+			%span MENU
 		.inner
 			= link_to 'About/How To', about_path
 			= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Log in', new_user_session_path )

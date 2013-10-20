@@ -4,8 +4,6 @@
 			bottom: 37%
 			#logo
 				top: 15%
-			#description
-				top: 20%
 			#banner
 				height: 50px
 				padding-top: 10px
@@ -15,9 +13,6 @@
 					display: block
 				a img
 					display: none
-		#footer
-			top: 63%
-			height: 37%
 @media (max-height: 450px) and (min-width: $break-medium)
 	body.home
 		#top #description p
@@ -26,22 +21,111 @@
 			font-size: 12px
 
 @media (max-width: $break-medium-large)
+	#overlay
+		#start_campaign
+			.left
+				right: 430px
+			.target
+				width: 230px
+		#menu_block #tweet_congress .target
+			width: 400px
+		.placeholder
+			left: 470px
+		#content_block
+			left: 490px
+		#menu_block, .placeholder, #content_block, #menu_block #tweet_congress
+			&, div, .target, .right, .left
+				height: 340px
+		#rest
+			top: 402px
+			.two, .five
+				left: 460px
+			.four
+				top: 300px
+				right: 10px
+			.instructions
+				.row
+					font-size: 70%
+					height: 60px
+					margin-bottom: 14px
 	body.home #main
 		#menu, #more-info, #powered_by
 			left: 80px
 		#content
+			#welcome
+				.smaller
+					display: block
+				.bigger
+					display: none
+				padding: 20px 10px 0
+				.rotate
+					.step
+						width: 20%
+						margin: 0 14px
+						svg
+							width: 100%
+						h2
+							font-size: 14px
+				.describe
+					height: 172px
+					.step
+						font-size: 15px
+						margin: 10px 20px
+				.links
+					text-align: left
+					margin: 0 0 0 10px
+					.row
+						width: 44%
+						vertical-align: top
+						margin: 0
+						font-size: 9px
+						&:last-child
+							width: 100%
 			margin-left: 490px
 			.item .description
+				.details_left
+					display: none
 				.title
 					.title_line
-						clear: both
-						width: 100%
-						margin-left: 0
 						h1,h3,h4
-							width: 100%
+							margin: 0
+						h3
+							font-size: 12px
+							color: $darkblue
+							letter-spacing: 1px
+						h1
+							&, & a
+								font-size: 24px
+								line-height: 0.8em
 					img
-						margin-bottom: 10px
+						margin: 10px 20px 0 0
+					.copy
+						margin-bottom: 30px
+				&.rep
+					.title .title_line
+						margin-bottom: 40px
+					.details_left
+						display: block
+	body.home #main #content .item
+		.description
+			background-size: inherit
+			.title button
+				max-width: 95%
+				margin: 0 auto
+				display: block
+				position: relative
+				font-size: 14px
+				padding: 4px
+
+	body.home #terrible
+		.tweet, .pick
+			width: 410px
+		.new
+			width: 224px
+			right: 208px
 	#top #fixed
+		button.all_partners
+			display: none
 		button.start_campaign, button.my_campaigns
 			font-size: 100%
 			padding: 4px 8px
@@ -50,10 +134,14 @@
 		a.item
 			margin: 0 14px
 		#top_menu
+			a.menu span
+				right: -3px
 			&:hover
 				a.menu
 					padding-bottom: 0
 					margin-bottom: 0
+					span
+						bottom: 2px
 			.inner
 				margin-top: -12px
 				right: 14px
@@ -91,8 +179,18 @@
 					word-break: break-all
 
 
-
 @media (max-width: $break-medium)
+	#overlay, #terrible, #welcome, #fixed button, #terrible, #menu button
+		display: none
+	.back
+		width: 50px
+		height: 100%
+		padding: 16px 4px
+		border-right: 1px solid $darkblue
+		display: none
+		cursor: pointer
+		svg
+			height: 26px
 	body.fixed.single
 		$width: 680px
 		min-width: $width + 28*2
@@ -108,81 +206,39 @@
 				padding: 60px 20px 10px
 				.widget_box
 					width: 600px
-	body.home #main
-		min-height: 0px
-		#content, #menu, #powered_by
-			display: none
-	#top
-		position: relative
-		bottom: inherit
-		height: auto
-		min-height: inherit
-		padding-bottom: 2%
-		#fixed
-			width: 40%
-			position: absolute
-			top: 10px
-			.start_campaign, .my_campaigns
-				display: none
-
-			#top_menu
-				.inner
-					right: 0
-					a
-						font-size: 18px
-			a.item
-				margin: 0 0 0 16px
-		#banner
-			height: 50px
-			padding-top: 10px
-			right: 2%
-			text-align: center
-			.small
-				display: block
-			a img
-				display: none
-		img#logo
-			width: 90%
-			left: 5%
-			margin-top: 10%
-			position: relative
-		#description
-			margin: 10% 0 0
-			width: 90%
-			left: 5%
-			position: relative
-			text-align: center
-			.get_started
-				margin: 2% auto
-	#footer
-		position: relative
-		padding: 0 0 30px 0
-		p
-		.column
-			width: 28%
-			margin: 0 2%
-			float: none
-			p
-				text-align: center
-		.disclaimer
-			width: 90%
-			margin-top: 2%
-			p, &
-				text-align: center
-
-	body.home.fixed
+	body.home
 		#top
+			&.mobile_active
+				img#logo
+					margin-left: 50px
+				.back
+					display: block
+
 			img#logo
 				position: absolute
 				margin-top: 0
 			.campaign
 				display: none
 			padding-bottom: 0
-		#footer
-			padding-bottom: 0
-			position: fixed
+			#fixed
+				#top_menu
+					margin-left: -150px
+					.menu
+						margin: 0 -11px 0 0
+						padding-bottom: 4px
+					.inner
+						margin-top: 5px
+						position: fixed
+						right: 0
+						width: 60%
+						bottom: 0
+						padding-top: 20px
+						a
+							font-size: 12px
+							text-decoration: none
+							line-height: 1.4em
 		#main
-			$top: 68px
+			$top: 50px
 			padding-bottom: 85px
 
 			#content, #menu, #powered_by
@@ -191,20 +247,39 @@
 			#menu
 				position: relative !important
 				height: auto
-				width: 80%
-				left: 10%
-				top: $top + 10
-				.items
-					height: 90%
+				left: 0
+				right: 0
+				width: 100%
+				top: $top
+				img.search
+					margin-top: 0
 				#tabs
-					marign: 0
+					width: 100%
 					span
-						padding: 2px 12px
+						position: relative
+						border-bottom: none
+						margin: 0 0 0 -5px
+						font-size: 11px
+						z-index: 0
+						&:first-child
+							margin-left: 0px
+						&:hover, &.on
+							z-index: 10
+							background-color: #fefefe
+				.inner
+					border: none
+					border-top: 1px solid $darkgrey
+					position: relative
+					z-index: 5
+					.items
+						background-color: #fefefe
+						height: 90%
+
 
 			#powered_by
 				bottom: 0px
-				left: -2px
-				width: 102%
+				left: -15px
+				width: 110%
 				padding: 0 2%
 
 			#more-info
@@ -227,26 +302,15 @@
 					overflow: hidden
 					.item
 						.description
+							padding: 20px 0
 							.title
-								img
-									margin-bottom: 0
-								.title_line
-									width: 100% !important
-									padding-top: 10px
-									h1
-										font-size: 24px
-										clear: both
+								padding: 10px
 								button.open_soundoff
 									font-size: 14px
-									width: 140px
 								.copy
-									margin: 12px 0
-								.title_line, .copy, .details_right, .details_left
-									text-align: center
-								.details_right, .details_left
-									position: relative
-									display: block
-									left: 0px
+									margin: 12px 0 40px
+									font-size: 12px
+
 						.tweets
 							.tweet
 								width: 90%
@@ -256,9 +320,10 @@
 							display: block
 							position: absolute
 							top: $top
-							margin: 50px 1%
-							width: 98%
+							margin: 0
+							width: 100%
 							left: 0px
+
 
 
 					.back
@@ -273,45 +338,5 @@
 @media (max-width: $break-small)
 	body.home
 		min-width: 320px !important
-
-		#top
-			#fixed
-				a.facebook, a.twitter
-					display: none
-				#top_menu a.menu
-					position: absolute
-					right: 0px
-			#logo
-				margin-top: 60px
-			#description
-				p
-					font-size: 15px
-				button
-					font-size: 20px
-					min-width: 50%
-					margin: 0 auto
-					display: block
-		#main
-			display: none
-
-		#footer
-			padding: 0
-			.column
-				width: 28%
-			.disclaimer
-				width: 90%
-				clear: both
-
-	body.fixed #main
-		min-height: 0px
-		display: block
-		#menu
-			min-width: 258px
-			h2
-				font-size: 16px
-	#main
-		#powered_by
-			position: absolute !important
-			bottom: 0
-		&.mobile_active #powered_by
+		.facebook, .twitter
 			display: none
