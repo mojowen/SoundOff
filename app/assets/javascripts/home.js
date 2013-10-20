@@ -43,7 +43,7 @@ if( $oundoff_config.home ) {
 		if( w_top > $welcome.height() ) {
 			$welcome.hide();
 			$('#terrible .step').removeClass('on')
-			if( $welcome.is(':visible') ) scroll_to(0, w_top - 620)
+			scroll_to(0, w_top -  $welcome.height() )
 		}
 		var $divs = $('#content div.item');
 		for (var i = $divs.length - 1; i >= 0; i--) {
