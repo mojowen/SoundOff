@@ -5,14 +5,17 @@
 			= image_tag 'icon-menu.svg'
 			%span MENU
 		.inner
+			= link_to 'Home', home_path unless controller.action_name == 'home'
 			= link_to 'About/How To', about_path
 			= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Log in', new_user_session_path )
+			= link_to 'Advanced Techniques', '#'
+			= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
 			= link_to 'Press', press_path
-			= link_to 'Donate', 'http://www.HeadCount.org/donate'
 			= link_to 'Privacy Policy', privacy_path, :target => '_blank'
 			= link_to 'Terms and Conditions', tos_path, :target => '_blank'
-			= link_to 'Contact', contact_path
 			= link_to 'Help', help_path
+			= link_to 'Contact', contact_path
+			= link_to 'Donate', 'http://www.HeadCount.org/donate'
 
 	%a.item.facebook{ :href => 'https://www.facebook.com/HeadCountOrg', :target => '_blank' }
 		= image_tag 'facebook.png'
@@ -27,4 +30,4 @@
 			%button.my_campaigns My Campaigns
 		- if current_user.admin
 			%a{ :href => partners_path }
-				%button.my_campaigns All Partners
+				%button.all_partners.my_campaigns All Partners

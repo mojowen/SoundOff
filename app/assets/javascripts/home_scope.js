@@ -95,7 +95,7 @@ function homePageScope($http, $scope) {
 		}
 		if( query.length > 0 ) $http.get( '/statuses?'+selector+'='+query+offset_string,{}).success(function(data,status) {
 			loadTweets(data);
-			if( main.tweets.length < 8 && main.tweets < main.score ) loadActive(main, offset + main.tweets.length );
+			if( main.tweets.length != 0 && main.tweets.length < 8 && main.tweets < main.score ) loadActive(main, offset + main.tweets.length );
 		})
 	}
 	function loadTweets(data) {
@@ -143,7 +143,7 @@ function homePageScope($http, $scope) {
 	// Search and items
 	$scope.search = ''
 	$scope.search_placeholder = function() {
-		return $scope.mode.toLowerCase() == 'reps' ? 'Search Reps' : 'Search Campaigns'
+		return $scope.mode.toLowerCase() == 'reps' ? 'Search Reps + Senators' : 'Search Campaigns'
 	}
 	$scope.search_reset = function() {
 		if( $scope.single_item != null ) $scope.reset();
@@ -207,13 +207,13 @@ function homePageScope($http, $scope) {
 		scroll_to(0)
 		$(menu).removeClass('single')
 
+
 		$scope.single_item = null
 		$scope.active = null
 
 		if( w_width > med_cut_off ) $scope.active = $scope.items()[0]
 
 		try{ history.pushState( {campaign: $scope.items[0] }, 'Sound Off',  '/' ); } catch(e) {}
-		if( $(document.body).hasClass('fixed') ) $(logo).attr('src','/assets/SoundOffWhiteBeta.svg')
 		document.title = '#SoundOff @ Congress'
 	}
 	$scope.resetHard = function() {
@@ -267,7 +267,10 @@ function homePageScope($http, $scope) {
 		if( $scope.single_item != null ) $scope.resetHard();
 		else $scope.reset()
 	}
-
+	$scope.stupid_toggle = function() {
+	 	if( $scope.mode == "Scoreboard" ) $scope.setMostRecent();
+	 	else $scope.setScoreBoard();
+	}
 	$scope.setMostRecent = function() {
 		$scope.raw_campaigns.sort( function(a,b) {
 			return a.created_at > b.created_at ? -1 : 1;
@@ -290,7 +293,12 @@ function homePageScope($http, $scope) {
 	$scope.isActive = function($index,campaign) { return campaign == $scope.active ? 'active' : 'non-active' }
 	$scope.isMode = function(mode) { return mode.toLowerCase() == $scope.mode.toLowerCase() ? 'on' : '' }
 	$scope.mobileActive = function() {
-		return $scope.active != null ? 'mobile_active' : ''
+		var mobile_active = $scope.active != null
+
+		if( mobile_active ) $('#top').addClass('mobile_active');
+		else $('#top').removeClass('mobile_active');
+
+		return mobile_active ? 'mobile_active' : ''
 	}
 	$scope.mode = 'Scoreboard'
 

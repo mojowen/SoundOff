@@ -1,47 +1,19 @@
 %script{ :type => 'text/javascript', :src => '//platform.twitter.com/widgets.js'}
 
 #top
-	#banner
-		powered by:
-		%br
-		%a{ :href=> 'http://headcount.org', :target => '_blank' }= image_tag 'headcount.png'
-		%a.small{ :href=> 'http://headcount.org', :target => '_blank' }HeadCount
+	.back
+		:plain
+			<svg enable-background="new 0 0 32 32" height="32px" id="svg2" version="1.1" viewBox="0 0 32 32" width="32px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg" y="0px"><g id="background"><rect fill="none" height="32" width="32"/></g><g id="arrow_x5F_right"><polygon fill="white" points="32,4 5,16 32,28  "/></g></svg>
 
-	= image_tag asset_path( @body_class.index('fixed') ? 'SoundOffWhiteBeta.svg' : 'SoundOffAtCongressWhiteBeta.svg' ), :id => 'logo'
-
-	#description
-		%p
-			Tweet directly @ Congress. Pick a topic, enter your zip, and type your message. #SoundOff sends the message to your House Rep or Senators on the issues that matter to you.
-
-		%button.get_started{ :href => '#' } Get Started
+	= image_tag 'SoundOffWhite.svg', :id => 'logo'
 
 	= render 'home/fixed'
-
-#footer
-	.disclaimer
-		%p
-			:plain
-				#SoundOff makes it easy to tweet  @ members of Congress. HeadCount.org created this tool to help Americans play a more active role in government. It’s available to all organizations and individuals regardless of their beliefs, as long as they comply with the Terms of Service. HeadCount does not endorse, censor or take responsibility for any content or any campaign using this service.
-
-
-	.column
-		%p= link_to 'About/How To', about_path
-		%p= link_to 'Press', press_path
-		%p= link_to 'Donate', 'http://www.HeadCount.org/donate'
-	.column
-		%p= link_to 'Privacy Policy', privacy_path, :target => '_blank'
-		%p= link_to 'Terms & Conditions', tos_path, :target => '_blank'
-		%p= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
-	.column
-		%p= link_to 'Contact', contact_path
-		%p= link_to 'Register to Vote', 'http://headcount.org/register-to-vote', :target => '_blank'
-		%p= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Sign In / Register', new_user_session_path )
 
 
 #main{ "ng-app" => true, "ng-controller" => 'homePageScope', 'ng-class' => 'mobileActive()'  }
 
 	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => 'menuClass()' }
-		%h2 Tweet @ Congress
+		%button.open_soundoff Tweet @ Congress
 
 		= image_tag 'search.png', :class => 'search'
 		%input{ :placeholder => '{{search_placeholder()}}', "ng-model" => "search", :type => 'text', 'ng-click' => 'reset();'}
@@ -52,11 +24,9 @@
 			%span.loading{ 'ng-hide' => 'search.length < 1 '} Loading...
 
 		#tabs
-			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Most Tweeted #
-			%span{ 'ng-click' => 'setMostRecent()', 'ng-class' => 'isMode("Most Recent")' } Most Recent #
-			%span{ 'ng-click' => 'setReps()', 'ng-class' => 'isMode("Reps")' } Most Tweeted @
-			%p
-				%a.open_soundoff{ 'ng-hide' => 'search.length > 0'} Tweet directly @ your Rep and Senators
+			%span{ 'ng-click' => 'setScoreBoard()', 'ng-class' => 'isMode("scoreboard")' } Popular
+			%span{ 'ng-click' => 'setMostRecent()', 'ng-class' => 'isMode("Most Recent")' } Recent
+			%span{ 'ng-click' => 'setReps()', 'ng-class' => 'isMode("Reps")' } Senators+Reps
 
 		.inner
 			.items
@@ -92,46 +62,119 @@
 			%a{ :href => 'http://cargocollective.com/bryanchiem', :target => '_blank' } Bryan Chiem
 
 	#content
+		#welcome.item
+			%h1.smaller Welcome to #SoundOff!
+			%h1.bigger
+				%a{ :href => 'http://headcount.org' }
+					= image_tag 'welcome.png'
+				Welcomes You to #SoundOff!
+			%a.close{ :href => '#' } x
+
+			.rotate
+				.step.on{ 'ng-click' => ' stupid_toggle() ' }
+					:plain
+						<svg version="1.1" id="Your_Icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="120px" height="120px" viewBox="0 0 100 100" >
+						<path d="M14.207,65.863c-1.433,1.461-4.09,1.117-5.937-0.764l0,0c-1.846-1.883-2.181-4.594-0.749-6.055l20.751-21.163
+							c1.433-1.461,4.09-1.119,5.937,0.764l0,0c1.846,1.882,2.181,4.593,0.749,6.055L14.207,65.863z"/>
+						<path d="M44.304,8C32.94,8,23.728,17.212,23.728,28.575c0,11.363,9.212,20.575,20.575,20.575c11.363,0,20.575-9.212,20.575-20.575
+							C64.879,17.212,55.667,8,44.304,8z M44.304,40.957c-6.838,0-12.382-5.544-12.382-12.382c0-6.838,5.544-12.382,12.382-12.382
+							s12.381,5.544,12.381,12.382C56.686,35.414,51.143,40.957,44.304,40.957z"/>
+						<g>
+							<rect x="47.986" y="69.8" width="29.813" height="3.286"/>
+							<rect x="47.986" y="60.41" width="29.813" height="3.285"/>
+							<rect x="47.986" y="51.02" width="29.813" height="3.287"/>
+							<path d="M52.682,18.978l-0.259,0.264c2.606,2.27,4.263,5.605,4.263,9.333c0,6.838-5.545,12.382-12.382,12.382
+								c-3.621,0-6.868-1.564-9.133-4.042l-1.739,1.781V90.34H92V18.978H52.682z M83.55,81.889H41.883V41.513h15.141V27.429H83.55V81.889z
+								"/>
+						</g>
+						</svg>
+
+
+					%h2 Pick an issue
+				.step.open_soundoff
+					:plain
+						<svg version="1.1" id="Your_Icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" >
+							<g>
+								<g>
+									<path d="M46.09,6.604c7.105-0.64,14.374,0.479,20.93,3.296c5.227,2.25,10.001,5.549,13.944,9.65
+										c4.418,4.582,7.771,10.179,9.72,16.241c3.45,10.672,2.358,22.738-3.049,32.58c-4.792,8.873-12.871,15.903-22.311,19.45
+										c-8.736,3.323-18.547,3.68-27.514,1.056c-1.222-0.314-2.379-0.843-3.594-1.166c-4.609,2.407-9.548,4.146-14.575,5.456
+										c-1.058,0.226-2.147,0.532-3.234,0.35c-0.281-0.032-0.479-0.32-0.428-0.596c0.127-0.641,0.562-1.157,0.94-1.67
+										c1.675-2.106,3.585-4.051,4.931-6.398c0.617-1.088,1.122-2.3,1.083-3.573c0.033-0.237-0.2-0.363-0.342-0.501
+										c-4.797-3.964-8.719-8.989-11.349-14.634c-2.962-6.34-4.303-13.438-3.805-20.419c0.497-7.843,3.302-15.515,7.959-21.843
+										c3.75-5.119,8.667-9.374,14.256-12.375C34.729,8.783,40.36,7.106,46.09,6.604z"/>
+								</g>
+							</g>
+							</svg>
+
+					%h2 Tweet @ Congress
+				.step{ :onclick => "document.location = '#{ new_campaign_path }'"}
+					:plain
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="150px" height="150px" viewBox="0 0 100 50" >
+						<g id="XMLID_34_">
+							<g>
+								<g id="XMLID_104_">
+									<g>
+										<path d="M58.85,61.686l1.703-6.343l-2.754-0.761l-3.1-19.915l0.182-0.67c0.472-1.667,2.174-2.663,3.842-2.192l7.61,2.049      l0.979-3.624l4.729,1.267l-0.979,3.624l8.843,2.375c1.667,0.471,2.663,2.173,2.21,3.84l-4.167,15.439      c-0.435,1.667-2.138,2.646-3.823,2.21l-8.861-2.372l-3.316,12.321l-4.71-1.269l0.525-1.958L58.85,61.686z"/>
+										<path d="M44.806,67.864l0.326,2.065l1.577,10.111l-6.505,1.016l-1.559-10.131l-0.326-2.048l-0.308-2.064l-8.444,1.304      c-1.376,0.218-2.608-0.796-2.845-2.21l-5.054-32.635C21.45,31.84,22.373,30.5,23.714,30.3l8.425-1.321l-0.326-2.03l-0.308-2.066      l-0.037-0.253l6.487-0.996l0.055,0.255l0.308,2.062l0.308,2.032l8.119-1.252c0.125-0.018,0.253-0.018,0.38-0.018      c1.196,0,2.265,0.961,2.463,2.229l2.448,15.657l1.358,8.805l1.269,8.191c0.09,0.706-0.072,1.412-0.473,1.975      c-0.36,0.544-0.924,0.889-1.576,0.997l-8.117,1.251L44.806,67.864z"/>
+									</g>
+								</g>
+							</g>
+						</g>
+						</svg>
+					%h2 Start a campaign
+			.describe
+				.step.on Pick an issue to tweet @ your Senator or Rep about. Just scroll through the hashtags and click one to begin.
+				.step Tweet directly @ your Senators and Rep with your own hashtag. Just click "Tweet @ Congress" and enter your zip. Then #SoundOff!
+				.step Be a leader and start a #SoundOff campaign. Click the button above, choose s hashtag, and get your friends and followers to #SoundOff @ Congress.
+				.tutorial_box
+					or
+					%button.tutorial View The Tutorial
+			.links
+				.row
+					= link_to 'About/How To', about_path
+					= link_to 'Press', press_path
+				.row
+					= link_to 'Donate', 'http://www.HeadCount.org/donate'
+					= link_to 'Terms & Conditions', tos_path, :target => '_blank'
+				.row
+					= link_to 'Privacy Policy', privacy_path, :target => '_blank'
+					= link_to 'Contact', contact_path
+				.row
+					= link_to 'Register to Vote', 'https://register.rockthevote.com/registrants/new?partner=1681', :target => '_blank'
+					= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Sign in /Register', new_user_session_path )
+				.row
+					= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
+					= link_to 'Advanced instructions', '#'
+
 		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
-			.back{ 'ng-click' => 'reset()'} < Back
 			.description.campaign
 				.title
-					%button.open_soundoff{{  :campaign => '{{item.id}}' }}
-						%span #S
-						ound
-						%span O
-						ff
-
-
 					%a{ 'ng-href' => '{{item.website}}', :target => '_blank' }
 						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}' }
 					.title_line
 						%h1
 							%a{ 'ng-href' => '/{{item.short_url }}' }{{item.name}}
 						%h3
-							Tweet @ your {{item.target}} with hashtag {{item.hashtag }}. Just click
-							%a.open_soundoff{ :href => '#', :campaign => '{{item.id}}'  }#SoundOff!
-
+							Tweet @ your {{item.target}} with hashtag {{ item.hashtag }}. Just click
+							%a.open_soundofff{ :href => '#'} here
 
 					.copy {{item.description}}
 
 					%p.details_left
-						%strong Launched
+						Launched
 						{{ item.created_at | date:'d MMMM' }}
+						%span{ 'ng-hide' => 'item.partner.length < 1' }
+							by
+							%a{ 'ng-href' => '{{item.website}}', :target => '_blank' } {{item.partner}}
+							%a.twitter_name{ 'ng-href' => 'https://twitter.com/{{item.twitter_name}}', :target => '_blank' } {{item.twitter_name}}
 
-					%p.details_right{ 'ng-hide' => 'item.partner.length < 1' }
-						%strong Created by
-						%a{ 'ng-href' => '{{item.website}}', :target => '_blank' } {{item.partner}}
-						%a{ 'ng-href' => 'https://twitter.com/{{item.twitter_name}}', :target => '_blank' } {{item.twitter_name}}
+					%button.open_soundoff{{  :campaign => '{{item.id}}' }} Tweet {{item.hashtag }}
+
 			.description.rep
 				.title
 
 					%img{ 'ng-src' => '{{item.twitter_profile_image.replace("_normal","_bigger") }}' }
-					%button.open_soundoff{{  :rep => '{{item.twitter_screen_name}}' }}
-						%span #S
-						ound
-						%span O
-						ff
 					.title_line
 						%h1
 							%a{ 'ng-href' => '/rep/{{item.twitter_screen_name}}'}{{item.title}} {{item.first_name}} {{item.last_name}}
@@ -142,7 +185,7 @@
 					%p.details_left
 						%strong {{longTitle( item )}}
 
-					.copy
+					%button.open_soundoff{{  :rep => '{{item.twitter_screen_name}}' }} Tweet @{{item.twitter_screen_name}}
 
 
 			.tweets
@@ -186,5 +229,47 @@
 				%a.open_soundoff{ :href => '#',:rep => '{{item.twitter_screen_name}}', :campaign => '{{item.id}}', 'ng-hide' => 'item.tweets.length < 1 '  } #SoundOff!
 
 
-= image_tag asset_path( 'SoundOffWhiteBeta.svg' ), :style => 'display:none'
-= image_tag asset_path( 'SoundOffAtCongressWhiteBeta.svg' ), :style => 'display:none'
+#terrible
+	.step.pick.on
+	.step.tweet
+	.step.new
+#overlay
+	#start_campaign
+		.left
+		.target
+		.right
+	#menu_block
+		#tweet_congress
+			.left
+			.target
+	.placeholder
+	#content_block
+		.target
+		.right
+	#rest
+		.dot.one 1
+		.dot.two 2
+		.dot.three 3
+		.dot.four 4
+		.dot.five 5
+		.instructions
+			.row
+				.dot.one 1
+				%h2 Start a Campaign
+				%p Just click the button above. You pick the hashtag and write a short description, and then get the URL and widget for your campaign.
+			.row
+				.dot.two 2
+				%h2 Tweet @ Congress
+				%p Click the button to the left. Then enter your zip, and your message. The handle for your Senators and Rep will be added automatically.
+			.row
+				.dot.three 3
+				%h2 Find a Campaign
+				%p You can browse the most popular campaigns, the most recent campaigns, or search by issue.
+			.row
+				.dot.four 4
+				%h2 Tweet as Part of a Campaign
+				%p Once you click on a campaign, a full description will appear on the right along with previous tweets. Hit the Tweet button, and provide your zip code. The campaign hashtag and your legislators' handles will automatically be added to your tweet.
+			.row
+				.dot.five 5
+				%h2 Target a Rep or Senator
+				%p Click "Senators + Reps" for a list of legislators targeted most. If you don't see the one's you're looking for, enter their name or state in "Search Reps + Senators"
