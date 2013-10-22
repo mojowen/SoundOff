@@ -321,7 +321,7 @@ function formScope($http, $scope) {
 	$scope.$watch('targets',function() {
 		if( $oundoff_config.campaign == null && $scope.targets.length > 0) {
 			$scope.default_message = 'https://twitter.com/intent/tweet?related=HeadCountOrg&text='
-			$scope.default_message += 'I just sent a %23SoundOff to my Rep '+ $scope.targets.map( function(el) { return '@'+el.twitter_id}).join(' ')+'. Do it to and help us %23SoundOff more! '
+			$scope.default_message += 'I just sent a %23SoundOff to my Rep '+ $scope.targets.map( function(el) { return '@'+el.twitter_screen_name}).join(' ')+'. Do it to and help us %23SoundOff more! '
 		}
 	})
 
