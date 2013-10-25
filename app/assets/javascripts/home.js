@@ -37,7 +37,7 @@ if( $oundoff_config.home ) {
 
 		if( w_width < 860 ) return false;
 
-		if( w_top == 0 && $(window).is(':visible') ) $(terrible).show();
+		if( w_top == 0 && $welcome.is(':visible') ) $(terrible).show();
 		else $(terrible).hide();
 
 		if( w_top > $welcome.height() ) {
