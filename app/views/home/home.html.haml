@@ -126,26 +126,26 @@
 			.describe
 				.step.on Pick an issue to tweet @ your Senator or Rep about. Just scroll through the hashtags and click one to begin.
 				.step Tweet directly @ your Senators and Rep with your own hashtag. Just click "Tweet @ Congress" and enter your zip. Then #SoundOff!
-				.step Be a leader and start a #SoundOff campaign. Click the button above, choose s hashtag, and get your friends and followers to #SoundOff @ Congress.
+				.step Be a leader and start a #SoundOff campaign. Click the button above, choose a hashtag, and get your friends and followers to #SoundOff @ Congress.
 				.tutorial_box
 					or
 					%button.tutorial View The Tutorial
 			.links
 				.row
 					= link_to 'About/How To', about_path
-					= link_to 'Press', press_path
+					= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Log in', new_user_session_path )
 				.row
-					= link_to 'Donate', 'http://www.HeadCount.org/donate'
-					= link_to 'Terms & Conditions', tos_path, :target => '_blank'
-				.row
-					= link_to 'Privacy Policy', privacy_path, :target => '_blank'
-					= link_to 'Contact', contact_path
-				.row
-					= link_to 'Register to Vote', 'https://register.rockthevote.com/registrants/new?partner=1681', :target => '_blank'
-					= !! current_user ? link_to( 'Log out', destroy_user_session_path ) : link_to( 'Sign in /Register', new_user_session_path )
-				.row
+					= link_to 'Advanced Techniques', about_path
 					= link_to 'HeadCount.org', 'http://headcount.org', :target => '_blank'
-					= link_to 'Advanced instructions', '#'
+				.row
+					= link_to 'Press', press_path
+					= link_to 'Privacy Policy', privacy_path, :target => '_blank'
+				.row
+					= link_to 'Terms and Conditions', tos_path, :target => '_blank'
+					= link_to 'Help', help_path
+				.row
+					= link_to 'Contact', contact_path
+					= link_to 'Donate', 'http://www.HeadCount.org/donate', :target => '_blank'
 
 		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
 			.description.campaign
