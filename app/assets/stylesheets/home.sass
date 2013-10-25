@@ -612,12 +612,12 @@ $row_top: 80px - 18px
 $row_height: 280px
 
 #overlay
-	position: fixed
+	position: absolute
 	display: none
+	pointer-events: none
 	top: 0
 	left: 0
 	right: 0
-	bottom: 0
 	z-index: 100
 	$overlay_color: rgba(102,102,102,0.9)
 
@@ -626,10 +626,11 @@ $row_height: 280px
 		box-shadow: inset 0px 0px 20px 10px $overlay_color
 
 	div
-		position: fixed
+		position: absolute
 
 	#start_campaign
 		top: -18px
+		width: 100%
 		@include overlay_pad( 300px, 80px, $overlay_color,0,200px)
 
 	#menu_block
@@ -669,26 +670,29 @@ $row_height: 280px
 			bottom: 0
 	#rest
 		background-color: $overlay_color
-		bottom: 0
+		padding-bottom: 50px
+		position: relative
 		left: 0
 		right: 0
-		top: $row_height + 80px - 18px
+		$rest_top: $row_height + 80px - 18px
+		top: $rest_top
 		.one
-			top: 40px
+			top: 40px - $rest_top
 			right: 200px
 		.two
-			top: 64px
+			top: 64px - $rest_top
 			left: 480px
 		.three
-			top: 170px
+			top: 170px - $rest_top
 			left: 70px
 		.four
-			top: 250px
+			top: 250px - $rest_top
 			right: 40px
 		.five
-			top: 170px
+			top: 170px - $rest_top
 			left: 480px
 		.instructions
+			position: relative
 			.row
 				clear: both
 				display: block
@@ -712,7 +716,7 @@ $row_height: 280px
 					padding: 0
 					margin: 0 0 8px
 		.dot
-			position: fixed
+			position: absolute
 			$size: 32px
 			background-color: $blue
 			color: white
@@ -737,7 +741,7 @@ body.overlaid
 		pointer-events: none
 	.step
 		position: absolute
-		border: 2px dotted #fff
+		border: 2px dotted $red
 		display: none
 		z-index: 60
 		&.on

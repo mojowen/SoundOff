@@ -37,12 +37,19 @@
 			&, div, .target, .right, .left
 				height: 340px
 		#rest
-			top: 402px
+			$rest_top: 402px
+			top: $rest_top
+			.one
+				top: 40px - $rest_top
+			.three, .five
+				top: 170px - $rest_top
 			.two, .five
 				left: 460px
 			.four
-				top: 300px
+				top: 300px - $rest_top
 				right: 10px
+			.two
+				top: 64px - $rest_top
 			.instructions
 				.row
 					font-size: 70%

@@ -125,14 +125,18 @@ if( $oundoff_config.home ) {
 	}
 	function overlay() {
 		if( $('body').toggleClass('overlaid').hasClass('overlaid') ) {
-			$(welcome).hide();
+			var $rest = $(rest)
+			$(welcome,terrible).hide();
 			scroll_to(0,0);
 			angular.element( main ).scope().$apply( function($scope) { $scope.mode = 'Scoreboard'; $scope.resetHard(); } )
+			$(main).css({ height: window.innerHeight, minHeight: '0px', overflow: 'hidden'})
+			$('#top,#menu').css('position','absolute')
 			setTimeout( function() {
-				$(document).bind('click.overlay scroll.overlay', function() { overlay(); $(this).unbind('click.overlay scroll.overlay') })
+				$(document).bind('click.overlay', function() { overlay(); $(this).unbind('click.overlay') })
 			}, 10);
 		} else {
 			$(welcome).show()
+			$('#top,#menu,#main').attr('style','')
 		}
 	}
 	function scroll_to(target_height,direction) {
