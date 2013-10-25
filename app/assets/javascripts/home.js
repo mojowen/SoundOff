@@ -79,6 +79,7 @@ if( $oundoff_config.home ) {
 		var type = $(this).hasClass('campaign') ? 'campaign' : 'rep',
 			item = angular.element( this ).scope()[type]
 
+		$(welcome).hide()
 		angular.element( main ).scope().$apply( function($scope) { $scope.active = item; });
 
 
