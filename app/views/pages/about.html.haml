@@ -20,23 +20,21 @@
 		%li
 			Visit the
 			= link_to 'action page', home_path
-			and pick a campaign. You can scroll through a list of the "Most Tweeted #" on the left side. Find other choices by searching for a particular topic or sorting by "Most Recent."
-		%li Click “#SoundOff”, enter your zip code and type your message.
+			and pick a campaign. You can scroll through a list of the "Popular" on the left side. Find other choices by searching for a particular topic or sorting by "Recent."
+		%li Click on any campaign and information will appear in the upper right.  Then hit the red button with the hashtag, enter your zip code and type your message.
 		%li Tweet it! SoundOff will automatically fill in your legislators’ handles and the campaign hashtag.
 
 	%p
 		You can also #SoundOff yourself (not part of a campaign), by clicking
-		"#{ link_to "Tweet directly @ your Rep and Senators", "#", :class => 'open_soundoff', :onclick => 'openSoundOff(); return false;'}"
-		and entering your zip.  Or click “Most Tweeted @” to see a list or Reps and Senators who are getting the most action. Once you do that, other Reps and Senators can be found through the Search bar -- useful if you want to tweet at someone in particular but you’re not in their district.
+		"#{ link_to "Tweet directly @ Congress", "#", :class => 'open_soundoff', :onclick => 'openSoundOff(); return false;'}"
+		and entering your zip.  Or click “Senators + Reps” to see a list or Reps and Senators who are getting the most action. Once you do that, other Reps and Senators can be found through the Search bar -- useful if you want to tweet at someone in particular but you’re not in their district.
 
 
 
 	%h2 START YOUR OWN CAMPAIGN
 
 	.para
-		Looking to get your message to Washington in a big way? #{link_to 'Start your own campaign', new_campaign_path}. You’ll just need to pick a hashtag and write a short description. Once your campaign is approved, you’ll get a link to your campaign and the code for an  embeddable widget (
-		%a{ :onclick => '$(this).next(".hidden_widget").show(); return false;', :href => '#' }click for example
-		).
+		Looking to get your message to Washington in a big way? #{link_to 'Start your own campaign', new_campaign_path}. You’ll just need to pick a hashtag and write a short description. Once your campaign is approved, you’ll get a link to your campaign and the code for an  embeddable widget (#{link_to 'click for example','#', :onclick =>'$(this).next(".hidden_widget").show(); return false;' }).
 		.hidden_widget
 			%h3 Widget Preview
 			%a.close{ :onclick => '$(this).parent().hide(); return false;', :href => '#' } close
@@ -44,9 +42,7 @@
 			%div{ :style => 'width: 300px;margin: 0 auto;' }
 				%a(class="soundoff_widget_light" href="http://www.soundoffatcongress.org/Fg-2" campaign="79")ShowLeadership
 
-		Send the link to friends and supporters. Or, place the widget on a Web page and direct traffic there. You can then log in any view your campaign dashboard to check your stats and responses (
-		%a{ :onclick => '$(this).next(".hidden_widget").show(); return false;', :href => '#' } click for example
-		).
+		Send the link to friends and supporters. Or, place the widget on a Web page and direct traffic there. You can then log in any view your campaign dashboard to check your stats and responses (#{ link_to 'click for example','#',:onclick => '$(this).next(".hidden_widget").show(); return false;'}).
 		.hidden_widget
 			%h3 Dashboard Preview
 			%a.close{ :onclick => '$(this).parent().hide(); return false;', :href => '#' } close
