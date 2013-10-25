@@ -142,12 +142,12 @@ body.home #main
 				white-space: nowrap
 			.description
 				width: 100%
-				background: transparent image_url('crowdphoto.png') 50% -144px no-repeat
+				background: transparent image_url('crowdphoto.png') 50% bottom no-repeat
 				background-size: cover
 				padding: 20px
 				.title
 					position: relative
-					background-color: rgba(255,255,255,0.9)
+					background-color: rgba(255,255,255,0.95)
 					padding: 20px
 					font-size: 14px
 					.title_line
@@ -180,26 +180,24 @@ body.home #main
 							color: $red
 							text-decoration: none
 					.copy
-						margin: 20px 0 80px
+						margin: 20px 0 20px
 						clear: both
 
 					button
 						@include button($red,$darkred)
-						position: absolute
-						bottom: 10px
-						right: 10px
-						font-size: 24px
+						float: right
+						font-size: 20px
 						height: 40px
 						padding: 1px 8px
 						letter-spacing: 3px
+						margin-top: 16px !important
+						@include clearfix
 						&::after
 							content: " \00BB"
 
 					.details_left
-						left: 20px
-					.details_right, .details_left
-						position: absolute
-						bottom: 20px
+						display: inline
+						pading
 						a
 							color: $darkblue
 							&.twitter_name
