@@ -35,7 +35,7 @@
 					%h3.name {{campaign.hashtag}}
 					%h4.twitter {{campaign.partner}}
 
-					.description {{campaign.description}}
+					.description {{ shrink_description( campaign) }}
 				.rep{ "ng-repeat" => "rep in reps()", "ng-class" => "isActive($index,rep)" }
 					%h3 {{rep.title}} {{rep.first_name}} {{rep.last_name}}
 					%p

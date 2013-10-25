@@ -283,6 +283,18 @@ function homePageScope($http, $scope) {
 		if( typeof item.hashtag != 'undefined' ) return 'about '+item.hashtag;
 		else return 'to @'+item.twitter_screen_name;
 	}
+	$scope.shrink_description = function(campaign) {
+		var words = campaign.description.split(/\s/),
+			work_with = ''
+
+		for (var i = 0; i < words.length; i++) {
+			if( work_with.length > 90 ) break;
+			else work_with += words[i]+' ';
+		};
+		if( campaign.description.length != work_with.length ) work_with += '...';
+
+		return work_with;
+	}
 
 	$scope.setReps = function() {
 		$scope.mode = 'Reps'
