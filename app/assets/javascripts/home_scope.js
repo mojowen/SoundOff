@@ -279,6 +279,10 @@ function homePageScope($http, $scope) {
 		if( $scope.single_item != null ) $scope.resetHard();
 		else $scope.reset()
 	}
+	$scope.long_title = function(item) {
+		if( typeof item.hashtag != 'undefined' ) return 'about '+item.hashtag;
+		else return 'to @'+item.twitter_screen_name;
+	}
 
 	$scope.setReps = function() {
 		$scope.mode = 'Reps'
