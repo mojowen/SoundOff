@@ -47,11 +47,9 @@
 		= f.text_field :contact_name, :placeholder => 'Contact Name*', :value => ( @partner.users.first.name rescue '' ), :for => 'company nonprofit individual'
 		.help Who should we talk to about your campaigns?
 
-		- if (@partner.users.first.password rescue false)
-			= f.hidden_field :contact_password, :value => @partner.users.first.password
-		- else
-			= f.password_field :contact_password, :placeholder => 'Password*', :value => ( @partner.users.first.password rescue '' ), :for => 'company nonprofit individual'
-			.help The password you'll use to login
+
+		= f.password_field :contact_password, :placeholder => 'Password*', :value => ( @partner.users.first.password rescue '' ), :for => 'company nonprofit individual'
+		.help The password you'll use to login
 
 		= f.email_field :contact_email, :placeholder => 'Contact Email*', :value => ( @partner.users.first.email rescue '' ), :for => 'company nonprofit individual'
 		.help We’ll email you a confirmation that your campaign has been approved, or hit you with any questions.
@@ -86,14 +84,17 @@
 
 		%p * Required
 
-		.errors
+		.errors= @partner.errors.messages.map{ |k,v| "#{k} #{v.uniq.first}" unless v.empty? }.reject(&:nil?).join(' and ')
 
 :javascript
-	$(document).ready( function() {  })
+	$(document).ready( function() {
+		$('.partner_type input').change()
+		$( #{ @partner.errors.messages.reject{|k,v| v.length < 1 }.map{ |k,v| "#partner_contact_#{k}" }.join(',').to_json } ).addClass('oops');
+	})
 	.on('click','.partner_type label, .line span',function() {
 		this.previousElementSibling.click()
 	})
-	.on('click','.partner_type input[type=radio]',function() {
+	.on('click change','.partner_type input[type=radio]',function() {
 		var type = $(this).val()
 
 		$('.help').removeClass('on')

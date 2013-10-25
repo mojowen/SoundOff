@@ -31,7 +31,7 @@ class Partner < ActiveRecord::Base
 		self.website = 'http://'+self.website unless self.website.index('http')
 	end
 
-	after_save :update_user
+	before_save :update_user
 
 	def update_user
 		if contact_name || contact_phone || contact_password || contact_email
@@ -44,10 +44,12 @@ class Partner < ActiveRecord::Base
 			user.password = contact_password if ! contact_password.nil? && ! contact_password.empty?
 			user.password_confirmation = contact_password if ! contact_password.nil? && ! contact_password.empty?
 
-			begin
+			if user.valid?
 				user.save
-			rescue
-				return errors[:base] << "Bad email"
+			else
+				errors[:email] << user.errors.messages[:email].first if user.errors.messages[:email]
+				errors[:password] << user.errors.messages[:password].first if user.errors.messages[:password]
+				return false
 			end
 		end
 	end
