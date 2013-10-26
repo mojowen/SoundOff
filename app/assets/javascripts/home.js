@@ -27,8 +27,10 @@ if( $oundoff_config.home ) {
 		else nextSlider( 0 );
 
 		if( typeof $oundoff_config.single != 'undefined' && $oundoff_config.single != null ) {
-			$(welcome).hide()
+			$welcome.hide()
 			$(terrible).hide()
+		} else {
+			$(terrible).show()
 		}
 	})
 	.scroll( function(e) {

@@ -275,6 +275,8 @@ function homePageScope($http, $scope) {
 		$scope.raw_campaigns.sort( function(a,b) {
 			return a.created_at > b.created_at ? -1 : 1;
 		})
+		$welcome.hide();
+		$(terrible).hide()
 		$scope.mode = 'Most Recent'
 		if( $scope.single_item != null ) $scope.resetHard();
 		else $scope.reset()
@@ -298,6 +300,8 @@ function homePageScope($http, $scope) {
 
 	$scope.setReps = function() {
 		$scope.mode = 'Reps'
+		$welcome.hide();
+		$(terrible).hide()
 		$scope.raw_reps.sort( function(a,b) {
 				sort = a.score > b.score
 
