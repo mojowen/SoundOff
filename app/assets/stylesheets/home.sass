@@ -341,6 +341,7 @@ body.home #main
 				float: right
 
 		&.single
+			display: none
 			border-bottom: none
 			padding-bottom: 30px
 			height: 250px
@@ -499,11 +500,16 @@ body.home #main
 		transition-property: left
 		transition-duration: 0.25s
 
-		display: block
-		top: 302px
+		display: none
+		&.single
+			display: block
+		// top: 302px
+		top: $fixed_header + 20px
 		&.reps
-			top: 264px
-		padding: 20px 10px
+			// top: 264px
+			top: $fixed_header + 20px
+		// padding: 20px 10px
+		padding: 10px
 		z-index: 0
 		position: fixed
 		left: $menu_left

@@ -41,7 +41,7 @@
 					%p
 						{{rep.state_name}}
 						%span{ 'ng-hide' => 'rep.district == "0"' }{{rep.district}}
-	#more-info{ 'ng-class' => '{true: "reps", false: "" }[mode.toLowerCase() == "reps"]' }
+	#more-info{ 'ng-class' => '{true: "reps", false: "" }[mode.toLowerCase() == "reps"]', :class => '{{menuClass()}}' }
 		%h2 More Info
 		%p
 			Direct Link:
@@ -50,6 +50,8 @@
 			%a{ :href => '{{single_twitter }}', :target => '_blank' } Share on Twitter
 			|
 			%a{ :href => '{{single_facebook }}', :target => '_blank' } Share on Facebook
+		%p
+			%a{ 'ng-click' => 'reset();', :href => '#' } See More {{{true: "Reps", false: "Campaigns" }[mode.toLowerCase() == "reps"]}}
 
 	#powered_by
 		.inner
