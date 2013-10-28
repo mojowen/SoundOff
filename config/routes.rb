@@ -28,6 +28,7 @@ SoundOff::Application.routes.draw do
   match '/contact' => 'pages#contact', :as => 'contact'
   match '/tos' => 'pages#tos', :as => 'tos'
   match '/privacy' => 'pages#privacy', :as => 'privacy'
+  match '/advanced' => 'pages#advanced', :as => 'advanced'
 
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
