@@ -41,8 +41,9 @@ ready( function() {
 			widget_frame.style.border = 'none'
 			widget_frame.style.overflow = 'hidden'
 			widget_frame.style.height = height + 6 + 'px'
-			widget_frame.style.width = width,
-			widget_frame.style.minWidth = minWidth,
+			widget_frame.style.width = width
+			widget_frame.style.minWidth = minWidth
+			widget_frame.setAttribute('frameBorder','0')
 			widget_frame.style.borderRadius = '3px'
 
 			// The top "button"

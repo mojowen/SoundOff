@@ -1,0 +1,77 @@
+%h1 Advanced Techniques
+
+#content.about
+
+	%p Here are some tips on how to “hack” #SoundOff to further customize your campaigns. If you have questions or would like assistance, feel free to email us at SoundOff@HeadCount.org.
+
+	%h3 1) Skip a step when sending users to your campaign:
+	%p Your campaign URL links to your #SoundOff campaign description, where users click a button to get started, and then enter their ZIP. If you want to skip a step and have users enter their zip code right away, Just add “?zip=” to the end of the URL that you send to your supporters.
+
+	%p
+		For example, click on both of these and decide which you prefer:
+		%ul
+			%li= link_to 'http://www.soundoffatcongress.org/kpQL', 'http://www.soundoffatcongress.org/kpQL', :target => '_blank'
+			%li= link_to 'http://www.soundoffatcongress.org/kpQL?zip=', 'http://www.soundoffatcongress.org/kpQL?zip=', :target => '_blank'
+
+	%p The second version is useful when you’ve already told your supporters what your campaign is about and asked them to tweet at Congress.
+
+	%h3 2) Track supporters’ actions without asking for their email addresses:
+	%p
+		What if you want to know which current supporters are taking action, but you don’t want to ask for email addresses? If you are emailing your campaign link to supporters and have the ability to add a variable and pass supporter information to the URL, just
+		%strong place their email address at the end of the URL.
+	%p Like this: #{ link_to 'http://www.soundoffatcongress.org/Fg-2?email=JohnDoe@gmail.com','http://www.soundoffatcongress.org/Fg-2?email=JohnDoe@gmail.com', :target => '_blank'}
+	%p Your supporter won’t be asked to provide an email address, and their email address will not be shared with HeadCount. But, their email address will still show up next to their action in the user data “Download Names” CSV file. You can then upload that to your database and know they took action. In this case, the supporter will not be asked to opt in or out of anyone’s email list (yours or ours) and only you will have this data.
+
+	%h3 3) Use your own graphics, and have the #SoundOff module pop up on your web page:
+	%p
+		The two basic ways to run a #SoundOff campaign are to have supporters click on a link to your Campaign URL, or embed your campaign widget on your web page. But what if you have a certain graphic look you want to maintain, and don’t want traffic to leave your page? There’s a way to make the #SoundOff module pop up directly on your site. If you know a bit about coding, this
+		= link_to 'Example Code','http://jsfiddle.net/mojowen/HaP89/5/', :target => '_blank'
+		shows you an example of how this worked with a previous campaign. For more information on further customization, please get in touch with us at
+		= link_to 'SoundOff@HeadCount.org','mailto:SoundOff@HeadCount.org'
+		\.
+
+	%h3 4) Take your supporters right to a pre-filled tweet (that contains your hashtag and first suggested tweet):
+
+	%p
+		It's simple to take your supporters to a tweet that's ready to send. Just
+		%strong insert the phrase "direct" in your campaign URL
+		before your campaign extension.
+	%p
+		Example:
+		%ul
+			%li
+				Start with:
+				= link_to 'http://www.soundoffatcongress.org/kpQL','http://www.soundoffatcongress.org/kpQL', :target => '_blank'
+			%li
+				Then add "direct":
+				= link_to 'http://www.soundoffatcongress.org/direct/kpQL','http://www.soundoffatcongress.org/direct/kpQL', :target => '_blank'
+
+	%p This is most useful when you want all the tweets to carry the same message, or cut down on the steps required for the user. Note that the user will still need to enter their ZIP before they are taken to Twitter and their pre-filled tweet. And there will be no language about the campaign, so you’ll need to include an explanation via email or social media along with the link.
+
+	%h3 5) Target a specific Rep or Senator:
+
+	%p
+		Add a ZIP code in your targets district to the end of the campaign URL, like this:
+		= link_to 'http://www.soundoffatcongress.org/Fg-2?zip=45331','http://www.soundoffatcongress.org/Fg-2?zip=45331', :target => '_blank'
+
+	%ul
+		%li To target John Boehner, use zip code 45331
+		%li To target Nancy Pelosi, use zip cose 94134
+		%li To target Eric Cantor, use zip code 22960
+		%li To target Steny Hoyer, use zip code 20678
+		%li To target Mitch McConnell, use zip code 40502
+		%li To target Harry Reid, use zip code 89701
+
+	%p
+		To target anyone else, use a zip that is entirely in their district. Also make sure that your campaign is set to House or Senate, depending on who you want to target. We RECOMMEND that when using this technique, you also use the “direct” function, like this:
+		= link_to 'http://www.soundoffatcongress.org/direct/Fg-2?zip=45331', 'http://www.soundoffatcongress.org/direct/Fg-2?zip=45331', :target => '_blank'
+
+	%p This will take the user directly to a pre-filled tweet targeting a particular legislator.
+
+	%p NOTE: Many zip codes are in more than one congressional district. Be sure the zip code you select is exclusively in one district.
+
+
+
+
+
+

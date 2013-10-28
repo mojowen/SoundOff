@@ -34,6 +34,7 @@ function openSoundOff( args ) {
       form.style.border = 'none'
       form.style.height = '0px'
       form.style.position = 'fixed'
+      form.setAttribute('frameBorder','0')
       form.style.top = (args.top || '60')+'px'
 
 
