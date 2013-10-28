@@ -11,8 +11,10 @@ if( $oundoff_config.home ) {
 		w_top = document.body.scrollTop,
 		w_height = window.innerHeight,
 		w_width = window.innerWidth
-		if( w_width < 860 ) resizeTabs(11);
-		else {
+		if( w_width < 860 ) {
+			resizeTabs(11);
+			$(terrible).hide()
+		} else {
 			$('span',tabs).css('fontSize','');
 			nextSlider( 0 );
 		}
@@ -30,7 +32,7 @@ if( $oundoff_config.home ) {
 			$welcome.hide()
 			$(terrible).hide()
 		} else {
-			$(terrible).show()
+			if( w_width > 860 ) $(terrible).show()
 		}
 	})
 	.scroll( function(e) {
