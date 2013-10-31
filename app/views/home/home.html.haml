@@ -193,7 +193,9 @@
 			.tweets
 				%h4
 					Join the Ranks
-					%span SoundOff with others {{ long_title( item) }}
+					%span
+						%a.open{  :campaign => '{{item.id}}', :rep => '{{item.twitter_screen_name}}', :href => '#' }#SoundOff
+						with others {{ long_title( item) }}
 
 
 				.tweet{ 'ng-repeat' => 'tweet in item.tweets', 'ng-hide' => '$index > (item.showing || 8) -1' }
