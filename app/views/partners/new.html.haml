@@ -88,7 +88,7 @@
 
 :javascript
 	$(document).ready( function() {
-		$('.partner_type input').change()
+		$('.partner_type input').not('.partner_type input').change()
 		$( #{ @partner.errors.messages.reject{|k,v| v.length < 1 }.map{ |k,v| "#partner_contact_#{k}" }.join(',').to_json } ).addClass('oops');
 	})
 	.on('click','.partner_type label, .line span',function() {
