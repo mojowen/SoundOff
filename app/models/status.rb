@@ -9,6 +9,7 @@ class Status < ActiveRecord::Base
 	has_and_belongs_to_many :found_hashtags, class_name: 'Hashtag'
 
 	def self.create_from_tweet raw_tweet
+		raw_tweet = status.to_json if raw_tweet.class != String
 		raw_tweet = JSON::parse(raw_tweet) if raw_tweet.class == String
 
 		hashtags = raw_tweet['entities']['hashtags'].map{ |f| f['text'].downcase }
@@ -102,5 +103,10 @@ class Status < ActiveRecord::Base
 			:created_at => data['created_at']
 		}
 	end
-
+	def self.backfill search
+		client = Twitter
+		client.search("##{search} #soundoff", :result_type => "recent") do |tweet|
+			Status.create_from_tweet(raw_tweet)
+		end
+	end
 end
