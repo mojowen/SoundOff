@@ -103,11 +103,11 @@ if( $oundoff_config.home ) {
 			nextSlider( $(this).index() )
 		}
 	},'.rotate .step')
-	.on('click','#welcome .close',function() { $(this).parent().hide() })
+	.on('click','#welcome .close',function() { $(this).parent().hide(); $(terrible).hide(); })
 	.on('click','#logo',function() { $(welcome).show(); $(terrible).show(); reset(); })
 	.on('click touchdown','.back',function() { reset() });
 
-	function reset() { angular.element( main ).scope().$apply( function($scope) { $scope.reset() }); }
+	function reset() { $(terrible).hide(); angular.element( main ).scope().$apply( function($scope) { $scope.reset() }); }
 	function nextSlider( next_step ) {
 
 		var next_step = next_step || 0,
