@@ -54,7 +54,7 @@ class CampaignsController < ApplicationController
 
 		if @campaign.save
 			respond_to do |format|
-				format.html { redirect_to campaigns_path }
+				format.html { redirect_to campaign_path @campaign }
 				format.json { render :json => { :success => true } }
 			end
 		else
