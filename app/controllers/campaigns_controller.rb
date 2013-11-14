@@ -29,7 +29,7 @@ class CampaignsController < ApplicationController
 		@campaign.partner = current_user.partner unless current_user.partner.nil?
 
 		if @campaign.save
-			redirect_to campaigns_path
+			redirect_to campaign_path @campaign
 		else
 			render action 'new'
 		end
