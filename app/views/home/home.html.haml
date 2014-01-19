@@ -199,20 +199,26 @@
 
 
 				.tweet{ 'ng-repeat' => 'tweet in item.tweets', 'ng-hide' => '$index > (item.showing || 8) -1' }
-					.actions
-						%a{ :href =>  "https://twitter.com/{{tweet.screen_name }}/status/{{tweet.tweet_id}}", :target => '_blank' }
-							= image_tag 'twitter_logo.png'
-							{{  tweet.created_at | date: 'd MMM' }}
-						.buttons
-							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.tweet_id}}', :target => '_blank' }
-							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
-							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
-
-					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}' }
-					%h2 {{tweet.sceren_name }}
+					%a.follow_button{ :href => 'https://twitter.com/{{tweet.screen_name}}', :target => '_blank' }
+						.bird
+						Follow
+					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}', :onerror => 'this.src = "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_bigger.png"' }
+					%h2 {{tweet.screen_name }}
 					%h3 @{{tweet.screen_name }}
 
-					.body {{ tweet.message }}
+					%blockquote.twitter-tweet
+						%p {{ tweet.message }}
+						%a{ :href =>  "https://twitter.com/{{tweet.screen_name }}/status/{{tweet.tweet_id}}", :target => '_blank' }
+							{{  tweet.created_at | date: 'h:mm a - MMM d yyyy' }}
+
+					.buttons
+						%span
+							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.tweet_id}}', :target => '_blank' }
+						%span
+							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
+						%span
+							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
+
 
 			.no-tweets{ 'ng-hide' => 'item.score <= item.tweets.length || item.tweets.length > 8 || item.score == 0'}
 				%h3 Loading Tweets...

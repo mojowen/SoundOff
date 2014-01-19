@@ -74,39 +74,88 @@
 	padding: 8px
 	font-size: 90%
 	min-width: 180px
+	border-radius: 5px
+	box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 3px
+	position: relative
 	a
 		text-decoration: none
 		color: #333
 		&:hover
 			text-decoration: underline
 	h2
-		font-size: 80%
-		padding-top: 8px
+		font-size: 16px
+		font-weight: bold
+		padding-top: 6px
+		font-family: $tweetFontSans
 		margin: 0
 	h3
-		font-size: 60%
+		margin: 4px 0 0
+		font-size: 12px
+		font-family: $tweetFontSans
+		font-weight: normal
+		color: #707070
 	img
-		height: 45px
-		width: 45px
+		height: 32px
+		width: 32px
 		clear: both
-		border-radius: 50px
+		border-radius: 4px
 		float: left
-		margin: 12px
-	.body
+		margin: 12px 6px 6px 12px
+	blockquote
 		clear: both
-		font-size: 85%
-		padding: 4px 4px 10px
+		padding: 0 4px 10px
 		margin: 10px
-		letter-spacing: 2px
-		border-bottom: 2px solid $blue
+		border-bottom: 1px solid $grey
 		word-break: break-word
-	.actions
-		margin: 0 0 10px
-		img
-			width: 30px
-			height: 30px
-			margin: -6px 0 0 -6px
-		.buttons
+		font-family: $tweetFont
+		&, p
+			font-size: 16px
+			line-height: 20px
+			letter-spacing: 1px
+		a
+			font-family: $tweetFontSans
+			color: $darkgrey
+			font-size: 12px
+			margin-top: -10px
+	iframe
+		margin: 0 auto
+		width: 100%
+
+	&.tweet_widgetized
+		border: none
+		box-shadow: none
+		margin: 0 8px
+		width: 42%
+		.follow_button, .buttons, img, h3, h2, a
+			display: none
+	.follow_button
+		position: absolute
+		top: 16px
+		right: 24px
+		padding: 0 5px 0 3px
+		font: bold 11px/18px 'Helvetica Neue',Arial,sans-serif
+		color: #333
+		text-decoration: none
+		text-shadow: 0 1px 0 rgba(255,255,255,0.5)
+		white-space: nowrap
+		cursor: pointer
+		background-color: #eee
+		background-image: -webkit-linear-gradient(#fff,#dedede)
+		background-image: linear-gradient(#fff,#dedede)
+		border: #ccc solid 1px
+		border-radius: 3px
+		.bird
+			width: 16px
+			height: 16px
+			margin: 0 3px 0 0
+			display: inline-block
+			vertical-align: middle
+			background: transparent url('http://platform.twitter.com/images/sprite.png') no-repeat -73px -160px
+			background-size: 177px 191px
+	.buttons
+		span
+			text-align: center
+			width: 33%
 			float: right
 			a
 				width: 15px

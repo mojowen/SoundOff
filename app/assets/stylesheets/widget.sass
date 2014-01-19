@@ -47,11 +47,16 @@ body.dark
 		overflow-y: auto
 
 		.tweet
+			iframe
+				margin: 0 auto
+				width: 100%
 			@include tweet
 			h2
 				padding-top: 16px
-			.actions
-				margin: 0 12px 10px
+			&.tweet_widgetized
+				width: 95%
+				margin: 0 auto
+				text-align: center
 
 
 	#header

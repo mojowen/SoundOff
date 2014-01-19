@@ -96,6 +96,7 @@ function homePageScope($http, $scope) {
 		if( query.length > 0 ) $http.get( '/statuses?'+selector+'='+query+offset_string,{}).success(function(data,status) {
 			loadTweets(data);
 			if( main.tweets.length != 0 && main.tweets.length < 8 && main.tweets < main.score ) loadActive(main, offset + main.tweets.length );
+			twttr.widgets.load()
 		})
 	}
 	function loadTweets(data) {
@@ -126,6 +127,7 @@ function homePageScope($http, $scope) {
 			}
 
 		};
+		setTimeout( function() { twttr.widgets.load() },500);
 	}
 	$scope.loadMore = function(item) {
 		loadActive(item)

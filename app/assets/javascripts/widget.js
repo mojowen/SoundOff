@@ -24,3 +24,18 @@ function widgetScope($http,$scope) {
 
 	}
 }
+
+function loadIntents() {
+	if (document.addEventListener) {
+		document.addEventListener('DOMNodeRemoved',removeNode,false)
+	} else if (document.attachEvent)  {
+	  document.attachEvent('DOMNodeRemoved',removeNode)
+	}
+	twttr.widdgets.load()
+}
+
+function removeNode(e) {
+	if( e.target.nodeName  === 'BLOCKQUOTE' && e.target.className == 'twitter-tweet' ) {
+		e.target.parentNode.className += ' tweet_widgetized'
+	}
+}

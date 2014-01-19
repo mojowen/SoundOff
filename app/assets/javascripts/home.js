@@ -105,7 +105,12 @@ if( $oundoff_config.home ) {
 	},'.rotate .step')
 	.on('click','#welcome .close',function() { $(this).parent().hide(); $(terrible).hide(); })
 	.on('click','#logo',function() { $(welcome).show(); $(terrible).show(); reset(); })
-	.on('click touchdown','.back',function() { reset() });
+	.on('click touchdown','.back',function() { reset() })
+	.on('DOMNodeRemoved', function(e) {
+		if( e.target.nodeName  === 'BLOCKQUOTE' && e.target.className == 'twitter-tweet' ) {
+			e.target.parentNode.className += ' tweet_widgetized'
+		}
+	})
 
 	function reset() { angular.element( main ).scope().$apply( function($scope) { $scope.reset() }); }
 	function nextSlider( next_step ) {

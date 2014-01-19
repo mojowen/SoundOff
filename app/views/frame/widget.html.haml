@@ -9,8 +9,11 @@
 		= javascript_include_tag "widget"
 		= javascript_include_tag '//platform.twitter.com/widgets.js'
 		= csrf_meta_tags
+		- if params[:style] == 'dark'
+			%meta(name="twitter:widgets:theme"content="dark")
 
-	%body{ :class => @body_class }
+
+	%body{ :class => @body_class, :onLoad => 'loadIntents()' }
 		#main{ "ng-app" => true, "ng-controller" => 'widgetScope'  }
 			%h3.take_action TAKE ACTION
 			#header
@@ -25,21 +28,26 @@
 					= @button
 			#content
 				.tweet{ 'ng-repeat' => 'tweet in tweets' }
-					.actions
-						%a{ :href =>  "https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}", :target => '_blank' }
-							= image_tag @body_class.index( 'dark' ).nil? ? 'twitter_logo.png' : 'twitter_dark.png'
-							{{  tweet.created_at | date: 'd MMM' }}
-
-						.buttons
-							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}', :target => '_blank' }
-							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}', :target => '_blank' }
-							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}', :target => '_blank' }
-
-					%img.profile_img{ 'ng-src' => '{{ tweet.user.profile_image_url.replace("_normal","_bigger") }}' }
+					%a.follow_button{ :href => 'https://twitter.com/{{tweet.user.screen_name}}', :target => '_blank' }
+						.bird
+						Follow
+					%img.profile_img{ 'ng-src' => '{{tweet.user.profile_image_url.replace("_normal","_bigger")}}', :onerror => 'this.src = "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_bigger.png"' }
 					%h2 {{tweet.user.name }}
 					%h3 @{{tweet.user.screen_name }}
 
-					.body {{ tweet.text }}
+					%blockquote.twitter-tweet
+						%p {{ tweet.text }}
+						%a{ :href =>  "https://twitter.com/{{tweet.user.screen_name }}/status/{{tweet.id_str}}", :target => '_blank' }
+							{{  tweet.created_at | date: 'h:mm a - MMM d yyyy' }}
+
+					.buttons
+						%span
+							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}', :target => '_blank' }
+						%span
+							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}', :target => '_blank' }
+						%span
+							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}', :target => '_blank' }
+
 
 		#attribute
 			powered by
