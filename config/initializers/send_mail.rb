@@ -23,4 +23,4 @@ elsif ENV['GMAIL_PASSWORD'] && ENV['GMAIL_USERNAME']
 	  :enable_starttls_auto => true
 	}
 end
-Rails.application.routes.default_url_options[:host] =  ( ENV['BASE_DOMAIN'].gsub(/(https|http|\:|\/\/|www)/,'') rescue 'localhost:3000' )
+Rails.application.routes.default_url_options[:host] =  ( ENV['BASE_DOMAIN'].gsub(/(https|http|\:|\/\/)/,'') rescue 'localhost:3000' )
