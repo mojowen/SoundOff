@@ -149,5 +149,18 @@ class HomeController < ApplicationController
       render :template => 'home/sitemap', :layout => false
     end
   end
+  def avatar_fallback
+    begin
+      user = Twitter.user(params[:twitter_screen_name].gsub('@',''))
+      if params[:fallback_type].downcase == 'partner'
+        Partner.find( params[:id] ).update_attributes( :logo => user.profile_image_url )
+      else
+        Rep.find( params[:id] ).update_attributes( :twitter_profile_image => user.profile_image_url )
+      end
+      redirect_to user.profile_image_url.gsub("_normal","_bigger")
+    rescue
+      redirect_to "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_bigger.png"
+    end
+  end
 
 end

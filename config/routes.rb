@@ -30,6 +30,7 @@ SoundOff::Application.routes.draw do
   match '/privacy' => 'pages#privacy', :as => 'privacy'
   match '/advanced' => 'pages#advanced', :as => 'advanced'
 
+  match '/avatar_fallback' => 'home#avatar_fallback', :as => 'avatar_fallback'
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
   match '/direct/:short_url' => 'frame#direct', :as => 'direct'
