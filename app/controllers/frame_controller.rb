@@ -32,7 +32,8 @@ class FrameController < ActionController::Base
       :post_message_to => params[:post_message_to],
       :skip_when_matched => ! params[:skip_when_matched].nil?
   	}
-    @body_class = 'form'
+    @body_class = "form"
+    @body_class += " #{@campaign.hashtag}" if @campaign
     @body_class += ' dark' if params[:style] == 'dark'
     @body_class += ' light' if params[:style] == 'light'
 

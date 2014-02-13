@@ -49,4 +49,13 @@ class PartnersController < ApplicationController
 		redirect_to partners_path
 	end
 
+	def update
+		return redirect_to new_user_session_path unless current_user.admin
+		if Partner.find( params[:id] ).update_attributes( params[:partner] )
+			render :json => { :success => true }
+		else
+			render :json => { :success => false }
+		end
+	end
+
 end

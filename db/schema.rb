@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131008175616) do
+ActiveRecord::Schema.define(:version => 20140213070052) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20131008175616) do
     t.string   "twitter_screen_name"
     t.text     "twitter_data",        :default => "{}"
     t.string   "hear_about_soundoff"
+    t.text     "custom_popup_css"
   end
 
   create_table "reps", :force => true do |t|

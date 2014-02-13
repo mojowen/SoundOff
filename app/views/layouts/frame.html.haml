@@ -15,6 +15,9 @@
 			var $oundoff_config = #{ ( @config || {} ).to_json }
 		= javascript_include_tag "application"
 		= csrf_meta_tags
+		- if params[:remote] && @campaign && @campaign.partner && @campaign.partner.custom_popup_css
+			:css
+				#{ @campaign.partner.custom_popup_css }
 
 	%body{ :class => "#{@body_class}" }
 

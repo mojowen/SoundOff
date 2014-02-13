@@ -1,6 +1,6 @@
 class Partner < ActiveRecord::Base
 	attr_accessible :name, :website, :tax_id, :logo, :partner_type,
-		:contact_email, :contact_phone, :contact_name, :contact_password, :twitter_screen_name, :twitter_data, :privacy_policy, :mailing_address, :hear_about_soundoff
+		:contact_email, :contact_phone, :contact_name, :contact_password, :twitter_screen_name, :twitter_data, :privacy_policy, :mailing_address, :hear_about_soundoff, :custom_popup_css
 	attr_accessor :contact_email, :contact_phone, :contact_name, :contact_password
 
 	serialize :twitter, JSON

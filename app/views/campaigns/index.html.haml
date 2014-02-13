@@ -44,20 +44,50 @@
 		|
 		%a{ :href => responses_path }
 			All Responses
+	- if @partner.custom_popup_css || current_user.admin
+		= javascript_include_tag 'codemirror.js'
+		= javascript_include_tag 'css.js'
+		= stylesheet_link_tag 'codemirror.css'
+		.custom_css
+			%a.open_custom_css{ :href=>'#' } Edit Custom CSS
+			.edit_custom_css{ :style => 'display:none'}
+				%h3 Custom Popup CSS
+				%em Will change the appearence of this partner's popup
+				%textarea#code= @partner.custom_popup_css
+				%button.codemirror Save
 
 :javascript
-	$(document).on('change','.change_status',function() {
-		var $this = $(this),
-			status = $this.val().toLowerCase(),
-			campaign = $this.attr('campaign')
-
-		if( status == 'destroy' && ! confirm('Are you sure you want to delete this campaign?') ) return false;
-
-		$.ajax({
-			url: '/campaigns/'+campaign+'.json',
-			data: { status: status},
-			type: status == 'destroy' ? 'DELETE' : 'PUT',
-			dataType: 'JSON',
-			success: function() { if( status == 'destroy') $this.parents('tr').remove(); }
+	$(document)
+		.on('click','.open_custom_css',function(e) {
+			$(this).hide().next().show();
+			editor = CodeMirror.fromTextArea(document.getElementById("code"), {lineNumbers: true});
+			e.preventDefault()
 		})
-	})
+		.on('click','.codemirror',function(e){
+			var $this = $(this)
+			$.ajax({
+				url: '/partners/#{@partner.id}.json',
+				data: { partner: { custom_popup_css: editor.getValue() } },
+				dataType: 'JSON',
+				type: 'PUT',
+				success: function(r) {
+					if( r.success ) $this.after('<p>Saved</p>');
+					else $this.after('<p>Didn\'t save</p>');
+				}
+			})
+		})
+		.on('change','.change_status',function() {
+			var $this = $(this),
+				status = $this.val().toLowerCase(),
+				campaign = $this.attr('campaign')
+
+			if( status == 'destroy' && ! confirm('Are you sure you want to delete this campaign?') ) return false;
+
+			$.ajax({
+				url: '/campaigns/'+campaign+'.json',
+				data: { status: status},
+				type: status == 'destroy' ? 'DELETE' : 'PUT',
+				dataType: 'JSON',
+				success: function() { if( status == 'destroy') $this.parents('tr').remove(); }
+			})
+		})
