@@ -9,7 +9,7 @@
 				%input{ :placeholder => "Zip Code", "ng-model" => "zip", :id => 'zip' }
 
 				- if ( @campaign.email_option != 'hidden' rescue true )
-					%input{ :placeholder => "Email", "ng-model" => "email", :id => 'email'  }
+					%input{ :placeholder => "Email", "ng-model" => "email", :id => 'email', :class => params[:email] ? 'from_params' : ''  }
 
 					- if params[:email].nil?
 						- if ( @campaign.email_option == 'optional' rescue true )
