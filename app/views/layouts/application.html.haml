@@ -13,9 +13,6 @@
 		= csrf_meta_tags
 		/[if IE]
 			= javascript_include_tag 'placeholder'
-		- if @partner && ( @partner.custom_popup_css || current_user.admin )
-			= javascript_include_tag 'assempled_codemirror'
-			= stylesheet_link_tag 'codemirror'
 
 	%body{ :class => "#{@body_class} fixed single" }
 		#top
