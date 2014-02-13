@@ -1,2 +1,0 @@
-//= require codemirror
-//= require css
