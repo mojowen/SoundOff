@@ -27,6 +27,8 @@ ready( function() {
 				maxWidth = '600px',
 				height = 500
 
+			if( typeof $oundoff_open_if_email !== 'undefined') open_if_email = $oundoff_open_if_email;
+
 			config.push( 'style='+style  )
 			config.push( 'campaign='+campaign.replace(/\#/,'') )
 			config.push( 'hashtag='+title.replace(/\#/,'') )
@@ -76,12 +78,25 @@ ready( function() {
 				openSoundOff( {
 					campaign: this.getAttribute('campaign'),
 					style: this.getAttribute('module_style'),
-					page_url: this.getAttribute('page_url')
+					page_url: this.getAttribute('page_url'),
+					skip_when_matched: this.getAttribute('skip_when_matched'),
 				} )
 			}
 			widget_top_button.onclick = launchModule;
 
 			the_parent.removeChild(add_link)
+
+			if( open_if_email !== null && document.location.search.search('email=') !== -1 ) {
+				var email = document.location.search.match(/email=\S[^&]/)[0].replace('email=',''),
+					config = {
+						campaign: campaign,
+						style: style,
+						email: email,
+					}
+				if( skip_when_matched !== null ) config['skip_when_matched'] = true
+				if( page_url !== null ) config['page_url'] = page_url
+				openSoundOff(config)
+			}
 		}
 	};
 })
