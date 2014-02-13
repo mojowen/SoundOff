@@ -30,14 +30,16 @@ class FrameController < ActionController::Base
       :message => params[:message],
       :page_url => params[:page_url],
       :post_message_to => params[:post_message_to],
-      :skip_when_matched => ! params[:skip_when_matched].nil?
+      :skip_when_matched => false
   	}
     @body_class = "form"
     @body_class += " #{@campaign.hashtag}" if @campaign
     @body_class += ' dark' if params[:style] == 'dark'
     @body_class += ' light' if params[:style] == 'light'
 
-    @suggestions = (@campaign.suggestions rescue [])
+    unless params[:skip_when_matched].nil?
+      @config[:skip_when_matched] = @campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first || true
+    end
   end
 
   def widget

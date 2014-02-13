@@ -73,7 +73,8 @@ function formScope($http, $scope) {
 		if( errors.length > 0 ) $notice.addClass('oops').html( errors.join(' and ') )
 		else $scope.stage = next;
 
-		if( $oundoff_config.skip_when_matched && next == 3 && $scope.raw_targets.length == config.limits[ config.target ] ) {
+		if( errors.length == 0 && $oundoff_config.skip_when_matched && next == 3 && $scope.raw_targets.length == config.limits[ config.target ] ) {
+			$scope.message = $oundoff_config.skip_when_matched
 			send_message(true);
 		}
 
@@ -109,10 +110,18 @@ function formScope($http, $scope) {
 					partner: $scope.add_partner
 				}
 			},
-			function() { if( direct ) document.location = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26'); }
+			function() {
+				var target = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26');
+				if( direct ) {
+					if( window.parent != window ) {
+						window.open(target);
+					} else document.location = target;
+				}
+			}
 		)
 
 		if( ! direct ) window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
+		else $scope.stage = 4;
 	}
 
 	// Stage 1

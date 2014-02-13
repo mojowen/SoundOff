@@ -20,6 +20,8 @@ ready( function() {
 				config = [],
 				style = add_link.className.replace(/soundoff_widget|\_|\s/g,''),
 				page_url = add_link.getAttribute('page_url'),
+				skip_when_matched = add_link.getAttribute('skip_when_matched'),
+				open_if_email = add_link.getAttribute('open_if_email'),
 				width = '100%',
 				minWidth = '280px',
 				maxWidth = '600px',
@@ -49,7 +51,8 @@ ready( function() {
 			// The top "button"
 			widget_top_button.setAttribute('campaign',campaign)
 			widget_top_button.setAttribute('module_style',style)
-			widget_top_button.setAttribute('page_url',page_url)
+			if( page_url !== null ) widget_top_button.setAttribute('page_url',page_url)
+			if( skip_when_matched !== null ) widget_top_button.setAttribute('skip_when_matched',true)
 			widget_top_button.style.position = 'absolute'
 			widget_top_button.style.cursor = 'pointer'
 			widget_top_button.style.zIndex = '100'
