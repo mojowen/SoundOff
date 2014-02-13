@@ -35,9 +35,10 @@
 
 			#stage_3
 
-				.target{ "ng-repeat" => "target in targets" }
-					%img.profile_img{ 'ng-src' => "{{target.twitter_profile_image}}", :onerror => "this.src = '#{avatar_fallback_path }?fallback_type=rep&twitter_screen_name={{target.twitter_screen_name}}&id={{target.id}}';" }
-					%h1 @{{ target.twitter_screen_name }}
+				.targets
+					.target{ "ng-repeat" => "target in targets" }
+						%img.profile_img{ 'ng-src' => "{{target.twitter_profile_image}}", :onerror => "this.src = '#{avatar_fallback_path }?fallback_type=rep&twitter_screen_name={{target.twitter_screen_name}}&id={{target.id}}';" }
+						%h1 @{{ target.twitter_screen_name }}
 
 				.box
 
