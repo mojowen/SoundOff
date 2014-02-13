@@ -31,7 +31,7 @@ window.onload = function() {
     }
 };
 
-function PlaceholderFormSubmit(oForm) {    
+function PlaceholderFormSubmit(oForm) {
     for (var i = 0; i < oForm.elements.length; i++) {
         var curElement = oForm.elements[i];
         HandlePlaceholderItemSubmit(curElement);

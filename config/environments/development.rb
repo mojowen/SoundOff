@@ -40,5 +40,5 @@ SoundOff::Application.configure do
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
   # Precompile additional assets
-  config.assets.precompile += %w( .svg .eot .woff .ttf codemirror.js css.js codemirror.css)
+  config.assets.precompile += %w( .svg .eot .woff .ttf)
 end
