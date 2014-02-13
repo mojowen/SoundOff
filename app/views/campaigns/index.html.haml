@@ -52,7 +52,7 @@
 			%a.open_custom_css{ :href=>'#' } Edit Custom CSS
 			.edit_custom_css{ :style => 'display:none'}
 				%h3 Custom Popup CSS
-				%em Will change the appearence of this partner's popup
+				%em Will change the appearence of #{current_user.admin ? "this partner's" : 'your' } popups
 				%textarea#code= @partner.custom_popup_css
 				%button.codemirror Save
 
