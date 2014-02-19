@@ -80,6 +80,7 @@ ready( function() {
 					style: this.getAttribute('module_style'),
 					page_url: this.getAttribute('page_url'),
 					skip_when_matched: this.getAttribute('skip_when_matched'),
+					remote: true
 				} )
 			}
 			widget_top_button.onclick = launchModule;
@@ -92,6 +93,7 @@ ready( function() {
 						campaign: campaign,
 						style: style,
 						email: email,
+						remote: true
 					}
 				if( skip_when_matched !== null ) config['skip_when_matched'] = true
 				if( page_url !== null ) config['page_url'] = page_url

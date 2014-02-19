@@ -17,7 +17,7 @@ function openSoundOff( args ) {
     else document.location = $oundoff_base_domain+'/form?'+config;
   } else { // if not mobile - open form and append
 
-    config += '&remote=true'
+    if( typeof args['remote'] != 'undefined' ) config += '&remote=true'
     config += '&post_message_to='+d.location.toString()
 
     if( typeof form_iframe_soundoff != 'undefined' ) return false
