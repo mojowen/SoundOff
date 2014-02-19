@@ -1,4 +1,4 @@
-function formScope($http, $scope) {
+function formScope($http, $timeout, $scope) {
 
 	var config = {
 			target: $oundoff_config.target || 'house', // Can also be senate
@@ -109,19 +109,11 @@ function formScope($http, $scope) {
 					headcount: $scope.add_headcount,
 					partner: $scope.add_partner
 				}
-			},
-			function() {
-				var target = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26');
-				if( direct ) {
-					if( window.parent != window ) {
-						window.open(target);
-					} else document.location = target;
-				}
 			}
 		)
 
-		if( ! direct ) window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
-		else $scope.stage = 4;
+		window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
+		$timeout( function() { $scope.stage = 4; },500);
 	}
 
 	// Stage 1

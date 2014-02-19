@@ -75,13 +75,17 @@ ready( function() {
 			the_parent.insertBefore(container,add_link)
 
 			function launchModule() {
-				openSoundOff( {
-					campaign: this.getAttribute('campaign'),
-					style: this.getAttribute('module_style'),
-					page_url: this.getAttribute('page_url'),
-					skip_when_matched: this.getAttribute('skip_when_matched'),
-					remote: true
-				} )
+				var config = {
+						campaign: this.getAttribute('campaign'),
+						style: this.getAttribute('module_style'),
+						page_url: this.getAttribute('page_url'),
+						skip_when_matched: this.getAttribute('skip_when_matched'),
+						remote: true
+					},
+					email = (document.location.search.match(/email=\S[^&]/) || [''])[0].replace('email=','')
+				if( email.length > 0 ) config['email'] = email;
+
+				openSoundOff( config )
 			}
 			widget_top_button.onclick = launchModule;
 
