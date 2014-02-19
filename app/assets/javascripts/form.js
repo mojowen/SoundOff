@@ -109,12 +109,6 @@ function formScope($http, $timeout, $scope) {
 					headcount: $scope.add_headcount,
 					partner: $scope.add_partner
 				}
-			},
-			function() {
-				if( ! direct ) {
-					var target = '/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26');
-					document.location = target;
-				}
 			}
 		)
 
