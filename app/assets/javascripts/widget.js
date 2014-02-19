@@ -29,9 +29,9 @@ function loadIntents() {
 	if (document.addEventListener) {
 		document.addEventListener('DOMNodeRemoved',removeNode,false)
 	} else if (document.attachEvent)  {
-	  document.attachEvent('DOMNodeRemoved',removeNode)
+		document.attachEvent('DOMNodeRemoved',removeNode)
 	}
-	twttr.widdgets.load()
+	twttr.widgets.load()
 }
 
 function removeNode(e) {
