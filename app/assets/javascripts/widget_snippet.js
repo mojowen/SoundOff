@@ -3,6 +3,14 @@
 //= require open_soundoff
 //= require ready
 
+(function(){
+	original_open = window.openSoundOff
+	window.openSoundOff = function(config) {
+		config['remote'] = true;
+		original_open(config)
+	}
+})()
+
 ready( function() {
 	var d = document,
 		links = d.getElementsByTagName('a')
@@ -73,14 +81,12 @@ ready( function() {
 			container.appendChild(widget_top_button)
 
 			the_parent.insertBefore(container,add_link)
-
 			function launchModule() {
 				var config = {
 						campaign: this.getAttribute('campaign'),
 						style: this.getAttribute('module_style'),
 						page_url: this.getAttribute('page_url'),
-						skip_when_matched: this.getAttribute('skip_when_matched'),
-						remote: true
+						skip_when_matched: this.getAttribute('skip_when_matched')
 					},
 					email = (document.location.search.match(/email=\S[^&]/) || [''])[0].replace('email=','')
 				if( email.length > 0 ) config['email'] = email;
