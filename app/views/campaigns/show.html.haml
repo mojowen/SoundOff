@@ -72,7 +72,7 @@
 				%p Copy and paste into your website to add the widget.
 				%textarea
 					:plain
-						<script src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
+						<script type="text/javascript" src="#{ENV['BASE_DOMAIN'] || ''}/assets/widget_snippet.js"></script><a class="soundoff_widget_dark" href="#{@campaign.url}" campaign="#{@campaign.id}">#{@campaign.hashtag}</a>
 
 
 
