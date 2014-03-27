@@ -68,7 +68,7 @@ class FrameController < ActionController::Base
   end
   def direct
     campaign = Campaign.find_by_short_url params[:short_url]
-    reps = JSON::parse( RestClient.get "http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&zip=#{params[:zip]}" )
+    reps = JSON::parse( RestClient.get "https://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&zip=#{params[:zip]}" )
     reps = reps['results']
 
     # Filtering down the reps

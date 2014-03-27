@@ -144,7 +144,7 @@ function formScope($http, $timeout, $scope) {
 	$scope.$watch( 'zip', function(newValue){
 		newValue = newValue.split('-')[0].replace(/\s/,'')
 		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.raw_targets.length == 0 ) {
-				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
+				var query = 'https://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
 				$scope.sunligh_fetching = true
 				$http.jsonp(query,{})
 					.success(function(data,status) {
@@ -219,7 +219,7 @@ function formScope($http, $timeout, $scope) {
 	function getByLatLng(latlng) {
 		if( latlng && latlng != $scope.latlng ) {
 
-				var query = 'http://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&latitude='+latlng[1]+"&longitude="+latlng[0]
+				var query = 'https://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&latitude='+latlng[1]+"&longitude="+latlng[0]
 				$http.jsonp(query,{})
 					.success( function(data,status){
 						$scope.electeds = data.results;
