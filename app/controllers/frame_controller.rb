@@ -78,15 +78,15 @@ class FrameController < ActionController::Base
           limit  = 1
         when 'senate'
           reps.select!{ |r| r['chamber'] == 'senate' }
-          limit  = 1
+          limit  = 2
         else
           limit = 3
     end
 
     if reps.length < limit
-      redirect_to :action => 'form', :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true
+      redirect_to :action => 'form', :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true, :campaign => campaign.id
     elsif reps.length > limit
-      redirect_to :action => 'form', :zip => params[:zip], :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true
+      redirect_to :action => 'form', :zip => params[:zip], :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true, :campaign => campaign.id
     else
       targets = reps.map{ |s| "@"+Rep.find_by_bioguide_id( s['bioguide_id'] ).twitter_screen_name }.join(' ')
       message = ["\u200B"+targets, ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ),'#'+campaign.hashtag].join(' ')
