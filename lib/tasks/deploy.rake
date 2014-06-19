@@ -20,7 +20,7 @@ task :deploy, :remote, :branch do |t,args|
       system 'git stash'
       system "git checkout -B compiled"
       system "git merge -s recursive -Xtheirs #{branch_to_push}"
-      
+
       blue "Rewriting Base Domain to #{base_domain}"
       File.open('app/assets/javascripts/base_domain.js','w+'){ |f| f.write( "$oundoff_base_domain = '#{base_domain}'; " ) }
 
@@ -31,7 +31,7 @@ task :deploy, :remote, :branch do |t,args|
       blue 'Commiting to compiled'
       system 'git add public/assets/'
       system "git commit -am 'Precompiling assets'"
-      
+
       system "git push -f #{remote} compiled:master"
     rescue Exception => e
       red "!!!! Something went wrong"
@@ -42,7 +42,7 @@ task :deploy, :remote, :branch do |t,args|
       system 'git stash pop'
     end
   # end
-  
+
 end
 
 def blue msg

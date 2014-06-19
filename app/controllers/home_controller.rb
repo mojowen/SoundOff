@@ -151,7 +151,7 @@ class HomeController < ApplicationController
   end
   def avatar_fallback
     begin
-      user = Twitter.user(params[:twitter_screen_name].gsub('@',''))
+      user = twitter_client.user(params[:twitter_screen_name].gsub('@',''))
       if params[:fallback_type].downcase == 'partner'
         Partner.find( params[:id] ).update_attributes( :logo => user.profile_image_url )
       else

@@ -104,8 +104,7 @@ class Status < ActiveRecord::Base
 		}
 	end
 	def self.backfill search
-		client = Twitter
-		client.search("##{search} #soundoff", :result_type => "recent").statuses.each do |tweet|
+		twitter_client.search("##{search} #soundoff", :result_type => "recent").statuses.each do |tweet|
 			self.create_from_tweet(tweet)
 		end
 	end

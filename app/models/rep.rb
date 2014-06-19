@@ -42,10 +42,10 @@ class Rep < ActiveRecord::Base
   	def self.mentioned
   		return Rep.joins(:statuses).limit(50).group('reps.id').order('count("statuses"."id") DESC')
   	end
-  	def self.add_custom_rep args
-  		t = Twitter.user( args[:twitter_screen_name] )
-  		args[:twitter_id] = t.id.to_s
-  		args[:twitter_profile_image] = t.profile_image_url
-  		new( args )
-  	end
+    def self.add_custom_rep args
+      t = twitter_client.user( args[:twitter_screen_name] )
+      args[:twitter_id] = t.id.to_s
+      args[:twitter_profile_image] = t.profile_image_url
+      new( args )
+    end
 end
