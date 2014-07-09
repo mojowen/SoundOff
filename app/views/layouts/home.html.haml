@@ -9,7 +9,9 @@
 
 		= stylesheet_link_tag    "application", :media => "all"
 		/[if IE]
-			= stylesheet_link_tag "ie", :media => "all"
+			:sass
+				body.home #main #menu #tabs span
+					padding-right: 16px
 		= javascript_include_tag "angular.min"
 		= csrf_meta_tags
 
