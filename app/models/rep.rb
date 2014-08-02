@@ -13,7 +13,7 @@ class Rep < ActiveRecord::Base
 	def self.search search
 		all(
 			:conditions => [
-					'LOWER(first_name) || \' \' || LOWER(last_name) LIKE :search OR LOWER(state_name) LIKE :search OR LOWER(twitter_screen_name) LIKE :search', 
+					'LOWER(first_name) || \' \' || LOWER(last_name) LIKE :search OR LOWER(state_name) LIKE :search OR LOWER(twitter_screen_name) LIKE :search',
 					{ :search => "%#{search.downcase}%" }
 				]
 			)
@@ -43,9 +43,36 @@ class Rep < ActiveRecord::Base
   		return Rep.joins(:statuses).limit(50).group('reps.id').order('count("statuses"."id") DESC')
   	end
     def self.add_custom_rep args
+
+      twitter_client = Twitter::REST::Client.new do |config|
+        config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
+        config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']
+        config.access_token        = ENV['TWITTER_OAUTH_TOKEN']
+        config.access_token_secret = ENV['TWITTER_OATH_SECRET']
+      end
+
       t = twitter_client.user( args[:twitter_screen_name] )
       args[:twitter_id] = t.id.to_s
-      args[:twitter_profile_image] = t.profile_image_url
+      args[:twitter_profile_image] = t.profile_image_url.to_str
+      args[:data] = t
       new( args )
+    end
+
+    def self.retrieve_new_rep(bioguide_id)
+      Thread.new do
+        bioguide_id = bioguide_id.upcase
+        sunlight_data = JSON.parse RestClient.get "https://congress.api.sunlightfoundation.com/legislators?bioguide_id=#{bioguide_id}&all_legislators=true&apikey=8fb5671bbea849e0b8f34d622a93b05a"
+
+        new_rep_raw = sunlight_data['results'][0]
+        new_rep = {}
+
+        attr_accessible[:default].reject{ |k| k.length < 1 }.each do |k|
+          new_rep[k.to_sym] = new_rep_raw[k] if new_rep_raw[k]
+        end
+
+        new_rep[:twitter_screen_name] = new_rep[:twitter_id]
+
+        add_custom_rep( new_rep ).save()
+      end
     end
 end
