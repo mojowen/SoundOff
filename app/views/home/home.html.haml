@@ -159,7 +159,7 @@
 							%a{ 'ng-href' => '/{{item.short_url }}' }{{item.name}}
 						%h3
 							Tweet @ your {{item.target}} with hashtag {{ item.hashtag }}. Just click
-							%a.open_soundoff{ :href => '#'} here
+							%a.open_soundoff{ :href => '#', :campaign => '{{item.id}}' } here
 
 					.copy {{item.description}}
 
