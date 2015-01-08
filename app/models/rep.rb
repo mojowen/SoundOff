@@ -36,6 +36,8 @@ class Rep < ActiveRecord::Base
       return Status.joins(:found_reps).where(['"reps"."twitter_id" = ?',twitter_id]).count
     end
     def add_twitter
+        return self unless self.twitter_screen_name
+
         twitter_client = Twitter::REST::Client.new do |config|
           config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
           config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']

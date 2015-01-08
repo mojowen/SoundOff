@@ -77,6 +77,7 @@ def check_user maybe_rep, twitter_user
     puts "Add this Twitter Account to Rep #{maybe_rep.first_name} #{maybe_rep.last_name} (y/n)"
     input = STDIN.gets.strip
     if input == 'y'
+        maybe_rep.twitter_screen_name = twitter_user.screen_name
         maybe_rep.add_twitter()
         maybe_rep.save()
         puts "\n\n\n\n"
