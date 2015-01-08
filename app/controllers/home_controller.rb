@@ -154,9 +154,9 @@ class HomeController < ApplicationController
       user = TWITTER_CLIENT.user(params[:twitter_screen_name].gsub('@',''))
       profile_image = user.profile_image_url.to_s
       if params[:fallback_type].downcase == 'partner'
-        Partner.find( params[:id] ).update_attributes( :logo =>  profile_image)
+        Partner.find_by_id_and_twitter_screen_name( params[:id], user.screen_name ).update_attributes( :logo =>  profile_image)
       else
-        Rep.find( params[:id] ).update_attributes( :twitter_profile_image => profile_image )
+        Rep.find_by_id_and_twitter_screen_name( params[:id], user.screen_name ).update_attributes( :twitter_profile_image => profile_image )
       end
       redirect_to profile_image
     rescue  => e
