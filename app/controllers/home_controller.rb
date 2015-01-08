@@ -158,7 +158,8 @@ class HomeController < ApplicationController
         Rep.find( params[:id] ).update_attributes( :twitter_profile_image => user.profile_image_url )
       end
       redirect_to user.profile_image_url
-    rescue
+    rescue  => e
+      logger.error "Avatar fallback failed with #{e}"
       redirect_to "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_bigger.png"
     end
   end
