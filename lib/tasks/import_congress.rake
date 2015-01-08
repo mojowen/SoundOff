@@ -90,23 +90,14 @@ end
 
 task :import_twitter_handles => :environment do |t,args|
 
-    twitter_client = Twitter::REST::Client.new do |config|
-      config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
-      config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_OAUTH_TOKEN']
-      config.access_token_secret = ENV['TWITTER_OATH_SECRET']
-    end
-
     handle = args.first || 'cspan'
     list = args.last || 'members-of-congress'
 
     puts "Importing #{handle}/#{list}"
-    cspan_list = twitter_client.list_members(handle, list).to_a
+    cspan_list = @twitter_client.list_members(handle, list).to_a
     sad_list = Rep.find_all_by_twitter_id(nil)
 
     cspan_list.each do |twitter_user|
-        # Do a last name search
-
         unless Rep.find_by_twitter_id "#{twitter_user.id}"
             maybe_rep = sad_list.select{ |c| c.last_name.downcase == twitter_user.name.split(/\s/).last.downcase }
             maybe_rep += sad_list.select{ |c| (twitter_user.name+twitter_user.screen_name).downcase.index(c.last_name.downcase) }

@@ -38,14 +38,7 @@ class Rep < ActiveRecord::Base
     def add_twitter
         return self unless self.twitter_screen_name
 
-        twitter_client = Twitter::REST::Client.new do |config|
-          config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
-          config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']
-          config.access_token        = ENV['TWITTER_OAUTH_TOKEN']
-          config.access_token_secret = ENV['TWITTER_OATH_SECRET']
-        end
-
-        t = twitter_client.user( self.twitter_screen_name )
+        t = @twitter_client.user( self.twitter_screen_name )
         self.twitter_id = t.id.to_s
         self.twitter_profile_image = t.profile_image_url.to_str
         self.data = t
