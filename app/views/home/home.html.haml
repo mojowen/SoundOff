@@ -153,7 +153,7 @@
 			.description.campaign
 				.title
 					%a{ 'ng-href' => '{{item.website}}', :target => '_blank' }
-						%img{ 'ng-src' => '{{item.logo.replace("_normal","_bigger")}}', :onerror => "this.src = '#{avatar_fallback_path }?fallback_type=partner&twitter_screen_name={{item.twitter_name}}&id={{item.id}}';" }
+						%img{ 'ng-src' => '{{item.logo}}',:onerror => "this.src = '#{avatar_fallback_path }?fallback_type=partner&twitter_screen_name={{item.twitter_name}}&id={{item.id}}';" }
 					.title_line
 						%h1
 							%a{ 'ng-href' => '/{{item.short_url }}' }{{item.name}}
@@ -176,7 +176,7 @@
 			.description.rep
 				.title
 
-					%img{ 'ng-src' => '{{item.twitter_profile_image.replace("_normal","_bigger") }}', :onerror => "this.src = '#{avatar_fallback_path }?fallback_type=rep&twitter_screen_name={{item.twitter_screen_name}}&id={{item.id}}';" }
+					%img{ 'ng-src' => '{{item.twitter_profile_image}}', :onerror => "this.src = '#{avatar_fallback_path }?fallback_type=rep&twitter_screen_name={{item.twitter_screen_name}}&id={{item.id}}';" }
 					.title_line
 						%h1
 							%a{ 'ng-href' => '/rep/{{item.twitter_screen_name}}'}{{item.title}} {{item.first_name}} {{item.last_name}}
