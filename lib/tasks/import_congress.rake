@@ -88,7 +88,7 @@ def check_user maybe_rep, twitter_user
 end
 
 
-task :import_twitter_handles => :environment do
+task :import_twitter_handles => :environment do |t,args|
 
     twitter_client = Twitter::REST::Client.new do |config|
       config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
@@ -97,7 +97,11 @@ task :import_twitter_handles => :environment do
       config.access_token_secret = ENV['TWITTER_OATH_SECRET']
     end
 
-    cspan_list = twitter_client.list_members('cspan','members-of-congress').to_a
+    handle = args.first || 'cspan'
+    list = args.last || 'members-of-congress'
+
+    puts "Importing #{handle}/#{list}"
+    cspan_list = twitter_client.list_members(handle, list).to_a
     sad_list = Rep.find_all_by_twitter_id(nil)
 
     cspan_list.each do |twitter_user|
