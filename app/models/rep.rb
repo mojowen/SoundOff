@@ -35,6 +35,20 @@ class Rep < ActiveRecord::Base
     def score
       return Status.joins(:found_reps).where(['"reps"."twitter_id" = ?',twitter_id]).count
     end
+    def add_twitter
+        twitter_client = Twitter::REST::Client.new do |config|
+          config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
+          config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']
+          config.access_token        = ENV['TWITTER_OAUTH_TOKEN']
+          config.access_token_secret = ENV['TWITTER_OATH_SECRET']
+        end
+
+        t = twitter_client.user( self.twitter_screen_name )
+        self.twitter_id = t.id.to_s
+        self.twitter_profile_image = t.profile_image_url.to_str
+        self.data = t
+        return self
+    end
 
   	def self.active
   		all( :conditions => ['char_length("twitter_screen_name") > 0'] )
@@ -44,38 +58,28 @@ class Rep < ActiveRecord::Base
   	end
     def self.add_custom_rep args
 
-      if args[':twitter_screen_name']
-        twitter_client = Twitter::REST::Client.new do |config|
-          config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
-          config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']
-          config.access_token        = ENV['TWITTER_OAUTH_TOKEN']
-          config.access_token_secret = ENV['TWITTER_OATH_SECRET']
-        end
+      new_rep = {}
 
-        t = twitter_client.user( args[:twitter_screen_name] )
-        args[:twitter_id] = t.id.to_s
-        args[:twitter_profile_image] = t.profile_image_url.to_str
-        args[:data] = t
+      attr_accessible[:default].reject{ |k| k.length < 1 }.each do |k|
+        new_rep[k.to_sym] = args[k] if args[k]
       end
 
-      new( args )
+      if new_rep[:twitter_id]
+        new_rep[:twitter_screen_name] = new_rep[:twitter_id]
+        new_rep[:twitter_id] = nil
+      end
+
+      new( new_rep )
     end
 
-    def self.retrieve_new_rep(bioguide_id)
+    def self.retrieve_new_rep bioguide_id
       Thread.new do
         bioguide_id = bioguide_id.upcase
         sunlight_data = JSON.parse RestClient.get "https://congress.api.sunlightfoundation.com/legislators?bioguide_id=#{bioguide_id}&all_legislators=true&apikey=8fb5671bbea849e0b8f34d622a93b05a"
 
-        new_rep_raw = sunlight_data['results'][0]
-        new_rep = {}
-
-        attr_accessible[:default].reject{ |k| k.length < 1 }.each do |k|
-          new_rep[k.to_sym] = new_rep_raw[k] if new_rep_raw[k]
-        end
-
-        new_rep[:twitter_screen_name] = new_rep[:twitter_id]
-
-        add_custom_rep( new_rep ).save()
+        new_rep = add_custom_rep( sunlight_data['results'][0] )
+        new_rep = add_twitter(new_rep) if new_rep.twitter_screen_name
+        new_rep.save()
       end
     end
 end
