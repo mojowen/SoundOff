@@ -134,6 +134,8 @@ task :import_congress => :environment  do
             raw_rep[ translate[column] || column ] = row[index]
         end
         raw_rep['state_name'] = states[ raw_rep['state'] ]
+        raw_rep['chamber'] = raw_rep['title'] == 'Rep' ? 'house' : 'senate'
+        raw_rep['district'] = raw_rep['title'] == 'Rep' ? raw_rep['district'] : nil
 
         if Rep.find_by_bioguide_id( raw_rep['bioguide_id'] ).nil? && raw_rep['in_office'] == '1'
             rep = Rep.add_custom_rep( raw_rep )
