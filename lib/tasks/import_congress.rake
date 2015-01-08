@@ -94,7 +94,7 @@ task :import_twitter_handles => :environment do |t,args|
     list = args.last || 'members-of-congress'
 
     puts "Importing #{handle}/#{list}"
-    cspan_list = @twitter_client.list_members(handle, list).to_a
+    cspan_list = TWITTER_CLIENT.list_members(handle, list).to_a
     sad_list = Rep.find_all_by_twitter_id(nil)
 
     cspan_list.each do |twitter_user|

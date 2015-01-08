@@ -18,7 +18,7 @@ class Partner < ActiveRecord::Base
 	def twitter_data
 		self.twitter_screen_name = twitter_screen_name.gsub('@','')
 		begin
-			tw = @twitter_client.user(self.twitter_screen_name)
+			tw = TWITTER_CLIENT.user(self.twitter_screen_name)
 			self.twitter_data = tw.to_json
 			self.logo = tw.profile_image_url
 		rescue

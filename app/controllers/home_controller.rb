@@ -151,15 +151,16 @@ class HomeController < ApplicationController
   end
   def avatar_fallback
     begin
-      user = @twitter_client.user(params[:twitter_screen_name].gsub('@',''))
+      user = TWITTER_CLIENT.user(params[:twitter_screen_name].gsub('@',''))
+      profile_image = user.profile_image_url.to_s
       if params[:fallback_type].downcase == 'partner'
-        Partner.find( params[:id] ).update_attributes( :logo => user.profile_image_url )
+        Partner.find( params[:id] ).update_attributes( :logo =>  profile_image)
       else
-        Rep.find( params[:id] ).update_attributes( :twitter_profile_image => user.profile_image_url )
+        Rep.find( params[:id] ).update_attributes( :twitter_profile_image => profile_image )
       end
-      redirect_to user.profile_image_url
+      redirect_to profile_image
     rescue  => e
-      logger.error "Avatar fallback failed with #{e}"
+      puts "Avatar fallback failed with #{e}"
       redirect_to "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_bigger.png"
     end
   end

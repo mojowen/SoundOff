@@ -38,7 +38,7 @@ class Rep < ActiveRecord::Base
     def add_twitter
         return self unless self.twitter_screen_name
 
-        t = @twitter_client.user( self.twitter_screen_name )
+        t = TWITTER_CLIENT.user( self.twitter_screen_name )
         self.twitter_id = t.id.to_s
         self.twitter_profile_image = t.profile_image_url.to_str
         self.data = t
