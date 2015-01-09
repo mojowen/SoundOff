@@ -316,7 +316,7 @@ function formScope($http, $timeout, $scope) {
 		$scope.url = $oundoff_base_domain
 	}
 
-	$scope.twitter_link = function() { return $scope.default_message + $scope.url }
+	$scope.twitter_link = function() { return $scope.default_message +' '+ $scope.url }
 	$scope.facebook_link = function() { return 'http://facebook.com/sharer/sharer.php?u='+$scope.url }
 
 	$scope.$watch('targets',function() {
