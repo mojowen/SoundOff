@@ -10,7 +10,7 @@
 	= render 'home/fixed'
 
 
-#main{ "ng-app" => true, "ng-controller" => 'homePageScope', 'ng-class' => 'mobileActive()'  }
+#main{ "ng-app" => "myApp", "ng-controller" => 'homePageScope', 'ng-class' => 'mobileActive()'  }
 
 	#menu{  :class => params[:short_url] ? 'single' : '', 'ng-class' => 'menuClass()' }
 		%button.open_soundoff Tweet @ Congress
@@ -153,7 +153,7 @@
 			.description.campaign
 				.title
 					%a{ 'ng-href' => '{{item.website}}', :target => '_blank' }
-						%img{ 'ng-src' => '{{item.logo}}',:onerror => "this.src = '#{avatar_fallback_path }?fallback_type=partner&twitter_screen_name={{item.twitter_name}}&id={{item.id}}';" }
+						%img{ 'ng-src' => '{{item.logo}}', 'fallback-src' => "#{avatar_fallback_path }?fallback_type=partner&twitter_screen_name={{item.twitter_name}}&id={{item.id}}" }
 					.title_line
 						%h1
 							%a{ 'ng-href' => '/{{item.short_url }}' }{{item.name}}
@@ -176,7 +176,7 @@
 			.description.rep
 				.title
 
-					%img{ 'ng-src' => '{{item.twitter_profile_image}}', :onerror => "this.src = '#{avatar_fallback_path }?fallback_type=rep&twitter_screen_name={{item.twitter_screen_name}}&id={{item.id}}';" }
+					%img{ 'ng-src' => '{{item.twitter_profile_image}}', 'fallback-src' => "#{avatar_fallback_path }?fallback_type=rep&twitter_screen_name={{item.twitter_screen_name}}&id={{item.id}}" }
 					.title_line
 						%h1
 							%a{ 'ng-href' => '/rep/{{item.twitter_screen_name}}'}{{item.title}} {{item.first_name}} {{item.last_name}}
@@ -202,7 +202,6 @@
 					%a.follow_button{ :href => 'https://twitter.com/{{tweet.screen_name}}', :target => '_blank' }
 						.bird
 						Follow
-					%img.profile_img{ 'ng-src' => '{{tweet.profile_image_url}}', :onerror => 'this.src = "http://a0.twimg.com/sticky/default_profile_images/default_profile_6_bigger.png"' }
 					%h2 {{tweet.screen_name }}
 					%h3 @{{tweet.screen_name }}
 

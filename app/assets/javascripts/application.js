@@ -16,7 +16,8 @@
 //= require is_mobile
 //= require form
 //= require home
-//= require home_scope
+//= require home_app
+//= require home_controller
 //= require open_soundoff
 
 if (!Array.prototype.filter) {
