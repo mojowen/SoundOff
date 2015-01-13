@@ -152,7 +152,7 @@ class HomeController < ApplicationController
   def avatar_fallback
     begin
       if params[:fallback_type].downcase == 'partner'
-        partner = Partner.find_by_twitter_screen_name(user.screen_name)
+        partner = Partner.find_by_twitter_screen_name(params[:twitter_screen_name].gsub('@',''))
         partner.save() if partner
       else
         user = TWITTER_CLIENT.user(params[:twitter_screen_name].gsub('@',''))
