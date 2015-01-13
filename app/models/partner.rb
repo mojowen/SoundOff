@@ -20,7 +20,7 @@ class Partner < ActiveRecord::Base
 		begin
 			tw = TWITTER_CLIENT.user(self.twitter_screen_name)
 			self.twitter_data = tw.to_json
-			self.logo = tw.profile_image_url
+			self.logo = tw.profile_image_url.to_s
 		rescue
 			return errors[:base] << 'Bad Twitter'
 			self.logo = '/assets/sq_icon.jpg'
