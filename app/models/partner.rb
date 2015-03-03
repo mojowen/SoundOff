@@ -18,13 +18,18 @@ class Partner < ActiveRecord::Base
 	def twitter_data
 		self.twitter_screen_name = twitter_screen_name.gsub('@','')
 		begin
-			tw = TWITTER_CLIENT.user(self.twitter_screen_name)
-			self.twitter_data = tw.to_json
-			self.logo = tw.profile_image_url.to_s
+			self.add_twitter
 		rescue
 			return errors[:base] << 'Bad Twitter'
 			self.logo = '/assets/sq_icon.jpg'
 		end
+	end
+	def add_twitter
+		return self unless self.twitter_screen_name
+		tw = TWITTER_CLIENT.user(self.twitter_screen_name)
+		self.twitter_data = tw.to_json
+		self.logo = tw.profile_image_url.to_s
+		self
 	end
 	def partner_url
 		return false if self.website.nil? || self.website.empty?
