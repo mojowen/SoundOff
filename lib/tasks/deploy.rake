@@ -7,7 +7,7 @@ task :deploy, :remote, :branch do |t,args|
 
   # blue ">>>> Did you pull from #{branch_to_push}?"
   # pull = STDIN.gets.chomp.downcase
-  
+
   # unless pull == 'true' || pull == 'yes' || pull == 'y'
   #   blue ">>>> Doing Git Pull - Make sure everything works then rake deploy again"
   #   system "git pull origin #{branch_to_push}"
