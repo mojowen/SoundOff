@@ -86,7 +86,7 @@ class Status < ActiveRecord::Base
 		hashtags = hashtags.downcase.split(',') if hashtags.class != Array
 		hashtags.map!{ |v| v.downcase }
 
-		return Status.limit(limit).offset(offset).order('created_at DESC').joins(:found_hashtags).where(['lower("hashtags"."keyword") IN(?)',hashtags])
+		Status.limit(limit).offset(offset).order('created_at DESC').joins(:found_hashtags).where(['lower("hashtags"."keyword") IN(?)',hashtags]).uniq(&:tweet_id)
 	end
 	def self.mention mentions, offset=0, limit=30
 		mentions = mentions.split(',') if mentions.class != Array
