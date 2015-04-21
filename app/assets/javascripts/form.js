@@ -112,7 +112,7 @@ function formScope($http, $timeout, $scope) {
 			}
 		)
 
-		window.open('/redirect.html#'+'​'+encodeURI(message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
+		window.open('/redirect.html#'+encodeURI('​'+message).replace(/\#/g,'%23').replace(/\&/g,'%26') );
 		$timeout( function() { $scope.stage = 4; },500);
 	}
 
