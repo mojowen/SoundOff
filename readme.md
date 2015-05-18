@@ -13,6 +13,12 @@ And uses some amazing API's like:
  * Sunlight's Open Congress
  * Twitter
 
-Currently in development - check [the website](http://soundoffatcongress.org) for our current progress.
+Currently in development - check [the website](http://soundoffatcongress.org) for our current progress. [Issues / Features tracked in github](/issues)
 
-Issues / Features tracked in github:
+## Standing It Up
+
+You'll want to run `rake db:seed` after the usual (`bundle install; rake db:migrate`) to seed the database with representatives.
+
+## Deploying
+
+`rake deploy` is a useful tool to pre generate all of the SoundOff's assets, commit them to a throwaway branch, and deploy that branch to Heroku.
