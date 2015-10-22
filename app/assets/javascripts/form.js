@@ -198,19 +198,14 @@ function formScope($http, $timeout, $scope) {
 			$scope.address = address;
 
 			$scope.geocoder.geocode( { 'address': address}, function(results, status) {
-				if( typeof  results[0] == 'undefined' ) {
+				if( typeof results[0] == 'undefined' ) {
 					$('#notice').html('').attr('class','').text('We couldn\'t match that address to a rep :(')
 					$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
 					$scope.raw_targets = [{twitter_id: 'whitehouse'}]
 					$scope.stage = 3
 				} else {
-					var location = results[0].geometry.location,
-						latlng = []
-					for( var i in location ) {
-						if( typeof location[i] == 'number' ) latlng.push( location[i] )
-					}
-					latlng = latlng.sort()
-					getByLatLng(latlng);
+					var location = results[0].geometry.location
+					getByLatLng([location.lng(), location.lat()])
 				}
 		    });
 		}
