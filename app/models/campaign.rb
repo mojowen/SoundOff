@@ -39,7 +39,7 @@ class Campaign < ActiveRecord::Base
 		end
 	end
 	def score
-		Status.count( :conditions => ['lower(hashtags) SIMILAR TO ?','%'+self.hashtag.downcase+'%'] )
+		Hashtag.find_by_keyword(self.hashtag.downcase).statuses.count
 	end
 
 	def sample_tweets
@@ -99,16 +99,18 @@ class Campaign < ActiveRecord::Base
 		end
 	end
 	def all_tweets
-		Status.where(['reply_to IS NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag.downcase+'%']).reverse
+		Hashtag.find_by_keyword(self.hashtag.downcase).statuses.reverse_order
 	end
 	def all_responses
-		Status.where(['reply_to IS NOT NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag.downcase+'%']).reverse
+		Hashtag.find_by_keyword(self.hashtag.downcase).statuses
+			   .where('reply_to IS NOT NULL').reverse_order
 	end
 	def count_tweets
-		Status.count( :conditions => ['reply_to IS NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag.downcase+'%'])
+		Hashtag.find_by_keyword(self.hashtag.downcase).statuses.count
 	end
 	def count_responses
-		Status.count( :conditions => ['reply_to IS NOT NULL AND lower(hashtags) SIMILAR TO ?','%'+hashtag.downcase+'%'])
+		Hashtag.find_by_keyword(self.hashtag.downcase).statuses
+			   .where('reply_to IS NOT NULL').count
 	end
 	def count_signups
 		Soundoff.count( :conditions => ['partner IS TRUE AND campaign_id = ?',self.id] )
