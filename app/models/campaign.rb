@@ -39,7 +39,8 @@ class Campaign < ActiveRecord::Base
 		end
 	end
 	def score
-		Hashtag.find_by_keyword(self.hashtag.downcase).statuses.count
+		hashtag = Hashtag.find_by_keyword(self.hashtag.downcase)
+		hashtag ? hashtag.statuses.count : 0
 	end
 
 	def sample_tweets
