@@ -100,19 +100,19 @@ class Campaign < ActiveRecord::Base
 	end
 	def all_tweets
 		hashtag = Hashtag.find_by_keyword(self.hashtag.downcase)
-		hashtag.statuses.reverse_order || []
+		hashtag ? hashtag.statuses.reverse_order : []
 	end
 	def all_responses
 		hashtag = Hashtag.find_by_keyword(self.hashtag.downcase)
-		hashtag.statuses.where('reply_to IS NOT NULL').reverse_order || []
+		hashtag ?  hashtag.statuses.where('reply_to IS NOT NULL').reverse_order : []
 	end
 	def count_tweets
 		hashtag = Hashtag.find_by_keyword(self.hashtag.downcase)
-		hashtag.statuses.count || 0
+		hashtag ? hashtag.statuses.count : 0
 	end
 	def count_responses
 		hashtag = Hashtag.find_by_keyword(self.hashtag.downcase)
-		hashtag.statuses.where('reply_to IS NOT NULL').count || 0
+		hashtag ? hashtag.statuses.where('reply_to IS NOT NULL').count : 0
 	end
 	def count_signups
 		Soundoff.count( :conditions => ['partner IS TRUE AND campaign_id = ?',self.id] )
