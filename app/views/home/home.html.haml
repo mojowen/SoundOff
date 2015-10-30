@@ -199,24 +199,10 @@
 
 
 				.tweet{ 'ng-repeat' => 'tweet in item.tweets', 'ng-hide' => '$index > (item.showing || 8) -1' }
-					%a.follow_button{ :href => 'https://twitter.com/{{tweet.screen_name}}', :target => '_blank' }
-						.bird
-						Follow
-					%h2 {{tweet.screen_name }}
-					%h3 @{{tweet.screen_name }}
-
 					%blockquote.twitter-tweet
 						%p {{ tweet.message }}
 						%a{ :href =>  "https://twitter.com/{{tweet.screen_name }}/status/{{tweet.tweet_id}}", :target => '_blank' }
 							{{  tweet.created_at | date: 'h:mm a - MMM d yyyy' }}
-
-					.buttons
-						%span
-							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.tweet_id}}', :target => '_blank' }
-						%span
-							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
-						%span
-							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.tweet_id}}', :target => '_blank' }
 
 
 			.no-tweets{ 'ng-hide' => 'item.score <= item.tweets.length || item.tweets.length > 8 || item.score == 0'}
