@@ -28,26 +28,10 @@
 					= @button
 			#content
 				.tweet{ 'ng-repeat' => 'tweet in tweets' }
-					%a.follow_button{ :href => 'https://twitter.com/{{tweet.user.screen_name}}', :target => '_blank' }
-						.bird
-						Follow
-					%img.profile_img{ 'ng-src' => '{{tweet.user.profile_image_url}}', :onerror => 'this.src = "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_normal.png"' }
-					%h2 {{tweet.user.name }}
-					%h3 @{{tweet.user.screen_name }}
-
 					%blockquote.twitter-tweet
 						%p {{ tweet.text }}
 						%a{ :href =>  "https://twitter.com/{{tweet.user.screen_name }}/status/{{tweet.id_str}}", :target => '_blank' }
 							{{  tweet.created_at | date: 'h:mm a - MMM d yyyy' }}
-
-					.buttons
-						%span
-							%a.reply{ :href => 'https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}', :target => '_blank' }
-						%span
-							%a.retweet{ :href => 'https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}', :target => '_blank' }
-						%span
-							%a.favorite{ :href => 'https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}', :target => '_blank' }
-
 
 		#attribute
 			powered by
