@@ -3,7 +3,7 @@ task :deploy, :remote, :branch do |t,args|
   branch_to_push = args[:branch] || 'master'
 
   remote = args[:remote] || 'heroku'
-  base_domain = 'http://www.soundoffatcongress.org'
+  base_domain = '//www.soundoffatcongress.org'
 
   # blue ">>>> Did you pull from #{branch_to_push}?"
   # pull = STDIN.gets.chomp.downcase
