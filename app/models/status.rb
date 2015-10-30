@@ -70,15 +70,19 @@ class Status < ActiveRecord::Base
 		campaigns = Campaign.all( :conditions => ['lower(hashtag) IN(?)', hashtags.downcase.split(',') ] ) if campaigns.nil?
 		reps = Rep.all( :conditions => ['twitter_id IN(?)', mentions.split(',') ] ) if reps.nil?
 
-		reps.each{ |r| r.statuses << self }
+		reps.each do |rep|
+			rep.statuses << self
+			rep.touch
+		end
 
-		campaigns.each do |r|
-			hashtag = Hashtag.find_by_keyword(r.hashtag.downcase)
+		campaigns.each do |campaign|
+			hashtag = Hashtag.find_by_keyword(campaign.hashtag.downcase)
 			if hashtag.nil?
-				hashtag = Hashtag.new( :keyword => r.hashtag.downcase)
+				hashtag = Hashtag.new( :keyword => campaign.hashtag.downcase)
 				hashtag.save
 			end
 			hashtag.statuses << self
+			campaign.touch
 		end
 	end
 
