@@ -89,7 +89,7 @@ class Campaign < ActiveRecord::Base
 		}
 	end
 	def self.active
-    	return all( :conditions => { :status => 'approved'} )
+		return all( :conditions => ['status = ? AND created_at > ?', 'approved', 6.months.ago]  )
 	end
 	def updated
 		if last_soundoff = Soundoff.all( :limit => 1, :conditions => { :campaign_id => id}, :order => 'created_at DESC' ).first
