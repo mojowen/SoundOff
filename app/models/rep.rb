@@ -32,8 +32,12 @@ class Rep < ActiveRecord::Base
   			return updated_at
   		end
   	end
-    def score
-      return Status.joins(:found_reps).where(['"reps"."twitter_id" = ?',twitter_id]).count
+    def score(pre_score=nil)
+      if pre_score
+        pre_score[self.twitter_id] || 0
+      else
+        Status.joins(:found_reps).where(['"reps"."twitter_id" = ?',twitter_id]).count
+      end
     end
     def add_twitter
         return self unless self.twitter_screen_name
@@ -48,8 +52,24 @@ class Rep < ActiveRecord::Base
   	def self.active
   		all( :conditions => ['char_length("twitter_screen_name") > 0'] )
   	end
-  	def self.mentioned
-  		return Rep.joins(:statuses).limit(50).group('reps.id').order('count("statuses"."id") DESC')
+    def self.mentioned
+      return Rep.joins(:statuses).limit(50).group('reps.id').order('count("statuses"."id") DESC')
+    end
+  	def self.mentioned_to_objs(rejected=nil)
+      mentioned_reps = mentioned.reject{ |r| r == rejected }
+      pre_score = Hash[ Rep.joins('INNER JOIN "reps_statuses" ON "reps_statuses"."rep_id" = "reps"."id"')
+                 .select('COUNT(reps_statuses.status_id), twitter_id')
+                 .where(['twitter_id IN (?)', mentioned_reps.map(&:twitter_id)])
+                 .group('twitter_id')
+                 .to_a
+                 .map{ |rep| [rep.twitter_id, rep.count.to_i] } ]
+      mentioned.map do |rep|
+        base_rep = rep.as_json
+        base_rep[:data] = nil
+        base_rep[:tweets] = []
+        base_rep[:score] = rep.score(pre_score)
+        base_rep
+      end
   	end
     def self.add_custom_rep args
 

@@ -50,8 +50,8 @@ class HomeController < ApplicationController
     @config = {
       :home => true,
     	:single => params[:short_url] || rep || nil,
-      :raw_reps => Rep.mentioned.reject{ |r| r == rep }.map{ |r| r.data = nil; r[:tweets] = []; r[:score] = r.score; r },
-      :raw_campaigns => Campaign.active.map(&:to_obj),
+      :raw_reps => Rep.mentioned_to_objs,
+      :raw_campaigns => Campaign.active_to_objs,
       :open_soundoff => open_soundoff,
       :raw_tweets => (raw_tweets || []),
       :skip_landing => is_home

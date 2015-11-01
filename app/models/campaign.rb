@@ -38,9 +38,15 @@ class Campaign < ActiveRecord::Base
 			return partner.partner_type == 'nonprofit'
 		end
 	end
-	def score
-		hashtag = Hashtag.find_by_keyword(self.hashtag.downcase)
-		hashtag ? hashtag.statuses.count : 0
+	def score(pre_score=nil)
+		return 0 if self.hashtag.nil?
+
+		if pre_score
+			pre_score[self.hashtag.downcase] || 0
+		else
+			hashtag = Hashtag.find_by_keyword(self.hashtag.downcase)
+			hashtag ? hashtag.statuses.count : 0
+		end
 	end
 
 	def sample_tweets
@@ -71,10 +77,10 @@ class Campaign < ActiveRecord::Base
 		return tweets
 	end
 
-	def to_obj
+	def to_obj(pre_score=nil)
 		return {
 			:name => name,
-			:score => score,
+			:score => score(pre_score),
 			:description => description,
 			:id => id,
 			:hashtag => '#'+hashtag,
@@ -90,7 +96,17 @@ class Campaign < ActiveRecord::Base
 		}
 	end
 	def self.active
-		return all( :conditions => ['status = ? AND updated_at > ?', 'approved', 6.months.ago]  )
+		return all( :conditions => ['status = ? AND updated_at > ?', 'approved', 6.months.ago], :include => [:partner]  )
+	end
+	def self.active_to_objs
+		active_campaigns = active
+		pre_score = Hash[ Hashtag.joins('INNER JOIN "hashtags_statuses" ON "hashtags_statuses"."hashtag_id" = "hashtags"."id"')
+						   .select('COUNT(hashtags_statuses.status_id), keyword')
+						   .where(['keyword IN (?)', active_campaigns.map(&:hashtag).map(&:downcase)])
+						   .group('keyword')
+						   .to_a
+						   .map{ |hashtag| [hashtag.keyword, hashtag.count.to_i] } ]
+		active_campaigns.map{ |campaign| campaign.to_obj(pre_score) }
 	end
 	def updated
 		if last_soundoff = Soundoff.all( :limit => 1, :conditions => { :campaign_id => id}, :order => 'created_at DESC' ).first
