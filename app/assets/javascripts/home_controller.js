@@ -138,7 +138,7 @@ function homePageScope($http, $scope) {
 		if( typeof $scope.active != 'undefined' ) {
 			var active_list = $scope.mode.toLowerCase() == 'reps' ? $scope.reps() : $scope.campaigns(),
 				position = active_list.indexOf( $scope.active )
-			loadActive( active_list.slice(position, position + 3) )
+			loadActive( active_list.slice(position, position + 1) )
 		}
 	})
 
