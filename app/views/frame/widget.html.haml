@@ -27,7 +27,7 @@
 					%br
 					= @button
 			#content
-				.tweet{ 'ng-repeat' => 'tweet in tweets' }
+				.tweet{ 'ng-repeat' => 'tweet in tweets', 'ng-cloak' => true }
 					%blockquote.twitter-tweet
 						%p {{ tweet.text }}
 						%a{ :href =>  "https://twitter.com/{{tweet.user.screen_name }}/status/{{tweet.id_str}}", :target => '_blank' }

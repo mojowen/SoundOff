@@ -16,7 +16,7 @@
 		%button.open_soundoff Tweet @ Congress
 
 		= image_tag 'search.png', :class => 'search'
-		%input{ :placeholder => '{{search_placeholder()}}', "ng-model" => "search", :type => 'text', 'ng-click' => 'reset();'}
+		%input{ "ng-cloak" => true, :placeholder => '{{search_placeholder()}}', "ng-model" => "search", :type => 'text', 'ng-click' => 'reset();'}
 		.messages
 			%a.rest.single.campaign{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all campaigns
 			%a.rest.single.rep{ 'ng-hide' => 'search.length < 1 ', 'ng-click' => 'resetHard(); '} see all rep
@@ -29,7 +29,7 @@
 			%span{ 'ng-click' => 'setReps()', 'ng-class' => 'isMode("Reps")' } Senators+Reps
 
 		.inner
-			.items
+			.items{ "ng-cloak" => true }
 				.campaign{ "ng-repeat" => "campaign in campaigns()", "ng-class" => "isActive($index,campaign)" }
 					%h3.score {{campaign.score}}
 					%h3.name {{campaign.hashtag}}
@@ -149,7 +149,7 @@
 					= link_to 'Contact', contact_path
 					= link_to 'Donate', 'http://www.HeadCount.org/donate', :target => '_blank'
 
-		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]" }
+		.item{ "ng-repeat" => "item in items()", "ng-class" => "isActive($index,item) +' '+{true: \"rep\", false: \"\" }[mode.toLowerCase() == \"reps\"]", "ng-cloak" => true }
 			.description.campaign
 				.title
 					%a{ 'ng-href' => '{{item.website}}', :target => '_blank' }
