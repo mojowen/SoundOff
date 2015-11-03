@@ -162,7 +162,7 @@ class HomeController < ApplicationController
       redirect_to partner ? partner.logo : rep.twitter_profile_image
     rescue  => e
       puts "Avatar fallback failed with #{e}"
-      redirect_to 'https://abs.twimg.com/sticky/default_profile_images/default_profile_6_normal.png'
+      redirect_to 'https://i.imgur.com/CN5rGTf.png'
     end
   end
 
