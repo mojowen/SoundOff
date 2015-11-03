@@ -116,8 +116,11 @@ function homePageScope($http, $scope) {
 				ids.push( tweet.tweet_id );
 
 				for (var tag = tweet_hashtags.length - 1; tag >= 0; tag--) {
-					var found_campaign = hashtags.indexOf( tweet_hashtags[tag] )
-					if( found_campaign !== -1 ) $scope.raw_campaigns[ found_campaign ].tweets.push( tweet )
+					for (var hashtag_i = hashtags.length - 1; hashtag_i >= 0; hashtag_i--) {
+						if( tweet_hashtags[tag] == hashtags[hashtag_i] ) {
+							$scope.raw_campaigns[ hashtag_i ].tweets.push( tweet )
+						}
+					};
 				};
 				for (var tag = tweet_mentions.length - 1; tag >= 0; tag--) {
 					var found_rep = mentions.indexOf( tweet_mentions[tag] )
