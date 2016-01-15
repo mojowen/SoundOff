@@ -311,8 +311,8 @@ function formScope($http, $timeout, $scope) {
 		$scope.url = $oundoff_base_domain
 	}
 
-	$scope.twitter_link = function() { return $scope.default_message +' '+ $scope.url }
-	$scope.facebook_link = function() { return 'http://facebook.com/sharer/sharer.php?u='+$scope.url }
+	$scope.twitter_link = function() { return $scope.default_message +' ' + document.location.protocol + $scope.url }
+	$scope.facebook_link = function() { return 'http://facebook.com/sharer/sharer.php?u='+document.location.protocol+$scope.url }
 
 	$scope.$watch('targets',function() {
 		if( $oundoff_config.campaign == null && $scope.targets.length > 0) {
