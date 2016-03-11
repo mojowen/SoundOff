@@ -6,7 +6,7 @@ if ENV['SENDGRID_PASSWORD'] && ENV['SENDGRID_USERNAME']
       :authentication => :plain,
       :user_name      => ENV['SENDGRID_USERNAME'],
       :password       => ENV['SENDGRID_PASSWORD'],
-      :domain         => 'heroku.com',
+      :domain         => 'soundoffatcongress.org',
       :enable_starttls_auto => true
     }
 	ActionMailer::Base.delivery_method = :smtp
