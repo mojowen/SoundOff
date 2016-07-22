@@ -51,7 +51,7 @@ class HomeController < ApplicationController
       :home => true,
     	:single => params[:short_url] || rep || nil,
       :raw_reps => Rep.mentioned_to_objs,
-      :raw_campaigns => Campaign.active_to_objs,
+      :raw_campaigns => Campaign.active_to_objs(campaign),
       :open_soundoff => open_soundoff,
       :raw_tweets => (raw_tweets || []),
       :skip_landing => is_home
