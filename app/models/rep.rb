@@ -87,14 +87,16 @@ class Rep < ActiveRecord::Base
       new( new_rep )
     end
 
-    def self.retrieve_new_rep bioguide_id
-      Thread.new do
-        bioguide_id = bioguide_id.upcase
-        sunlight_data = JSON.parse RestClient.get "https://congress.api.sunlightfoundation.com/legislators?bioguide_id=#{bioguide_id}&all_legislators=true&apikey=8fb5671bbea849e0b8f34d622a93b05a"
+    def self.retrieve_new_rep(bioguide_id)
+      Thread.new { Rep.retrieve_new_rep_sync(bioguide_id) }
+    end
 
-        new_rep = add_custom_rep( sunlight_data['results'][0] )
-        new_rep = add_twitter(new_rep) if new_rep.twitter_screen_name
-        new_rep.save()
-      end
+    def self.retrieve_new_rep_sync(bioguide_id)
+      bioguide_id = bioguide_id.upcase
+      sunlight_data = JSON.parse RestClient.get "https://congress.api.sunlightfoundation.com/legislators?bioguide_id=#{bioguide_id}&all_legislators=true&apikey=8fb5671bbea849e0b8f34d622a93b05a"
+
+      new_rep = add_custom_rep( sunlight_data['results'][0] )
+      new_rep = new_rep.add_twitter if new_rep.twitter_screen_name
+      new_rep.save
     end
 end
