@@ -95,10 +95,15 @@ class Campaign < ActiveRecord::Base
     }
   end
   def self.active
-    return all( :conditions => ['status = ? AND updated_at > ?', 'approved', 6.months.ago], :include => [:partner]  )
+    where('status = ? AND updated_at > ?', 'approved', 6.months.ago)
+      .order(:id)
+      .includes(:partner)
+      .each_with_object({}) do |campaign, obj|
+        obj[campaign.hashtag] = campaign
+        obj
+      end.values
   end
   def self.active_to_objs(injected_campaign = nil)
-    active_campaigns = active.to_a
     active_campaigns << injected_campaign if injected_campaign
     pre_score = Hash[ Hashtag.joins('INNER JOIN "hashtags_statuses" ON "hashtags_statuses"."hashtag_id" = "hashtags"."id"')
                              .select('COUNT(hashtags_statuses.status_id), keyword')

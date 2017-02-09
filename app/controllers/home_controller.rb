@@ -17,9 +17,8 @@ class HomeController < ApplicationController
       @og_image = (rep.twitter_profile_image.gsub('_normal','') rescue nil)
       raw_tweets = Status.mention( rep.twitter_id ).map(&:to_json)
     end
-    campaign = Campaign.find_by_short_url( params[:short_url] ) if params[:short_url]
-    if campaign
 
+    if campaign = Campaign.find_by_short_url(params[:short_url])
       @title = campaign.name+' #'+ campaign.hashtag
       @og_title = @title+' | #SoundOff @ Congress'
       @og_description = campaign.description
@@ -29,11 +28,11 @@ class HomeController < ApplicationController
 
     if params[:email] || params[:zip] || params[:targets] || params[:message]
       open_soundoff = {
-        :email => params[:email],
-        :zip => params[:zip],
-        :targets => params[:targets],
-        :message => params[:message],
-        :no_click => true
+        email: params[:email],
+        zip: params[:zip],
+        targets: params[:targets],
+        message: params[:message],
+        no_click: true
       }
     else
       open_soundoff = false
@@ -47,13 +46,13 @@ class HomeController < ApplicationController
     end
 
     @config = {
-      :home => true,
-      :single => params[:short_url] || rep || nil,
-      :raw_reps => Rep.mentioned_to_objs,
-      :raw_campaigns => Campaign.active_to_objs(campaign),
-      :open_soundoff => open_soundoff,
-      :raw_tweets => (raw_tweets || []),
-      :skip_landing => is_home
+      home: true,
+      single: params[:short_url] || rep || nil,
+      raw_reps: Rep.mentioned_to_objs,
+      raw_campaigns: Campaign.active_to_objs(campaign),
+      open_soundoff: open_soundoff,
+      raw_tweets: (raw_tweets || []),
+      skip_landing: is_home
     }
 
     @body_class = 'home'
@@ -100,6 +99,7 @@ class HomeController < ApplicationController
 
     send_data result, :type => 'text/csv; charset=utf-8; header=present', :disposition => "attachment; filename=all_tweets.csv", :filename => "all_tweets.csv"
   end
+
   def all_responses
     only_logged_in
     require 'csv'
@@ -127,8 +127,6 @@ class HomeController < ApplicationController
   end
 
   def sitemap
-
-
     @urls = [
         # A place to put urls
         # { :priority => '0.4', :url => ENV['BASE_URL']+'/about', :updated => '2012-10-05'},
@@ -148,6 +146,7 @@ class HomeController < ApplicationController
       render :template => 'home/sitemap', :layout => false
     end
   end
+
   def avatar_fallback
     begin
       if params[:fallback_type].downcase == 'partner'
@@ -156,7 +155,7 @@ class HomeController < ApplicationController
       else
         user = TWITTER_CLIENT.user(params[:twitter_screen_name].gsub('@',''))
         rep = Rep.find_by_twitter_screen_name(user.screen_name.downcase)
-        rep.update_attributes( :twitter_profile_image => user.profile_image_url.to_s ) if rep
+        rep.update_attributes(twitter_profile_image: user.profile_image_url.to_s) if rep
       end
       redirect_to partner ? partner.logo : rep.twitter_profile_image
     rescue  => e
