@@ -22,15 +22,15 @@ class ApplicationController < ActionController::Base
 
   private
   def render_not_found(exception)
-      @msg = exception.to_s.split(' ').map{|w| w[0].upcase+w.slice(1,w.length)}.join(' ')
-      @body_class = 'error'
-     render :template => "/errors/404", :status => 404, :layout => 'application.html.haml'
+    @msg = exception.to_s.split(' ').map{|w| w[0].upcase+w.slice(1,w.length)}.join(' ')
+    @body_class = 'error'
+    render template: "errors/404", status: 404, layout: 'application.html.haml'
   end
 
   def render_error(exception)
     @msg = exception.to_s.split(' ').map{|w| w[0].upcase+w.slice(1,w.length)}.join(' ')
     @backtrace = exception.backtrace.join("\n")
     @body_class = 'error'
-    render :template => "/errors/500", :status => 500, :layout => 'application.html.haml'
+    render template: "errors/500", status: 500, layout: 'application.html.haml'
   end
 end
