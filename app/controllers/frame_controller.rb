@@ -37,7 +37,7 @@ class FrameController < ActionController::Base
     @body_class += ' dark' if params[:style] == 'dark'
     @body_class += ' light' if params[:style] == 'light'
 
-    unless params[:skip_when_matched].nil?
+    if params[:skip_when_matched] && @campaign
       @config[:skip_when_matched] = @campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first || true
     end
   end
@@ -88,7 +88,7 @@ class FrameController < ActionController::Base
     elsif reps.length > limit
       redirect_to :action => 'form', :zip => params[:zip], :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true, :campaign => campaign.id
     else
-      targets = reps.map{ |s| "@"+Rep.find_by_bioguide_id( s['bioguide_id'] ).twitter_screen_name }.join(' ')
+      targets = reps.map{ |s| "@#{Rep.find_by_bioguide_id( s['bioguide_id'] ).twitter_screen_name}" }.join(' ')
       message = ["\u200B"+targets, ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ),'#'+campaign.hashtag].join(' ')
       headcount = campaign.partner.nil?
 

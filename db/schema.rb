@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213070052) do
+ActiveRecord::Schema.define(:version => 20170209012936) do
 
   create_table "campaigns", :force => true do |t|
     t.string   "name"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(:version => 20140213070052) do
   create_table "soundoffs", :force => true do |t|
     t.string   "zip"
     t.string   "email"
-    t.string   "message"
+    t.text     "message"
     t.string   "targets"
     t.string   "hashtag"
     t.integer  "campaign_id"

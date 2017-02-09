@@ -2,12 +2,11 @@ class HomeController < ApplicationController
   layout 'home.html'
 
   def home
-
-  	if params[:twitter_screen_name]
-  		rep = Rep.where( ['LOWER(twitter_screen_name) = ? ',params[:twitter_screen_name].downcase]).first
+    if params[:twitter_screen_name]
+      rep = Rep.where( ['LOWER(twitter_screen_name) = ? ',params[:twitter_screen_name].downcase]).first
       redirect_to home_path if rep.nil?
 
-  		rep.data = nil unless rep.data
+      rep.data = nil unless rep.data
       rep[:short_url] = rep_path( rep.twitter_screen_name )
       rep[:tweets] = []
       rep[:score] = rep.score
@@ -17,7 +16,7 @@ class HomeController < ApplicationController
       @og_description = "#SoundOff @ #{rep.name} from #{rep.state_name} and see what others are saying. #SoundOff is an advocacy tool created and maintained by HeadCount.org."
       @og_image = (rep.twitter_profile_image.gsub('_normal','') rescue nil)
       raw_tweets = Status.mention( rep.twitter_id ).map(&:to_json)
-  	end
+    end
     campaign = Campaign.find_by_short_url( params[:short_url] ) if params[:short_url]
     if campaign
 
@@ -49,7 +48,7 @@ class HomeController < ApplicationController
 
     @config = {
       :home => true,
-    	:single => params[:short_url] || rep || nil,
+      :single => params[:short_url] || rep || nil,
       :raw_reps => Rep.mentioned_to_objs,
       :raw_campaigns => Campaign.active_to_objs(campaign),
       :open_soundoff => open_soundoff,

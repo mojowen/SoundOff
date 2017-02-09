@@ -35,5 +35,4 @@ SoundOff::Application.routes.draw do
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
   match '/direct/:short_url' => 'frame#direct', :as => 'direct'
 
-
 end

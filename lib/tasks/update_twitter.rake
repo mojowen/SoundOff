@@ -1,6 +1,6 @@
 def update obj, name_of
     begin
-        obj.add_twitter().save()
+        obj.add_twitter.save
         puts "Updated #{name_of}"
     rescue
         puts "Failed to update #{name_of}"
