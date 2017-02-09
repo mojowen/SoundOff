@@ -104,6 +104,7 @@ class Campaign < ActiveRecord::Base
       end.values
   end
   def self.active_to_objs(injected_campaign = nil)
+    active_campaigns = active
     active_campaigns << injected_campaign if injected_campaign
     pre_score = Hash[ Hashtag.joins('INNER JOIN "hashtags_statuses" ON "hashtags_statuses"."hashtag_id" = "hashtags"."id"')
                              .select('COUNT(hashtags_statuses.status_id), keyword')
