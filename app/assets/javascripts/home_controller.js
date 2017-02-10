@@ -187,7 +187,6 @@ function homePageScope($http, $scope) {
 	$scope.single_facebook = ''
 	$scope.build_widget = ''
 	$scope.$watch('single_item', function() {
-
 		if( $scope.single_item != null  ) {
 			var url = $oundoff_base_domain + ($scope.single_item.short_url.slice(0,1) == '/' ? '' : '/') + $scope.single_item.short_url
 			$scope.single_url =  url
