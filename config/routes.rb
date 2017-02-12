@@ -31,8 +31,10 @@ SoundOff::Application.routes.draw do
   match '/advanced' => 'pages#advanced', :as => 'advanced'
 
   match '/avatar_fallback' => 'home#avatar_fallback', :as => 'avatar_fallback'
+  match '/500' => 'errors#500'
+  match '/404' => 'errors#404'
+
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
   match '/direct/:short_url' => 'frame#direct', :as => 'direct'
-
 end
