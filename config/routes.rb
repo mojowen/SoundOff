@@ -31,8 +31,9 @@ SoundOff::Application.routes.draw do
   match '/advanced' => 'pages#advanced', :as => 'advanced'
 
   match '/avatar_fallback' => 'home#avatar_fallback', :as => 'avatar_fallback'
-  match '/500' => 'errors#500'
-  match '/404' => 'errors#404'
+  match '/apple-touch-icon-precomposed.png' => 'errors#five_hundred'
+  match '/500' => 'errors#five_hundred'
+  match '/404' => 'errors#four_oh_four'
 
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
