@@ -32,6 +32,7 @@ SoundOff::Application.routes.draw do
 
   match '/avatar_fallback' => 'home#avatar_fallback', :as => 'avatar_fallback'
 
+  match '/apple-touch-icon.png' => 'errors#four_oh_four'
   match '/apple-touch-icon-precomposed.png' => 'errors#four_oh_four'
   match '/500' => 'errors#five_hundred'
   match '/404' => 'errors#four_oh_four'
