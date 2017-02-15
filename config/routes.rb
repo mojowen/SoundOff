@@ -18,6 +18,10 @@ SoundOff::Application.routes.draw do
   match '/all_responses' => 'home#all_responses', :as => 'responses'
   match '/statuses' => 'home#statuses', :as => 'statuses'
   match '/sitemap' => 'home#sitemap'
+  match '/:dumb.png' => 'errors#four_oh_four'
+  match '/:dumb.xml' => 'home#sitemap'
+  match '/500' => 'errors#five_hundred'
+  match '/404' => 'errors#four_oh_four'
 
   match '/all_reps' => 'rep#index', :as => 'all_reps'
   match '/find_reps' => 'rep#search', :as => 'find_reps'
@@ -31,11 +35,6 @@ SoundOff::Application.routes.draw do
   match '/advanced' => 'pages#advanced', :as => 'advanced'
 
   match '/avatar_fallback' => 'home#avatar_fallback', :as => 'avatar_fallback'
-
-  match '/apple-touch-icon.png' => 'errors#four_oh_four'
-  match '/apple-touch-icon-precomposed.png' => 'errors#four_oh_four'
-  match '/500' => 'errors#five_hundred'
-  match '/404' => 'errors#four_oh_four'
 
   match '/:short_url' => 'home#home', :as => 'short'
   match '/rep/:twitter_screen_name' => 'home#home', :as => 'rep'
