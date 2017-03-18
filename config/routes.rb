@@ -18,6 +18,7 @@ SoundOff::Application.routes.draw do
   match '/all_responses' => 'home#all_responses', :as => 'responses'
   match '/statuses' => 'home#statuses', :as => 'statuses'
   match '/sitemap' => 'home#sitemap'
+  match '/:dumb.txt' => 'errors#four_oh_four'
   match '/:dumb.png' => 'errors#four_oh_four'
   match '/:dumb.xml' => 'home#sitemap'
   match '/500' => 'errors#five_hundred'
