@@ -71,6 +71,8 @@ class FrameController < ActionController::Base
     reps = JSON::parse( RestClient.get "https://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&zip=#{params[:zip]}" )
     reps = reps['results']
 
+    return redirect_to '/404' unless campaign
+
     # Filtering down the reps
     case campaign.target
         when 'house'
