@@ -20,6 +20,7 @@ SoundOff::Application.routes.draw do
   match '/sitemap' => 'home#sitemap'
   match '/:dumb.txt' => 'errors#four_oh_four'
   match '/:dumb.png' => 'errors#four_oh_four'
+  match '/:dumb.zip' => 'errors#four_oh_four'
   match '/:dumb.xml' => 'home#sitemap'
   match '/500' => 'errors#five_hundred'
   match '/404' => 'errors#four_oh_four'

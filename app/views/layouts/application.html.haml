@@ -1,7 +1,7 @@
 !!!
 %html
 	%head
-		%title #{ @title + ' | #SoundOff @ Congress' rescue '#SoundOff @ Congress' }
+		%title #{ @title.force_encoding("utf-8") + ' | #SoundOff @ Congress' rescue '#SoundOff @ Congress' }
 
 		= render 'home/meta'
 
