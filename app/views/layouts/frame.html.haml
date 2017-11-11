@@ -18,6 +18,8 @@
 		- if params[:remote] && @campaign && @campaign.partner && @campaign.partner.custom_popup_css
 			:scss
 				#{ @campaign.partner.custom_popup_css }
+		:javascript
+			window.CIVIC_API_FRONTEND_KEY = "#{ENV['CIVIC_API_FRONTEND_KEY']}"
 
 	%body{ :class => "#{@body_class}" }
 

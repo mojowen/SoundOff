@@ -10,7 +10,11 @@
 		:javascript
 			var $oundoff_config = #{ ( @config || {} ).to_json }
 		= javascript_include_tag "application"
+		:javascript
+			window.CIVIC_API_FRONTEND_KEY = "#{ENV['CIVIC_API_FRONTEND_KEY']}"
+
 		= csrf_meta_tags
+
 		/[if IE]
 			= javascript_include_tag 'placeholder'
 

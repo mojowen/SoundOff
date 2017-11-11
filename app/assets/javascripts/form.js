@@ -144,24 +144,35 @@ function formScope($http, $timeout, $scope) {
 	$scope.$watch( 'zip', function(newValue){
 		newValue = newValue.split('-')[0].replace(/\s/,'')
 		if( typeof newValue != 'undefined' && newValue.length == 5 && $scope.raw_targets.length == 0 ) {
-				var query = 'https://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&zip='+$scope.zip
+
+				var roles = "roles=legislatorLowerBody&roles=legislatorUpperBody"
+				if( config.target == "house" ) roles = "roles=legislatorLowerBody"
+				if( config.target == "senate" ) roles = "roles=legislatorUpperBody"
+
+				var query = [
+					"https://www.googleapis.com/civicinfo/v2/representatives?",
+					"includeOffices=true&levels=country&",
+					roles,
+					"&key=",
+					window.CIVIC_API_FRONTEND_KEY,
+					"&callback=JSON_CALLBACK&address=",
+					$scope.zip
+				].join('')
+
 				$scope.sunligh_fetching = true
-				$http.jsonp(query,{})
-					.success(function(data,status) {
-						$scope.electeds = data.results;
-						var limit = config.limits[ config.target ],
-							targets = $scope.electeds.filter( function(el) { return el.chamber == config.target || config.target == 'all' } )
+				$http.jsonp(query,{}).success(function(data,status) {
+					$scope.electeds = data.officials;
+					if( $scope.electeds.length === config.limits[ config.target ] ) {
+						$scope.raw_targets = $scope.electeds;
+					}
 
-						if( targets.length != limit && typeof google_maps == 'undefined' ) addGoogleMaps();
-						else $scope.raw_targets = targets;
-
-						$scope.sunligh_fetching = false;
-						if( $scope.ready_for_2 ) $scope.nextStage()
-					})
+					$scope.sunligh_fetching = false;
+					if( $scope.ready_for_2 ) $scope.nextStage()
+				})
 		}
 
 		if( newValue.length > 5 ) {
-			$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
+			$oundoff_config.targets.push({twitter_id: 'whitehouse'})
 			$scope.raw_targets = [{twitter_id: 'whitehouse'}]
 		}
 	})
@@ -169,65 +180,49 @@ function formScope($http, $timeout, $scope) {
 	// Stage 2 - clarfiy location
 	$scope.street = ''
 	$scope.city = ''
-	$scope.latlng = false
 	$scope.address = ''
 
-	$scope.geocoder = false
 	$scope.geocoder_fetching = false
 	$scope.ready_for_3 = false
 
 	$scope.$watch( 'city', lookupLatLng )
 	$scope.$watch( 'street', lookupLatLng )
-	$scope.$watch( 'geocoder', lookupLatLng )
-
-
-	function addGoogleMaps() {
-		var script = document.createElement( 'script' ),
-			fjs = document.head.getElementsByTagName('script')[0]
-    	script.type = 'text/javascript';
-    	script.id = 'google_maps';
-    	script.src = 'http://maps.google.com/maps/api/js?sensor=true&callback=addGeocoder';
-		fjs.parentNode.insertBefore( script, fjs);
-	}
 
 	function lookupLatLng() {
 		var address = [$scope.street, $scope.city, $scope.zip].join(' ')
 
-		if( $scope.street != '' && $scope.city != '' && $scope.geocoder && ! $scope.geocoder_fetching && $scope.address != address) {
+		if($scope.street != '' && $scope.city != '' && !$scope.geocoder_fetching && $scope.address != address) {
+
 			$scope.geocoder_fetching = true;
 			$scope.address = address;
 
-			$scope.geocoder.geocode( { 'address': address}, function(results, status) {
-				if( typeof results[0] == 'undefined' ) {
-					$('#notice').html('').attr('class','').text('We couldn\'t match that address to a rep :(')
-					$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
-					$scope.raw_targets = [{twitter_id: 'whitehouse'}]
-					$scope.stage = 3
-				} else {
-					var location = results[0].geometry.location
-					getByLatLng([location.lng(), location.lat()])
-				}
-		    });
-		}
-	}
+			var roles = "roles=legislatorLowerBody&roles=legislatorUpperBody"
+			if( config.target == "house" ) roles = "roles=legislatorLowerBody"
+			if( config.target == "senate" ) roles = "roles=legislatorUpperBody"
 
-	function getByLatLng(latlng) {
-		if( latlng && latlng != $scope.latlng ) {
+			var query = [
+				"https://www.googleapis.com/civicinfo/v2/representatives?",
+				"includeOffices=true&levels=country&",
+				roles,
+				"&key=",
+				window.CIVIC_API_FRONTEND_KEY,
+				"&callback=JSON_CALLBACK&address=",
+				address
+			].join('')
 
-				var query = 'https://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&callback=JSON_CALLBACK&latitude='+latlng[1]+"&longitude="+latlng[0]
-				$http.jsonp(query,{})
-					.success( function(data,status){
-						$scope.electeds = data.results;
-						$scope.raw_targets = $scope.electeds.filter( function(el) { return el.chamber == config.target || config.target == 'all' } )
+			$http.jsonp(query,{}).success( function(data,status){
+					$scope.electeds = data.officials;
+					$scope.raw_targets = $scope.electeds
+					$scope.geocoder_fetching = false;
 
-						$scope.geocoder_fetching = false;
-						$scope.latlng = latlng
-						if( $scope.raw_targets.length == 0 ) {
-							$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
-							$scope.raw_targets = [{twitter_id: 'whitehouse'}];
-						}
-						if( $scope.ready_for_3 ) $scope.nextStage();
-				})
+					if( $scope.raw_targets.length == 0 ) {
+						$oundoff_config.targets.push( {twitter_id: 'whitehouse'} )
+						$scope.raw_targets = [{twitter_id: 'whitehouse'}];
+					}
+
+					if( $scope.ready_for_3 ) $scope.nextStage();
+			})
+
 		}
 	}
 
@@ -254,7 +249,9 @@ function formScope($http, $timeout, $scope) {
 				.filter( function(el) { return $scope.targets.map(function(t){ return t.twitter_screen_name; }).indexOf(el) === -1;  })
 				.join(','),
 			bios = $scope.raw_targets
-				.map( function(el) { return el.bioguide_id })
+				.map( function(el) {
+					return (el.photoUrl || '').split('/').reverse()[0].split('.')[0]
+				})
 				.filter( function(el) { return $scope.targets.map(function(t){ return t.bioguide_id; }).indexOf(el) === -1;  })
 				.join(',')
 
@@ -322,11 +319,6 @@ function formScope($http, $timeout, $scope) {
 	})
 
 }
-function addGeocoder() {
-	angular.element( popup ).scope().$apply( function($scope) {
-		$scope.geocoder = new google.maps.Geocoder();
-	})
-}
 if ( window.self === window.top && $oundoff_config.form ) {
 	$(document).ready( function() {
 		if( isMobile.any() ) {
@@ -335,9 +327,9 @@ if ( window.self === window.top && $oundoff_config.form ) {
 		}
 		$('#close').remove();
 	})
- 	window.onbeforeunload = function(e) {
-      return 'Are you sure you want to cancel your SoundOff?';
-    };
+	window.onbeforeunload = function(e) {
+			return 'Are you sure you want to cancel your SoundOff?';
+		};
 }
 if( $oundoff_config.form ) $(document).on('keydown keyup','textarea', function() {
 	var $notice = $('#notice').html('').attr('class',''),
