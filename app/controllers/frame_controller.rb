@@ -60,18 +60,22 @@ class FrameController < ActionController::Base
           @button = 'Congress'
     end
 
-    @config = {
-      :campaign => params[:campaign],
-      :raw_tweets => tweets
-    }
+    @config = { campaign: params[:campaign], raw_tweets: tweets }
     render 'frame/widget.html', :layout => false
   end
   def direct
     campaign = Campaign.find_by_short_url params[:short_url]
-    reps = JSON::parse( RestClient.get "https://congress.api.sunlightfoundation.com/legislators/locate?apikey=8fb5671bbea849e0b8f34d622a93b05a&zip=#{params[:zip]}" )
-    reps = reps['results']
 
     return redirect_to '/404' unless campaign
+
+    reps = JSON::parse(
+      RestClient.get("https://www.googleapis.com/civicinfo/v2/representatives" \
+                     "?includeOffices=true&levels=country&" \
+                     "roles=legislatorLowerBody&roles=legislatorUpperBody&"\
+                     "key=#{ENV['CIVIC_API_BACKEND_KEY']}&" \
+                     "address=#{params[:zip]}")
+    ).fetch('officials')
+
 
     # Filtering down the reps
     case campaign.target
@@ -85,16 +89,49 @@ class FrameController < ActionController::Base
           limit = 3
     end
 
+    message = params.fetch(
+      :message,
+      campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first
+    )
+
     if reps.length < limit
-      redirect_to :action => 'form', :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true, :campaign => campaign.id
+      redirect_to(
+        action: 'form',
+        email: params[:email],
+        message: message,
+        skip_when_matched: true,
+        campaign: campaign.id
+      )
     elsif reps.length > limit
-      redirect_to :action => 'form', :zip => params[:zip], :email => params[:email], :message => ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ), :skip_when_matched => true, :campaign => campaign.id
+      redirect_to(
+        action: 'form',
+        zip: params[:zip],
+        email: params[:email],
+        message: message,
+        skip_when_matched: true,
+        campaign: campaign.id
+      )
     else
-      targets = reps.map{ |s| "@#{Rep.find_by_bioguide_id( s['bioguide_id'] ).twitter_screen_name}" }.join(' ')
-      message = ["\u200B"+targets, ( params[:message] || campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first ),'#'+campaign.hashtag].join(' ')
+      targets = reps.map do |rep|
+        rep = Rep.find_by_bioguide_id(
+          rep.fetch('photoUrl').split('/').last.split('.').first
+        )
+        "@#{rep.twitter_screen_name}"
+      end.join(' ')
+
+      message = ["\u200B"+targets, message, '#'+campaign.hashtag].join(' ')
       headcount = campaign.partner.nil?
 
-      Soundoff.new( { :message => message, :targets =>  targets, :hashtag => campaign.hashtag, :zip => params[:zip], :campaign_id => campaign.id, :email => params[:email], :partner => true, :headcount => headcount } ).save
+      Soundoff.create(
+        message: message,
+        targets: targets,
+        hashtag: campaign.hashtag,
+        zip: params[:zip],
+        campaign_id: campaign.id,
+        email: params[:email],
+        partner: true,
+        headcount: headcount
+      )
 
       redirect_to '/redirect#'+URI.escape(message).gsub(/\#/,'%23').gsub(/\&/,'%26')
     end
