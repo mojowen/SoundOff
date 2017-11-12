@@ -68,10 +68,19 @@ class FrameController < ActionController::Base
 
     return redirect_to '/404' unless campaign
 
+    case campaign.target
+        when 'house'
+          roles = 'roles=legislatorLowerBody&'
+        when 'senate'
+          roles = 'roles=legislatorUpperBody&'
+        else
+          roles = 'roles=legislatorLowerBody&roles=legislatorUpperBody&'
+    end
+
     reps = JSON::parse(
       RestClient.get("https://www.googleapis.com/civicinfo/v2/representatives" \
                      "?includeOffices=true&levels=country&" \
-                     "roles=legislatorLowerBody&roles=legislatorUpperBody&"\
+                     "#{roles}"\
                      "key=#{ENV['CIVIC_API_BACKEND_KEY']}&" \
                      "address=#{params[:zip]}")
     ).fetch('officials')
@@ -115,6 +124,9 @@ class FrameController < ActionController::Base
       targets = reps.map do |rep|
         rep = Rep.find_by_bioguide_id(
           rep.fetch('photoUrl').split('/').last.split('.').first
+        )
+        rep ||= Rep.find_by_bioguide_id(
+          rep.fetch('channels').find { |ch| ch.fetch('type').match(/twitter/i) }.fetch('id')
         )
         "@#{rep.twitter_screen_name}"
       end.join(' ')

@@ -10,17 +10,12 @@ class RepController < ApplicationController
 
 		if search.length > 3
 			all_reps = Rep.search( search )
-		elsif  search.length == 2
+		elsif search.length == 2
 			all_reps = Rep.find_all_by_state( search.upcase  )
-		elsif twitter_list.length > 0 && search.length < 2
-			all_reps = Rep.all( :conditions => ['LOWER(twitter_screen_name) IN(?)',twitter_list] )
-		elsif bio_list.length > 0 && search.length < 2
-			all_reps = Rep.all( :conditions => ['LOWER(bioguide_id) IN(?)',bio_list] )
-			bio_list.reject{ |id| all_reps.map(&:bioguide_id).index(id) }.each{ |id| Rep.retrieve_new_rep(id) }
 		else
-			all_reps = {}
+			all_reps = Rep.lookup(twitter_list + bio_list)
 		end
 
-		render :json => all_reps.map{ |r| r.data = nil;  r[:score] = r.score; r }
+		render json: all_reps.map{ |r| r.data = nil;  r[:score] = r.score; r }
 	end
 end

@@ -242,23 +242,36 @@ function formScope($http, $timeout, $scope) {
 	$scope.counter = 139
 
 	$scope.$watch('raw_targets',function(targets) {
+		if( $scope.targets.length === $scope.raw_targets.length ) return null;
 
 		var params = '',
 			sns = $scope.raw_targets
-				.map( function(el) { return el.twitter_id })
-				.filter( function(el) { return $scope.targets.map(function(t){ return t.twitter_screen_name; }).indexOf(el) === -1;  })
+				.map(function(el) {
+					var twitter = el.channels.filter(function(el) {
+						return el.type.match(/twitter/i)
+					})
+					return twitter[0] ? twitter[0].id : null
+				})
+				.filter(function(el) {
+					return $scope.targets.map(function(t) {
+						return t.twitter_screen_name;
+					}).indexOf(el) === -1
+				})
 				.join(','),
 			bios = $scope.raw_targets
-				.map( function(el) {
+				.map(function(el) {
 					return (el.photoUrl || '').split('/').reverse()[0].split('.')[0]
 				})
-				.filter( function(el) { return $scope.targets.map(function(t){ return t.bioguide_id; }).indexOf(el) === -1;  })
+				.filter(function(el) {
+					return $scope.targets.map(function(t){
+						return t.bioguide_id;
+					}).indexOf(el) === -1
+				})
 				.join(',')
 
 		if( sns.length > 1 || bios.length > 1 )  {
-
-			if( $oundoff_config.targets.length > 0 ) params = 'sns='+sns
-			else params = 'bio='+bios
+			params += 'sns='+sns
+			params += '&bio='+bios
 
 			$http.get( '/find_reps?'+params ).success( function(r) { $scope.targets = r; });
 		}
