@@ -66,7 +66,15 @@ class FrameController < ActionController::Base
   def direct
     campaign = Campaign.find_by_short_url params[:short_url]
 
-    return redirect_to '/404' unless campaign && params[:zip]
+    return redirect_to '/404' unless campaign
+
+    return redirect_to(
+      action: 'form',
+      email: params[:email],
+      message: message,
+      skip_when_matched: true,
+      campaign: campaign.id
+    ) unless params[:zip]
 
     case campaign.target
         when 'house'
