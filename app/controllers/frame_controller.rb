@@ -68,6 +68,11 @@ class FrameController < ActionController::Base
 
     return redirect_to '/404' unless campaign
 
+    message = params.fetch(
+      :message,
+      campaign.suggested.to_a.flatten.select{ |l| l.length > 1 }.first
+    )
+
     return redirect_to(
       action: 'form',
       email: params[:email],
