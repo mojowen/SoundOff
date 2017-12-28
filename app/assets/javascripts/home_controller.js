@@ -158,9 +158,10 @@ function homePageScope($http, $scope) {
 		else return $scope.campaigns()
 	}
 	$scope.$watch('search',function() {
-		if( typeof fetch != 'undefined' ) clearTimeout( fetch);
 
-		fetch = setTimeout( function() {
+		if( typeof fetch_search !== 'undefined' ) clearTimeout( fetch_search);
+
+		fetch_search = setTimeout( function() {
 
 			if( $scope.search.length > 1 && $scope.mode.toLowerCase() == 'reps' && $scope.single_item == null ) {
 
@@ -177,7 +178,7 @@ function homePageScope($http, $scope) {
 							};
 						})
 			}
-		},250)
+		}, 250)
 	})
 
 	$scope.single_item =  null;
