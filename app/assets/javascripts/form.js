@@ -300,7 +300,7 @@ function formScope($http, $timeout, $scope) {
 		tags.push('#soundoff')
 		tags = tags.join(' ')
 
-		$scope.counter = 140 - [targets,$scope.message,tags].join(' ').length
+		$scope.counter = 280 - [targets,$scope.message,tags].join(' ').length
 	}
 
 	// Stage 4
