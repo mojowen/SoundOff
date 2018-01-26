@@ -239,7 +239,7 @@ function formScope($http, $timeout, $scope) {
 		return "Type your message to "+$scope.targets_list()+" here. Handles"+( $oundoff_config.campaign == null ? '' : ' and '+$scope.campaign )+" will be added automatically."
 	}
 
-	$scope.counter = 139
+	$scope.counter = 280
 
 	$scope.$watch('raw_targets',function(targets) {
 		if( $scope.targets.length === $scope.raw_targets.length ) return null;
