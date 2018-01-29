@@ -179,7 +179,7 @@
 		}
 	})
 	.on('change', '.targets.radio', function(e){
-		var counter = $(campaign_target_all).is(':checked') ? 65 : 80;
+		var counter = $(campaign_target_all).is(':checked') ? 175 : 180;
 
 		$('.suggested_tweets textarea').each( function() {
 			$(this).attr('counter',counter).trigger('keydown');
