@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  rescue_from ActionView::MissingTemplate, with: :not_found
 
   def only_logged_in
   	redirect_to new_user_session_path if !!! current_user

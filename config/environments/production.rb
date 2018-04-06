@@ -67,6 +67,7 @@ SoundOff::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   config.middleware.use ExceptionNotification::Rack,
+    ignore_exceptions: ['ActionView::TemplateError'] + ExceptionNotifier.ignored_exceptions,
     email: { email_prefix: "[SoundOff] ",
              sender_address: %{"notifier" <notifier@soundoffatcongress.org> },
              exception_recipients: %w{srduncombe@gmail.com}}
