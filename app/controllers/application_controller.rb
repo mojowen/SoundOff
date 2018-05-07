@@ -18,16 +18,19 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError,       :with => :render_not_found
     rescue_from ActionController::UnknownController,  :with => :render_not_found
     rescue_from ActionController::UnknownAction,      :with => :render_not_found
+    rescue_from ActionView::MissingTemplate,          :with => :render_not_found
   end
 
   private
   def render_not_found(exception)
+    request.format = "html"
     @msg = exception.to_s.split(' ').map{|w| w[0].upcase+w.slice(1,w.length)}.join(' ')
     @body_class = 'error'
     render template: "errors/404", status: 404, layout: 'application.html.haml'
   end
 
   def render_error(exception)
+    request.format = "html"
     @msg = exception.to_s.split(' ').map{|w| w[0].upcase+w.slice(1,w.length)}.join(' ')
     @backtrace = exception.backtrace.join("\n")
     @body_class = 'error'
