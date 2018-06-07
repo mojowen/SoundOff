@@ -24,6 +24,8 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
+gem 'test-unit', '~> 3.0'
+
 gem 'rest-client'
 gem 'nokogiri'
 gem 'tweetstream'
